@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_5"
+    android:paddingBottom="@dimen/dp_5"
+    android:weightSum="1">
+
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="wrap_content"
+        android:id="@+id/messageFrom_tv"
+        android:layout_height="wrap_content"
+        android:text="rbgrthrtrthrth"
+        android:textColor="@color/cancel"
+        android:gravity="center_vertical|left"
+        android:layout_centerVertical="true"
+        />
+    <com.biglynx.fulfiller.fonts.CustomFontLight
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/messageFrom_tv"
+        android:id="@+id/message_tv"
+        android:text="jsdhfsjhfjshfsjfhsjfhsjfhsj sdbfjsbvgs
+sdfbshfbgsfgsf"
+        android:textColor="@color/cancel"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:gravity="center_vertical|left"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.biglynx.fulfiller.fonts.CustomFontBold
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_20"
+    android:text="@string/savings"
+    android:textColor="#000"
+    android:background="@color/white"
+    android:textAllCaps="true"
+    android:textSize="@dimen/sp_16"
+    android:gravity="center|start"
+    >
+</com.biglynx.fulfiller.fonts.CustomFontBold>

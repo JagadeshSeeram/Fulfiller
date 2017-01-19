@@ -1,0 +1,131 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EFEFEF"
+    >
+    <!--toolbar-->
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dealtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.35"
+                android:textColor="@color/colorPrimary"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/lef_roundedcorner"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/active_tv"
+                android:textSize="@dimen/sp_13"
+                android:text="Active"
+                android:textAllCaps="true"
+                >
+
+            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.35"
+                android:background="@drawable/lef_roundedcorner_trans"
+                android:textColor="#FFFFFF"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:layout_marginRight="50dp"
+                android:paddingBottom="15dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/past_tv"
+                android:textSize="@dimen/sp_13"
+                android:text="Past"
+                android:textAllCaps="true"
+                >
+
+            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <!--toolbar end-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#353944"
+        android:gravity="center"
+        android:padding="8dp"
+        android:id="@+id/headerbar_LI"
+        android:orientation="horizontal">
+
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:id="@+id/awating_tv"
+            android:text="Awating confirmation"
+            android:textSize="@dimen/textview_dp14"
+            android:textAllCaps="true"
+            android:visibility="gone"
+            ></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="#FFFFFF"
+            android:gravity="center|end|right"
+            android:id="@+id/confirmed_tv"
+            android:text="Confirmed"
+            android:visibility="gone"
+            android:textAllCaps="true"
+            android:textSize="@dimen/textview_dp14"
+            ></com.biglynx.fulfiller.fonts.CustomFontRegular>
+    </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_To_Refresh_Layout"
+        >
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fulfiment_lv"
+            android:divider="#353944"
+            android:padding="@dimen/dp_10"
+            android:background="#FFFFFF"
+            android:visibility="visible"
+            android:dividerHeight="0.1dp">
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000"
+        android:id="@+id/nofulfillments_tv"
+        android:text="No Fulfillments"/>
+
+</LinearLayout>

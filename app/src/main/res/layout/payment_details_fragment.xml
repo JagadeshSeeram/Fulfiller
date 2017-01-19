@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    >
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/paymentsDetails_lv"
+        android:background="@color/white"
+        android:layout_margin="@dimen/dp_10"
+        >
+    </ListView>
+
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noPayments_tv"
+        android:text="No Payments"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/sp_16"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

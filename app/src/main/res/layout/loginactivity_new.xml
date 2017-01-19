@@ -1,0 +1,346 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_forgot"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/login_image"
+                android:scaleType="fitXY"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/login_truck" />
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Recieved a delivery token from your company?" />
+
+                <Button
+                    android:id="@+id/start_delivery_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/start_delivery_button_bg"
+                    android:letterSpacing="0.1"
+                    android:text="@string/startdelivering"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textview_dp16" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="60"
+            android:background="@color/window_background"
+            android:paddingBottom="5dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                >
+
+                <LinearLayout
+                    android:id="@+id/login_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/window_background"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <com.biglynx.fulfiller.utils.EditTextFontMedium
+                            android:id="@+id/email_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:hint="@string/email_address"
+                            android:paddingBottom="@dimen/spacing_small"
+                            android:paddingLeft="0dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_color_hint_login"
+                            android:textSize="@dimen/sp_14"
+                            android:background="@drawable/editext_bottom"
+                             />
+
+                        <com.biglynx.fulfiller.utils.EditTextFontLight
+                            android:id="@+id/password_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/password"
+                            android:paddingBottom="@dimen/spacing_small"
+                            android:paddingLeft="0dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_color_hint_login"
+                            android:textSize="@dimen/sp_14"
+                            android:background="@drawable/editext_bottom" />
+
+                        <Button
+                            android:id="@+id/sign_in_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/sign_in_button_bg"
+                            android:letterSpacing="0.1"
+                            android:text="@string/sign_in"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/textview_dp16"
+                            android:textAllCaps="true"
+                            />
+
+                    </LinearLayout>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/or"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textview_dp16"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/social_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                                android:id="@+id/login_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/fb_button_bg"
+                                android:ems="15"
+                                android:gravity="center"
+                                android:padding="14dp"
+                                android:text="@string/continue_fb"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dp_20"
+                                android:background="@color/facebook_bg"
+                                android:src="@drawable/facebook_btn_logo"
+                                />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                                android:id="@+id/sign_in_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/gplus_button_bg"
+                                android:ems="15"
+                                android:gravity="center"
+                                android:padding="14dp"
+                                android:text="@string/continue_googlenew"
+                                android:textSize="@dimen/sp_14" />
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/dp_20"
+                                android:background="@color/gplus_bg"
+                                android:src="@drawable/gplus_btn_logo"
+
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/start_delivering_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/window_background"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontLight
+                        android:id="@+id/close_delivering_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:drawableRight="@drawable/crossgrey"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text="@string/startdelivering"
+                        android:textColor="@color/initial_login" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontLight
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:text="@string/please_provide_the_delivery_token"
+                        android:textColor="@color/initial_login" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/fullfiller_id_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_bottom"
+                        android:hint="@string/enter_fulfiller_id"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/initial_login"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:textSize="@dimen/sp_16" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/confirmation_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_bottom"
+                        android:hint="@string/enter_confirmation_token"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/initial_login"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:textSize="@dimen/sp_16" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/name_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_bottom"
+                        android:hint="@string/enter_name"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/initial_login"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:textSize="@dimen/sp_16" />
+
+                    <Button
+                        android:id="@+id/start_delivery_without_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/buttons"
+                        android:letterSpacing="0.1"
+                        android:text="@string/startdelivering"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/sp_16" />
+                </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_forgot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Forgot your password?"
+            android:textSize="@dimen/textview_dp14">
+
+        </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
+
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/joinNow_tv"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Dont you have account? JOIN NOW"
+            android:textSize="@dimen/textview_dp14">
+
+        </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+    </LinearLayout>
+</RelativeLayout>

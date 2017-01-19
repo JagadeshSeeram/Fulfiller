@@ -1,0 +1,186 @@
+<resources>
+    <string name="app_name">Fulfiller</string>
+    <string name="joinforfree">JOIN FOR FREE</string>
+    <string name="login">  Log In</string>
+    <string name="or">OR</string>
+    <string name="itsfree">its Free</string>
+    <string name="nocommitments">No Commitments</string>
+    <string name="longterm">no login-term contracts</string>
+    <string name="learn">Learn how Fulfiller works?</string>
+    <string name="clickhere">Click here</string>
+    <string name="google">LogIn with google</string>
+    <string name="fb">  \t\t\t \t LogIn with facebook</string>
+    <string name="googlenew">google</string>
+
+    <string name="continue_fb">Continue with Facebook</string>
+    <string name="continue_googlenew">Continue with Google</string>
+    <string name="fbnew">Facebook</string>
+    <string name="startdelivering">START DELIVERING</string>
+    <string name="alreadyfulfiller">    Already a fulfiller member? </string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="technical_error">Server Error, Try again</string>
+
+    <string name="fbid">905986182864867</string>
+    <string name="google_apikey">AIzaSyDV99UNmtLmw_VW0hqQr1tq_ituc_MIsYc</string>
+    <string name="oauth2_client_id">55470930292-9ussmff0kkbfjjab1ldaicf7leucf4t8.apps.googleusercontent.com</string>
+
+    <string name="busniessname">Business Name</string>
+    <string name="contactname">Contact Person</string>
+    <string name="enter_business">Enter business name</string>
+    <string name="enter_person">Enter person name</string>
+    <string name="email">E-Mail</string>
+    <string name="enter_email">Enter email address</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_confirm_password">Enter confirm password</string>
+    <string name="confirm_password">CONFIRM PASSWORD</string>
+    <string name="phonenumber">Phone Number</string>
+    <string name="enter_phoneo">Enter your phone number</string>
+    <string name="enter_address">Enter your Address</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="enter_city">Enter your city</string>
+    <string name="state">State</string>
+    <string name="enter_state">Enter your state</string>
+    <string name="country">Country</string>
+    <string name="enter_country">Enter your Country</string>
+    <string name="zipcode">Zip code</string>
+    <string name="enter_zipcode">Enter your zip code</string>
+    <string name="firstname">first name</string>
+    <string name="enter_fname">Enter first name</string>
+    <string name="lastanme">Last name</string>
+    <string name="enter_lname">Enter last name</string>
+    <string name="register">Register</string>
+    <string name="policies">By registering, you confirm that you accept our Terms of Use and Privacy policy</string>
+    <string name="alreadyregister">Already register with Fulfiller?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="registerbelow">Reigster below to complete sing up</string>
+    <string name="home">Home</string>
+    <string name="broadcast">BroadCasts</string>
+    <string name="fulfillment">FulFillments</string>
+    <string name="me">Settings</string>
+    <string name="placebid">place bid</string>
+    <string name="submitbud">submit interest</string>
+    <string name="bid_agreement">  By placing a bid, you\'re committing to fulfill delivery items if you win. I Agree to
+        terms and conditions.</string>
+    <string name="termscondition">I agree terms and conditions</string>
+    <string name="vehicletype">Vehicle type</string>
+    <string name="vehicleyear">Vehicle year</string>
+    <string name="licenecplate">Licence plate number</string>
+    <string name="vehicleinsurence">Vehicle insurance</string>
+    <string name="vehicleregistration">Vehicle registratoin</string>
+    <string name="choosevehicletype">Choose vehicle type</string>
+    <string name="vehicleyearhint">Enter vehicle year</string>
+    <string name="enterliceneplatenumber">Enter licene plate number</string>
+    <string name="addvehicleinsurence">Add vehicle insurance document</string>
+    <string name="addvehiclereg">Add vehicle registration document</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="please_provide_the_delivery_token">Please provide the delivery token provided by your organization to start delivering. This app requires precise location of your device and shares the collected information with retailer to track deliveries.</string>
+    <string name="enter_fulfiller_id">Enter fulfiller Id</string>
+    <string name="enter_confirmation_token">Enter confirmation token</string>
+    <string name="enter_name">Enter name</string>
+    <string name="or_">----------- OR -----------</string>
+    <string name="united_states_of_america">United States of America</string>
+    <string name="cutomer_address">CUSTOMER ADDRESS</string>
+    <string name="OOPS">Oops... Something went wrong.</string>
+    <string name="setup_proximity_distance">Setup proximity distance from retailer pick up locatoin to receive notifications when new order are broadcasted by retailer \n\n E.g. Lets say you have configured proximity as 5 miles. Based on your geo location you will receive notifications for all the new fulfillments broadcasted by retailer when you are within 5 miles of pickup location.</string>
+    <string name="submit">submit</string>
+    <string name="distance_cant_be_emptry">Proximity Distance can\'t be empty</string>
+    <string name="vehicle_added">Vehicle Added.</string>
+    <string name="addvehicle">ADD A VEHICLE</string>
+    <string name="savings">savings</string>
+    <string name="current">current</string>
+    <string name="pending">pending</string>
+    <string name="configuration">Configuration</string>
+    <string name="payments">Payments</string>
+    <string name="configure_payouts">Please fill in the details of your Bank Account you wish to register for payouts</string>
+    <string name="bankName">bank name, where the account is held</string>
+    <string name="enter_bank_name">Enter bank name</string>
+    <string name="accountType">type of account</string>
+    <string name="enter_type_of_account">Enter type of account</string>
+    <string name="account_number">bank account number</string>
+    <string name="enter_account_number">Enter bank account number</string>
+    <string name="routing_number">Routing number</string>
+    <string name="enter_aba_number">Enter ABA number</string>
+    <string name="bank_account_name">bank account name</string>
+    <string name="enter_bank_account_name">Enter bank account name</string>
+    <string name="account_types">account types</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="camera_roll">Camera Roll</string>
+    <string name="full_name">full name</string>
+    <string name="mobile">mobile</string>
+    <string name="contact_person">contact person</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="business_name">Business Name</string>
+    <string name="add_insurance_doc">Add insurence document</string>
+    <string name="note">Note!</string>
+    <string name="orders">orders</string>
+    <string name="miles">Miles</string>
+    <string name="check_interent_connection">Network is disconnected.Please check......</string>
+    <string name="permisn_denied">Permission Denied.</string>
+    <string name="explantn_for_requstng_permissn">You have denied the permission to Access your Phone calls.
+        Without this permission you are unable to fulfill the delivery.Are you sure You want to deny this permission?</string>
+    <string name="accept_permission_in_settings"><![CDATA[You have denied the permission to get your current Location.To enable this permission,
+    Go to settings->Apps->FulFiller->Permissions and enable Location permission.]]></string>
+    <string name="message_cant_be_empty">Message can\'t be empty...</string>
+    <string name="send_msg_to_retailer">Send message to retailer</string>
+    <string name="not_matched">Total packages OR Total customers count does not matched..</string>
+    <string name="mandatory">All fields are mandatory.</string>
+    <string name="explantn_for_requstng_location_permissn">If you deny this permission you are unable to track the delivery items.Please Accept.</string>
+    <string name="visit_for_any_help">Visit online help for any question</string>
+    <string-array name="statesList">
+        <item>AL</item>
+        <item>ak</item>
+        <item>az</item>
+        <item>ar</item>
+        <item>ca</item>
+        <item>co</item>
+        <item>ct</item>
+        <item>de</item>
+        <item>fl</item>
+        <item>ga</item>
+        <item>hi</item>
+        <item>id</item>
+        <item>il</item>
+        <item>in</item>
+        <item>ia</item>
+        <item>ks</item>
+        <item>ky</item>
+        <item>la</item>
+        <item>me</item>
+        <item>md</item>
+        <item>ma</item>
+        <item>mi</item>
+        <item>mn</item>
+        <item>ms</item>
+        <item>mo</item>
+        <item>mt</item>
+        <item>ne</item>
+        <item>nv</item>
+        <item>nh</item>
+        <item>nj</item>
+        <item>nm</item>
+        <item>ny</item>
+        <item>nc</item>
+        <item>nd</item>
+        <item>oh</item>
+        <item>ok</item>
+        <item>or</item>
+        <item>pa</item>
+        <item>ri</item>
+        <item>sc</item>
+        <item>sd</item>
+        <item>tn</item>
+        <item>tx</item>
+        <item>ut</item>
+        <item>vt</item>
+        <item>va</item>
+        <item>wa</item>
+        <item>wv</item>
+        <item>wi</item>
+        <item>wy</item>
+
+    </string-array>
+
+</resources>

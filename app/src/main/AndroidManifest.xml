@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.biglynx.fulfiller">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- To access accounts configured on device -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- To use account credentials -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="com.biglynx.fulfiller.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name=".app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/appicon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppThemeNew">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Transparent.splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.InitialScreen"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/AppThemes" />
+        <activity android:name=".ui.BusinessRegistration" />
+        <activity android:name=".ui.SelectRegistration" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.StartDelivery"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.ExplinFulfiller"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.Invoice"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.ThankYou"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.CustomerAddress"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.VehicleList"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.AddVehicle"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.VehicleType"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.NotificatoinProximity"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.InterestDetails"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.CustomerSupport"
+            android:theme="@style/AppThemes" />
+        <activity
+            android:name=".ui.FulfillmentDetails"
+            android:theme="@style/AppThemes" />
+        <activity android:name=".ui.PaymentsActivity" />
+        <activity android:name=".ui.AccountTypes" />
+        <activity android:name=".ui.TermsActivity" />
+        <activity android:name=".ui.EditProfileActivity" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fbid" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_apikey" />
+
+        <uses-library android:name="com.google.android.maps" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9670afc70ca67113b8babc3ab9b71fdc758026d8" />
+
+        <activity android:name=".ui.CreateTicketActivity"></activity>
+    </application>
+
+</manifest>

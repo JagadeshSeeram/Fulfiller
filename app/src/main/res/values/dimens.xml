@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ACTV_height">35dp</dimen>
+    <dimen name="ACTV_width">300dp</dimen>
+
+    <dimen name="tool_bar_height">65dp</dimen>
+    <dimen name="gridview_image_height">120dp</dimen>
+    <dimen name="issueimage">180dp</dimen>
+    <dimen name="rightsidemenu">230dp</dimen>
+    <dimen name="reports">200dp</dimen>
+    <dimen name="textview_dp16">14sp</dimen>
+    <dimen name="textview_dp14">12sp</dimen>
+    <dimen name="textview_dp12">11sp</dimen>
+    <dimen name="textview_dp10">9sp</dimen>
+    <dimen name="textview_dp18">16sp</dimen>
+    <dimen name="textview_dp20">18sp</dimen>
+    <dimen name="textview_dp22">20sp</dimen>
+    <dimen name="textview_dp35">32sp</dimen>
+    <dimen name="textview_dp65">60sp</dimen>
+    <dimen name="issuedetails_item">120dp</dimen>
+    <dimen name="issuedetails_dialogue_item">80dp</dimen>
+    <dimen name="issuedetails_imageheight">250sp</dimen>
+    <dimen name="reportslistview">280sp</dimen>
+    <dimen name="mlas_sidebar_width">220sp</dimen>
+    <dimen name="navigation_icon_size">55dp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_26">26dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_105">105dp</dimen>
+    <dimen name="sp_11">11sp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+
+</resources>

@@ -1,0 +1,554 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:background="@color/colorPrimary"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5">
+
+            </View>
+
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/user_imv"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center|start"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/com_facebook_profile_picture_blank_square"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:id="@+id/name_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:text="test name"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/textview_dp14">
+
+                    </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                        android:id="@+id/customFontRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center|start|bottom"
+                        android:text="status: Activte"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/textview_dp12">
+
+                    </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/editProfile_iv"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="0.2"
+                    android:src="@drawable/edit_icon_whites" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!--header finished-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/vehicles_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/vehicles_ics"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Vehicles"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+
+                <LinearLayout
+                    android:id="@+id/notification_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/warehouse_proximity_ics"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Notificatoin approximity"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/payments_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/documents_ics"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Payments"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+
+                <LinearLayout
+                    android:id="@+id/rating_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/payment"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:id="@+id/customFontMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="review &amp; ratings"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/terms_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/terms_of_services"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:id="@+id/terms_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Terms of Services"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+
+                <LinearLayout
+                    android:id="@+id/policy_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/privacy_policys"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Privacy policy"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#EFEFEF"
+                    android:padding="6dp"></View>
+
+                <LinearLayout
+                    android:id="@+id/cservices_LI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="6dp"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/customer_services"
+                        android:visibility="visible"></ImageView>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.8"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="customer services"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+
+                    <ImageView
+
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/right_arrow"
+                        android:visibility="visible"></ImageView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/logout_LI"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/dp_10"
+                android:text="Logout"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_13"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/appcolor_border"
+                android:orientation="horizontal"
+                >
+            </com.biglynx.fulfiller.fonts.CustomFontMedium>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

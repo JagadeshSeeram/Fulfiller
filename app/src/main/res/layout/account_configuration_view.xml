@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    >
+
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_tv"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="@string/configure_payouts"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#000"
+        android:layout_alignParentTop="true"
+        android:gravity="center|start"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_tv"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_above="@+id/submit_tv"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:id="@+id/customFontBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/bankName"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/bank_name_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/enter_bank_name"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:paddingLeft="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accountType"
+                        android:textAllCaps="true"
+                        android:textColor="@color/header_color"
+                        android:textSize="@dimen/sp_13" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/account_type_ev"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/editext_bottom"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/enter_type_of_account"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:paddingLeft="0dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/account_type_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@drawable/right_arrow" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_number"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/account_number_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/enter_account_number"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:paddingLeft="0dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_5">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/routing_number"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/routing_number_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/enter_aba_number"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:paddingLeft="0dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bank_account_name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/bank_account_name_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/enter_bank_account_name"
+                    android:paddingLeft="0dp"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:id="@+id/submit_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/submit_button_bg"
+        android:gravity="center"
+        android:text="SUBMIT"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/sp_16" />
+</RelativeLayout>

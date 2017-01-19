@@ -1,0 +1,361 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_profile"></include>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_To_Refresh_Layout"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.35"
+                        android:background="#8DB32C"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:id="@+id/fulfillemts_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="#53681D"
+                            android:text="0"
+                            android:textSize="@dimen/sp_15"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="Fulfillments"
+                            android:textColor="#53681D"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontLight
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="(In Progress)"
+                            android:textColor="#53681D"
+                            android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.32"
+                        android:background="#3999D3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:id="@+id/earned_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="#53681D"
+                            android:text="$0.0"
+                            android:textSize="@dimen/sp_15"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="Earned"
+                            android:textAllCaps="true"
+                            android:textColor="#53681D"
+                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontLight
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="(current month)"
+                            android:textColor="#53681D"
+                            android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.32"
+                        android:background="#C1AE86"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:id="@+id/mildesdriven_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="#53681D"
+                            android:text="0.00"
+                            android:textSize="@dimen/sp_15"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontBold
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="Miles Driven"
+                            android:textAllCaps="true"
+                            android:textColor="#53681D"
+                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontLight
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="(current month)"
+                            android:textColor="#53681D"
+                            android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ready_fil_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start"
+                        android:src="@drawable/small_cab" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start"
+                        android:layout_toRightOf="@+id/imageView2"
+                        android:layout_toLeftOf="@+id/Switch"
+                        android:paddingLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:text=" Ready to fulfill orders"
+                        android:textAllCaps="true"
+                        android:textColor="@color/ready_fil_color"
+                        android:textSize="@dimen/textview_dp12">
+
+                    </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/Switch"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.11"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textOff=""
+                        android:textOn="" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:orientation="vertical"
+                        android:padding="0dp">
+
+                        <com.biglynx.fulfiller.fonts.CustomFontLight
+                            android:id="@+id/customFontBold3"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:paddingLeft="10dp"
+                            android:layout_gravity="center|start"
+                            android:background="@drawable/editext_bottom"
+                            android:gravity="center|start"
+                            android:text="Expressed Interests"
+                            android:textAllCaps="true"
+                            android:textColor="#000"
+                            android:letterSpacing="0.1"
+                            android:textSize="@dimen/textview_dp12">
+
+                        </com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ListView
+                                android:id="@+id/waitinglist_LI"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:divider="@color/seperator_color"
+                                android:dividerHeight="0.5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp">
+
+                            </ListView>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:id="@+id/noitems_wait_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:text="No Fulfillments"
+                                android:textColor="@color/header_grey"
+                                android:textSize="@dimen/textview_dp12"
+                                android:visibility="gone" />
+
+                        </FrameLayout>
+
+
+                        <com.biglynx.fulfiller.fonts.CustomFontMedium
+                            android:id="@+id/waiting_sm_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/spacing_small"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="See More"
+                            android:textColor="#0000FF"
+                            android:textSize="@dimen/textview_dp12" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="#FFFFFF"
+                        android:orientation="vertical">
+
+                        <com.biglynx.fulfiller.fonts.CustomFontLight
+                            android:id="@+id/customFontBold2"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:paddingLeft="10dp"
+                            android:layout_gravity="center|start"
+                            android:background="@drawable/editext_bottom"
+                            android:gravity="center|start"
+                            android:text="fulfillments In Progress"
+                            android:textAllCaps="true"
+                            android:textColor="#000"
+                            android:textSize="@dimen/textview_dp12">
+
+                        </com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ListView
+                                android:id="@+id/confirmlist_LI"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:divider="@color/seperator_color"
+                                android:dividerHeight="0.5dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp">
+
+                            </ListView>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:id="@+id/noitems_confirm_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="12dp"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="No Fulfillments"
+                                android:textColor="@color/header_grey"
+                                android:textSize="@dimen/textview_dp12"
+                                android:visibility="gone"
+                                />
+
+                        </FrameLayout>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontMedium
+                            android:id="@+id/complete_sm_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="See More"
+                            android:textColor="#0000FF"
+                            android:layout_marginBottom="@dimen/spacing_small"
+                            android:textSize="@dimen/textview_dp12" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

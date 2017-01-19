@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:layout_height="25dp" >
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="25dp"
+        android:id="@+id/background_img"
+        android:background="@drawable/marks_bg_orgs"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+            <com.biglynx.fulfiller.fonts.CustomFontBold
+                android:id="@+id/name_tv"
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:gravity="center|start"
+                android:text="retailername"
+                android:textColor="#FFFFFF"
+                android:singleLine="true"
+                android:textSize="10dp"
+                android:textStyle="bold" />
+
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:id="@+id/orders_tv"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center|start"
+            android:text="6 orders"
+            android:textColor="#FFFFFF"
+            android:textSize="9dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#EFEFEF"
+    android:layout_height="wrap_content">
+
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_insurance_doc"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dp_20"
+        android:id="@+id/type_tv"
+        android:layout_gravity="center"
+        android:textSize="@dimen/textview_dp16"
+        android:gravity="center">
+    </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/blueborder"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/note"
+            android:textColor="@color/dialog_text"
+            android:layout_gravity="center|top"
+            android:textSize="@dimen/sp_13"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+        <com.biglynx.fulfiller.fonts.CustomFontMedium
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Please use Desktop to upload documents other than image format like PDF"
+            android:textColor="@color/dialog_text"
+            android:layout_gravity="center|start"
+            android:textSize="@dimen/sp_13"
+            android:gravity="center|start"
+            android:id="@+id/customFontMedium2">
+
+        </com.biglynx.fulfiller.fonts.CustomFontMedium>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="@dimen/dp_80"
+            android:id="@+id/camera_imv"
+            android:src="@drawable/camera_ics"/>
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:text="Or"
+            android:textColor="@color/or_color"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textview_dp14"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="80dp"
+            android:id="@+id/gallery_Imv"
+            android:src="@drawable/cam_rolls"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="wrap_content">
+
+        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="Take a Photo"
+            android:textColor="#868686"
+            android:id="@+id/takephoto_tv"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textview_dp12"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textview_dp14"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="Camera roll"
+            android:textColor="#868686"
+            android:layout_marginTop="0dp"
+            android:id="@+id/gallery_tv"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textview_dp12"
+            android:gravity="center"
+            >
+        </com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#868686"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="40dp">
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:text="Cancel"
+            android:id="@+id/cancle_tv"
+            android:textColor="@color/cancel"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_13"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#868686"></View>
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:text="Ok"
+            android:textColor="@color/cancel"
+            android:id="@+id/ok_tv"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_13"
+            android:gravity="center">
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+    </LinearLayout>
+</LinearLayout>

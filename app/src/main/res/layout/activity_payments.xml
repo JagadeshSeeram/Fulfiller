@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.biglynx.fulfiller.ui.PaymentsActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:local="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dealtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/icon_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:src="@drawable/ic_ab_back" />
+
+            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                android:id="@+id/configuration_tv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_weight="0.35"
+                android:background="@drawable/lef_roundedcorner"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:text="@string/configuration"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_13">
+
+            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                android:id="@+id/payments_tv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp_50"
+                android:layout_weight="0.35"
+                android:background="@drawable/lef_roundedcorner_trans"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:text="@string/payments"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_13">
+
+            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_payouts"
+        >
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_search"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_10">
+
+            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:padding="8dp"
+                android:text="@string/setup_proximity_distance"
+                android:textColor="#787878"
+                android:textSize="@dimen/textview_dp12" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/appcolor_border"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:id="@+id/bid_text_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="setup your proximity distance"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textview_dp16" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/enter_bid_ev"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/ef_border"
+                        android:hint=""
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:textColor="#000"
+                        android:textColorHint="#D1D1D1" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:gravity="center|start"
+                        android:padding="8dp"
+                        android:text="Miles"
+                        android:textAllCaps="false"
+                        android:textColor="#787878"
+                        android:textSize="@dimen/textview_dp12" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_submit_proximity_distance"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/submit_button_bg"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/dp_10"
+            />
+    </RelativeLayout>
+</LinearLayout>

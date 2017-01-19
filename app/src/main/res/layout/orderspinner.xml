@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#EFEFEF"
+    android:padding="5dp">
+
+    <com.biglynx.fulfiller.fonts.CustomFontMedium
+        android:id="@+id/name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:gravity="center|start"
+        android:maxLines="1"
+        android:padding="2dp"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+    <com.biglynx.fulfiller.fonts.CustomFontMedium
+        android:id="@+id/pos_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:gravity="center|start"
+        android:maxLines="1"
+        android:padding="2dp"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:textSize="@dimen/textview_dp16"
+        android:visibility="gone"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+</LinearLayout>

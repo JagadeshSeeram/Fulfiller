@@ -1,0 +1,392 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EFEFEF"
+    >
+    <include layout="@layout/toolbar_search"></include>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/companylogo_imv"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/cougar_logo"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center|start"
+                    android:scaleType="fitXY"></ImageView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="0.6"
+                    android:orientation="vertical">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center|start"
+                        android:textColor="#000"
+                        android:textSize="@dimen/sp_13"
+                        android:singleLine="true"
+                        android:textAllCaps="true"
+                        android:text="companyname"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/company_tv"
+                        android:layout_height="wrap_content" />
+
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:id="@+id/pickup_loc_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="0dp"
+                        android:gravity="center|start"
+                        android:textColor="#7B7B7B"
+                        android:maxLines="2"
+                        android:text="address"
+                        android:textSize="@dimen/textview_dp14" />
+
+                </LinearLayout>
+
+                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                    android:id="@+id/date_tv"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.4"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top|end"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="top|end"
+                    android:textColor="#7B7B7B"
+                    android:maxLines="2"
+                    android:text="date"
+                    android:textSize="@dimen/sp_13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#A2A2A2"
+                    android:orientation="horizontal">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center"
+                        android:gravity="center|start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        android:singleLine="true"
+                        android:text="Description"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="match_parent" />
+
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center"
+                        android:gravity="center|end"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        android:singleLine="true"
+                        android:text="amouont"
+                        android:textAllCaps="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_height="match_parent" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_gravity="center"
+                        android:gravity="center|start"
+                        android:textColor="#7B7B7B"
+                        android:textSize="@dimen/sp_12"
+                        android:maxLines="1"
+                        android:text="fulfillment id"
+                        android:id="@+id/fulfillment_id_tv"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="match_parent" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical|right"
+                        android:paddingRight="@dimen/dp_20"
+                        android:textColor="#408007"
+                        android:textSize="@dimen/sp_12"
+                        android:maxLines="1"
+                        android:id="@+id/amount_tv"
+                        android:textAllCaps="true"
+                        android:text="$0.00"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:textColor="#7B7B7B"
+                    android:textSize="@dimen/sp_12"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:text="orders"
+                    android:id="@+id/orders_tv"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:textColor="#7B7B7B"
+                    android:textSize="@dimen/textview_dp12"
+                    android:singleLine="true"
+                    android:text="Fixed Price"
+                    android:id="@+id/fixedprice_tv"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#7B7B7B"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_gravity="center"
+                        android:gravity="center|end"
+                        android:textColor="#7B7B7B"
+                        android:textSize="@dimen/textview_dp12"
+                        android:singleLine="true"
+                        android:text="subtotal"
+                        android:textAllCaps="true"
+                        android:layout_height="match_parent" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="right"
+                        android:gravity="right|center_vertical"
+                        android:textColor="#408007"
+                        android:textSize="@dimen/textview_dp14"
+                        android:singleLine="true"
+                        android:id="@+id/subtotal_tv"
+                        android:textAllCaps="true"
+                        android:layout_height="match_parent"
+                        android:text="$0.00"
+                        android:layout_marginRight="@dimen/dp_20"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_gravity="center"
+                        android:gravity="center|end"
+                        android:textColor="#7B7B7B"
+                        android:textSize="@dimen/textview_dp12"
+                        android:singleLine="true"
+                        android:text="service fee(10%)"
+                        android:textAllCaps="true"
+                        android:layout_height="match_parent" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="right"
+                        android:gravity="right|center_vertical"
+                        android:textColor="#EF4C51"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:textSize="@dimen/textview_dp14"
+                        android:singleLine="true"
+                        android:id="@+id/servicefee_tv"
+                        android:textAllCaps="true"
+                        android:layout_height="match_parent" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_gravity="center"
+                        android:gravity="center|end"
+                        android:textColor="#7B7B7B"
+                        android:textSize="@dimen/textview_dp12"
+                        android:singleLine="true"
+                        android:text="total payout"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="match_parent" />
+
+                    <com.biglynx.fulfiller.fonts.CustomFontMedium
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_gravity="right"
+                        android:gravity="right|center_vertical"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:textColor="#408007"
+                        android:textSize="@dimen/textview_dp14"
+                        android:singleLine="true"
+                        android:id="@+id/totalpay_tv"
+                        android:textAllCaps="true"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--price type details-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="0dp"
+                        android:letterSpacing="0.2"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="bid expiration time"
+                        android:id="@+id/bid_text_tv"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/textview_dp14" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/ef_border"
+                        android:id="@+id/bidtime_ev"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#000"
+                        android:textSize="@dimen/textview_dp14"
+                        android:textColorHint="#7B7B7B"
+                        android:text="10 mins"
+                        android:layout_marginTop="10dp"
+                        android:editable="false"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+
+                </LinearLayout>
+
+
+
+                <Button
+                    android:id="@+id/bid_now_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="15dp"
+                    android:padding="10dp"
+                    android:background="@drawable/submit_button_bg"
+                    android:text="@string/submitbud"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/textview_dp20" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

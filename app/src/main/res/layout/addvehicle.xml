@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_search"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_10">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:id="@+id/customFontBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/vehicletype"
+                        android:textAllCaps="true"
+                        android:textColor="@color/header_color"
+                        android:textSize="@dimen/sp_13" />
+
+                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                        android:id="@+id/vehicle_type_ev"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/editext_bottom"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/choosevehicletype"
+                        android:maxLines="1"
+                        android:paddingLeft="0dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:textSize="@dimen/sp_13"
+                        android:paddingBottom="@dimen/spacing_small"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_vehicleType_arrow"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@drawable/right_arrow" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vehicleyear"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/vehicle_year_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/vehicleyearhint"
+                    android:paddingLeft="0dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13"
+                    android:paddingBottom="@dimen/spacing_small" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/licenecplate"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/licence_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:hint="@string/enterliceneplatenumber"
+                    android:paddingLeft="0dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13"
+                    android:paddingBottom="@dimen/spacing_small" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/dp_10"
+                    >
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicleinsurence"
+                        android:textAllCaps="true"
+                        android:textColor="@color/header_color"
+                        android:textSize="@dimen/sp_13" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/vehilceinsur_ev_img"
+                            android:layout_width="@dimen/dp_40"
+                            android:layout_height="@dimen/dp_40"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
+
+                        <com.biglynx.fulfiller.utils.EditTextFontLight
+                            android:id="@+id/vehilceinsur_ev"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/editext_bottom"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/addvehicleinsurence"
+                            android:paddingLeft="0dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_color_hint_login"
+                            android:textSize="@dimen/sp_13"
+                            android:paddingBottom="@dimen/spacing_small" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_insurence_attachment"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@drawable/attachment" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_10">
+
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicleregistration"
+                        android:textAllCaps="true"
+                        android:textColor="@color/header_color"
+                        android:textSize="@dimen/sp_13" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/vehilcereg_ev_img"
+                            android:layout_width="@dimen/dp_40"
+                            android:scaleType="centerCrop"
+                            android:layout_height="@dimen/dp_40"
+                            android:visibility="gone" />
+
+                        <com.biglynx.fulfiller.utils.EditTextFontLight
+                            android:id="@+id/vehilcereg_ev"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/editext_bottom"
+                            android:focusable="false"
+                            android:hint="@string/addvehiclereg"
+                            android:paddingLeft="0dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_color_hint_login"
+                            android:textSize="@dimen/sp_13"
+                            android:paddingBottom="@dimen/spacing_small" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_registration_attachment"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@drawable/attachment" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:id="@+id/submit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/submit_button_bg"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+
+</LinearLayout>

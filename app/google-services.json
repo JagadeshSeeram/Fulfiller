@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "684384173280",
+    "project_id": "biglynxfulfiller"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684384173280:android:554d4aa118ee9709",
+        "android_client_info": {
+          "package_name": "com.biglynx.fulfiller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684384173280-u8l3kfbckpg7rsbm2bs1tgjt09j60ej9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biglynx.fulfiller",
+            "certificate_hash": "97BDC6BD59462C74B5B3464846C972F16FA8727F"
+          }
+        },
+        {
+          "client_id": "684384173280-t5njkeqg3oma7v7eoaupr7qrgl1i6900.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1WkwZ6DWeIBj8QJDwgNGbYM3ISNivJE4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
