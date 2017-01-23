@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             >
             <RelativeLayout
-                android:layout_width="110dp"
+                android:layout_width="115dp"
                 android:layout_height="20dp"
                 android:background="@drawable/ef_border"
                 android:id="@+id/layout_spinner_status"
@@ -77,8 +77,9 @@
                     >
                 </Spinner>
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/spinner_arrow"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_10"
@@ -105,13 +106,13 @@
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginTop="@dimen/dp_5"
         >
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:id="@+id/address_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_alignParentLeft="true"
@@ -121,13 +122,14 @@
             android:text="address"
             android:textColor="#787878"
             android:layout_toLeftOf="@+id/copy_tv"
-            android:maxLines="1"
+            android:maxLines="3"
+            android:padding="3dp"
             android:textSize="@dimen/textview_dp14">
         </com.biglynx.fulfiller.fonts.CustomFontBold>
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:id="@+id/copy_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:background="#787878"
@@ -142,12 +144,12 @@
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:id="@+id/openinmap_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:maxLines="1"
             android:padding="@dimen/dp_5"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:background="#787878"
             android:text="Open in maps"
             android:textColor="#FFFFFF"

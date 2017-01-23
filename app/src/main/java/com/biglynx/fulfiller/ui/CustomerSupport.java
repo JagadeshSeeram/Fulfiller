@@ -1,5 +1,6 @@
 package com.biglynx.fulfiller.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,7 @@ public class CustomerSupport extends AppCompatActivity implements View.OnClickLi
 
     ImageView icon_back;
     TextView companyname_tv;
+    private TextView createTicket_tv,viewTicket_tv;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customersupport);
@@ -26,7 +28,11 @@ public class CustomerSupport extends AppCompatActivity implements View.OnClickLi
         icon_back = (ImageView) findViewById(R.id.icon_back);
         icon_back.setVisibility(View.VISIBLE);
         companyname_tv.setText("Customer Support");
+        createTicket_tv = (TextView) findViewById(R.id.create_ticket_tv);
+        viewTicket_tv = (TextView) findViewById(R.id.view_ticket_tv);
 
+        createTicket_tv.setOnClickListener(this);
+        viewTicket_tv.setOnClickListener(this);
         icon_back.setOnClickListener(this);
     }
 
@@ -35,6 +41,11 @@ public class CustomerSupport extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.icon_back:
                 finish();
+                break;
+            case R.id.create_ticket_tv:
+                startActivity(new Intent(CustomerSupport.this,CreateTicketActivity.class));
+                break;
+            case R.id.view_ticket_tv:
                 break;
         }
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.adapter.VehiclesAdapter;
+import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.Vehicles;
 import com.biglynx.fulfiller.network.HttpAdapter;
 import com.biglynx.fulfiller.network.NetworkOperationListener;
@@ -44,6 +45,8 @@ public class VehicleType extends AppCompatActivity implements View.OnClickListen
     ImageView icon_back, toolbar_end_imv;
     TextView companyname_tv;
     ListView listView;
+    private ArrayList<SupportCategoryModel> categoriesList;
+    private ArrayAdapter<String> myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class VehicleType extends AppCompatActivity implements View.OnClickListen
                 String value = (String) adapter.getItemAtPosition(position);
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", value);
+                if (categoriesList != null)
+                returnIntent.putExtra("categoryID",String.valueOf(categoriesList.get(position).SupportCategoryId));
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -69,16 +74,27 @@ public class VehicleType extends AppCompatActivity implements View.OnClickListen
         icon_back = (ImageView) findViewById(R.id.icon_back);
 
         icon_back.setVisibility(View.VISIBLE);
+        companyname_tv.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
-        companyname_tv.setText("VEHICLE TYPE");
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, R.layout.mytextview);
 
-        myAdapter.add("Car");
-        myAdapter.add("SUV");
-        myAdapter.add("Pickup Van");
-        myAdapter.add("Commercial cargo van");
-        myAdapter.add("commercial heavy truck");
-        myAdapter.add("Other");
+        if (getIntent().hasExtra("categoriesList")){
+           categoriesList = getIntent().getParcelableArrayListExtra("categoriesList");
+        }
+        myAdapter = new ArrayAdapter<String>(this, R.layout.mytextview);
+        if (categoriesList == null) {
+            companyname_tv.setText("VEHICLE TYPE");
+            myAdapter.add("Car");
+            myAdapter.add("SUV");
+            myAdapter.add("Pickup Van");
+            myAdapter.add("Commercial cargo van");
+            myAdapter.add("commercial heavy truck");
+            myAdapter.add("Other");
+        }else {
+            companyname_tv.setText("SUPPORT CATEGORIES");
+            for (int i=0;i<categoriesList.size();i++){
+                myAdapter.add(categoriesList.get(i).CategoryTitle);
+            }
+        }
 
 
         listView = (ListView) findViewById(R.id.listview);

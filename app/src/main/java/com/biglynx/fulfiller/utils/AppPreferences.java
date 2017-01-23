@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.biglynx.fulfiller.models.AccountConfigModel;
 import com.biglynx.fulfiller.models.SignInResult;
 
 import org.json.JSONException;
@@ -45,22 +46,12 @@ public class AppPreferences {
         localEditor.commit();
     }
 
-    public void setAccountInfo(HashMap<String,String> hashMap){
+    public void setAccountInfo(AccountConfigModel configModel){
         Editor localEditor = this.mPrefs.edit();
-        if (hashMap == null)
+        if (configModel == null)
             localEditor.putString(ACCOUNt_INFO, "");
         else {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("BankName",hashMap.get("BankName"));
-                jsonObject.put("AccountType",hashMap.get("AccountType"));
-                jsonObject.put("AccountNumber",hashMap.get("AccountNumber"));
-                jsonObject.put("RoutingNumber",hashMap.get("RoutingNumber"));
-                jsonObject.put("AccountName",hashMap.get("AccountName"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            localEditor.putString(ACCOUNt_INFO, jsonObject.toString());
+            localEditor.putString(ACCOUNt_INFO, configModel.toJson().toString());
         }
         localEditor.commit();
     }

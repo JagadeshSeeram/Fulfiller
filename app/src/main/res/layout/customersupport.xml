@@ -67,9 +67,10 @@
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/create_ticket_tv"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dp_12"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/sign_in_button_bg"
                     android:gravity="center"
                     android:letterSpacing="0.05"
                     android:padding="@dimen/dp_5"
@@ -81,9 +82,10 @@
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/view_ticket_tv"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:background="#282F37"
+                    android:background="@drawable/submit_button_bg"
                     android:gravity="center"
                     android:letterSpacing="0.02"
                     android:padding="@dimen/dp_5"

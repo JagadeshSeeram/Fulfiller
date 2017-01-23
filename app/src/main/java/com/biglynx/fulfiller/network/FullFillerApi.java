@@ -10,6 +10,7 @@ import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
 import com.biglynx.fulfiller.models.SignInResult;
+import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.UserProfile;
 import com.biglynx.fulfiller.models.Vehicles;
 
@@ -71,7 +72,7 @@ public interface FullFillerApi {
     Call<Vehicles> addVehicleCall(@Body HashMap hashMap);
 
     @POST(HttpAdapter.DIRECTDEPOSIT)
-    Call<AccountConfigModel> accountConfiguration(@Body HashMap<String,String> hashMap);
+    Call<AccountConfigModel> accountConfiguration(@Body AccountConfigModel configModel);
 
     @GET(HttpAdapter.PAYOUTS)
     Call<List<PaymentDetailsModel>> payouts();
@@ -88,4 +89,16 @@ public interface FullFillerApi {
 
     @POST(HttpAdapter.UPDATE_DELIVERY_STATUS)
     Call<InterestDTO> updateDeliveryStatus(@Body HashMap<String,Object> hashMap);
+
+    @GET(HttpAdapter.DIRECTDEPOSIT+"/"+"{fulfillerID}")
+    Call<AccountConfigModel> getAccountDetails(@Path("fulfillerID") String fulfillerID);
+
+    @GET(HttpAdapter.GET_SUPPORT_CATEGORIES)
+    Call<ArrayList<SupportCategoryModel>> getSupportCategories(@Query("ProductCode") String productCode);
+
+    @POST(HttpAdapter.CREATE_TICKET)
+    Call<SupportCategoryModel> createTicket(@Body HashMap<String,String> hashMap);
+
+    @GET(HttpAdapter.CREATE_TICKET)
+    Call<ArrayList<SupportCategoryModel>> getAllTickets(@Query("ProductCode") String productCode);
 }

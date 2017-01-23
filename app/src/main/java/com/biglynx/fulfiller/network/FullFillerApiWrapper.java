@@ -11,6 +11,7 @@ import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
 import com.biglynx.fulfiller.models.SignInResult;
+import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.UserProfile;
 import com.biglynx.fulfiller.models.Vehicles;
 
@@ -189,12 +190,12 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<AccountConfigModel> accountConfigurationCall(final String authToken, HashMap hashMap,
+    public Call<AccountConfigModel> accountConfigurationCall(final String authToken, AccountConfigModel configModel,
                                                              Callback<AccountConfigModel> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(hashMap);
+        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(configModel);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;
@@ -248,6 +249,49 @@ public class FullFillerApiWrapper {
             createRetrofitWithHeader(authToken);
         }
         Call<InterestDTO> call = fullFillerApiHeader.updateDeliveryStatus(hashMap);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<AccountConfigModel> getAccountDetailsCall(String authToken,String fulfillerID,Callback<AccountConfigModel> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<AccountConfigModel> call = fullFillerApiHeader.getAccountDetails(fulfillerID);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<ArrayList<SupportCategoryModel>> getSupportCategoriesCall(String authToken,String productCode,
+                                                                          Callback<ArrayList<SupportCategoryModel>> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getSupportCategories(productCode);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<SupportCategoryModel> createTicketCall(String authToken, HashMap<String,String> hashMap,
+                                                     Callback<SupportCategoryModel> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<SupportCategoryModel> call = fullFillerApiHeader.createTicket(hashMap);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<ArrayList<SupportCategoryModel>> getAllTicketsCall(String authToken,String productCode,
+                                                                          Callback<ArrayList<SupportCategoryModel>> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getSupportCategories(productCode);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;

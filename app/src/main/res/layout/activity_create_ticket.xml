@@ -12,31 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/white"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:id="@+id/supportCategory_LI"
+            android:layout_marginTop="10dp"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
-                    android:id="@+id/customFontBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/vehicletype"
+                    android:text="@string/support_category"
                     android:textAllCaps="true"
                     android:textColor="@color/header_color"
                     android:textSize="@dimen/sp_13" />
 
                 <com.biglynx.fulfiller.utils.EditTextFontLight
-                    android:id="@+id/vehicle_type_ev"
+                    android:id="@+id/supportCategory_type_ev"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -45,7 +45,7 @@
                     android:editable="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="@string/choosevehicletype"
+                    android:hint="@string/support_category_type"
                     android:maxLines="1"
                     android:paddingLeft="0dp"
                     android:singleLine="true"
@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/iv_vehicleType_arrow"
+                android:id="@+id/iv_supportCategoryType_arrow"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:layout_alignParentRight="true"
@@ -65,5 +65,93 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:src="@drawable/right_arrow" />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/selectIssue_LI"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_issue"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.utils.EditTextFontLight
+                    android:id="@+id/select_issue_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/editext_bottom"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/select_issue"
+                    android:maxLines="1"
+                    android:paddingLeft="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint_login"
+                    android:textSize="@dimen/sp_13"
+                    android:paddingBottom="@dimen/spacing_small"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_selectIssue_arrow"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/right_arrow" />
+        </RelativeLayout>
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/describe_issue"
+            android:textColor="@color/header_color"
+            android:textAllCaps="true"
+            android:textSize="@dimen/sp_13"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            />
+        <com.biglynx.fulfiller.utils.EditTextFontMedium
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:id="@+id/description_ev"
+            android:hint="Enter your description"
+            android:gravity="start|top"
+            android:layout_margin="@dimen/dp_10"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/black"
+            android:background="@drawable/ef_border"
+            android:padding="@dimen/dp_7"
+            />
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/create_ticket_tv"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/submit_button_bg"
+            android:gravity="center"
+            android:letterSpacing="0.02"
+            android:padding="@dimen/dp_10"
+            android:text="create ticket"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/sp_14"
+            android:layout_marginBottom="@dimen/dp_10"
+            />
     </LinearLayout>
 </LinearLayout>

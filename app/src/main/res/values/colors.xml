@@ -34,4 +34,5 @@
     <color name="or_color">#868686</color>
     <color name="cancel">#0079FE</color>
     <color name="grey_shade_1">#555555</color>
+    <color name="capture_view_bg">#E1E1E1</color>
 </resources>

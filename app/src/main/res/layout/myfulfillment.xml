@@ -103,29 +103,35 @@
             android:textSize="@dimen/textview_dp14"
             ></com.biglynx.fulfiller.fonts.CustomFontRegular>
     </LinearLayout>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_To_Refresh_Layout"
+        android:background="@color/window_background"
         >
-        <ListView
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fulfiment_lv"
-            android:divider="#353944"
-            android:padding="@dimen/dp_10"
-            android:background="#FFFFFF"
-            android:visibility="visible"
-            android:dividerHeight="0.1dp">
-        </ListView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <com.biglynx.fulfiller.fonts.CustomFontBold
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="#000"
-        android:id="@+id/nofulfillments_tv"
-        android:text="No Fulfillments"/>
-
+            android:id="@+id/swipe_To_Refresh_Layout"
+            >
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fulfiment_lv"
+                android:divider="#353944"
+                android:padding="@dimen/dp_10"
+                android:background="#FFFFFF"
+                android:visibility="visible"
+                android:dividerHeight="0.1dp">
+            </ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#000"
+            android:id="@+id/nofulfillments_tv"
+            android:visibility="gone"
+            android:text="No Fulfillments"/>
+    </RelativeLayout>
 </LinearLayout>

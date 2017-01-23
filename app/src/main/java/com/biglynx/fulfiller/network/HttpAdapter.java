@@ -42,8 +42,11 @@ public class HttpAdapter {
     public static final String DASHBOARD_NEW = BASE_URL + "dashboard/";
     public static final String PAYOUTS = BASE_URL + "payouts";
     public static final String START_DELIVERY = BASE_URL + "startdelivery/";
-    public static final String FULFILLMENT_PROGRESS_MESSAGE = BASE_URL + "fulfillmentprogressmessage/";
+    public static final String FULFILLMENT_PROGRESS_MESSAGE = BASE_URL + "fulfillmentprogressmessage";
     public static final String UPDATE_DELIVERY_STATUS = BASE_URL + "updatedeliverystatus?";
+    public static final String SUPPORT_CATEGORIES = BASE_URL + "";
+    public static final String GET_SUPPORT_CATEGORIES = BASE_URL + "SupportRequest/GetCategories?";
+    public static final String CREATE_TICKET = BASE_URL + "SupportRequest?";
 
 
     // extendexpiration

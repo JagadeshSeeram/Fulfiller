@@ -46,13 +46,10 @@ import com.biglynx.fulfiller.app.MyApplication;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
-import com.biglynx.fulfiller.network.NetworkOperationListener;
-import com.biglynx.fulfiller.network.NetworkResponse;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.CaptureSignatureView;
 import com.biglynx.fulfiller.utils.Common;
-import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -75,6 +72,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -111,7 +109,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private static int deviceswidth;
     private EditText confirm_code_ev, no_ofpackages_ev, no_ofcustomers_ev;
     private ListView orderlist_LI;
-    private InterestDTO interest, responseInterestObj;
+    private InterestDTO responseInterestObj;
     private StartDeliveryAdapter startDeliveryAdapter;
     private SimpleDateFormat simpleDateFormat;
     private TextView fulfillmentid_tv;
@@ -119,7 +117,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private RecyclerView.LayoutManager mLayoutManager;
     private MessagesAdapter adapter;
     private FullFillerApiWrapper apiWrapper;
-    private boolean newMsgSent = true;
     private EditText replyText_ev;
     private TextView reply_tv, retailerName_tv;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -133,24 +130,33 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private static String responseString;
     private CaptureSignatureView signView;
     private static String blobId;
+    private LinearLayout confirm_delivery_LI;
+    private String FULFILLER_ID;
+    private String FULFILLER_NAME;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
         // To make activity full screen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_delivery);
+        getpermissions();
+        getScreenResolution(this);
 
         initViews();
+
         progressStatus = 0;
+        if (getIntent().getExtras() != null){
+            responseInterestObj = (InterestDTO) getIntent().getExtras().getParcelable("responseInterest");
+            FULFILLER_ID = getIntent().getExtras().getString("fulfillerId");
+            if (getIntent().hasExtra("FulfillerName"))
+                FULFILLER_NAME = getIntent().getExtras().getString("FulfillerName");
+        }
+        if (responseInterestObj != null){
+            buildUI(responseInterestObj);
+            updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
 
-        if (Common.isNetworkAvailable(this)) {
-
-            Common.showDialog(this);
-            getpermissions();
-            Log.d("resolution", "" + getScreenResolution(this));
-
-
-        } else
-            AppUtil.toast(StartDelivery.this, getString(R.string.check_interent_connection));
+            callGetMessagesAPI(true);
+        }
     }
 
     private void getpermissions() {
@@ -159,8 +165,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         if (sdkVersion >= 23) {
             // Getting permissins to Read from External Storage
             getPermissionsToReadPhoneState();
-        } else
-            callServices(true);
+        }
     }
 
     public void getPermissionsToReadPhoneState() {
@@ -218,7 +223,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             }
         } else {
             //Permission already granted
-            callServices(true);
         }
 
     }
@@ -230,7 +234,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         if (requestCode == READ_PHONE_STATE_PERMISSION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Granted", Toast.LENGTH_SHORT).show();
-                callServices(true);
             } else {
                 Toast.makeText(this, "Denied", Toast.LENGTH_SHORT).show();
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_PHONE_STATE)) {
@@ -255,26 +258,22 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     }
 
     //StartDelivery API
-    private void callServices(final boolean updateUI) {
+    private void callStartDeliveryService(final boolean updateUI) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        if (getIntent().hasExtra("fulfillerid")) {
-            hashMap.put("fulfillerid", getIntent().getExtras().get("fulfillerid"));
-            hashMap.put("confirmationcode", getIntent().getExtras().get("confirmationcode"));
-            hashMap.put("name", getIntent().getExtras().get("name"));
-            hashMap.put("latitude", getIntent().getExtras().get("latitude"));
-            hashMap.put("longitude", getIntent().getExtras().get("longitude"));
-        } else {
-            hashMap.put("fulfillerid", AppUtil.ifNotEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")) ?
-                    AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId") : "");
-            hashMap.put("confirmationcode", AppUtil.ifNotEmpty(interest.Fulfillments.FulfillerInterests.ConfirmationCode) ?
-                    interest.Fulfillments.FulfillerInterests.ConfirmationCode : "");
-            hashMap.put("name", AppUtil.ifNotEmpty(interest.Fulfillments.LocationContactPerson) ?
-                    interest.Fulfillments.LocationContactPerson : "");
-            hashMap.put("latitude", AppUtil.ifNotEmpty(String.valueOf(interest.Fulfillments.PickUpMapLatitude)) ?
-                    interest.Fulfillments.PickUpMapLatitude : "");
-            hashMap.put("longitude", AppUtil.ifNotEmpty(String.valueOf(interest.Fulfillments.PickUpMapLongitude)) ?
-                    interest.Fulfillments.PickUpMapLongitude : "");
-        }
+
+        hashMap.put("fulfillerid", AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
+                AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId") : FULFILLER_ID);
+        if (responseInterestObj.Fulfillments.DeliveryPartner != null)
+            hashMap.put("confirmationcode", responseInterestObj.Fulfillments.DeliveryPartner.ConfirmationCode);
+        else
+            hashMap.put("confirmationcode", responseInterestObj.Fulfillments.DeliveryPerson.ConfirmationCode);
+        hashMap.put("name", AppUtil.ifNotEmpty(responseInterestObj.Fulfillments.LocationContactPerson) ?
+                responseInterestObj.Fulfillments.LocationContactPerson : "");
+        hashMap.put("latitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLatitude)) ?
+                responseInterestObj.Fulfillments.PickUpMapLatitude : "");
+        hashMap.put("longitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLongitude)) ?
+                responseInterestObj.Fulfillments.PickUpMapLongitude : "");
+
         hashMap.put("deviceid", getDeviceId());
         apiWrapper.startDeliveryCall(AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
                         AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("AuthNToken") : "",
@@ -288,6 +287,9 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                             if (updateUI) {
                                 buildUI(responseInterestObj);
                                 updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
+                            }else {
+                                checkIfAllOrdersAllDelivered(responseInterestObj);
+                                startDeliveryAdapter.setItemsList(responseInterestObj.Fulfillments.Orders);
                             }
                         } else {
                             try {
@@ -296,10 +298,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
-                            if (interest == null) {
-                                startActivity(new Intent(StartDelivery.this, LoginActivity.class));
-                                return;
-                            }
+
                             AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                     }
@@ -308,16 +307,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                     public void onFailure(Call<InterestDTO> call, Throwable t) {
                         Common.disMissDialog();
                         AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
-                        if (interest == null) {
-                            startActivity(new Intent(StartDelivery.this, LoginActivity.class));
-                            return;
-                        }
                     }
                 });
-
-        if (newMsgSent) {
-            callGetMessagesAPI(true);
-        }
     }
 
     public void callUpdateDeliverySignLayout(String orderId) {
@@ -345,9 +336,9 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                         if (response.isSuccessful()) {
                             updateProgress(deliveryStatusId);
                             if (deliveryStatusId == 4 || deliveryStatusId == 5)
-                                callServices(false);
+                                callStartDeliveryService(false);
                             if (deliveryStatusId == 6) {
-                                if (interest != null)
+                                if (FULFILLER_ID == null)
                                     finishActivity();
                                 else {
                                     startActivity(new Intent(StartDelivery.this, LoginActivity.class));
@@ -380,24 +371,25 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
     public HashMap<String, Object> getDeliveryStatusDetails() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        if (getIntent().hasExtra("fulfillerid")) {
-            hashMap.put("fulfillerid", getIntent().getExtras().get("fulfillerid"));
-        } else {
-            hashMap.put("fulfillerid", AppUtil.ifNotEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")) ?
-                    AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId") : "");
-        }
+
+        hashMap.put("fulfillerid", AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
+                AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")
+                : FULFILLER_ID );
         if (responseInterestObj.Fulfillments.DeliveryPartner != null)
             hashMap.put("confirmationcode", responseInterestObj.Fulfillments.DeliveryPartner.ConfirmationCode);
         else
             hashMap.put("confirmationcode", responseInterestObj.Fulfillments.DeliveryPerson.ConfirmationCode);
 
-        if (AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
-            if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName")))
-                hashMap.put("FriendlyName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName"));
-        } else {
-            if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
-                hashMap.put("FriendlyName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
-        }
+        if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null) {
+            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+                if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName")))
+                    hashMap.put("FriendlyName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName"));
+            } else {
+                if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
+                    hashMap.put("FriendlyName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
+            }
+        }else
+            hashMap.put("FriendlyName",FULFILLER_NAME);
         hashMap.put("GeoLocationLatitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLatitude)) ?
                 responseInterestObj.Fulfillments.PickUpMapLatitude : "");
         hashMap.put("GeoLocationLongitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLongitude)) ?
@@ -419,6 +411,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
     private void initViews() {
         apiWrapper = new FullFillerApiWrapper();
+
         icon_back = (ImageView) findViewById(R.id.icon_back);
         subway_arrow_imv = (ImageView) findViewById(R.id.subway_arrow_imv);
         trackimage_imv = (ImageView) findViewById(R.id.trackimage_imv);
@@ -433,6 +426,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         pickedup_tv = (TextView) findViewById(R.id.pickedup_tv);
         delivered_tv = (TextView) findViewById(R.id.delivered_tv);
         orderlist_LI = (ListView) findViewById(R.id.orderlist_LI);
+        startDeliveryAdapter = new StartDeliveryAdapter(this);
+        orderlist_LI.setAdapter(startDeliveryAdapter);
         //confirm delivery intilizations
         confirm_pickup_btn_tv = (TextView) findViewById(R.id.confirm_pickup_btn_tv);
         no_ofpackages_ev = (EditText) findViewById(R.id.no_ofpackages_ev);
@@ -441,6 +436,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         time_tv = (TextView) findViewById(R.id.time_tv);
         //orders to customer
         confirm_deli_tv = (TextView) findViewById(R.id.confirm_deli_tv);
+        confirm_delivery_LI = (LinearLayout) findViewById(R.id.confirm_delivery_LI);
 
         phoneno_tv = (TextView) findViewById(R.id.phoneno_tv);
         name_tv = (TextView) findViewById(R.id.name_tv);
@@ -466,6 +462,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         notifieddata_tv = (TextView) findViewById(R.id.notifieddata_tv);
         fulfillmentid_tv = (TextView) findViewById(R.id.fulfillmentid_tv);
         replyText_ev = (EditText) findViewById(R.id.replyText_ev);
+        replyText_ev.clearFocus();
         reply_tv = (TextView) findViewById(R.id.reply_tv);
         retailerName_tv = (TextView) findViewById(R.id.retailerName_tv);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_To_Refresh_Layout);
@@ -493,9 +490,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         confirm_pickup_btn_tv.setOnClickListener(this);
         reply_tv.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
-
-        if (getIntent().hasExtra("interest"))
-            interest = (InterestDTO) getIntent().getSerializableExtra("interest");
     }
 
     private static String getScreenResolution(Context context) {
@@ -566,6 +560,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                     googlemaps_LI.setVisibility(View.GONE);
                                     confirmorders_LI.setVisibility(View.GONE);
                                     deliv_customers_LI.setVisibility(View.VISIBLE);
+                                    checkIfAllOrdersAllDelivered(responseInterestObj);
                                     pickedup_imv.setImageResource(R.drawable.pickedup_g);
                                     pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                                 }
@@ -722,6 +717,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 if (signatureLayout.isShown()) {
                     signatureLayout.setVisibility(View.GONE);
                 }
+                startDeliveryAdapter.notifyDataSetChanged();
                 orderId = null;
                 break;
             case R.id.icon_back:
@@ -733,19 +729,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                  /* googlemaps_LI.setVisibility(View.GONE);
                   confirmorders_LI.setVisibility(View.GONE);
                   deliv_customers_LI.setVisibility(View.VISIBLE);*/
-                    if (responseInterestObj.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
-                        int noOfOrders = responseInterestObj.Fulfillments.Orders.size();
-                        int deliveredItemsCount = 0;
-                        for (int i = 0; i < responseInterestObj.Fulfillments.Orders.size(); i++) {
-                            if (responseInterestObj.Fulfillments.Orders.get(i).Status.equalsIgnoreCase("Delivered"))
-                                deliveredItemsCount = deliveredItemsCount + 1;
-                        }
-                        if (noOfOrders == deliveredItemsCount) {
-                            callUpdateDeliveryStatusAPi(6, null);
-                        } else
-                            AppUtil.toast(StartDelivery.this, "All orders are not delivered...");
-
-                    }
+                    callUpdateDeliveryStatusAPi(6,null);
                 } else {
                     AppUtil.toast(StartDelivery.this, "Please type CONFIRMED");
                 }
@@ -803,17 +787,24 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         Common.showDialog(StartDelivery.this);
         final HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("FulfillmentId", responseInterestObj.Fulfillments.FulfillmentId);
-        if (getIntent().hasExtra("FulfillerId"))
-            hashMap.put("FulfillerId", getIntent().getExtras().get("FulfillerId"));
-        else
-            hashMap.put("FulfillerId", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId"));
-
-        if (AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
-            if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName")))
-                hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName"));
-        } else {
-            if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
-                hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
+        hashMap.put("fulfillerid", AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
+                AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")
+                : FULFILLER_ID );
+        if (FULFILLER_NAME != null)
+            hashMap.put("FlulfillerName",FULFILLER_NAME);
+        else if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null) {
+            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+                if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName")))
+                    hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName"));
+            } else {
+                if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
+                    hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
+            }
+        }else {
+            if (responseInterestObj.Fulfillments.DeliveryPartner != null)
+                hashMap.put("FlulfillerName", responseInterestObj.Fulfillments.DeliveryPartner.Contactperson);
+            else
+                hashMap.put("FlulfillerName", responseInterestObj.Fulfillments.DeliveryPerson.Contactperson);
         }
         hashMap.put("RetailerId", "");
         hashMap.put("RetailerName", "");
@@ -829,7 +820,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                         if (response.isSuccessful()) {
                             if (!mRecyclerView.isShown())
                                 mRecyclerView.setVisibility(View.VISIBLE);
-                            newMsgSent = true;
                             MessagesModel messagesModel = new MessagesModel();
                             messagesModel.FlulfillerName = (String) hashMap.get("FlulfillerName");
                             messagesModel.Message = (String) hashMap.get("Message");
@@ -838,7 +828,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                         } else {
                             if (mRecyclerView.isShown())
                                 mRecyclerView.setVisibility(View.GONE);
-                            newMsgSent = false;
                             try {
                                 AppUtil.parseErrorMessage(StartDelivery.this, response.errorBody().string());
                             } catch (IOException e) {
@@ -855,7 +844,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                         Common.disMissDialog();
                         if (mRecyclerView.isShown())
                             mRecyclerView.setVisibility(View.GONE);
-                        newMsgSent = false;
                         AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                     }
                 });
@@ -871,9 +859,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             Common.showDialog(StartDelivery.this);
 
         String fulfillmentId;
-        if (interest != null)
-            fulfillmentId = interest.Fulfillments.FulfillmentId;
-        else if (responseInterestObj != null)
+        if (responseInterestObj != null)
             fulfillmentId = responseInterestObj.Fulfillments.FulfillmentId;
         else
             fulfillmentId = "";
@@ -884,23 +870,16 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onResponse(Call<List<MessagesModel>> call, Response<List<MessagesModel>> response) {
                         if (response.isSuccessful()) {
-                            newMsgSent = false;
                             adapter.setItems(response.body());
                             if (!mRecyclerView.isShown())
                                 mRecyclerView.setVisibility(View.VISIBLE);
                         } else {
-                            if (interest == null && responseInterestObj == null) {
-                                startActivity(new Intent(StartDelivery.this, LoginActivity.class));
-                                finish();
-                            }
-                            newMsgSent = true;
                             if (mRecyclerView.isShown())
                                 mRecyclerView.setVisibility(View.GONE);
                             try {
                                 AppUtil.parseErrorMessage(StartDelivery.this, response.errorBody().string());
                             } catch (IOException e) {
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
-                                e.printStackTrace();
                             }
                             AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
@@ -918,14 +897,10 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                             Common.disMissDialog();
                         else
                             swipeRefreshLayout.setRefreshing(false);
-                        newMsgSent = true;
                         if (mRecyclerView.isShown())
                             mRecyclerView.setVisibility(View.GONE);
-                        AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
-                        if (interest == null && responseInterestObj == null) {
-                            startActivity(new Intent(StartDelivery.this, LoginActivity.class));
-                            finish();
-                        }
+                        if (!(t instanceof EOFException))
+                            AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                     }
                 });
     }
@@ -933,17 +908,19 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void buildUI(InterestDTO mInterest) {
 
-        if (AppUtil.ifNotEmpty(mInterest.CompanyLogo)) {
+        if (AppUtil.ifNotEmpty(mInterest.Fulfillments.RetailerLocation.Retailer.CompanyLogo)) {
             if (!companylogo_imv.isShown())
                 companylogo_imv.setVisibility(View.VISIBLE);
             retailerName_tv.setVisibility(View.GONE);
-            Picasso.with(StartDelivery.this).load(mInterest.CompanyLogo)
+            Picasso.with(StartDelivery.this).load(mInterest.Fulfillments.RetailerLocation.Retailer.CompanyLogo)
                     .error(R.drawable.cougar_logo).into(companylogo_imv);
         } else {
             companylogo_imv.setVisibility(View.GONE);
             retailerName_tv.setVisibility(View.VISIBLE);
             retailerName_tv.setText(mInterest.Fulfillments.RetailerLocation.Retailer.BusinessLegalName);
         }
+
+        checkIfAllOrdersAllDelivered(mInterest);
 
         fulfillmentid_tv.setText(mInterest.Fulfillments.FulfillmentId);
 
@@ -997,11 +974,25 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 });
             }
         }, 0, 1000);
-
-
-        startDeliveryAdapter = new StartDeliveryAdapter(this, mInterest.Fulfillments.Orders);
-        orderlist_LI.setAdapter(startDeliveryAdapter);
+        startDeliveryAdapter.setItemsList(mInterest.Fulfillments.Orders);
         //Common.setListViewHeightBasedOnItems(orderlist_LI);
+    }
+
+    private void checkIfAllOrdersAllDelivered(InterestDTO mInterest) {
+        if (deliv_customers_LI.isShown()) {
+            if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
+                int noOfOrders = mInterest.Fulfillments.Orders.size();
+                int deliveredItemsCount = 0;
+                for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
+                    if (mInterest.Fulfillments.Orders.get(i).Status.equalsIgnoreCase("Delivered"))
+                        deliveredItemsCount = deliveredItemsCount + 1;
+                }
+                if (noOfOrders == deliveredItemsCount) {
+                    confirm_delivery_LI.setVisibility(View.VISIBLE);
+                } else
+                    confirm_delivery_LI.setVisibility(View.GONE);
+            }
+        }
     }
 
     public void printDifference(Date startDate, Date endDate) {

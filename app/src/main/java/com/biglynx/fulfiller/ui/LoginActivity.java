@@ -1,7 +1,9 @@
 package com.biglynx.fulfiller.ui;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -19,6 +21,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -37,6 +40,7 @@ import android.widget.Toast;
 
 import com.biglynx.fulfiller.MainActivity;
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.utils.AppPreferences;
@@ -71,6 +75,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -682,20 +687,80 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                 if (AppUtil.ifNotEmpty(et_FullfillerId.getText().toString()) &&
                         AppUtil.ifNotEmpty(et_confirmationCode.getText().toString()) &&
                         AppUtil.ifNotEmpty(et_name.getText().toString())) {
-                    startActivity(new Intent(LoginActivity.this, StartDelivery.class)
+
+                    callStartDeliveryService();
+                    /*startActivity(new Intent(LoginActivity.this, StartDelivery.class)
                             .putExtra("fulfillerid", et_FullfillerId.getText().toString())
                             .putExtra("confirmationcode", et_confirmationCode.getText().toString())
                             .putExtra("name", et_name.getText().toString())
                             .putExtra("latitude", latitude != 0 ? latitude : "")//47.6062
                             .putExtra("longitude", longitude != 0 ? longitude : "")//122.3321
-                    );
-                    finish();
+                    );*/
                 } else
                     AppUtil.toast(LoginActivity.this, getString(R.string.mandatory));
                 break;
         }
     }
 
+    private void callStartDeliveryService() {
+        Common.showDialog(LoginActivity.this);
+        final HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("fulfillerid", et_FullfillerId.getText().toString());
+        hashMap.put("confirmationcode",et_confirmationCode.getText().toString());
+        hashMap.put("name", et_name.getText().toString());
+        hashMap.put("latitude", latitude != 0 ? latitude : "");//47.6062
+        hashMap.put("longitude", longitude != 0 ? longitude : "");//122.3321
+        hashMap.put("deviceid", getDeviceId());
+
+        fillerApiWrapper.startDeliveryCall(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
+                        AppPreferences.getInstance(LoginActivity.this).getSignInResult().optString("AuthNToken") : "",
+                hashMap, new Callback<InterestDTO>() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void onResponse(Call<InterestDTO> call, Response<InterestDTO> response) {
+                        if (response.isSuccessful()) {
+                            InterestDTO responseInterestObj = response.body();
+                            if (responseInterestObj != null) {
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("responseInterest",responseInterestObj);
+                                bundle.putString("fulfillerId",hashMap.get("fulfillerid").toString());
+                                bundle.putString("FulfillerName",hashMap.get("name").toString());
+                                startActivity(new Intent(LoginActivity.this,StartDelivery.class)
+                                        .putExtras(bundle));
+                                if (startDeliveringLayout.isShown()) {
+                                    startDeliveringLayout.startAnimation(animation_slide_down);
+                                    startDeliveringLayout.setVisibility(View.GONE);
+                                    enableDisableView(loginLayout,true);
+                                }
+                            }else {
+                                AppUtil.toast(LoginActivity.this,"The response is empty");
+                            }
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(LoginActivity.this, OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+                        }
+                        Common.disMissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<InterestDTO> call, Throwable t) {
+                        Common.disMissDialog();
+                        AppUtil.toast(LoginActivity.this, OOPS_SOMETHING_WENT_WRONG);
+                    }
+                });
+
+    }
+
+    private Object getDeviceId() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceID = telephonyManager.getDeviceId();
+        Log.d(LoginActivity.class.getSimpleName(), "Device ID :: " + deviceID);
+        return deviceID;
+    }
 
     public static void enableDisableView(View view, boolean enabled) {
         view.setEnabled(enabled);

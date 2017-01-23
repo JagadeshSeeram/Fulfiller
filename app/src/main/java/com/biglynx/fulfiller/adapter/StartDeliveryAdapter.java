@@ -43,11 +43,10 @@ public class StartDeliveryAdapter extends BaseAdapter{
     private boolean userSelected = false;
 
 
-    public StartDeliveryAdapter(Context mContext, List<Orders> morderList){
+    public StartDeliveryAdapter(Context mContext){
         Context=mContext;
-        ordersList=morderList;
         inflater = LayoutInflater.from(this.Context);
-
+        ordersList = new ArrayList<>();
         phoneNumberUtil = PhoneNumberUtil.getInstance();
     }
 
@@ -131,6 +130,7 @@ public class StartDeliveryAdapter extends BaseAdapter{
                 TextView tv=(TextView)view.findViewById(R.id.pos_tv);
                 Log.d("get position",tv.getText().toString()+""+spinnerOrdersList.get(position).id);*/
                 if (userSelected) {
+                    userSelected = false;
                     Log.d("Slected Type ", " :: " + parent.getAdapter().getItem(adapterPosition));
                     StartDelivery startDelivery = (StartDelivery) Context;
                     if (parent.getAdapter().getItem(adapterPosition).equals("Started"))
@@ -147,6 +147,13 @@ public class StartDeliveryAdapter extends BaseAdapter{
             }
         });
         return convertView;
+    }
+
+    public void setItemsList(List<Orders> itemsList){
+        if (ordersList != null)
+            ordersList.clear();
+        ordersList.addAll(itemsList);
+        notifyDataSetChanged();
     }
 
     private class MyViewHolder {

@@ -1,831 +1,1095 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar"></include>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_To_Refresh_Layout"
+    <LinearLayout
+        android:id="@+id/activityRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/spacing_small"
-        >
+        android:orientation="vertical">
 
-        <ScrollView
-            android:id="@+id/deliveryScrollView"
+        <include layout="@layout/toolbar"></include>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_To_Refresh_Layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#EFEFEF">
 
-            <LinearLayout
+            <ScrollView
+                android:id="@+id/deliveryScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#EFEFEF"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#F6F6F6"
-                    android:orientation="horizontal"
-                    android:paddingRight="10dp"
-                    android:weightSum="1">
-
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/customFontSemiBold"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|end"
-                        android:layout_weight="0.4"
-                        android:gravity="center|end"
-                        android:maxLines="2"
-                        android:padding="5dp"
-                        android:text="Time remaining:"
-                        android:textAllCaps="true"
-                        android:textColor="#000"
-                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center|end"
-                        android:layout_weight="0.6"
-                        android:gravity="center|end"
-                        android:orientation="horizontal">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontBold
-                            android:id="@+id/day_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:background="#EF484F"
-                            android:gravity="center|end"
-                            android:padding="5dp"
-                            android:textAllCaps="true"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/textview_dp14" />
-
-                        <com.biglynx.fulfiller.fonts.CustomFontBold
-                            android:id="@+id/time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:layout_marginLeft="10dp"
-                            android:background="#EF484F"
-                            android:gravity="center|end"
-                            android:padding="5dp"
-                            android:textAllCaps="true"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/textview_dp14" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#8F8F8F"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_10">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="60dp"
-                            android:layout_weight="0.5">
-
-                            <ImageView
-                                android:id="@+id/companylogo_imv"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="left|start|center" />
-
-                            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                android:id="@+id/retailerName_tv"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:gravity="center|top"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_14"
-                                android:visibility="gone" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.5">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/dp_20"
-                                android:layout_toLeftOf="@+id/subway_arrow_imv"
-                                android:orientation="vertical"
-                                android:weightSum="1">
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:id="@+id/name_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center|end"
-                                    android:padding="1dp"
-                                    android:text="John Walker"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:id="@+id/phoneno_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center|end"
-                                    android:padding="1dp"
-                                    android:text="454 545 454"
-                                    android:textAllCaps="true"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/subway_arrow_imv"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/down_white_arrow"
-                                android:visibility="visible">
-
-                            </ImageView>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontMedium
-                            android:id="@+id/address_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.8"
-                            android:background="#E6E6E6"
-                            android:gravity="center"
-                            android:padding="3dp"
-                            android:singleLine="true"
-                            android:text="Address"
-                            android:textColor="#4E4E4E"
-                            android:textSize="@dimen/sp_13">
-
-                        </com.biglynx.fulfiller.fonts.CustomFontMedium>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.2"
-                            android:background="#363636"
-                            android:gravity="center"
-                            android:text="Copy"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/subway_details_LI"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_10"
-                    android:background="@color/white"
-                    android:visibility="visible">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/messages_listView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:visibility="gone"
-                        >
-                    </android.support.v7.widget.RecyclerView>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <com.biglynx.fulfiller.utils.EditTextFontLight
-                            android:id="@+id/replyText_ev"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.8"
-                            android:background="@drawable/ef_border"
-                            android:gravity="center|start"
-                            android:hint="@string/send_msg_to_retailer"
-                            android:maxLines="2"
-                            android:padding="3dp"
-                            android:textColor="#4E4E4E"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.utils.EditTextFontLight>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontBold
-                            android:id="@+id/reply_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="0.2"
-                            android:background="#363636"
-                            android:gravity="center"
-                            android:maxLines="2"
-                            android:padding="2dp"
-                            android:text="Reply"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontBold>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <!--details view start-->
-                <LinearLayout
-                    android:id="@+id/details_LI"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontMedium
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.4"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:text="Fulfillment ID :"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/fulfillmentid_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.6"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:singleLine="true"
-                            android:textColor="#000"
-                            android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.4"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:text="Delivery Due Date"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/deliverydate_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.6"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:singleLine="true"
-                            android:text="due"
-                            android:textColor="#000"
-                            android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.5"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:text="Delivery Token:"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/confirmtoken_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.5"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="#000"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.5"
-                            android:gravity="center|start"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:text="Ready For Pick up:"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/readytopick_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.5"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="#000"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.9"
-                            android:gravity="center|start"
-                            android:padding="5dp"
-                            android:text="Store working hours"
-                            android:textColor="#787878"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <ImageView
-                            android:id="@+id/roderinfo_imv"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.1"
-                            android:gravity="center"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/right_arrow"
-                            android:visibility="visible"></ImageView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.8"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="5dp"
-                            android:text="Total miles from store:"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/mindistance_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.2"
-                            android:gravity="center|end"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="#000"
-                            android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/editext_bottom"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_weight="0.8"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="5dp"
-                            android:text="Approximate delivery time:"
-                            android:textColor="@color/header_color"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                        <com.biglynx.fulfiller.fonts.CustomFontLight
-                            android:id="@+id/maxdistance_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|end"
-                            android:layout_weight="0.2"
-                            android:gravity="center|end"
-                            android:maxLines="2"
-                            android:padding="5dp"
-                            android:textColor="#000"
-                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
-
-                    </LinearLayout>
-                </LinearLayout>
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#efefef"
+                    android:background="#EFEFEF"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/ef_border"
-                        android:orientation="vertical">
+                        android:layout_height="50dp"
+                        android:background="#F6F6F6"
+                        android:orientation="horizontal"
+                        android:paddingRight="10dp"
+                        android:weightSum="1">
 
-                        <com.biglynx.fulfiller.fonts.CustomFontBold
-                            android:layout_width="match_parent"
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/customFontSemiBold"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center|start"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:text="Live status update"
+                            android:layout_gravity="center|end"
+                            android:layout_weight="0.4"
+                            android:gravity="center|end"
+                            android:maxLines="2"
+                            android:padding="5dp"
+                            android:text="Time remaining:"
                             android:textAllCaps="true"
                             android:textColor="#000"
-                            android:textSize="@dimen/textview_dp16">
+                            android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
 
-                        </com.biglynx.fulfiller.fonts.CustomFontBold>
-                        <!-- tracking status-->
-
-                        <ImageView
-                            android:id="@+id/trackimage_imv"
-                            android:layout_width="60dp"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="50dp"
-                            android:layout_gravity="center|start"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/delivery_current_location"
-                            android:visibility="visible"></ImageView>
+                            android:layout_gravity="center|end"
+                            android:layout_weight="0.6"
+                            android:gravity="center|end"
+                            android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp">
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:id="@+id/day_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|end"
+                                android:background="#EF484F"
+                                android:gravity="center|end"
+                                android:padding="5dp"
+                                android:textAllCaps="true"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/textview_dp14" />
 
-                            <!--<View
-                                android:layout_width="match_parent"
-                                android:layout_height="6dp"
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:id="@+id/time_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|end"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:background="#92C56D"></View>-->
-                            <ProgressBar
-                                android:id="@+id/progress_bar"
-                                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="5dp"
-                                android:layout_gravity="center"
-                                android:progressDrawable="@drawable/progressbarcolor" />
-
-                            <View
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/circle_progress"></View>
-
-                            <View
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:layout_marginLeft="60dp"
-                                android:background="@drawable/circle_progress"></View>
-
-                            <View
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:layout_gravity="end"
-                                android:layout_marginRight="60dp"
-                                android:background="@drawable/circle_progress"></View>
-
-
-                        </FrameLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="8dp"
-                            android:orientation="horizontal"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.35"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/ontheway_imv"
-                                    android:layout_width="30dp"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:scaleType="fitCenter"
-                                    android:src="@drawable/ontheway_y"
-                                    android:visibility="visible"></ImageView>
-
-                                <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                    android:id="@+id/ontheway_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:paddingLeft="5dp"
-                                    android:text="Onthe way"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.35"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/pickedup_imv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:scaleType="fitCenter"
-                                    android:src="@drawable/pickedup_y"
-                                    android:visibility="visible"></ImageView>
-
-
-                                <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                    android:id="@+id/pickedup_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:paddingLeft="5dp"
-                                    android:text="Picked up"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.35"
-                                android:orientation="vertical">
-
-
-                                <ImageView
-                                    android:id="@+id/delivered_imv"
-                                    android:layout_width="30dp"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:scaleType="fitCenter"
-                                    android:src="@drawable/delivered_y"
-                                    android:visibility="visible"></ImageView>
-
-
-                                <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                    android:id="@+id/delivered_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.5"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:paddingLeft="5dp"
-                                    android:text="Delivered"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                            </LinearLayout>
-
+                                android:background="#EF484F"
+                                android:gravity="center|end"
+                                android:padding="5dp"
+                                android:textAllCaps="true"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/textview_dp14" />
                         </LinearLayout>
-                        <!--end trcking status-->
+                    </LinearLayout>
+                    <!--Retailer Info layout-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#8F8F8F"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="8dp"
-                            android:background="#E5E5E5"></View>
-
-                        <!-- delivery customer details-->
                         <LinearLayout
-                            android:id="@+id/deliv_customers_LI"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="0.5">
+
+                                <ImageView
+                                    android:id="@+id/companylogo_imv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="left|start|center"
+                                    android:scaleType="centerCrop" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/dp_20"
+                                    android:orientation="vertical"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:id="@+id/retailerName_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="top|left"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_14"
+                                        android:visibility="visible" />
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center|end"
+                                        android:padding="1dp"
+                                        android:text="sdf"
+                                        android:textAllCaps="true"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="@dimen/sp_13"
+                                        android:visibility="invisible"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+                                </LinearLayout>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/dp_20"
+                                    android:layout_toLeftOf="@+id/subway_arrow_imv"
+                                    android:orientation="vertical"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:id="@+id/name_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center|end"
+                                        android:padding="1dp"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:id="@+id/phoneno_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center|end"
+                                        android:padding="1dp"
+                                        android:textAllCaps="true"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/subway_arrow_imv"
+                                    android:layout_width="26dp"
+                                    android:layout_height="26dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/down_white_arrow"
+                                    android:visibility="visible">
+
+                                </ImageView>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                                android:id="@+id/address_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.8"
+                                android:background="#E6E6E6"
+                                android:gravity="center"
+                                android:maxLines="3"
+                                android:padding="3dp"
+                                android:text="Address"
+                                android:textColor="#4E4E4E"
+                                android:textSize="11sp">
+
+                            </com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.2"
+                                android:background="#363636"
+                                android:gravity="center"
+                                android:text="Copy"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!--Retailer info layout end-->
+
+                    <!--Messages List-->
+                    <LinearLayout
+                        android:id="@+id/subway_details_LI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10"
+                        android:visibility="visible">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/messages_listView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.biglynx.fulfiller.utils.EditTextFontLight
+                                android:id="@+id/replyText_ev"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.8"
+                                android:background="@drawable/ef_border"
+                                android:gravity="center|start"
+                                android:hint="@string/send_msg_to_retailer"
+                                android:maxLines="2"
+
+                                android:padding="3dp"
+                                android:textColor="#4E4E4E"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.utils.EditTextFontLight>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:id="@+id/reply_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.2"
+                                android:background="#363636"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:padding="2dp"
+                                android:text="Reply"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontBold>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!--Messages List end-->
+
+                    <!--details view start-->
+                    <LinearLayout
+                        android:id="@+id/details_LI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="#FFFFFF"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontMedium
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.4"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:text="Fulfillment ID :"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/fulfillmentid_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.6"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:singleLine="true"
+                                android:textColor="#000"
+                                android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.4"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:text="Delivery Due Date"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/deliverydate_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.6"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:singleLine="true"
+                                android:text="due"
+                                android:textColor="#000"
+                                android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.5"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:text="Delivery Token:"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/confirmtoken_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.5"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="#000"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.5"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:text="Ready For Pick up:"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/readytopick_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.5"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="#000"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.9"
+                                android:gravity="center|start"
+                                android:padding="5dp"
+                                android:text="Store working hours"
+                                android:textColor="#787878"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <ImageView
+                                android:id="@+id/roderinfo_imv"
+                                android:layout_width="0dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.1"
+                                android:gravity="center"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/right_arrow"
+                                android:visibility="visible"></ImageView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.8"
+                                android:gravity="center|start"
+                                android:maxLines="2"
+                                android:padding="5dp"
+                                android:text="Total miles from store:"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/mindistance_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.2"
+                                android:gravity="center|end"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="#000"
+                                android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/editext_bottom"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_weight="0.8"
+                                android:gravity="center|start"
+                                android:maxLines="2"
+                                android:padding="5dp"
+                                android:text="Approximate delivery time:"
+                                android:textColor="@color/header_color"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontLight
+                                android:id="@+id/maxdistance_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center|end"
+                                android:layout_weight="0.2"
+                                android:gravity="center|end"
+                                android:maxLines="2"
+                                android:padding="5dp"
+                                android:textColor="#000"
+                                android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!--details view end-->
+
+                    <!--Live status update start-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#efefef"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/ef_border"
+                            android:orientation="vertical">
 
                             <com.biglynx.fulfiller.fonts.CustomFontBold
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|start"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="@dimen/dp_10"
-                                android:gravity="center|start"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:maxLines="1"
                                 android:padding="3dp"
-                                android:text="Delivery Customers"
+                                android:text="Live status update"
                                 android:textAllCaps="true"
                                 android:textColor="#000"
                                 android:textSize="@dimen/textview_dp16">
 
                             </com.biglynx.fulfiller.fonts.CustomFontBold>
+                            <!-- tracking status-->
 
-                            <View
+                            <ImageView
+                                android:id="@+id/trackimage_imv"
+                                android:layout_width="60dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center|start"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/delivery_current_location"
+                                android:visibility="visible"></ImageView>
+
+                            <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginRight="@dimen/dp_10"
-                                android:background="#E5E5E5"></View>
+                                android:layout_height="10dp">
 
-                            <ListView
-                                android:id="@+id/orderlist_LI"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginRight="@dimen/dp_10"
-                                android:layout_marginTop="5dp"
-                                android:background="@color/window_background"
-                                android:divider="#787878"
-                                android:dividerHeight="0.5dp">
+                                <!--<View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="6dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="#92C56D"></View>-->
+                                <ProgressBar
+                                    android:id="@+id/progress_bar"
+                                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:layout_gravity="center"
+                                    android:progressDrawable="@drawable/progressbarcolor" />
 
-                            </ListView>
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/circle_progress"></View>
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginRight="@dimen/dp_10"
-                                android:background="#E5E5E5"></View>
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_marginLeft="60dp"
+                                    android:background="@drawable/circle_progress"></View>
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="60dp"
+                                    android:background="@drawable/circle_progress"></View>
+
+
+                            </FrameLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="8dp"
+                                android:orientation="horizontal"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.35"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/ontheway_imv"
+                                        android:layout_width="30dp"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/ontheway_y"
+                                        android:visibility="visible"></ImageView>
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:id="@+id/ontheway_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:paddingLeft="5dp"
+                                        android:text="Onthe way"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.35"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/pickedup_imv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/pickedup_y"
+                                        android:visibility="visible"></ImageView>
+
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:id="@+id/pickedup_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:paddingLeft="5dp"
+                                        android:text="Picked up"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.35"
+                                    android:orientation="vertical">
+
+
+                                    <ImageView
+                                        android:id="@+id/delivered_imv"
+                                        android:layout_width="30dp"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/delivered_y"
+                                        android:visibility="visible"></ImageView>
+
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:id="@+id/delivered_tv"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:paddingLeft="5dp"
+                                        android:text="Delivered"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <!--end trcking status-->
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="8dp"
+                                android:background="#E5E5E5"></View>
+
+                            <!-- delivery customer details-->
+                            <LinearLayout
+                                android:id="@+id/deliv_customers_LI"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginRight="@dimen/dp_10"
-                                android:layout_marginTop="5dp"
                                 android:orientation="vertical"
-                                android:weightSum="1">
+                                android:visibility="gone">
+
+                                <com.biglynx.fulfiller.fonts.CustomFontBold
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|start"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="@dimen/dp_10"
+                                    android:gravity="center|start"
+                                    android:maxLines="1"
+                                    android:padding="3dp"
+                                    android:text="Delivery Customers"
+                                    android:textAllCaps="true"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/textview_dp16">
+
+                                </com.biglynx.fulfiller.fonts.CustomFontBold>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:background="#E5E5E5"></View>
+
+                                <ListView
+                                    android:id="@+id/orderlist_LI"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/window_background"
+                                    android:divider="#787878"
+                                    android:dividerHeight="0.5dp">
+
+                                </ListView>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:background="#E5E5E5"></View>
+
+                                <!--Confirm delivery layout start-->
+                                <LinearLayout
+                                    android:id="@+id/confirm_delivery_LI"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:layout_marginTop="5dp"
+                                    android:orientation="vertical"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="10dp"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="To confirm delivery of fulfillment - type CONFIRMED"
+                                        android:textColor="#000"
+                                        android:textSize="@dimen/textview_dp14">
+
+                                    </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="10dp"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:weightSum="1">
+
+                                        <EditText
+                                            android:id="@+id/confirm_code_ev"
+                                            android:layout_width="0dp"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center|start"
+                                            android:layout_weight="0.45"
+                                            android:background="@drawable/light_border"
+                                            android:gravity="center"
+                                            android:textColor="#000" />
+
+                                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                            android:id="@+id/confirm_deli_tv"
+                                            android:layout_width="0dp"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_weight="0.43"
+                                            android:background="@color/colorPrimary"
+                                            android:gravity="center"
+                                            android:maxLines="2"
+                                            android:padding="8dp"
+                                            android:text="Confirm Delivery"
+                                            android:textColor="#FFFFFF"
+                                            android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                    </LinearLayout>
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="20dp"
+                                        android:layout_marginLeft="@dimen/dp_10"
+                                        android:layout_marginRight="@dimen/dp_10"
+                                        android:layout_marginTop="@dimen/dp_5">
+
+                                        <CheckBox
+                                            android:id="@+id/cb_confirmDelivery"
+                                            android:layout_width="30dp"
+                                            android:layout_height="20dp"
+                                            android:background="@null"
+                                            android:checked="true"
+                                            android:clickable="false" />
+
+                                        <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_toRightOf="@+id/cb_confirmDelivery"
+                                            android:gravity="center"
+                                            android:maxLines="2"
+                                            android:padding="3dp"
+                                            android:text="You have notified retailer with delivery confirmatoins at 7:30 PM"
+                                            android:textColor="#919191"
+                                            android:textSize="@dimen/textview_dp12">
+
+                                        </com.biglynx.fulfiller.fonts.CustomFontRegular>
+                                    </RelativeLayout>
+                                </LinearLayout>
+                                <!--Confirm delivery layout end-->
+
+
+                            </LinearLayout>
+                            <!--End of delivery customer details-->
+
+                            <!-- Confirm orders-->
+                            <LinearLayout
+                                android:id="@+id/confirmorders_LI"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
 
                                 <com.biglynx.fulfiller.fonts.CustomFontRegular
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="10dp"
+                                    android:layout_gravity="center|start"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
-                                    android:maxLines="2"
+                                    android:maxLines="1"
                                     android:padding="3dp"
-                                    android:text="To confirm delivery of fulfillment - type CONFIRMED"
+                                    android:text="Confirm orders picked up from store"
                                     android:textColor="#000"
-                                    android:textSize="@dimen/textview_dp14">
+                                    android:textSize="@dimen/textview_dp16">
 
                                 </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="40dp"
                                     android:gravity="center"
                                     android:orientation="horizontal"
+                                    android:padding="10dp"
                                     android:weightSum="1">
 
-                                    <EditText
-                                        android:id="@+id/confirm_code_ev"
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:id="@+id/customFontSemiBold2"
                                         android:layout_width="0dp"
                                         android:layout_height="40dp"
                                         android:layout_gravity="center|start"
-                                        android:layout_weight="0.45"
-                                        android:background="@drawable/light_border"
-                                        android:gravity="center"
-                                        android:textColor="#000" />
+                                        android:layout_weight="0.8"
+                                        android:gravity="center|right"
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="Enter the number of customers to deliver reports"
+                                        android:textColor="#787878"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
 
-                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:id="@+id/confirm_deli_tv"
+                                    <EditText
+                                        android:id="@+id/no_ofcustomers_ev"
                                         android:layout_width="0dp"
                                         android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.2"
+                                        android:background="@drawable/light_border"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="40dp"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.8"
+                                        android:gravity="center|right"
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="Ente total number of packeges received for delivery"
+                                        android:textColor="#787878"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                    <EditText
+                                        android:id="@+id/no_ofpackages_ev"
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.2"
+                                        android:background="@drawable/light_border"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="40dp"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.8"
+                                        android:gravity="center|right"
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="Please confirm that packages have invoices tagged to identity what each customer receives during delivery ?"
+                                        android:textColor="#787878"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                    <android.support.v7.widget.SwitchCompat
+                                        android:id="@+id/confirmSwitch"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_weight="0.2"
+                                        android:background="@android:color/transparent"
+                                        android:button="@null"
+                                        android:gravity="left"
+                                        android:padding="0dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textOff=""
+                                        android:textOn="" />
+                                </LinearLayout>
+
+                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                    android:id="@+id/confirm_pickup_btn_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="40dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center"
+                                    android:maxLines="2"
+                                    android:padding="8dp"
+                                    android:text="Confirm Pick Up"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/textview_dp18"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                            </LinearLayout>
+                            <!-- End of Confirm orders-->
+                            <!--google maps with notify to retails-->
+                            <LinearLayout
+                                android:id="@+id/googlemaps_LI"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="150dp"
+                                    android:padding="8dp">
+
+                                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:id="@+id/map"
+                                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_weight="0.43"
-                                        android:background="@color/colorPrimary"
+                                        android:layout_marginLeft="@dimen/dp_10"
+                                        android:layout_marginRight="@dimen/dp_10" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/dp_10"
+                                    android:orientation="horizontal">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:id="@+id/notifiy_tv"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.8"
                                         android:gravity="center"
                                         android:maxLines="2"
-                                        android:padding="8dp"
-                                        android:text="Confirm Delivery"
-                                        android:textColor="#FFFFFF"
-                                        android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+                                        android:padding="3dp"
+                                        android:text="On the way to Pick up goods from retailer ? "
+                                        android:textColor="#000"
+                                        android:textSize="@dimen/sp_12"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
 
+                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:id="@+id/notifiy_btn_tv"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.2"
+                                        android:background="@color/colorPrimary"
+                                        android:gravity="center"
+                                        android:maxLines="1"
+                                        android:padding="3dp"
+                                        android:text="Notifiy"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
                                 </LinearLayout>
 
                                 <RelativeLayout
@@ -833,326 +1097,105 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="20dp"
                                     android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:layout_marginTop="@dimen/dp_5">
+                                    android:layout_marginRight="@dimen/dp_10">
 
                                     <CheckBox
-                                        android:id="@+id/cb_confirmDelivery"
+                                        android:id="@+id/cb_notify"
                                         android:layout_width="30dp"
                                         android:layout_height="20dp"
                                         android:background="@null"
-                                        android:checked="true"
-                                        android:clickable="false" />
+                                        android:checked="true" />
 
                                     <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                        android:id="@+id/notifieddata_tv"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_toRightOf="@+id/cb_confirmDelivery"
+                                        android:layout_toRightOf="@+id/cb_notify"
                                         android:gravity="center"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="You have notified retailer with delivery confirmatoins at 7:30 PM"
-                                        android:textColor="#919191"
-                                        android:textSize="@dimen/textview_dp12">
-
-                                    </com.biglynx.fulfiller.fonts.CustomFontRegular>
+                                        android:text="you have notified retailer at 6:30PM. Arrived at store by 7:30 PM"
+                                        android:textColor="@color/header_color"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
                                 </RelativeLayout>
                             </LinearLayout>
+                            <!-- End of googlemaps with notify orders-->
                         </LinearLayout>
-                        <!--End of delivery customer details-->
-
-                        <!-- Confirm orders-->
-                        <LinearLayout
-                            android:id="@+id/confirmorders_LI"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-
-                            <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center|start"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:padding="3dp"
-                                android:text="Confirm orders picked up from store"
-                                android:textColor="#000"
-                                android:textSize="@dimen/textview_dp16">
-
-                            </com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:orientation="horizontal"
-                                android:padding="10dp"
-                                android:weightSum="1">
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:layout_width="0dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.8"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:padding="3dp"
-                                    android:text="Enter the number of customers to deliver reports"
-                                    android:textColor="#787878"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                <EditText
-                                    android:id="@+id/no_ofcustomers_ev"
-                                    android:layout_width="0dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.2"
-                                    android:background="@drawable/light_border"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:textColor="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:orientation="horizontal"
-                                android:padding="10dp"
-                                android:weightSum="1">
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:layout_width="0dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.8"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:padding="3dp"
-                                    android:text="Ente total number of packeges received for delivery"
-                                    android:textColor="#787878"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                <EditText
-                                    android:id="@+id/no_ofpackages_ev"
-                                    android:layout_width="0dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.2"
-                                    android:background="@drawable/light_border"
-                                    android:gravity="center"
-                                    android:inputType="number"
-                                    android:textColor="@color/black" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:orientation="horizontal"
-                                android:padding="10dp"
-                                android:weightSum="1">
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:layout_width="0dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.8"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:padding="3dp"
-                                    android:text="Please confirm that packages have invoices tagged to identity what each customer receives during delivery ?"
-                                    android:textColor="#787878"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                <android.support.v7.widget.SwitchCompat
-                                    android:id="@+id/confirmSwitch"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="0.2"
-                                    android:background="@android:color/transparent"
-                                    android:button="@null"
-                                    android:padding="0dp"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textOff=""
-                                    android:textOn="" />
-                            </LinearLayout>
-
-                            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                android:id="@+id/confirm_pickup_btn_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="40dp"
-                                android:layout_marginTop="10dp"
-                                android:background="@color/colorPrimary"
-                                android:gravity="center"
-                                android:maxLines="2"
-                                android:padding="8dp"
-                                android:text="Confirm Pick Up"
-                                android:textColor="#FFFFFF"
-                                android:textSize="@dimen/textview_dp18"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                        </LinearLayout>
-                        <!-- End of Confirm orders-->
-                        <!--google maps with notify to retails-->
-                        <LinearLayout
-                            android:id="@+id/googlemaps_LI"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="150dp"
-                                android:padding="8dp">
-
-                                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    android:id="@+id/map"
-                                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/dp_10"
-                                android:orientation="horizontal">
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:id="@+id/notifiy_tv"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.8"
-                                    android:gravity="center"
-                                    android:maxLines="2"
-                                    android:padding="3dp"
-                                    android:text="On the way to Pick up goods from retailer ? "
-                                    android:textColor="#000"
-                                    android:textSize="@dimen/sp_12"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                    android:id="@+id/notifiy_btn_tv"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center|start"
-                                    android:layout_weight="0.2"
-                                    android:background="@color/colorPrimary"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:padding="3dp"
-                                    android:text="Notifiy"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginRight="@dimen/dp_10">
-
-                                <CheckBox
-                                    android:id="@+id/cb_notify"
-                                    android:layout_width="30dp"
-                                    android:layout_height="20dp"
-                                    android:background="@null"
-                                    android:checked="true" />
-
-                                <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                    android:id="@+id/notifieddata_tv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@+id/cb_notify"
-                                    android:gravity="center"
-                                    android:text="you have notified retailer at 6:30PM. Arrived at store by 7:30 PM"
-                                    android:textColor="@color/header_color"
-                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
-                            </RelativeLayout>
-                        </LinearLayout>
-                        <!-- End of googlemaps with notify orders-->
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <RelativeLayout android:id="@+id/signature_layout"
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/signature_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="#80000000"
+        android:background="#191919"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:visibility="gone"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <com.biglynx.fulfiller.utils.CaptureSignatureView
-            android:id="@+id/signature_view"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/dp_10"
-            android:layout_height="150dp" />
-        <com.biglynx.fulfiller.fonts.CustomFontLight
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@+id/signature_view"
-            android:id="@+id/signHere_tv"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/header_color"
-            android:text="Sign here"
-            />
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/signHere_tv"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_5"
-            android:orientation="horizontal">
+            android:background="@color/white">
 
-            <com.biglynx.fulfiller.fonts.CustomFontMedium
-                android:id="@+id/signature_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:background="@drawable/sign_in_button_bg"
-                android:layout_alignParentLeft="true"
-                android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_20"
-                android:textColor="@color/white"
-                android:visibility="visible" />
+            <com.biglynx.fulfiller.utils.CaptureSignatureView
+                android:id="@+id/signature_view"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/dp_10" />
 
-            <com.biglynx.fulfiller.fonts.CustomFontMedium
-                android:id="@+id/signature_save"
-                android:layout_width="wrap_content"
+            <com.biglynx.fulfiller.fonts.CustomFontLight
+                android:id="@+id/signHere_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:background="@drawable/sign_in_button_bg"
-                android:text="Save"
-                android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_20"
-                android:textColor="@color/white"
-                android:visibility="visible" />
+                android:layout_below="@+id/signature_view"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Sign here"
+                android:textColor="@color/header_color" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/signHere_tv"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal">
+
+                <com.biglynx.fulfiller.fonts.CustomFontMedium
+                    android:id="@+id/signature_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/sign_in_button_bg"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingTop="@dimen/dp_10"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+
+                <com.biglynx.fulfiller.fonts.CustomFontMedium
+                    android:id="@+id/signature_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/sign_in_button_bg"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingTop="@dimen/dp_10"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-</LinearLayout>
+
+</RelativeLayout>

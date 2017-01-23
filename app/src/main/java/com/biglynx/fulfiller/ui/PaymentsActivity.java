@@ -23,7 +23,7 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initLoadFirstFragment() {
-        getSupportFragmentManager().beginTransaction().add(R.id.container_payouts,new AccountConfigFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_payouts,new PaymentDetailsFragment()).commit();
     }
 
     private void initViews() {
@@ -44,18 +44,18 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.configuration_tv:
-                configuration_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
-                payments_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
+                configuration_tv.setBackgroundResource(R.drawable.right_roundedcorner);
+                payments_tv.setBackgroundResource(R.drawable.right_roundedcorner_trans);
                 configuration_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
                 payments_tv.setTextColor(Color.parseColor("#FFFFFF"));
-                initLoadFirstFragment();
+                getSupportFragmentManager().beginTransaction().add(R.id.container_payouts,new AccountConfigFragment()).commit();
                 break;
             case R.id.payments_tv:
-                configuration_tv.setBackgroundResource(R.drawable.right_roundedcorner_trans);
-                payments_tv.setBackgroundResource(R.drawable.right_roundedcorner);
+                configuration_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
+                payments_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
                 payments_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
                 configuration_tv.setTextColor(Color.parseColor("#FFFFFF"));
-                getSupportFragmentManager().beginTransaction().add(R.id.container_payouts,new PaymentDetailsFragment()).commit();
+                initLoadFirstFragment();
                 break;
         }
     }

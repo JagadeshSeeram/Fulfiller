@@ -38,6 +38,7 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
     private EditText bankName_ev, accountType_ev, accountNumber_ev, routingNumber_ev, bankAccountName_ev;
     private ImageView accountTypeArrowImage;
     private TextView submit_tv;
+    private FullFillerApiWrapper apiWrapper;
 
     @Nullable
     @Override
@@ -55,8 +56,16 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
         bankAccountName_ev = (EditText) view.findViewById(R.id.bank_account_name_ev);
         accountTypeArrowImage = (ImageView) view.findViewById(R.id.account_type_arrow);
         submit_tv = (TextView) view.findViewById(R.id.submit_tv);
+        apiWrapper = new FullFillerApiWrapper();
+        updateUi();
+        accountType_ev.setOnClickListener(this);
+        accountTypeArrowImage.setOnClickListener(this);
+        submit_tv.setOnClickListener(this);
 
-        if (AppPreferences.getInstance(getActivity()).getAccountInfo() != null){
+    }
+
+    public void updateUi() {
+        if (AppPreferences.getInstance(getActivity()).getAccountInfo() != null) {
             JSONObject jsonObject = AppPreferences.getInstance(getActivity()).getAccountInfo();
             bankName_ev.setText(jsonObject.optString("BankName"));
             accountType_ev.setText(jsonObject.optString("AccountType"));
@@ -64,12 +73,39 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
             routingNumber_ev.setText(jsonObject.optString("RoutingNumber"));
             bankAccountName_ev.setText(jsonObject.optString("AccountName"));
 
+        } else {
+            getAccountConfigurationDetails();
         }
+    }
 
-        accountType_ev.setOnClickListener(this);
-        accountTypeArrowImage.setOnClickListener(this);
-        submit_tv.setOnClickListener(this);
+    private void getAccountConfigurationDetails() {
+        Common.showDialog(getActivity());
+        apiWrapper.getAccountDetailsCall(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"),
+                AppPreferences.getInstance(getActivity()).getSignInResult().optString("FulfillerId"), new Callback<AccountConfigModel>() {
+                    @Override
+                    public void onResponse(Call<AccountConfigModel> call, Response<AccountConfigModel> response) {
+                        if (response.isSuccessful()) {
+                            AccountConfigModel accountConfigModel = response.body();
+                            AppPreferences.getInstance(getActivity()).setAccountInfo(accountConfigModel);
+                            updateUi();
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+                            AppUtil.CheckErrorCode(getActivity(), response.code());
+                        }
+                        Common.disMissDialog();
+                    }
 
+                    @Override
+                    public void onFailure(Call<AccountConfigModel> call, Throwable t) {
+                        Common.disMissDialog();
+                        AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                    }
+                });
     }
 
     @Override
@@ -89,7 +125,7 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
                     AlertDialogManager.showAlertOnly(getActivity(), "Account Config", "All Fields are mandatory", "Ok");
 
                 } else {
-                    HashMap<String, String> hashMap = new HashMap<>();
+                    /*HashMap<String, String> hashMap = new HashMap<>();
                     try {
                         hashMap.put("Fulfillerid", AppPreferences.getInstance(getActivity()).getSignInResult().getString("FulfillerId"));
                     } catch (JSONException e) {
@@ -101,35 +137,50 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
                     hashMap.put("AccountNumber", accountNumber_ev.getText().toString());
                     hashMap.put("RoutingNumber", routingNumber_ev.getText().toString());
                     hashMap.put("AccountName", bankAccountName_ev.getText().toString());
-                    hashMap.put("Status","Pending");
-                    callService(hashMap);
+                    hashMap.put("Status", "Pending");
+*/
+                    AccountConfigModel configModel = new AccountConfigModel();
+                    try {
+                        configModel.Fulfillerid = AppPreferences.getInstance(getActivity()).getSignInResult().getString("FulfillerId");
+                    } catch (JSONException e) {
+                        configModel.Fulfillerid = "";
+                        e.printStackTrace();
+                    }
+                    configModel.BankName =  bankName_ev.getText().toString();
+                    configModel.AccountType = accountType_ev.getText().toString();
+                    configModel.AccountNumber = accountNumber_ev.getText().toString();
+                    configModel.RoutingNumber = routingNumber_ev.getText().toString();
+                    configModel.AccountName = bankAccountName_ev.getText().toString();
+                    configModel.Status = "Pending";
+                    callService(configModel);
                 }
         }
     }
 
-    private void callService(final HashMap<String,String> hashMap) {
+    private void callService(final AccountConfigModel configModel) {
 
         if (!Common.isNetworkAvailable(getActivity())) {
             AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
             return;
         }
         Common.showDialog(getActivity());
-        FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
         apiWrapper.accountConfigurationCall(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"),
-                hashMap, new Callback<AccountConfigModel>() {
+                configModel, new Callback<AccountConfigModel>() {
                     @Override
                     public void onResponse(Call<AccountConfigModel> call, Response<AccountConfigModel> response) {
                         Common.disMissDialog();
-                        if (response.isSuccessful()){
-                            AppPreferences.getInstance(getActivity()).setAccountInfo(hashMap);
+                        if (response.isSuccessful()) {
+                            AccountConfigModel configModel = response.body();
+                            AppPreferences.getInstance(getActivity()).setAccountInfo(configModel);
                             getActivity().finish();
-                        }else {
+                        } else {
                             try {
                                 AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
                             } catch (IOException e) {
                                 AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
+                            AppUtil.CheckErrorCode(getActivity(), response.code());
                         }
                     }
 

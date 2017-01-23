@@ -1,13 +1,23 @@
 package com.biglynx.fulfiller.ui;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.app.MyApplication;
@@ -35,10 +46,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -81,6 +94,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     static final int DATE_PICKER_ID = 1111;
     private FullFillerApiWrapper apiWrapper;
     private TextView cutomer_address_textView;
+    private int READ_PHONE_STATE_PERMISSION = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -400,9 +414,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                 showDialog(DATE_PICKER_ID);
                 break;
             case R.id.startdelivery_LI:
-                startActivity(new Intent(this, StartDelivery.class)
-                        .putExtra("interest", interest)
-                );
+                getpermissions();
                 break;
 
             case R.id.cancel_intrest_LI:
@@ -451,6 +463,151 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                         .putExtra("position", positions));
                 break;
         }
+    }
+    private void getpermissions() {
+        int sdkVersion = Build.VERSION.SDK_INT;
+
+        if (sdkVersion >= 23) {
+            // Getting permissins to Read from External Storage
+            getPermissionsToReadPhoneState();
+        }else
+            callStartDeliveryService();
+    }
+
+    private Object getDeviceId() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceID = telephonyManager.getDeviceId();
+        Log.d(StartDelivery.class.getSimpleName(), "Device ID :: " + deviceID);
+        return deviceID;
+    }
+
+    public void getPermissionsToReadPhoneState() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_PHONE_STATE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.permisn_denied));
+                builder.setMessage(getString(R.string.explantn_for_requstng_permissn));
+                builder.setPositiveButton("RE-TRY", new
+                        DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //User has asked the permission again.
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    ActivityCompat.requestPermissions(InterestDetails.this, new
+                                                    String[]{android.Manifest.permission.READ_PHONE_STATE},
+                                            READ_PHONE_STATE_PERMISSION);
+                                }
+                            }
+                        });
+                builder.setNegativeButton("IM SURE", new
+                        DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //User has denied the permission.
+                                dialog.dismiss();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+                return;
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ActivityCompat.requestPermissions(InterestDetails.this, new
+                                    String[]{android.Manifest.permission.READ_PHONE_STATE},
+                            READ_PHONE_STATE_PERMISSION);
+                    return;
+                }
+            }
+        } else {
+            //Permission already granted
+            callStartDeliveryService();
+        }
+
+    }
+
+    // Callback with the request from calling requestPermissions(...)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == READ_PHONE_STATE_PERMISSION) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Granted", Toast.LENGTH_SHORT).show();
+                callStartDeliveryService();
+            } else {
+                Toast.makeText(this, "Denied", Toast.LENGTH_SHORT).show();
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_PHONE_STATE)) {
+                    AlertDialog dialog = new AlertDialog.Builder(InterestDetails.this)
+                            .setMessage(getString(R.string.accept_permission_in_settings))
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create();
+                    dialog.setCancelable(false);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                }
+            }
+        }
+    }
+
+
+    private void callStartDeliveryService() {
+        if (!Common.isNetworkAvailable(MyApplication.getInstance())) {
+            AppUtil.toast(InterestDetails.this, "Network disconnected. Please check");
+            return;
+        }
+
+        Common.showDialog(InterestDetails.this);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("fulfillerid", AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
+        hashMap.put("confirmationcode",interest.Fulfillments.FulfillerInterests.ConfirmationCode);
+        hashMap.put("name", interest.Fulfillments.LocationContactPerson);
+        hashMap.put("latitude", interest.Fulfillments.PickUpMapLatitude);//47.6062`
+        hashMap.put("longitude", interest.Fulfillments.PickUpMapLongitude);//122.3321
+        hashMap.put("deviceid", getDeviceId());
+
+        apiWrapper.startDeliveryCall(AppPreferences.getInstance(InterestDetails.this).getSignInResult() != null ?
+                        AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("AuthNToken") : "",
+                hashMap, new Callback<InterestDTO>() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void onResponse(Call<InterestDTO> call, Response<InterestDTO> response) {
+                        if (response.isSuccessful()) {
+                            InterestDTO responseInterestObj = response.body();
+                            if (responseInterestObj != null) {
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("responseInterest",responseInterestObj);
+                                bundle.putString("fulfillerId",null);
+                                startActivity(new Intent(InterestDetails.this,StartDelivery.class)
+                                .putExtras(bundle));
+                            }else {
+                                AppUtil.toast(InterestDetails.this,"The response is empty");
+                            }
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(InterestDetails.this, response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(InterestDetails.this, OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+                        }
+                        Common.disMissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<InterestDTO> call, Throwable t) {
+                        Common.disMissDialog();
+                        AppUtil.toast(InterestDetails.this, OOPS_SOMETHING_WENT_WRONG);
+                    }
+                });
+
     }
 
     protected void sendSMSMessage() {

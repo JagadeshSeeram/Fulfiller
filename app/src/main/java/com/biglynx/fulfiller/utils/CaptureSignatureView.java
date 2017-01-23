@@ -6,9 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.biglynx.fulfiller.R;
 
 import java.io.ByteArrayOutputStream;
 
@@ -31,7 +34,7 @@ public class CaptureSignatureView extends View {
         _paint = new Paint();
         _paint.setAntiAlias(true);
         _paint.setDither(true);
-        _paint.setColor(Color.argb(255, 0, 0, 0));
+        _paint.setColor(Color.argb(255,0, 0, 0));
         _paint.setStyle(Paint.Style.STROKE);
         _paint.setStrokeJoin(Paint.Join.ROUND);
         _paint.setStrokeCap(Paint.Cap.ROUND);
@@ -48,7 +51,7 @@ public class CaptureSignatureView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(getResources().getColor(R.color.capture_view_bg));
         canvas.drawBitmap(_Bitmap, 0, 0, _BitmapPaint);
         canvas.drawPath(_Path, _paint);
     }

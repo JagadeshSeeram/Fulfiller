@@ -27,39 +27,36 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
                 android:src="@drawable/ic_ab_back" />
-
-            <com.biglynx.fulfiller.fonts.CustomFontRegular
-                android:id="@+id/configuration_tv"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_40"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dp_30"
-                android:layout_weight="0.35"
-                android:background="@drawable/lef_roundedcorner"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp_10"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_10"
-                android:text="@string/configuration"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp_13">
-
-            </com.biglynx.fulfiller.fonts.CustomFontRegular>
-
             <com.biglynx.fulfiller.fonts.CustomFontRegular
                 android:id="@+id/payments_tv"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp_40"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/dp_50"
                 android:layout_weight="0.35"
-                android:background="@drawable/lef_roundedcorner_trans"
                 android:gravity="center"
+                android:background="@drawable/lef_roundedcorner"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/payments"
+                android:textSize="@dimen/sp_13">
+            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                android:id="@+id/configuration_tv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center"
+                android:layout_weight="0.35"
+                android:gravity="center"
+                android:background="@drawable/lef_roundedcorner_trans"
+                android:layout_marginRight="@dimen/dp_50"
                 android:paddingBottom="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"
-                android:text="@string/payments"
                 android:textColor="@color/white"
+                android:text="@string/configuration"
                 android:textSize="@dimen/sp_13">
 
             </com.biglynx.fulfiller.fonts.CustomFontRegular>
