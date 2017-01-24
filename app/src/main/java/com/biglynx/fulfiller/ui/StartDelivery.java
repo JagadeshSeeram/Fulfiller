@@ -462,7 +462,6 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         notifieddata_tv = (TextView) findViewById(R.id.notifieddata_tv);
         fulfillmentid_tv = (TextView) findViewById(R.id.fulfillmentid_tv);
         replyText_ev = (EditText) findViewById(R.id.replyText_ev);
-        replyText_ev.clearFocus();
         reply_tv = (TextView) findViewById(R.id.reply_tv);
         retailerName_tv = (TextView) findViewById(R.id.retailerName_tv);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_To_Refresh_Layout);
@@ -930,8 +929,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             confirmtoken_tv.setText(responseInterestObj.Fulfillments.DeliveryPerson.ConfirmationCode);
 
         readytopick_tv.setText("YES");
-        mindistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.MinDistance) + " KM");
-        maxdistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.MaxDistance) + " KM");
+        mindistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.TotalDistance)+" Miles");
+        maxdistance_tv.setText(mInterest.Fulfillments.TotalApproxTimeInSeconds + " min");
         deliverydate_tv.setText(AppUtil.getLocalDateFormat(mInterest.Fulfillments.ExpirationDateTime));
 
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();

@@ -242,8 +242,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
             else
                 share_intrest_LI.setVisibility(View.GONE);
 
-        }
-        else {
+        } else {
             cancel_intrest_LI.setVisibility(View.GONE);
             expressinterest_LI.setVisibility(View.GONE);
             startdelivery_LI.setVisibility(View.GONE);
@@ -267,6 +266,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         // pricetype_tv.setText(interest.Fulfillments.PriceType);
         Date date = new Date();
         date_tv.setText("" + date.toString().replace("GMT+05:30 2016", ""));
+        //date_tv.setText("" +AppUtil.formatTodayDate(date));
         //fulId=interest.Fulfillments.FulfillmentId;
         fulfillment_id_tv.setText("BROADCAST ID " + interest.Fulfillments.FulfillmentId);
         amount_tv.setText("$ " + AppUtil.getTwoDecimals(interest.Fulfillments.FulfillerInterests.Amount));
@@ -320,10 +320,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         try {
 
-            Date myDates = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestDateTime);
-            interest_exp_val_tv.setText("" + myDates.toString().replace("GMT+05:30 2016", ""));
+            //Date myDates = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestDateTime);
+            interest_exp_val_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -348,8 +348,8 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         order_tv.setText("" + interest.Fulfillments.Orders.size());
         total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
-        mindistance_tv.setText(interest.Fulfillments.MinDistance + " Kms");
-        maxdistance_tv.setText(interest.Fulfillments.MaxDistance + " Kms");
+        mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
+        maxdistance_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " min");
         // point_miles_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " Miles");
 
 
@@ -443,9 +443,9 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                     android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
                             getSystemService(context.CLIPBOARD_SERVICE);
                     android.content.ClipData clip = android.content.ClipData
-                            .newPlainText("Details","Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
+                            .newPlainText("Details", "Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
                                     interest.Fulfillments.FulfillmentId +
-                                    "\nFulFiller Id : "+AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
+                                    "\nFulFiller Id : " + AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
                     clipboard.setPrimaryClip(clip);
 
                 } catch (Exception e) {
@@ -464,13 +464,14 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                 break;
         }
     }
+
     private void getpermissions() {
         int sdkVersion = Build.VERSION.SDK_INT;
 
         if (sdkVersion >= 23) {
             // Getting permissins to Read from External Storage
             getPermissionsToReadPhoneState();
-        }else
+        } else
             callStartDeliveryService();
     }
 
@@ -567,7 +568,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         Common.showDialog(InterestDetails.this);
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("fulfillerid", AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
-        hashMap.put("confirmationcode",interest.Fulfillments.FulfillerInterests.ConfirmationCode);
+        hashMap.put("confirmationcode", interest.Fulfillments.FulfillerInterests.ConfirmationCode);
         hashMap.put("name", interest.Fulfillments.LocationContactPerson);
         hashMap.put("latitude", interest.Fulfillments.PickUpMapLatitude);//47.6062`
         hashMap.put("longitude", interest.Fulfillments.PickUpMapLongitude);//122.3321
@@ -583,12 +584,12 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                             InterestDTO responseInterestObj = response.body();
                             if (responseInterestObj != null) {
                                 Bundle bundle = new Bundle();
-                                bundle.putParcelable("responseInterest",responseInterestObj);
-                                bundle.putString("fulfillerId",null);
-                                startActivity(new Intent(InterestDetails.this,StartDelivery.class)
-                                .putExtras(bundle));
-                            }else {
-                                AppUtil.toast(InterestDetails.this,"The response is empty");
+                                bundle.putParcelable("responseInterest", responseInterestObj);
+                                bundle.putString("fulfillerId", null);
+                                startActivity(new Intent(InterestDetails.this, StartDelivery.class)
+                                        .putExtras(bundle));
+                            } else {
+                                AppUtil.toast(InterestDetails.this, "The response is empty");
                             }
                         } else {
                             try {
@@ -625,9 +626,9 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
             AlertDialogManager.showAlertOnly(this,"Fulfiller","Error sending SMS","Ok");
             e.printStackTrace();
         }*/
-        Intent message = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + "" ) );
-        message.putExtra( "sms_body", "Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
-                interest.Fulfillments.FulfillmentId + "\nFulFiller Id : "+AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
+        Intent message = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + ""));
+        message.putExtra("sms_body", "Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
+                interest.Fulfillments.FulfillmentId + "\nFulFiller Id : " + AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
         startActivity(message);
     }
 
@@ -643,7 +644,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Fulfiller Details");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
-                interest.Fulfillments.FulfillmentId + "\nFulFiller Id : "+AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
+                interest.Fulfillments.FulfillmentId + "\nFulFiller Id : " + AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));

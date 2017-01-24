@@ -85,10 +85,10 @@ public interface FullFillerApi {
     Call<List<MessagesModel>> getAllMessages(@Path("FulFillmentId") String FulFillmentId);
 
     @POST(HttpAdapter.FULFILLMENT_PROGRESS_MESSAGE)
-    Call<List<MessagesModel>> postFulFillerMessages(@Body HashMap<String,Object> hashMap);
+    Call<List<MessagesModel>> postFulFillerMessages(@Body HashMap<String, Object> hashMap);
 
     @POST(HttpAdapter.UPDATE_DELIVERY_STATUS)
-    Call<InterestDTO> updateDeliveryStatus(@Body HashMap<String,Object> hashMap);
+    Call<InterestDTO> updateDeliveryStatus(@Body HashMap<String, Object> hashMap);
 
     @GET(HttpAdapter.DIRECTDEPOSIT+"/"+"{fulfillerID}")
     Call<AccountConfigModel> getAccountDetails(@Path("fulfillerID") String fulfillerID);
@@ -97,7 +97,7 @@ public interface FullFillerApi {
     Call<ArrayList<SupportCategoryModel>> getSupportCategories(@Query("ProductCode") String productCode);
 
     @POST(HttpAdapter.CREATE_TICKET)
-    Call<SupportCategoryModel> createTicket(@Body HashMap<String,String> hashMap);
+    Call<SupportCategoryModel> createTicket(@Body HashMap<String, String> hashMap);
 
     @GET(HttpAdapter.CREATE_TICKET)
     Call<ArrayList<SupportCategoryModel>> getAllTickets(@Query("ProductCode") String productCode);

@@ -14,7 +14,7 @@
             android:id="@+id/swipe_To_Refresh_Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EFEFEF">
+            >
 
             <ScrollView
                 android:id="@+id/deliveryScrollView"
@@ -24,13 +24,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#EFEFEF"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="#DADADA"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="#F6F6F6"
                         android:orientation="horizontal"
                         android:paddingRight="10dp"
                         android:weightSum="1">
@@ -258,9 +260,9 @@
                                 android:gravity="center|start"
                                 android:hint="@string/send_msg_to_retailer"
                                 android:maxLines="2"
-
                                 android:padding="3dp"
                                 android:textColor="#4E4E4E"
+                                android:textColorHint="@color/header_color"
                                 android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.utils.EditTextFontLight>
 
                             <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -479,7 +481,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|start"
-                                android:layout_weight="0.8"
+                                android:layout_weight="0.6"
                                 android:gravity="center|start"
                                 android:maxLines="2"
                                 android:padding="5dp"
@@ -492,7 +494,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center|end"
-                                android:layout_weight="0.2"
+                                android:layout_weight="0.4"
                                 android:gravity="center|end"
                                 android:maxLines="1"
                                 android:padding="5dp"
@@ -505,7 +507,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:background="@drawable/editext_bottom"
                             android:orientation="horizontal"
                             android:weightSum="1">
 
@@ -513,7 +514,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|start"
-                                android:layout_weight="0.8"
+                                android:layout_weight="0.6"
                                 android:gravity="center|start"
                                 android:maxLines="2"
                                 android:padding="5dp"
@@ -526,7 +527,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center|end"
-                                android:layout_weight="0.2"
+                                android:layout_weight="0.4"
                                 android:gravity="center|end"
                                 android:maxLines="2"
                                 android:padding="5dp"
@@ -543,7 +544,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:background="#efefef"
+                        android:background="#DADADA"
                         android:orientation="vertical">
 
                         <LinearLayout

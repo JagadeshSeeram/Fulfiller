@@ -347,6 +347,22 @@ public class AppUtil {
         }
     }
 
+    public static String formatTodayDate(Date date){
+        try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int month = cal.get(Calendar.DAY_OF_MONTH);
+            String suffix = getDayNumberSuffix(month);
+            SimpleDateFormat displayDateFormat = new SimpleDateFormat("EEE MMM dd'" + suffix + "' hh:mm:ss a yyyy");
+            displayDateFormat.setTimeZone(TimeZone.getDefault());
+            String result = displayDateFormat.format(date);
+            return result;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return " ";
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void CheckErrorCode(Activity context, int responseCode) {
 
@@ -358,5 +374,19 @@ public class AppUtil {
             context.finishAffinity();
             ;
         }
+    }
+
+    public static String convertIntoMiles(double kilomtrs) {
+        double miles = kilomtrs * 0.6213;
+        return String.format(".%2f", miles);
+    }
+
+    public static String convertIntoMinutes(String seconds) {
+        if (seconds.equals("0") || seconds == null
+                || seconds.length() == 0 || seconds.equals("null")) {
+            return "0";
+        }
+        double min = Double.parseDouble(seconds) / 60;
+        return String.format(".%2f", min);
     }
 }

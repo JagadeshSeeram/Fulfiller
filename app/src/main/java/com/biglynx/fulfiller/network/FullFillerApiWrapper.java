@@ -291,7 +291,7 @@ public class FullFillerApiWrapper {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getSupportCategories(productCode);
+        Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getAllTickets(productCode);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;

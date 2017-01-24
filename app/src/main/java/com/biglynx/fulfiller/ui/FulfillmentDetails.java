@@ -397,8 +397,8 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
         fulfillmentid_tv.setText(broadCast.Fulfillments.get(positions).FulfillmentId);
         orders_tv.setText("" + broadCast.Fulfillments.get(positon).OrderCount);
         total_weight_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalWeight) + " Lbs");
-        mindistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).MinDistance) + " Kms");
-        maxdistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).MaxDistance) + " Kms");
+        mindistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalDistance) + " Miles");
+        maxdistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalApproxTimeInSeconds) + " min");
         point_miles_tv.setText(broadCast.Fulfillments.get(positon).TotalApproxTimeInSeconds + " Miles");
 
 

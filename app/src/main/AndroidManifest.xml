@@ -31,8 +31,8 @@
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:windowSoftInputMode="adjustResize"
-        android:theme="@style/AppThemeNew">
+        android:theme="@style/AppThemeNew"
+        android:windowSoftInputMode="stateAlwaysHidden">
         <activity
             android:name=".ui.SplashActivity"
             android:label="@string/app_name"
@@ -117,7 +117,8 @@
             android:name="io.fabric.ApiKey"
             android:value="9670afc70ca67113b8babc3ab9b71fdc758026d8" />
 
-        <activity android:name=".ui.CreateTicketActivity"></activity>
+        <activity android:name=".ui.CreateTicketActivity" />
+        <activity android:name=".ui.ViewServiceRequestsActivity"></activity>
     </application>
 
 </manifest>
