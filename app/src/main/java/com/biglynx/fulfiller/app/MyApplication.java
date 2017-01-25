@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.biglynx.fulfiller.models.FulfillersDTO;
+import com.biglynx.fulfiller.receiver.NotificationsBroadcastReceiver;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import java.security.MessageDigest;

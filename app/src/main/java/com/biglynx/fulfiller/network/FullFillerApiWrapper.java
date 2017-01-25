@@ -14,6 +14,7 @@ import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.UserProfile;
 import com.biglynx.fulfiller.models.Vehicles;
+import com.biglynx.fulfiller.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -292,6 +293,26 @@ public class FullFillerApiWrapper {
             createRetrofitWithHeader(authToken);
         }
         Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getAllTickets(productCode);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<String> sendFcmTokenToServerCall(String authToken,String fcmToken,Callback<String> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(fcmToken);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<Void> sendRegistrationID(String authToken,String registrationID, HashMap<String,Object> hashMap, Callback<Void> callback){
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<Void> call = fullFillerApiHeader.sendRegistrationID(registrationID, Constants.NOTIFICATION_PRODUCTCODE, hashMap);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;

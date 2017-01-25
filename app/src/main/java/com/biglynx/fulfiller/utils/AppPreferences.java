@@ -10,8 +10,6 @@ import com.biglynx.fulfiller.models.SignInResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 public class AppPreferences {
     private static final String PREF_APP_RATE = "pref_app_rate";
     private static final String PREF_LAUNCH_COUNT = "pref_launch_count";
@@ -19,6 +17,7 @@ public class AppPreferences {
     private static AppPreferences sInstance;
     private SharedPreferences mPrefs;
     private String ACCOUNt_INFO = "pref_account_info";
+    private String NOTIFICATION_REGISTRATION_ID = "registration_ID";
 
     private AppPreferences(Context paramContext) {
         this.mPrefs = paramContext.getSharedPreferences("app_prefs", 0);
@@ -101,5 +100,19 @@ public class AppPreferences {
         Editor localEditor = this.mPrefs.edit();
         localEditor.remove(PREF_LAUNCH_COUNT);
         localEditor.commit();
+    }
+
+    public void setRegistrationID(String registrationID){
+        Editor localEditor = this.mPrefs.edit();
+        localEditor.putString(NOTIFICATION_REGISTRATION_ID,registrationID);
+        localEditor.commit();
+    }
+
+    public String getRegistrationID() {
+        String registrationID = mPrefs.getString(NOTIFICATION_REGISTRATION_ID,null);
+        if (registrationID != null)
+            return registrationID;
+        else
+            return null;
     }
 }

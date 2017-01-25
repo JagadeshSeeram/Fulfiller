@@ -34,7 +34,7 @@ android {
         javaMaxHeapSize "2048M"
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15
@@ -80,4 +80,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.googlecode.libphonenumber:libphonenumber:7.2.2'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
 }
+
+
+
+apply plugin: 'com.google.gms.google-services'

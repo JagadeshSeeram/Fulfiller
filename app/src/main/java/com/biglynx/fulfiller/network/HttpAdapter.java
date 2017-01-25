@@ -47,6 +47,8 @@ public class HttpAdapter {
     public static final String SUPPORT_CATEGORIES = BASE_URL + "";
     public static final String GET_SUPPORT_CATEGORIES = BASE_URL + "SupportRequest/GetCategories?";
     public static final String CREATE_TICKET = BASE_URL + "SupportRequest?";
+    public static final String SEND_TOKEN_TO_SERVER = "http://biglynxnotification.azurewebsites.net/api//register?";
+    public static final String SEND_REGISTRATION_ID = "http://biglynxnotification.azurewebsites.net/api/register?";
 
 
     // extendexpiration

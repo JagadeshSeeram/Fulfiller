@@ -1022,7 +1022,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             String data = "";
 
             // Obtain browser key from https://code.google.com/apis/console
-            String key = "key=AIzaSyDnvhGPDhbTPt-XkXPu7MSvisHZwuy6iHQ";
+            String key = "key=AIzaSyADZn_fB01NotqDI_rjxkBMe9_NfMXNrEw";
 
 
             String input = "";

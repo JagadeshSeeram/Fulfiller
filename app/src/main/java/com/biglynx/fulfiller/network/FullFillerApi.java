@@ -101,4 +101,11 @@ public interface FullFillerApi {
 
     @GET(HttpAdapter.CREATE_TICKET)
     Call<ArrayList<SupportCategoryModel>> getAllTickets(@Query("ProductCode") String productCode);
+
+    @POST(HttpAdapter.SEND_TOKEN_TO_SERVER)
+    Call<String> sendFcmTokenToServer(@Query("handle") String fcmToken);
+
+    @POST(HttpAdapter.SEND_REGISTRATION_ID)
+    Call<Void> sendRegistrationID(@Query("id") String registrationID, @Query("productid") String productCode, @Body HashMap<String,Object> hashMap);
+
 }

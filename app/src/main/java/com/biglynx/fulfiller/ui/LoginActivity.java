@@ -66,8 +66,10 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,6 +124,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     private double longitude;
     private double latitude;
     private View loginLayout;
+    private String registrationID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -773,6 +776,15 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         }
     }
     public void finishActivity() {
+
+        if (AppPreferences.getInstance(LoginActivity.this).getRegistrationID() == null){
+            String fireBaseRegistrationID = FirebaseInstanceId.getInstance().getToken();
+            if (fireBaseRegistrationID != null){
+                Log.e(TAG,"FireBase Token :: "+fireBaseRegistrationID);
+                sendFcmTokenToServer(fireBaseRegistrationID);
+            }
+        }
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -780,6 +792,92 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         startActivity(intent);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Common.disMissDialog();
+    }
+
+    private void sendFcmTokenToServer(String fcmToken) {
+        Common.showDialog(LoginActivity.this);
+
+        fillerApiWrapper.sendFcmTokenToServerCall(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
+                        AppPreferences.getInstance(LoginActivity.this).getSignInResult().optString("AuthNToken") : "",
+                fcmToken, new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()){
+                            registrationID = response.body();
+                            Log.e(TAG,"Sending FcmToken Body :: "+registrationID);
+                            sendRegistrationID(registrationID);
+                        }else {
+                            try {
+                                AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
+                            } catch (IOException e) {
+                                Log.e(TAG,"Sending FcmToken Error");
+                                e.printStackTrace();
+                            }
+                        }
+                        Common.disMissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Common.disMissDialog();
+                        Log.e(TAG,"Sending FcmToken Error");
+                    }
+                });
+
+    }
+
+    private void sendRegistrationID(final String registrationID) {
+        Common.showDialog(LoginActivity.this);
+
+        JSONArray flagsObj = new JSONArray();
+        if (AppPreferences.getInstance(this).getSignInResult() != null) {
+            if (AppPreferences.getInstance(this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+                flagsObj.put("UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") != null ?
+                        AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") : "");
+            } else {
+                flagsObj.put("UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("Email") != null ?
+                        AppPreferences.getInstance(this).getSignInResult().optString("Email") : "");
+            }
+        }
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("Platform","gcm");
+        hashMap.put("Handle",registrationID);
+        hashMap.put("Tags",flagsObj);
+
+        if (registrationID != null){
+            fillerApiWrapper.sendRegistrationID(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
+                            AppPreferences.getInstance(LoginActivity.this).getSignInResult().optString("AuthNToken") : "",
+                    registrationID, hashMap, new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()){
+                                Log.e(TAG,"Notification Register Body :: "+response.body());
+                                AppPreferences.getInstance(LoginActivity.this).setRegistrationID(registrationID);
+                            }else {
+                                try {
+                                    AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
+                                } catch (IOException e) {
+                                    Log.e(TAG,"Notification Register Error");
+                                    e.printStackTrace();
+                                }
+                            }
+                            Common.disMissDialog();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Common.disMissDialog();
+                            Log.e(TAG,"Notification Register Error");
+                        }
+                    });
+        }
+    }
+
 
     @Override
     public void onLocationChanged(Location location) {
