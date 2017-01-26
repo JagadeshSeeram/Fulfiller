@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.biglynx.fulfiller">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,7 +27,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <permission android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE"/>
+
     <application
+        tools:replace="android:icon"
         android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/appicon"

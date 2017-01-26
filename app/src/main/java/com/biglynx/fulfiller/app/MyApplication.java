@@ -1,6 +1,7 @@
 package com.biglynx.fulfiller.app;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,8 +11,12 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.biglynx.fulfiller.models.FulfillersDTO;
+import com.biglynx.fulfiller.network.HttpAdapter;
 import com.biglynx.fulfiller.receiver.NotificationsBroadcastReceiver;
+import com.biglynx.fulfiller.services.MyHandler;
 import com.crashlytics.android.Crashlytics;
+import com.microsoft.windowsazure.notifications.NotificationsManager;
+
 import io.fabric.sdk.android.Fabric;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +34,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        NotificationsManager.handleNotifications(this, HttpAdapter.SENDER_ID, MyHandler.class);
         printHashKey();
         _instance = this;
     }
