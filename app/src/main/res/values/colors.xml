@@ -35,4 +35,5 @@
     <color name="cancel">#0079FE</color>
     <color name="grey_shade_1">#555555</color>
     <color name="capture_view_bg">#E1E1E1</color>
+    <color name="settings_seperator_color">#D0CFD3</color>
 </resources>

@@ -35,7 +35,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/header_color"
+        android:background="@color/settings_seperator_color"
         >
     </View>
     <RelativeLayout
@@ -72,7 +72,7 @@
         android:gravity="left"
         android:text="djsdsd sdjsjds jdjsbdhsdsbusd sdbhsbsh"
         android:layout_toLeftOf="@+id/date_tv"
-        android:textColor="@color/black"
+        android:textColor="@color/header_color"
         android:layout_marginTop="3dp"
         android:textSize="@dimen/sp_13"
         />

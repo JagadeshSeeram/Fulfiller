@@ -17,14 +17,20 @@
 
         </include>
 
-
-        <ListView
-            android:id="@+id/listview_lv"
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:divider="@color/seperator_color"
-            android:dividerHeight="1dp"></ListView>
+            android:id="@+id/swipe_To_Refresh_Layout"
+            >
+            <ListView
+                android:id="@+id/listview_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@color/seperator_color"
+                android:dividerHeight="1dp"></ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
     <FrameLayout

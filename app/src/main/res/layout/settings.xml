@@ -35,6 +35,7 @@
                     android:gravity="center|start"
                     android:maxLines="1"
                     android:text="test name"
+                    android:letterSpacing="0.05"
                     android:textAllCaps="true"
                     android:textSize="@dimen/sp_14">
 
@@ -108,7 +109,7 @@
                         android:layout_weight="0.1"
                         android:gravity="center"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/vehicles_ics"
+                        android:src="@drawable/ic_vehicl"
                         android:visibility="visible"></ImageView>
 
                     <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -140,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="48dp"
-                    android:background="@color/header_color"
+                    android:background="@color/settings_seperator_color"
                     android:padding="6dp"></View>
 
                 <LinearLayout
@@ -245,7 +246,7 @@
                     android:layout_height="1dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="48dp"
-                    android:background="@color/header_color"
+                    android:background="@color/settings_seperator_color"
                     android:padding="6dp"></View>
 
                 <LinearLayout
@@ -352,7 +353,7 @@
                     android:layout_height="1dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="48dp"
-                    android:background="@color/header_color"
+                    android:background="@color/settings_seperator_color"
                     android:padding="6dp"></View>
 
                 <LinearLayout
@@ -405,7 +406,7 @@
                     android:layout_height="1dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="48dp"
-                    android:background="@color/header_color"
+                    android:background="@color/settings_seperator_color"
                     android:padding="6dp"></View>
 
                 <LinearLayout

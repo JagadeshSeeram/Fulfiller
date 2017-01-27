@@ -56,7 +56,7 @@ public class CustomerAddress extends AppCompatActivity implements
 
         if (getIntent().getExtras() != null){
             if (getIntent().hasExtra("broadCast"))
-                broadCast=(BroadCast)getIntent().getSerializableExtra("broadCast");
+                broadCast=(BroadCast)getIntent().getParcelableExtra("broadCast");
             else
                 interestDTO = (InterestDTO) getIntent().getParcelableExtra("interest");
 

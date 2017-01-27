@@ -61,7 +61,6 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
                 //this will log the page number that was click
                 Log.i("TAG", "This page was clicked: " + broadCast.RetailerLocationAddress.RetailerLocationId);
                 mContext.startActivity(new Intent(mContext, FulfillmentDetails.class)
-                .putExtra("broadCast",broadCast)
                 .putExtra("position",position)
                         .putExtra("retaileLocId",broadCast.RetailerLocationAddress.RetailerLocationId)
                 );

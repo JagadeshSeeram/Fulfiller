@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -100,7 +101,7 @@ import retrofit2.Response;
 public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener, AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener {
+        LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener, AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private GoogleMap gMap;
     GoogleApiClient mGoogleApiClient;
@@ -149,6 +150,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private Animation animation_slide_down;
     private Animation animation_slide_up;
     private View v;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -198,9 +200,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
         apiWrapper = new FullFillerApiWrapper();
         if (Common.isNetworkAvailable(MyApplication.getInstance())) {
-            apiWrapper = new FullFillerApiWrapper();
-            Common.showDialog(getActivity());
-            callService();
+            callService(true);
         } else
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
 
@@ -209,6 +209,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     private void initViews(View v) {
         googlePlacesresult = new ArrayList<>();
+        apiWrapper = new FullFillerApiWrapper();
         Log.d("onCreate", "onCreate()");
         dbHelper = new DBHelper(getActivity());
         search_ev = (PlaceAutocompleteFragment)
@@ -269,6 +270,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         atvPlaces = (AutoCompleteTextView) v.findViewById(R.id.atv_places);
         searchbar_FL = (FrameLayout) v.findViewById(R.id.searchbar_FL);
         autocomplte_places = (TextView) v.findViewById(R.id.autocomplte_places);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
         atvPlaces.setThreshold(1);
         broadCastList = new ArrayList<>();
         LinearLayout retailerInfo = (LinearLayout) v.findViewById(R.id.retailerInfo);
@@ -401,35 +404,46 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
-    private void callService() {
-        apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"), new Callback<ArrayList<BroadCast>>() {
-            @Override
-            public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
-                if (response.isSuccessful()) {
-                    broadCastList = response.body();
-                    checkTheExpressedFullfilments();
-                    drawCircle(centerLatLng);
-                    broadcastAdapter = new Broadcast_Adapter(getActivity(), broadCastList);
-                    listview_lv.setAdapter(broadcastAdapter);
-                } else {
-                    try {
-                        AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
-                    } catch (IOException e) {
-                        AppUtil.toast(getActivity(), getString(R.string.OOPS));
-                        e.printStackTrace();
+    private void callService(final boolean showProgress) {
+        if (showProgress)
+            Common.showDialog(getActivity());
+        apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
+                new Callback<ArrayList<BroadCast>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
+                        if (response.isSuccessful()) {
+                            broadCastList = response.body();
+                            checkTheExpressedFullfilments();
+                            drawCircle(centerLatLng);
+                            broadcastAdapter = new Broadcast_Adapter(getActivity(), broadCastList);
+                            listview_lv.setAdapter(broadcastAdapter);
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(getActivity(), getString(R.string.OOPS));
+                                e.printStackTrace();
+                            }
+                            AppUtil.CheckErrorCode(getActivity(), response.code());
+                        }
+                        if (showProgress)
+                            Common.disMissDialog();
+                        else
+                            swipeRefreshLayout.setRefreshing(false);
                     }
-                    AppUtil.CheckErrorCode(getActivity(), response.code());
-                }
-                Common.disMissDialog();
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<BroadCast>> call, Throwable t) {
-                Common.disMissDialog();
-                Log.e("BroadCastFrag", "BroadCast :: " + t.getMessage());
-                AppUtil.toast(getActivity(), getString(R.string.OOPS));
-            }
-        });
+                    @Override
+                    public void onFailure(Call<ArrayList<BroadCast>> call, Throwable t) {
+                        if (showProgress)
+                            Common.disMissDialog();
+                        else
+                            swipeRefreshLayout.setRefreshing(false);
+
+                        Log.e("BroadCastFrag", "BroadCast :: " + t.getMessage());
+                        AppUtil.toast(getActivity(), getString(R.string.OOPS));
+                    }
+                });
     }
 
     private void checkTheExpressedFullfilments() {
@@ -1404,5 +1418,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             builder.include(south);
         }
         return builder.build();
+    }
+
+    @Override
+    public void onRefresh() {
+        callService(false);
     }
 }

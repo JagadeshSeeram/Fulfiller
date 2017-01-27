@@ -66,77 +66,83 @@
     </android.support.v7.widget.Toolbar>
 
     <!--toolbar end-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#353944"
-        android:gravity="center"
-        android:padding="8dp"
-        android:id="@+id/headerbar_LI"
-        android:orientation="horizontal">
-
-        <com.biglynx.fulfiller.fonts.CustomFontRegular
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="center"
-            android:gravity="center|start"
-            android:id="@+id/awating_tv"
-            android:text="Awating confirmation"
-            android:textSize="@dimen/textview_dp14"
-            android:textAllCaps="true"
-            android:visibility="gone"
-            ></com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-        <com.biglynx.fulfiller.fonts.CustomFontRegular
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textColor="#FFFFFF"
-            android:gravity="center|end|right"
-            android:id="@+id/confirmed_tv"
-            android:text="Confirmed"
-            android:visibility="gone"
-            android:textAllCaps="true"
-            android:textSize="@dimen/textview_dp14"
-            ></com.biglynx.fulfiller.fonts.CustomFontRegular>
-    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipe_To_Refresh_Layout"
         >
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#DADADA"
-            >
-            <ListView
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fulfiment_lv"
-                android:divider="#353944"
-                android:layout_margin="@dimen/dp_10"
-                android:background="#FFFFFF"
-                android:visibility="visible"
-                android:dividerHeight="0.1dp">
-            </ListView>
-
-            <com.biglynx.fulfiller.fonts.CustomFontBold
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nofulfillments_tv"
-                android:visibility="gone"
+                android:background="#353944"
                 android:gravity="center"
-                android:textColor="#ABABAB"
-                android:drawableTop="@drawable/ic_fulfillments"
-                android:textSize="15sp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:drawablePadding="@dimen/dp_10"
-                android:text="No recent fulfillments!"/>
-        </RelativeLayout>
+                android:padding="8dp"
+                android:id="@+id/headerbar_LI"
+                android:orientation="horizontal">
+
+                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:id="@+id/awating_tv"
+                    android:text="Awating confirmation"
+                    android:textSize="@dimen/textview_dp14"
+                    android:textAllCaps="true"
+                    android:visibility="gone"
+                    ></com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center|end|right"
+                    android:id="@+id/confirmed_tv"
+                    android:text="Confirmed"
+                    android:visibility="gone"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textview_dp14"
+                    ></com.biglynx.fulfiller.fonts.CustomFontRegular>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DADADA"
+                >
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fulfiment_lv"
+                    android:divider="#353944"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="#FFFFFF"
+                    android:visibility="visible"
+                    android:dividerHeight="0.1dp">
+                </ListView>
+
+                <com.biglynx.fulfiller.fonts.CustomFontBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nofulfillments_tv"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textColor="#ABABAB"
+                    android:drawableTop="@drawable/ic_fulfillments"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="No recent fulfillments!"/>
+            </RelativeLayout>
+        </LinearLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

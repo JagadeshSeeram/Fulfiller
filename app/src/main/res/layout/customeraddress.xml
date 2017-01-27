@@ -41,7 +41,7 @@
             android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:drawablePadding="@dimen/dp_10"
+            android:drawablePadding="@dimen/dp_5"
             />
 
         <com.biglynx.fulfiller.fonts.CustomFontBold

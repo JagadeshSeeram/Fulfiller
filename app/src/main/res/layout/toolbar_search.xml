@@ -61,7 +61,6 @@
                     android:textSize="@dimen/textview_dp14"
                     android:maxLines="1"
                     android:visibility="gone"
-                    android:textAllCaps="true"
                     android:id="@+id/statustv"
                     android:layout_height="wrap_content" />
 
@@ -73,17 +72,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:layout_gravity="center"
             >
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:gravity="center|right"
                 android:layout_marginRight="10dp"
                 android:visibility="gone"
                 android:id="@+id/toolbar_end_imv"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/filters"
+                android:src="@drawable/help_icon_n"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -95,6 +96,7 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center|start"
                 android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
                 />
         </RelativeLayout>
     </LinearLayout>

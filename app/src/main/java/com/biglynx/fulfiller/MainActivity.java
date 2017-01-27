@@ -19,7 +19,7 @@ import com.biglynx.fulfiller.ui.SettingsFragment;
 import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends FragmentActivity {
-    private FragmentTabHost mTabHost;
+    private static FragmentTabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,47 +41,54 @@ public class MainActivity extends FragmentActivity {
                 mTabHost.newTabSpec("ME").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.me, R.drawable.ic_me,false)),
                 SettingsFragment.class, null);
 
+
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-
-                int tab = mTabHost.getCurrentTab();
-
-                for(int i=0;i<=3;i++){
-
-                    View v = mTabHost.getTabWidget().getChildAt(i);
-                    TextView tv = (TextView) v.findViewById(R.id.textView);
-                    ImageView imv = (ImageView) v.findViewById(R.id.imageView);
-
-                    if(tab==i){
-
-                        tv.setTextColor(Color.parseColor("#EC932F"));
-                        if(i==0){
-                            imv.setImageResource(R.drawable.ic_home_selected);
-                        }else  if(i==1){
-                            imv.setImageResource(R.drawable.ic_broadcasts_selected);
-                        }else  if(i==2){
-                            imv.setImageResource(R.drawable.ic_fulfillments_selected);
-                        }else  if(i==3){
-                            imv.setImageResource(R.drawable.ic_me_selected);
-                        }
-                    }
-                    else {
-                        tv.setTextColor(Color.parseColor("#B1B1B1"));
-                        if(i==0){
-                            imv.setImageResource(R.drawable.ic_home);
-                        }else  if(i==1){
-                            imv.setImageResource(R.drawable.ic_broadcasts);
-                        }else  if(i==2){
-                            imv.setImageResource(R.drawable.ic_fulfillments);
-                        }else  if(i==3){
-                            imv.setImageResource(R.drawable.ic_me);
-                        }
-                    }
-                }
-
+                updateTabs();
             }
         });
+    }
+
+    public static void setCurrentTab(int position){
+        mTabHost.setCurrentTab(position);
+    }
+
+    public static void updateTabs() {
+        int tab = mTabHost.getCurrentTab();
+
+        for(int i=0;i<=3;i++){
+
+            View v = mTabHost.getTabWidget().getChildAt(i);
+            TextView tv = (TextView) v.findViewById(R.id.textView);
+            ImageView imv = (ImageView) v.findViewById(R.id.imageView);
+
+            if(tab==i){
+
+                tv.setTextColor(Color.parseColor("#EC932F"));
+                if(i==0){
+                    imv.setImageResource(R.drawable.ic_home_selected);
+                }else  if(i==1){
+                    imv.setImageResource(R.drawable.ic_broadcasts_selected);
+                }else  if(i==2){
+                    imv.setImageResource(R.drawable.ic_fulfillments_selected);
+                }else  if(i==3){
+                    imv.setImageResource(R.drawable.ic_me_selected);
+                }
+            }
+            else {
+                tv.setTextColor(Color.parseColor("#B1B1B1"));
+                if(i==0){
+                    imv.setImageResource(R.drawable.ic_home);
+                }else  if(i==1){
+                    imv.setImageResource(R.drawable.ic_broadcasts);
+                }else  if(i==2){
+                    imv.setImageResource(R.drawable.ic_fulfillments);
+                }else  if(i==3){
+                    imv.setImageResource(R.drawable.ic_me);
+                }
+            }
+        }
     }
 
     private View getTabIndicator(Context context, int title, int icon, boolean intialtab) {

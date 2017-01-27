@@ -98,6 +98,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     private int READ_PHONE_STATE_PERMISSION = 1;
     private ImageView toolbar_end_imv;
     private TextView due_date_tv;
+    private LinearLayout delivery_due_LI;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         due_date_tv = (TextView) findViewById(R.id.due_date_tv);
         expiration_tv = (TextView) findViewById(R.id.expiration_tv);
         expiremsg_tv = (TextView) findViewById(R.id.expiremsg_tv);
+        delivery_due_LI = (LinearLayout) findViewById(R.id.delivery_due_LI);
         expressed_LI = (LinearLayout) findViewById(R.id.expressed_LI);
         expressinterest_LI = (LinearLayout) findViewById(R.id.expressinterest_LI);
         cancel_intrest_LI = (LinearLayout) findViewById(R.id.cancel_intrest_LI);
@@ -227,7 +229,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
     private void buildUI() {
 
-        status_tv.setText("status :" + interest.Fulfillments.FulfillerInterests.InterestStatus);
+        status_tv.setText("Status: " + interest.Fulfillments.FulfillerInterests.InterestStatus);
         status_tv.setVisibility(View.VISIBLE);
         titlebar.setText(interest.BusinessLegalName.toUpperCase());
 
@@ -269,7 +271,8 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         fillfromData(positon);
 
         pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
-                interest.RetailerLocationAddress.RetailerLocationAddress.City + ", " +interest.RetailerLocationAddress.RetailerLocationAddress.State+", "+
+                interest.RetailerLocationAddress.RetailerLocationAddress.City + ", "
+                +interest.RetailerLocationAddress.RetailerLocationAddress.State+", "+
                 interest.RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
         // pricetype_tv.setText(interest.Fulfillments.PriceType);
@@ -277,7 +280,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         //date_tv.setText("" + date.toString().replace("GMT+05:30 2016", ""));
         date_tv.setText("" +AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
         //fulId=interest.Fulfillments.FulfillmentId;
-        fulfillment_id_tv.setText("BROADCAST ID " + interest.Fulfillments.FulfillmentId);
+        fulfillment_id_tv.setText("BROADCAST ID: " + interest.Fulfillments.FulfillmentId);
         amount_tv.setText("$ " + AppUtil.getTwoDecimals(interest.Fulfillments.FulfillerInterests.Amount));
         //orders=""+interest.Fulfillments.Orders.size();
 
@@ -295,7 +298,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         } else {
             double amount = interest.Fulfillments.FulfillerInterests.Amount;
             double subtotals = amount + 0;
-            fixedprice_tv.setText("Bid Amount " + AppUtil.getTwoDecimals(subtotals) + " $");
+            fixedprice_tv.setText("Bidding price " + AppUtil.getTwoDecimals(subtotals) + " $");
             subtotal.setText("$ " + AppUtil.getTwoDecimals(subtotals));
             double value = subtotals * (10 / 100.0f);
             servicefee_tv.setText("" + AppUtil.getTwoDecimals(value));
@@ -306,7 +309,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     }
 
     private void fillfromData(final int positon) {
-
+        // Timer to display delivery due time
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -315,10 +318,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                     public void run() {
                         // TODO do your thing
                         try {
-                            Date myDate = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestExpirationDateTime);
-                            Date date = new Date();
-                            System.out.println("service Date  " + myDate + ",current date" + date);
-                            printDifference(date, myDate);
+                            Date interestDueDate = simpleDateFormat.parse(interest.Fulfillments.ExpirationDateTime);
+                            Date todayDate = new Date();
+                            System.out.println("service Date  " + interestDueDate + ",current date" + todayDate);
+                            printDifference(todayDate, interestDueDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -330,12 +333,14 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         try {
 
             //Date myDates = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestDateTime);
+            //Interest created time
             interest_exp_val_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        //Timer to display interest expiration time,if interest is not expired
         exp_time.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -344,9 +349,9 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                     public void run() {
                         // TODO do your thing
                         try {
-                            Date myDates = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestExpirationDateTime);
-                            Date date = new Date();
-                            displayExpire(date, myDates);
+                            Date interestExpDate = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.InterestExpirationDateTime);
+                            Date todayLocalDate = new Date();
+                            displayExpire(todayLocalDate, interestExpDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -359,7 +364,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
         mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
         maxdistance_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " min");
-        due_date_tv.setText(""+AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestExpirationDateTime));
+        due_date_tv.setText(""+AppUtil.getLocalDateFormat(interest.Fulfillments.ExpirationDateTime));
         // point_miles_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " Miles");
 
 
@@ -759,9 +764,9 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     //1 hour = 60 x 60 = 3600
     //1 day = 3600 x 24 = 86400
 
-    public void printDifference(Date startDate, Date endDate) {
+    public void printDifference(Date todayDate, Date interestDueDate) {
         //milliseconds
-        long different = endDate.getTime() - startDate.getTime();
+        long different = interestDueDate.getTime() - todayDate.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
@@ -784,16 +789,24 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         if (String.valueOf(elapsedSeconds).startsWith("-") || String.valueOf(elapsedDays).startsWith("-") ||
                 String.valueOf(elapsedHours).startsWith("-") || String.valueOf(elapsedMinutes).startsWith("-")) {
             if (completed.equals("not")) {
-                expiremsg_tv.setVisibility(View.VISIBLE);
+                if (!expiremsg_tv.isShown())
+                    expiremsg_tv.setVisibility(View.VISIBLE);
+                if (delivery_due_LI.isShown())
+                    delivery_due_LI.setVisibility(View.GONE);
             }
         } else {
-            expiremsg_tv.setVisibility(View.GONE);
+            if (expiremsg_tv.isShown())
+                expiremsg_tv.setVisibility(View.GONE);
+            if (!delivery_due_LI.isShown())
+                delivery_due_LI.setVisibility(View.VISIBLE);
         }
     }
 
-    public void displayExpire(Date startDate, Date endDate) {
+    public void displayExpire(Date todayLocalDate, Date interestExpDate) {
         //milliseconds
-        long different = endDate.getTime() - startDate.getTime();
+        //if interestExpDate is greater than todayLocalDate, that means interest has already expired is not expired.
+        //Display interest expiation time
+        long different = interestExpDate.getTime() - todayLocalDate.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
@@ -810,14 +823,16 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         long elapsedSeconds = different / secondsInMilli;
 
-        day_tv.setText("" + elapsedDays + " Days");
-        time_tv.setText("" + elapsedHours + "H : " + elapsedMinutes + "M : " + elapsedSeconds + "S");
+        /*day_tv.setText("" + elapsedDays + " Days");
+        time_tv.setText("" + elapsedHours + "H : " + elapsedMinutes + "M : " + elapsedSeconds + "S");*/
 
         if (String.valueOf(elapsedSeconds).startsWith("-") || String.valueOf(elapsedDays).startsWith("-") ||
                 String.valueOf(elapsedHours).startsWith("-") || String.valueOf(elapsedMinutes).startsWith("-")) {
+            if (expiration_tv.isShown())
             expiration_tv.setVisibility(View.GONE);
         } else {
-            expiration_tv.setVisibility(View.VISIBLE);
+            if (!expiration_tv.isShown())
+                expiration_tv.setVisibility(View.VISIBLE);
             if (!interest.Fulfillments.FulfillerInterests.InterestStatus.equalsIgnoreCase("Confirmed") &&
                     !cancel_intrest_LI.isShown())
                 cancel_intrest_LI.setVisibility(View.VISIBLE);

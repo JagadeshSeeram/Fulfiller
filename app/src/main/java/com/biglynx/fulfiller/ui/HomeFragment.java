@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.biglynx.fulfiller.MainActivity;
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.adapter.FulfillerConfirmAdapter;
 import com.biglynx.fulfiller.adapter.FulfillerPendingAdapter;
@@ -422,6 +423,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 }
                 break;
             case R.id.fulfiller_profile_info_LI:
+                MainActivity.setCurrentTab(3);
                 getFragmentManager().beginTransaction().add(R.id.tabFrameLayout, new SettingsFragment()).addToBackStack(null).commit();
                 break;
         }

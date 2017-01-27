@@ -22,7 +22,7 @@ public class ViewServiceRequestsActivity extends AppCompatActivity implements Vi
     private ArrayList<SupportCategoryModel> categoriesList;
     private ImageView icon_back;
     private TextView companyname_tv;
-    private int VERTICAL_ITEM_SPACE = 15;
+    private int VERTICAL_ITEM_SPACE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -165,8 +165,10 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
         enter_bid_ev = (EditText) findViewById(R.id.enter_bid_ev);
         bid_now_btn = (Button) findViewById(R.id.bid_now_btn);
 
-        positon = getIntent().getIntExtra("position", 1);
-        retaileLocId = getIntent().getStringExtra("retaileLocId");
+        if (getIntent().hasExtra("retaileLocId")) {
+            positon = getIntent().getIntExtra("position", 1);
+            retaileLocId = getIntent().getStringExtra("retaileLocId");
+        }
 
         if (!TextUtils.isEmpty(retaileLocId))
             Log.e(FulfillmentDetails.class.getSimpleName(), "retaileLocId :: " + retaileLocId);
@@ -176,8 +178,8 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
         apiWrapper = new FullFillerApiWrapper();
         if (Common.isNetworkAvailable(MyApplication.getInstance())) {
             Common.showDialog(this);
-            //HttpAdapter.broadCastDetails(this, "broadcast", retaileLocId);
-            apiWrapper.broadCastDetailsCall(AppPreferences.getInstance(FulfillmentDetails.this).getSignInResult().optString("AuthNToken"),
+            apiWrapper.broadCastDetailsCall(AppPreferences.getInstance(FulfillmentDetails.this).getSignInResult() != null ?
+                    AppPreferences.getInstance(FulfillmentDetails.this).getSignInResult().optString("AuthNToken") : "",
                     retaileLocId, new Callback<ArrayList<BroadCast>>() {
                         @Override
                         public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
