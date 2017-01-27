@@ -914,6 +914,38 @@
 
                                 </com.biglynx.fulfiller.fonts.CustomFontRegular>
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="40dp"
+                                    android:orientation="horizontal"
+                                    android:padding="10dp"
+                                    android:weightSum="1">
+
+                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.8"
+                                        android:gravity="center|right"
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="Enter number of packages picked up"
+                                        android:textColor="#979797"
+                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                    <EditText
+                                        android:id="@+id/no_ofpackages_ev"
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.2"
+                                        android:background="@drawable/light_border"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:textColor="@color/black" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -934,8 +966,8 @@
                                         android:gravity="center|right"
                                         android:maxLines="2"
                                         android:padding="3dp"
-                                        android:text="Enter the number of customers to deliver reports"
-                                        android:textColor="#787878"
+                                        android:text="Enter the number of customers to deliver"
+                                        android:textColor="#979797"
                                         android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
 
                                     <EditText
@@ -950,38 +982,6 @@
                                         android:textColor="@color/black" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="40dp"
-                                    android:orientation="horizontal"
-                                    android:padding="10dp"
-                                    android:weightSum="1">
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.8"
-                                        android:gravity="center|right"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="Ente total number of packeges received for delivery"
-                                        android:textColor="#787878"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    <EditText
-                                        android:id="@+id/no_ofpackages_ev"
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.2"
-                                        android:background="@drawable/light_border"
-                                        android:gravity="center"
-                                        android:inputType="number"
-                                        android:textColor="@color/black" />
-                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -1000,8 +1000,8 @@
                                         android:gravity="center|right"
                                         android:maxLines="2"
                                         android:padding="3dp"
-                                        android:text="Please confirm that packages have invoices tagged to identity what each customer receives during delivery ?"
-                                        android:textColor="#787878"
+                                        android:text="I confirm that each package have customer information for delivery"
+                                        android:textColor="#979797"
                                         android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
 
                                     <android.support.v7.widget.SwitchCompat

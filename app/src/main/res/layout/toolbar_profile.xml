@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/toolbar_title"
-                android:layout_width="130dp"
-                android:layout_height="30dp"
+                android:layout_width="114dp"
+                android:layout_height="36dp"
                 android:src="@drawable/logo_white_with_biglynx"
                 />
 
