@@ -95,10 +95,10 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
         switch (v.getId()) {
 
             case R.id.logout_LI:
+                Common.showDialog(getActivity());
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Common.showDialog(getActivity());
                         AppPreferences.getInstance(getContext()).setSignInResult(null);
                         AppPreferences.getInstance(getContext()).setAccountInfo(null);
                         startActivity(new Intent(getActivity(), InitialScreen.class));
