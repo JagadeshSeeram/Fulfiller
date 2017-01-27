@@ -60,7 +60,7 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
     ImageView icon_back, toolbar_end_imv;
     TextView companyname_tv;
     ListView listView;
-    TextView addvechile_tv;
+    TextView addvechile_tv, no_vehicles_tv;
     FullFillerApiWrapper apiWrapper;
 
     @Override
@@ -83,10 +83,12 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
         apiWrapper.vehicleListCall(AppPreferences.getInstance(VehicleList.this).getSignInResult().optString("AuthNToken"), new Callback<List<Vehicles>>() {
             @Override
             public void onResponse(Call<List<Vehicles>> call, Response<List<Vehicles>> response) {
-                Common.disMissDialog();
                 if (response.isSuccessful()) {
                     List<Vehicles> vehiclesList = response.body();
                     if (vehiclesList != null && vehiclesList.size() > 0) {
+                        if (!listView.isShown())
+                            listView.setVisibility(View.VISIBLE);
+                        no_vehicles_tv.setVisibility(View.GONE);
                         vehiclesAdapter = new VehiclesAdapter(VehicleList.this, vehiclesList);
                         listView.setAdapter(vehiclesAdapter);
                         Common.setListViewHeightBasedOnItems(listView);
@@ -98,13 +100,21 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
                         AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
                         e.printStackTrace();
                     }
+
+                    if (listView.isShown())
+                        listView.setVisibility(View.GONE);
+                    no_vehicles_tv.setVisibility(View.VISIBLE);
                 }
+                Common.disMissDialog();
             }
 
             @Override
             public void onFailure(Call<List<Vehicles>> call, Throwable t) {
-                Common.disMissDialog();
+                if (listView.isShown())
+                    listView.setVisibility(View.GONE);
+                no_vehicles_tv.setVisibility(View.VISIBLE);
                 AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
+                Common.disMissDialog();
             }
         });
 
@@ -122,9 +132,9 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
         icon_back.setOnClickListener(this);
         toolbar_end_imv.setOnClickListener(this);
         addvechile_tv.setOnClickListener(this);
-        addvechile_tv.setVisibility(View.VISIBLE);
         companyname_tv.setText("VEHICLES");
         listView = (ListView) findViewById(R.id.listview);
+        no_vehicles_tv = (TextView) findViewById(R.id.no_vehicles_tv);
         apiWrapper = new FullFillerApiWrapper();
     }
 

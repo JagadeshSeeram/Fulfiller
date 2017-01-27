@@ -41,15 +41,23 @@
                 android:layout_width="114dp"
                 android:layout_height="36dp"
                 android:src="@drawable/logo_white_with_biglynx"
-               />
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center">
-
+            android:gravity="right|center"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/help_icon"
+                android:src="@drawable/help_ic_white"
+                android:layout_marginRight="@dimen/dp_10"
+                android:visibility="gone"
+                />
 
         </LinearLayout>
     </LinearLayout>

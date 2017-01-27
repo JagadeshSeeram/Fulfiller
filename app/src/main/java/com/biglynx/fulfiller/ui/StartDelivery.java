@@ -98,7 +98,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
     private static final int READ_PHONE_STATE_PERMISSION = 1;
     private static int statusId = 0;
-    ImageView icon_back, subway_arrow_imv, trackimage_imv, ontheway_imv, pickedup_imv, delivered_imv, companylogo_imv;
+    ImageView icon_back, help_icon, subway_arrow_imv, trackimage_imv, ontheway_imv, pickedup_imv, delivered_imv, companylogo_imv;
     TextView deliverydate_tv, confirmtoken_tv, readytopick_tv, mindistance_tv, maxdistance_tv, notifiy_btn_tv, notifieddata_tv,
             ontheway_tv, pickedup_tv, delivered_tv, confirm_deli_tv, confirm_pickup_btn_tv, day_tv, time_tv, phoneno_tv, name_tv, address_tv;
     LinearLayout subway_details_LI, details_LI, deliv_customers_LI, googlemaps_LI, confirmorders_LI;
@@ -413,6 +413,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         apiWrapper = new FullFillerApiWrapper();
 
         icon_back = (ImageView) findViewById(R.id.icon_back);
+        help_icon = (ImageView) findViewById(R.id.help_icon);
+        help_icon.setVisibility(View.VISIBLE);
         subway_arrow_imv = (ImageView) findViewById(R.id.subway_arrow_imv);
         trackimage_imv = (ImageView) findViewById(R.id.trackimage_imv);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -483,6 +485,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
+        help_icon.setOnClickListener(this);
         subway_arrow_imv.setOnClickListener(this);
         notifiy_btn_tv.setOnClickListener(this);
         confirm_deli_tv.setOnClickListener(this);
@@ -721,6 +724,10 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.icon_back:
                 finish();
+                break;
+
+            case R.id.help_icon:
+                startActivity(new Intent(StartDelivery.this, CustomerSupport.class));
                 break;
 
             case R.id.confirm_deli_tv:

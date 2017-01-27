@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -70,6 +72,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private String rollType, editProfileType;
     private TextView userType_tv;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout fulfiller_profile_info_LI;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -153,7 +156,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         userType_tv.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
         swipeRefreshLayout.setOnRefreshListener(this);
+        fulfiller_profile_info_LI = (LinearLayout) v.findViewById(R.id.fulfiller_profile_info_LI);
 
+        fulfiller_profile_info_LI.setOnClickListener(this);
         waiting_sm_tv.setOnClickListener(this);
         complete_sm_tv.setOnClickListener(this);
 
@@ -394,15 +399,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     waitinglist_LI.setAdapter(fulfillerPendingAdapter);
                     Common.setListViewHeightBasedOnItems(waitinglist_LI);
                     waiting_sm_tv.setText("See Less");
-                    break;
                 } else if (waiting_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
                     fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
                     waitinglist_LI.setAdapter(fulfillerPendingAdapter);
                     Common.setListViewHeightBasedOnItems(waitinglist_LI);
                     waiting_sm_tv.setText("See More");
-                    break;
                 }
-
+                break;
             case R.id.complete_sm_tv:
 
                 if (complete_sm_tv.getText().toString().equalsIgnoreCase("See More")) {
@@ -411,14 +414,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     confirmList.setAdapter(fulfillerConfirmAdapter);
                     Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See Less");
-                    break;
                 } else if (complete_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
                     fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
                     confirmList.setAdapter(fulfillerConfirmAdapter);
                     Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See More");
-                    break;
                 }
+                break;
+            case R.id.fulfiller_profile_info_LI:
+                getFragmentManager().beginTransaction().add(R.id.tabFrameLayout, new SettingsFragment()).addToBackStack(null).commit();
+                break;
         }
     }
 

@@ -277,8 +277,8 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
         companyname_tv.setText(broadCast.BusinessLegalName);
         locationtype_text_view.setText(broadCast.RetailerLocationAddress.LocationType);
         locationtype_tv.setText(broadCast.RetailerLocationAddress.LocationType + " Category");
-        pickup_loc_tv.setText(broadCast.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
-                broadCast.RetailerLocationAddress.RetailerLocationAddress.City + "," +
+        pickup_loc_tv.setText(broadCast.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
+                broadCast.RetailerLocationAddress.RetailerLocationAddress.City + ", " +broadCast.RetailerLocationAddress.RetailerLocationAddress.State+", "+
                 broadCast.RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
 

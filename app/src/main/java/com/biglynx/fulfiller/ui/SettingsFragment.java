@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,6 +21,9 @@ import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.Common;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /*
  *
@@ -91,10 +95,17 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
         switch (v.getId()) {
 
             case R.id.logout_LI:
-                AppPreferences.getInstance(getContext()).setSignInResult(null);
-                AppPreferences.getInstance(getContext()).setAccountInfo(null);
-                startActivity(new Intent(getActivity(), InitialScreen.class));
-                getActivity().finishAffinity();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Common.showDialog(getActivity());
+                        AppPreferences.getInstance(getContext()).setSignInResult(null);
+                        AppPreferences.getInstance(getContext()).setAccountInfo(null);
+                        startActivity(new Intent(getActivity(), InitialScreen.class));
+                        getActivity().finishAffinity();
+                    }
+                }, 3000);
+
                 break;
             case R.id.vehicles_LI:
                 startActivity(new Intent(getActivity(), VehicleList.class));
@@ -120,5 +131,11 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
                 break;
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Common.disMissDialog();
     }
 }

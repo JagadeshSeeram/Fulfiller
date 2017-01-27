@@ -25,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -93,8 +94,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
     static final int DATE_PICKER_ID = 1111;
     private FullFillerApiWrapper apiWrapper;
-    private TextView cutomer_address_textView;
+    private RelativeLayout cus_address_LI;
     private int READ_PHONE_STATE_PERMISSION = 1;
+    private ImageView toolbar_end_imv;
+    private TextView due_date_tv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         express_day_tv = (TextView) findViewById(R.id.express_day_tv);
         express_time_tv = (TextView) findViewById(R.id.express_time_tv);
         status_tv = (TextView) findViewById(R.id.statustv);
+        due_date_tv = (TextView) findViewById(R.id.due_date_tv);
         expiration_tv = (TextView) findViewById(R.id.expiration_tv);
         expiremsg_tv = (TextView) findViewById(R.id.expiremsg_tv);
         expressed_LI = (LinearLayout) findViewById(R.id.expressed_LI);
@@ -136,14 +140,14 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         share_copy_tv = (TextView) findViewById(R.id.share_copy_tv);
         share_email_tv = (TextView) findViewById(R.id.share_email_tv);
         share_sms_tv = (TextView) findViewById(R.id.share_sms_tv);
-        cutomer_address_textView = (TextView) findViewById(R.id.cus_address_LI);
+        cus_address_LI = (RelativeLayout) findViewById(R.id.cus_address_LI);
         share_LI.setVisibility(View.GONE);
 
         startdelivery_LI.setOnClickListener(this);
         cancel_intrest_LI.setOnClickListener(this);
         expressinterest_LI.setOnClickListener(this);
         share_intrest_LI.setOnClickListener(this);
-        cutomer_address_textView.setOnClickListener(this);
+        cus_address_LI.setOnClickListener(this);
 
         share_LI.setOnClickListener(this);
         share_cancel_tv.setOnClickListener(this);
@@ -251,6 +255,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
+        toolbar_end_imv = (ImageView) findViewById(R.id.toolbar_end_imv);
+        toolbar_end_imv.setVisibility(View.VISIBLE);
+        toolbar_end_imv.setImageResource(R.drawable.help_icon_n);
+        toolbar_end_imv.setOnClickListener(this);
         companyname_tv.setText(interest.BusinessLegalName.toUpperCase());
         deliverytoken_tv.setText(interest.Fulfillments.FulfillerInterests.ConfirmationCode);
         fulfillmentid_tv.setText(interest.Fulfillments.FulfillmentId);
@@ -260,13 +268,14 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         fillfromData(positon);
 
-        pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ",\n" +
-                interest.RetailerLocationAddress.RetailerLocationAddress.City + ",\n" + interest.RetailerLocationAddress.RetailerLocationAddress.CountryName);
+        pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
+                interest.RetailerLocationAddress.RetailerLocationAddress.City + ", " +interest.RetailerLocationAddress.RetailerLocationAddress.State+", "+
+                interest.RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
         // pricetype_tv.setText(interest.Fulfillments.PriceType);
         Date date = new Date();
-        date_tv.setText("" + date.toString().replace("GMT+05:30 2016", ""));
-        //date_tv.setText("" +AppUtil.formatTodayDate(date));
+        //date_tv.setText("" + date.toString().replace("GMT+05:30 2016", ""));
+        date_tv.setText("" +AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
         //fulId=interest.Fulfillments.FulfillmentId;
         fulfillment_id_tv.setText("BROADCAST ID " + interest.Fulfillments.FulfillmentId);
         amount_tv.setText("$ " + AppUtil.getTwoDecimals(interest.Fulfillments.FulfillerInterests.Amount));
@@ -350,6 +359,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
         mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
         maxdistance_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " min");
+        due_date_tv.setText(""+AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestExpirationDateTime));
         // point_miles_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " Miles");
 
 
@@ -409,6 +419,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
             case R.id.icon_back:
                 finish();
+                break;
+            case R.id.toolbar_end_imv:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.eyece.com/Index.html#/help"));
+                startActivity(browserIntent);
                 break;
             case R.id.expressinterest_LI:
                 showDialog(DATE_PICKER_ID);

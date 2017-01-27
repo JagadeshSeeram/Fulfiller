@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,8 +37,8 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
     private ImageView icon_back;
     private ArrayList<SupportCategoryModel> categoriesList;
     private FullFillerApiWrapper apiWrapper;
-    private EditText supportCategory_ev,issue_ev,description_ev;
-    private RelativeLayout caterory_LI,issue_LI;
+    private EditText supportCategory_ev,description_ev;
+    private LinearLayout caterory_LI;
     private TextView createTicket_tv;
     private String selectedCategoryId;
 
@@ -56,15 +57,12 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
         companyname_tv.setVisibility(View.VISIBLE);
         apiWrapper = new FullFillerApiWrapper();
         supportCategory_ev = (EditText) findViewById(R.id.supportCategory_type_ev);
-        issue_ev = (EditText) findViewById(R.id.select_issue_ev);
         description_ev = (EditText) findViewById(R.id.description_ev);
-        caterory_LI = (RelativeLayout) findViewById(R.id.supportCategory_LI);
-        issue_LI = (RelativeLayout) findViewById(R.id.selectIssue_LI);
+        caterory_LI = (LinearLayout) findViewById(R.id.supportCategory_LI);
         createTicket_tv = (TextView) findViewById(R.id.create_ticket_tv);
 
         createTicket_tv.setOnClickListener(this);
         caterory_LI.setOnClickListener(this);
-        issue_LI.setOnClickListener(this);
         icon_back.setOnClickListener(this);
     }
 
