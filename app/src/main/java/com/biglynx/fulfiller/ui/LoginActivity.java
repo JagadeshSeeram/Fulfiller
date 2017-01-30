@@ -813,7 +813,8 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                             sendRegistrationID(registrationID);
                         }else {
                             try {
-                                AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
+                                Log.e(TAG,"Sending FcmToken to Server :: "+response.errorBody().string());
+                                //AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
                             } catch (IOException e) {
                                 Log.e(TAG,"Sending FcmToken Error");
                                 e.printStackTrace();

@@ -101,7 +101,8 @@ import retrofit2.Response;
 public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener, AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener, SwipeRefreshLayout.OnRefreshListener {
+        LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener,
+        AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener {
 
     private GoogleMap gMap;
     GoogleApiClient mGoogleApiClient;
@@ -142,7 +143,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     PlacesTask placesTask;
     ParserTask parserTask;
     List<HashMap<String, String>> googlePlacesresult;
-    ImageView search_back, cancel_button, search_imv, maps_icon, list_icon;
+    private ImageView search_back, cancel_button, search_imv, maps_icon, list_icon, refresh_iv;
     ArrayList<BroadCast> broadCastList;
     private String currentAddress;
     private Broadcast_Adapter broadcastAdapter;
@@ -150,7 +151,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private Animation animation_slide_down;
     private Animation animation_slide_up;
     private View v;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -200,7 +200,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
         apiWrapper = new FullFillerApiWrapper();
         if (Common.isNetworkAvailable(MyApplication.getInstance())) {
-            callService(true);
+            callService();
         } else
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
 
@@ -222,6 +222,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         maps_view = (FrameLayout) v.findViewById(R.id.maps_view);
         listview_LI = (LinearLayout) v.findViewById(R.id.listview_LI);
         recent_search_LI = (LinearLayout) v.findViewById(R.id.recent_search_LI);
+        refresh_iv = (ImageView) v.findViewById(R.id.refresh_iv);
 
         current_miles_tv = (TextView) v.findViewById(R.id.current_miles_tv);
         fiften_miles_tv = (TextView) v.findViewById(R.id.fiften_miles_tv);
@@ -264,14 +265,13 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         list_icon.setOnClickListener(this);
         maps_icon.setOnClickListener(this);
         current_loc_tv.setOnClickListener(this);
+        refresh_iv.setOnClickListener(this);
         // list_icon.setImageResource(R.drawable.sortings);
         maps_icon.setImageResource(R.drawable.map_views);
         listview_LI.setVisibility(View.GONE);
         atvPlaces = (AutoCompleteTextView) v.findViewById(R.id.atv_places);
         searchbar_FL = (FrameLayout) v.findViewById(R.id.searchbar_FL);
         autocomplte_places = (TextView) v.findViewById(R.id.autocomplte_places);
-        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
         atvPlaces.setThreshold(1);
         broadCastList = new ArrayList<>();
         LinearLayout retailerInfo = (LinearLayout) v.findViewById(R.id.retailerInfo);
@@ -404,9 +404,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
-    private void callService(final boolean showProgress) {
-        if (showProgress)
-            Common.showDialog(getActivity());
+    private void callService() {
+        Common.showDialog(getActivity());
         apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
                 new Callback<ArrayList<BroadCast>>() {
@@ -427,19 +426,12 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                             }
                             AppUtil.CheckErrorCode(getActivity(), response.code());
                         }
-                        if (showProgress)
-                            Common.disMissDialog();
-                        else
-                            swipeRefreshLayout.setRefreshing(false);
+                        Common.disMissDialog();
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<BroadCast>> call, Throwable t) {
-                        if (showProgress)
-                            Common.disMissDialog();
-                        else
-                            swipeRefreshLayout.setRefreshing(false);
-
+                        Common.disMissDialog();
                         Log.e("BroadCastFrag", "BroadCast :: " + t.getMessage());
                         AppUtil.toast(getActivity(), getString(R.string.OOPS));
                     }
@@ -844,6 +836,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             case R.id.listview_imv:
                 maps_view.setVisibility(View.GONE);
                 listview_LI.setVisibility(View.VISIBLE);
+                break;
+            case R.id.refresh_iv:
+                callService();
                 break;
         }
 
@@ -1418,10 +1413,5 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             builder.include(south);
         }
         return builder.build();
-    }
-
-    @Override
-    public void onRefresh() {
-        callService(false);
     }
 }
