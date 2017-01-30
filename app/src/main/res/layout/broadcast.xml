@@ -17,19 +17,14 @@
 
         </include>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+
+        <ListView
+            android:id="@+id/listview_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/swipe_To_Refresh_Layout"
-            >
-            <ListView
-                android:id="@+id/listview_lv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:divider="@color/seperator_color"
-                android:dividerHeight="1dp"></ListView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:background="@color/white"
+            android:divider="@color/seperator_color"
+            android:dividerHeight="1dp"></ListView>
 
     </LinearLayout>
 
@@ -124,8 +119,7 @@
                     android:paddingLeft="@dimen/dp_10"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
             </LinearLayout>
 
@@ -418,10 +412,10 @@
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/retailerInfo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/retailerInfo"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_weight="0.35"
