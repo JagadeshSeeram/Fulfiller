@@ -2,6 +2,8 @@ package com.biglynx.fulfiller.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +37,7 @@ import static com.biglynx.fulfiller.utils.AppUtil.context;
 public class StartDeliveryAdapter extends BaseAdapter {
     private ArrayAdapter<String> myAdapter;
     private PhoneNumberUtil phoneNumberUtil;
-    android.content.Context Context;
+    Context mContext;
     List<Orders> ordersList;
     LayoutInflater inflater;
     SimpleDateFormat simpleDateFormat;
@@ -44,8 +46,8 @@ public class StartDeliveryAdapter extends BaseAdapter {
 
 
     public StartDeliveryAdapter(Context mContext) {
-        Context = mContext;
-        inflater = LayoutInflater.from(this.Context);
+        this.mContext = mContext;
+        inflater = LayoutInflater.from(this.mContext);
         ordersList = new ArrayList<>();
         phoneNumberUtil = PhoneNumberUtil.getInstance();
     }
@@ -101,11 +103,11 @@ public class StartDeliveryAdapter extends BaseAdapter {
                     clipboard.setText("Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
                             interest.Fulfillments.FulfillmentId);*/
                     android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
-                            Context.getSystemService(context.CLIPBOARD_SERVICE);
+                            mContext.getSystemService(context.CLIPBOARD_SERVICE);
                     android.content.ClipData clip = android.content.ClipData
                             .newPlainText("Details", mViewHolder.address_tv.getText().toString().trim());
                     clipboard.setPrimaryClip(clip);
-                    Toast.makeText(Context,"Copied to Clipboard!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"Copied to Clipboard!!",Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -114,6 +116,14 @@ public class StartDeliveryAdapter extends BaseAdapter {
         mViewHolder.openinmap_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String address = mViewHolder.address_tv.getText().toString().trim();
+                String geoUrl = "geo:"+ordersList.get(position).OrderAddress.Latitude+","+
+                        ordersList.get(position).OrderAddress.Longitude+"?";
+                Uri gmmIntentUri = Uri.parse(geoUrl+"q=" + Uri.encode(address));
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW,gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(mContext.getPackageManager()) != null)
+                    mContext.startActivity(mapIntent);
             }
         });
         if (ordersList.get(position).DeliveryStatusId == 4) {
@@ -127,16 +137,6 @@ public class StartDeliveryAdapter extends BaseAdapter {
         }
 
 
-        // attaching data adapter to spinner
-        /*spinnerOrdersList=new ArrayList<>();
-        spinnerOrdersList.add(new SpinnerOrders("Not Started",position));
-        spinnerOrdersList.add(new SpinnerOrders("Started",position));
-        spinnerOrdersList.add(new SpinnerOrders("Delivered",position));
-        spinnerOrdersList.add(new SpinnerOrders("Completed",position));
-        Log.d("inserting position",""+position);
-        mViewHolder.spinner.setTag(position);
-        OrderSpinner orderSpinner= new OrderSpinner(Context,spinnerOrdersList,position);*/
-
         mViewHolder.spinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -147,14 +147,10 @@ public class StartDeliveryAdapter extends BaseAdapter {
         mViewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int adapterPosition, long id) {
-/*                String item = parent..get(position).name;
-               // int pos= (Integer) view.getTag();
-                TextView tv=(TextView)view.findViewById(R.id.pos_tv);
-                Log.d("get position",tv.getText().toString()+""+spinnerOrdersList.get(position).id);*/
                 if (userSelected) {
                     userSelected = false;
                     Log.d("Slected Type ", " :: " + parent.getAdapter().getItem(adapterPosition));
-                    StartDelivery startDelivery = (StartDelivery) Context;
+                    StartDelivery startDelivery = (StartDelivery) mContext;
                     if (parent.getAdapter().getItem(adapterPosition).equals("Started"))
                         startDelivery.callUpdateDeliveryStatusAPi(4, ordersList.get(position).OrderId);
                     else if (parent.getAdapter().getItem(adapterPosition).equals("Delivered"))
@@ -193,7 +189,7 @@ public class StartDeliveryAdapter extends BaseAdapter {
             spinner = (Spinner) item.findViewById(R.id.spinner);
             spinnerLayout = (RelativeLayout) item.findViewById(R.id.layout_spinner_status);
 
-            myAdapter = new ArrayAdapter(Context, R.layout.view_status_spinner);
+            myAdapter = new ArrayAdapter(mContext, R.layout.view_status_spinner);
             myAdapter.add("Not Started");
             myAdapter.add("Delivered");
             myAdapter.add("Started");
