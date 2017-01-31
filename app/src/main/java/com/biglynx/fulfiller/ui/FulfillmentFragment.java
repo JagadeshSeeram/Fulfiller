@@ -180,7 +180,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                         completed = false;
                         confirm = false;
                         Log.e(FulfillmentFragment.class.getSimpleName(), "DashboardAPI :: " + t.getMessage());
-                        AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                       // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                         if (showDialog)
                             Common.disMissDialog();
                         else

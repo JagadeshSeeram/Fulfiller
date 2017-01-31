@@ -291,7 +291,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
             fixedprice_tv.setText("Fixed Price " + AppUtil.getTwoDecimals(amount) + " $ ");
             subtotal.setText("$ " + AppUtil.getTwoDecimals(amount));
             double value = (amount * (10 / 100.0f));
-            servicefee_tv.setText("" + AppUtil.getTwoDecimals(value));
+            servicefee_tv.setText("$ " + AppUtil.getTwoDecimals(value));
             totalpay_tv.setText("$ " + AppUtil.getTwoDecimals((amount - value)));
             // finalAmount="$ " + ((Integer.parseInt(interest.Fulfillments.Amount)) - value);
 

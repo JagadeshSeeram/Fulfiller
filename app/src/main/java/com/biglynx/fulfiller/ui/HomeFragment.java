@@ -357,7 +357,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                             noitems_wait_tv.setVisibility(View.VISIBLE);
                             noitems_confirm_tv.setVisibility(View.VISIBLE);
                             Log.e("HomeFragment", "DashboardAPI :: " + t.getMessage());
-                            AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                           // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();
                             else

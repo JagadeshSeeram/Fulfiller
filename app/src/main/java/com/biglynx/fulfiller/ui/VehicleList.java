@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,13 +92,13 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
                         no_vehicles_tv.setVisibility(View.GONE);
                         vehiclesAdapter = new VehiclesAdapter(VehicleList.this, vehiclesList);
                         listView.setAdapter(vehiclesAdapter);
-                        Common.setListViewHeightBasedOnItems(listView);
                     }
                 } else {
                     try {
                         AppUtil.parseErrorMessage(VehicleList.this, response.errorBody().string());
                     } catch (IOException e) {
-                        AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
+                        if (response.code() != 200)
+                            AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
                         e.printStackTrace();
                     }
 
@@ -113,7 +114,8 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
                 if (listView.isShown())
                     listView.setVisibility(View.GONE);
                 no_vehicles_tv.setVisibility(View.VISIBLE);
-                AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
+                if (!(t instanceof EOFException))
+                    AppUtil.toast(VehicleList.this, OOPS_SOMETHING_WENT_WRONG);
                 Common.disMissDialog();
             }
         });

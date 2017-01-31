@@ -115,7 +115,9 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_color_hint_login"
                             android:textSize="@dimen/sp_14"
-                            android:background="@drawable/editext_bottom" />
+                            android:background="@drawable/editext_bottom"
+                            android:inputType="textPassword"
+                            />
 
                         <Button
                             android:id="@+id/sign_in_email"
@@ -340,7 +342,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Dont you have account? JOIN NOW"
+            android:text="Don't have an account? JOIN NOW"
             android:textSize="@dimen/textview_dp14">
 
         </com.biglynx.fulfiller.fonts.CustomFontRegular>

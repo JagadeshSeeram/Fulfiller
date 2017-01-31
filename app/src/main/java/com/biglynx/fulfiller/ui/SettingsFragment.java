@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +32,13 @@ import java.util.TimerTask;
  *
 */
 
-public class SettingsFragment extends Fragment implements NetworkOperationListener,View.OnClickListener {
+public class SettingsFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView name_tv, logout_Li;
     private CircularImageView user_Imv;
     private LinearLayout vehicles_LI,notification_LI,cservices_LI,payments_LI,terms_LI, policy_LI;
     private ImageView editProfile_iv;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,12 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateProfileInfo(false);
+    }
+
     private void initViews(View v) {
         user_Imv=(CircularImageView) v.findViewById(R.id.user_imv);
         name_tv=(TextView) v.findViewById(R.id.name_tv);
@@ -64,13 +72,8 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
         editProfile_iv = (ImageView) v.findViewById(R.id.editProfile_iv);
         terms_LI = (LinearLayout) v.findViewById(R.id.terms_LI);
         policy_LI = (LinearLayout) v.findViewById(R.id.policy_LI);
-
-        if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo")))
-            Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo"))
-                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(this.user_Imv);
-
-        if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("FirstName")))
-            name_tv.setText(AppPreferences.getInstance(getContext()).getSignInResult().optString("FirstName"));
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         logout_Li.setOnClickListener(this);
         vehicles_LI.setOnClickListener(this);
@@ -82,10 +85,20 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
         policy_LI.setOnClickListener(this);
     }
 
-    @Override
-    public void operationCompleted(NetworkResponse networkResponse) {
-        Common.disMissDialog();
+    private void updateProfileInfo(boolean showRefresh) {
+        if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo")))
+            Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo"))
+                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(this.user_Imv);
 
+        if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))
+                name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName"));
+        } else {
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName")))
+                name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
+        }
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -137,5 +150,10 @@ public class SettingsFragment extends Fragment implements NetworkOperationListen
     public void onDestroy() {
         super.onDestroy();
         Common.disMissDialog();
+    }
+
+    @Override
+    public void onRefresh() {
+        updateProfileInfo(true);
     }
 }

@@ -62,7 +62,7 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
         createTicket_tv = (TextView) findViewById(R.id.create_ticket_tv);
 
         createTicket_tv.setOnClickListener(this);
-        caterory_LI.setOnClickListener(this);
+        supportCategory_ev.setOnClickListener(this);
         icon_back.setOnClickListener(this);
     }
 
@@ -72,7 +72,7 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
             case R.id.icon_back:
                 finish();
                 break;
-            case R.id.supportCategory_LI:
+            case R.id.supportCategory_type_ev:
                 callSupportCategoriesService();
                 break;
             case R.id.selectIssue_LI:
