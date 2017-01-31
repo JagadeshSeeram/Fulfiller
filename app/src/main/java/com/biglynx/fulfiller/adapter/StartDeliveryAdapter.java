@@ -3,7 +3,6 @@ package com.biglynx.fulfiller.adapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,10 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.Orders;
-import com.biglynx.fulfiller.models.SpinnerOrders;
 import com.biglynx.fulfiller.ui.StartDelivery;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -27,13 +26,14 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import static com.biglynx.fulfiller.utils.AppUtil.context;
 
 /**
  * Created by Biglynx on 7/22/2016.
  */
-public class StartDeliveryAdapter extends BaseAdapter{
-    private  ArrayAdapter<String> myAdapter;
+public class StartDeliveryAdapter extends BaseAdapter {
+    private ArrayAdapter<String> myAdapter;
     private PhoneNumberUtil phoneNumberUtil;
     android.content.Context Context;
     List<Orders> ordersList;
@@ -43,8 +43,8 @@ public class StartDeliveryAdapter extends BaseAdapter{
     private boolean userSelected = false;
 
 
-    public StartDeliveryAdapter(Context mContext){
-        Context=mContext;
+    public StartDeliveryAdapter(Context mContext) {
+        Context = mContext;
         inflater = LayoutInflater.from(this.Context);
         ordersList = new ArrayList<>();
         phoneNumberUtil = PhoneNumberUtil.getInstance();
@@ -79,9 +79,9 @@ public class StartDeliveryAdapter extends BaseAdapter{
         }
         mViewHolder.name_tv.setText(ordersList.get(position).CustomerFirstName);
         try {
-            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(ordersList.get(position).CustomerPhone,"US");
+            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(ordersList.get(position).CustomerPhone, "US");
             String usFormatNUmber = phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-            String finalNumber = usFormatNUmber.replace(" ","-");
+            String finalNumber = usFormatNUmber.replace(" ", "-");
             mViewHolder.phoneno_tv.setText(finalNumber);
 
         } catch (NumberParseException e) {
@@ -92,14 +92,36 @@ public class StartDeliveryAdapter extends BaseAdapter{
                 ordersList.get(position).OrderAddress.City + ", " +
                 ordersList.get(position).OrderAddress.State + " " +
                 ordersList.get(position).OrderAddress.CountryName);
+        mViewHolder.copy_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                   /* android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
+                            .getSystemService(context.CLIPBOARD_SERVICE);
+                    clipboard.setText("Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
+                            interest.Fulfillments.FulfillmentId);*/
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
+                            Context.getSystemService(context.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData
+                            .newPlainText("Details", mViewHolder.address_tv.getText().toString().trim());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(Context,"Copied to Clipboard!!",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        mViewHolder.openinmap_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
         if (ordersList.get(position).DeliveryStatusId == 4) {
             mViewHolder.spinner.setSelection(2);
             mViewHolder.time_tv.setText("");
-        }
-        else if (ordersList.get(position).DeliveryStatusId == 5) {
+        } else if (ordersList.get(position).DeliveryStatusId == 5) {
             mViewHolder.spinner.setSelection(1);
-        }
-        else {
+        } else {
             mViewHolder.spinner.setSelection(0);
             mViewHolder.time_tv.setText("");
         }
@@ -149,7 +171,7 @@ public class StartDeliveryAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void setItemsList(List<Orders> itemsList){
+    public void setItemsList(List<Orders> itemsList) {
         if (ordersList != null)
             ordersList.clear();
         ordersList.addAll(itemsList);
@@ -157,7 +179,7 @@ public class StartDeliveryAdapter extends BaseAdapter{
     }
 
     private class MyViewHolder {
-        TextView name_tv, phoneno_tv,address_tv,copy_tv,openinmap_tv,time_tv;
+        TextView name_tv, phoneno_tv, address_tv, copy_tv, openinmap_tv, time_tv;
         Spinner spinner;
         RelativeLayout spinnerLayout;
 
@@ -177,5 +199,6 @@ public class StartDeliveryAdapter extends BaseAdapter{
             myAdapter.add("Started");
             spinner.setAdapter(myAdapter);
         }
+
     }
 }

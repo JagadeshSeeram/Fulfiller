@@ -684,7 +684,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                 }
                 break;
             case R.id.joinNow_tv:
-                startActivity(new Intent(LoginActivity.this, InitialScreen.class));
+                startActivity(new Intent(LoginActivity.this, SelectRegistration.class));
                 break;
             case R.id.start_delivery_without_login:
                 if (AppUtil.ifNotEmpty(et_FullfillerId.getText().toString()) &&

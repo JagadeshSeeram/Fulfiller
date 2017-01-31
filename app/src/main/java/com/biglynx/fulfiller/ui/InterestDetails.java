@@ -47,7 +47,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -272,13 +271,13 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
                 interest.RetailerLocationAddress.RetailerLocationAddress.City + ", "
-                +interest.RetailerLocationAddress.RetailerLocationAddress.State+", "+
+                + interest.RetailerLocationAddress.RetailerLocationAddress.State + ", " +
                 interest.RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
         // pricetype_tv.setText(interest.Fulfillments.PriceType);
         Date date = new Date();
         //date_tv.setText("" + date.toString().replace("GMT+05:30 2016", ""));
-        date_tv.setText("" +AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
+        date_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.FulfillerInterests.InterestDateTime));
         //fulId=interest.Fulfillments.FulfillmentId;
         fulfillment_id_tv.setText("BROADCAST ID: " + interest.Fulfillments.FulfillmentId);
         amount_tv.setText("$ " + AppUtil.getTwoDecimals(interest.Fulfillments.FulfillerInterests.Amount));
@@ -364,7 +363,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
         mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
         maxdistance_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " min");
-        due_date_tv.setText(""+AppUtil.getLocalDateFormat(interest.Fulfillments.ExpirationDateTime));
+        due_date_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.ExpirationDateTime));
         // point_miles_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " Miles");
 
 
@@ -466,7 +465,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                                     interest.Fulfillments.FulfillmentId +
                                     "\nFulFiller Id : " + AppPreferences.getInstance(InterestDetails.this).getSignInResult().optString("FulfillerId"));
                     clipboard.setPrimaryClip(clip);
-
+                    Toast.makeText(InterestDetails.this, "Copied to Clipboard!!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -829,7 +828,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         if (String.valueOf(elapsedSeconds).startsWith("-") || String.valueOf(elapsedDays).startsWith("-") ||
                 String.valueOf(elapsedHours).startsWith("-") || String.valueOf(elapsedMinutes).startsWith("-")) {
             if (expiration_tv.isShown())
-            expiration_tv.setVisibility(View.GONE);
+                expiration_tv.setVisibility(View.GONE);
         } else {
             if (!expiration_tv.isShown())
                 expiration_tv.setVisibility(View.VISIBLE);

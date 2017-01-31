@@ -135,6 +135,7 @@
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="match_parent"
+                    android:id="@+id/customer_email"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
@@ -188,6 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:id="@+id/customer_phone"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="425 749 7100"
