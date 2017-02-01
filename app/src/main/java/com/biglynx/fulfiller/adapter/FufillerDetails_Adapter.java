@@ -48,7 +48,7 @@ public class FufillerDetails_Adapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         final MyViewHolder mViewHolder;
 
         if (convertView == null) {
@@ -58,13 +58,19 @@ public class FufillerDetails_Adapter extends BaseAdapter {
         } else {
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
-
+        if(position == 0){
+            mViewHolder.place_tv.setSelected(true);
+        }
         mViewHolder.place_tv.setText("FULFILMENT "+(position+1));
         mViewHolder.place_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FulfillmentDetails fulfillmentDetailsFrag = (FulfillmentDetails) Context;
                 fulfillmentDetailsFrag.fillfromData(position,true);
+                for(int i = 0 ;i < parent.getChildCount();i++){
+                    parent.getChildAt(i).findViewById(R.id.place_tv).setSelected(false);
+                }
+                v.setSelected(true);
             }
         });
 
@@ -76,10 +82,8 @@ public class FufillerDetails_Adapter extends BaseAdapter {
 
         public MyViewHolder(View item) {
             place_tv = (TextView) item.findViewById(R.id.place_tv);
-            place_tv.setTextIsSelectable(true);
             place_tv.setClickable(true);
             place_tv.setTextColor(Context.getResources().getColorStateList(R.color.list_item_selector));
-
         }
     }
 }

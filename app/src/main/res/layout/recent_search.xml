@@ -1,23 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:background="#353944"
-  >
-            <com.biglynx.fulfiller.fonts.CustomFontMedium
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:gravity="center|start"
-                android:text="name"
-                android:padding="2dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:maxLines="2"
-                android:id="@+id/place_tv"
-                android:textColor="#000"
-                android:textSize="@dimen/textview_dp16">
-                </com.biglynx.fulfiller.fonts.CustomFontMedium>
+
+    android:background="#353944">
+
+    <com.biglynx.fulfiller.fonts.CustomFontMedium
+        android:id="@+id/place_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:gravity="center|start"
+        android:maxLines="2"
+        android:padding="10dp"
+        android:text="name"
+        android:textColor="#000"
+        android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontMedium>
 
 </LinearLayout>
