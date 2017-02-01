@@ -77,6 +77,7 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -400,7 +401,7 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
         orders_tv.setText("" + broadCast.Fulfillments.get(positon).OrderCount);
         total_weight_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalWeight) + " Lbs");
         mindistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalDistance) + " Miles");
-        maxdistance_tv.setText(AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).TotalApproxTimeInSeconds) + " min");
+        maxdistance_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(broadCast.Fulfillments.get(positon).TotalApproxTimeInSeconds)) + " min");
         point_miles_tv.setText(broadCast.Fulfillments.get(positon).TotalApproxTimeInSeconds + " Miles");
 
 

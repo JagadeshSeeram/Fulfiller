@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -362,7 +363,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         order_tv.setText("" + interest.Fulfillments.Orders.size());
         total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
         mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
-        maxdistance_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " min");
+        maxdistance_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(interest.Fulfillments.TotalApproxTimeInSeconds)) + " Min");
         due_date_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.ExpirationDateTime));
         // point_miles_tv.setText(interest.Fulfillments.TotalApproxTimeInSeconds + " Miles");
 

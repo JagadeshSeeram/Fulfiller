@@ -85,6 +85,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -937,7 +938,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
         readytopick_tv.setText("YES");
         mindistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.TotalDistance)+" Miles");
-        maxdistance_tv.setText(mInterest.Fulfillments.TotalApproxTimeInSeconds + " min");
+        maxdistance_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(responseInterestObj.Fulfillments.TotalApproxTimeInSeconds)) + " Min");
         deliverydate_tv.setText(AppUtil.getLocalDateFormat(mInterest.Fulfillments.ExpirationDateTime));
 
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();

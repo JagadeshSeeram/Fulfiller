@@ -20,6 +20,7 @@ import com.biglynx.fulfiller.ui.FulfillmentDetails;
 import com.biglynx.fulfiller.utils.AppUtil;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class BroadCast_Ful_Adapter extends PagerAdapter {
@@ -82,7 +83,8 @@ public class BroadCast_Ful_Adapter extends PagerAdapter {
         fullfillments_tv.setText("Fulfillments "+(position+1)+"/"+fullfillerList.size());
         orders_tv.setText(fullfillerList.get(position).OrderCount);
         miles_tv.setText(AppUtil.getTwoDecimals(fullfillerList.get(position).TotalDistance));
-        approx_time_tv.setText(fullfillerList.get(position).TotalApproxTimeInSeconds+" Sec");
+        approx_time_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(fullfillerList.get(position).TotalApproxTimeInSeconds))+" Min");
+
 
         ((ViewPager) container).addView(itemView);
         return itemView;
