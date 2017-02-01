@@ -34,7 +34,7 @@ android {
         javaMaxHeapSize "2048M"
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.1'
     defaultConfig {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15
@@ -83,6 +83,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.microsoft.azure:notification-hubs-android-sdk:0.4@aar'
     compile 'com.microsoft.azure:azure-notifications-handler:1.0.1@aar'
+    compile 'me.relex:circleindicator:1.2.2@aar'
 }
 repositories {
     maven {

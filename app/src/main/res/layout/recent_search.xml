@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="#EFEFEF"
+    android:background="#353944"
   >
             <com.biglynx.fulfiller.fonts.CustomFontMedium
                 android:layout_width="match_parent"
@@ -12,8 +12,8 @@
                 android:gravity="center|start"
                 android:text="name"
                 android:padding="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:maxLines="2"
                 android:id="@+id/place_tv"
                 android:textColor="#000"

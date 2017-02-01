@@ -17,6 +17,8 @@ import com.biglynx.fulfiller.models.BroadCast;
 
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator;
+
 
 public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageChangeListener {
 
@@ -66,14 +68,15 @@ public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageCh
         mViewHolder.warehouse_tv.setText("");
         mViewHolder.address_tv.setText(broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
                 broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.City + "," +
-                broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.State+","+
+                broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.State + "," +
                 broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.CountryName);
         //mViewHolder.distance_tv.setText(broadCastList.get(position).MaxDistance+" Miles");
         BroadCast_Viewpager_Adapter broadCastViewpagerAdapter = new BroadCast_Viewpager_Adapter(Context, broadCastList.get(position), broadCastList.get(position).Fulfillments);
         mViewHolder.broacast_viewpager.setAdapter(broadCastViewpagerAdapter);
-        setUiPageViewController(mViewHolder.pager_indicator, broadCastViewpagerAdapter);
+        mViewHolder.circularIndicator.setViewPager(mViewHolder.broacast_viewpager);
+//        setUiPageViewController(mViewHolder.pager_indicator, broadCastViewpagerAdapter);
 
-        mViewHolder.broacast_viewpager.setOnPageChangeListener(Broadcast_Adapter.this);
+//        mViewHolder.broacast_viewpager.setOnPageChangeListener(Broadcast_Adapter.this);
         return convertView;
     }
 
@@ -100,7 +103,8 @@ public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageCh
     private class MyViewHolder {
         TextView retailer_name_tv, store_tv, warehouse_tv, address_tv, distance_tv;
         ViewPager broacast_viewpager;
-        LinearLayout pager_indicator;
+        private CircleIndicator circularIndicator;
+        //        LinearLayout pager_indicator;
 
         public MyViewHolder(View item) {
 
@@ -110,7 +114,7 @@ public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageCh
             warehouse_tv = (TextView) item.findViewById(R.id.warehouse_tv);
             address_tv = (TextView) item.findViewById(R.id.address_tv);
             distance_tv = (TextView) item.findViewById(R.id.distance_tv);
-            pager_indicator = (LinearLayout) item.findViewById(R.id.viewPagerCountDots);
+            circularIndicator = (CircleIndicator) item.findViewById(R.id.indicator);
         }
     }
 
@@ -130,7 +134,7 @@ public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageCh
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
 
-            params.setMargins(4, 0, 4, 0);
+            params.setMargins(8, 0, 8, 0);
             pager_indicator.addView(dots[i], params);
         }
 

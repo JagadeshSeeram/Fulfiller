@@ -91,7 +91,7 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
  *
 */
 
-public class FulfillmentDetails extends AppCompatActivity implements NetworkOperationListener,
+public class FulfillmentDetails extends AppCompatActivity implements
         AdapterView.OnItemClickListener, View.OnClickListener, OnMapReadyCallback {
 
     ImageView icon_back, price_imv;
@@ -436,27 +436,6 @@ public class FulfillmentDetails extends AppCompatActivity implements NetworkOper
             timer.cancel();
     }
 
-    @Override
-    public void operationCompleted(NetworkResponse networkResponse) {
-
-        if (networkResponse.getStatusCode() == 200) {
-            try {
-                JSONArray result = new JSONArray(networkResponse.getResponseString());
-
-                for (int i = 0; i < result.length(); i++) {
-
-                    JSONObject jsonObject = result.optJSONObject(i);
-                    broadCast = new Gson().fromJson(jsonObject.toString(), BroadCast.class);
-                }
-                buildUI();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-        }
-        Common.disMissDialog();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

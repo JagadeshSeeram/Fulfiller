@@ -141,7 +141,7 @@
                 android:layout_height="45dp"
                 android:background="#353944"
                 android:orientation="horizontal"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:weightSum="1">
 
 

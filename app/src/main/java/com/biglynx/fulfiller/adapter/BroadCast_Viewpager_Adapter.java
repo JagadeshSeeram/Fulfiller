@@ -88,7 +88,7 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
 
         orders_tv.setText(fullfillerList.get(position).OrderCount);
         miles_tv.setText(AppUtil.getTwoDecimals(fullfillerList.get(position).TotalDistance));
-        approx_time_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(fullfillerList.get(position).TotalApproxTimeInSeconds))+" Min");
+        approx_time_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(fullfillerList.get(position).TotalApproxTimeInSeconds)) + " Min");
 
         ((ViewPager) container).addView(itemView);
         return itemView;
