@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:background="#353944">
+    android:background="#FFFFFF">
 
     <com.biglynx.fulfiller.fonts.CustomFontMedium
         android:id="@+id/place_tv"
