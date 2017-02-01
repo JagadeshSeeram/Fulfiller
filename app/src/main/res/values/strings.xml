@@ -133,6 +133,7 @@
     <string name="support_category_type">Select support category</string>
     <string name="select_issue">Select an issue</string>
     <string name="describe_issue">describe issue</string>
+    <string name="no_account_join_now">Don\'t have an account?\nJOIN NOW</string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

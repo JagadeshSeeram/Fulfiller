@@ -342,7 +342,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Don't have an account? JOIN NOW"
+            android:text="@string/no_account_join_now"
             android:textSize="@dimen/textview_dp14">
 
         </com.biglynx.fulfiller.fonts.CustomFontRegular>

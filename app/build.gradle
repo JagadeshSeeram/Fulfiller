@@ -26,7 +26,7 @@ android {
             keyPassword 'biglynx'
 //            storeFile file('E:/Biglynx Android Projects/fulfiller/appstore/keystore.jks')
             storePassword 'biglynx'
-          //  storeFile file('D:/Fulfiller/fulfiller/appstore/keystore.jks')
+            storeFile file('D:/Fulfiller/fulfiller/appstore/keystore.jks')
         }
     }
     dexOptions {
@@ -34,12 +34,12 @@ android {
         javaMaxHeapSize "2048M"
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 7
+        versionCode 9
         versionName "1.0"
         multiDexEnabled true
     }
