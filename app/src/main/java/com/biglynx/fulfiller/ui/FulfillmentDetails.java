@@ -92,7 +92,7 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 */
 
 public class FulfillmentDetails extends AppCompatActivity implements
-        AdapterView.OnItemClickListener, View.OnClickListener, OnMapReadyCallback {
+         View.OnClickListener, OnMapReadyCallback {
 
     ImageView icon_back, price_imv;
     TextView companyname_tv, pickup_loc_tv, locationtype_tv, pricetype_tv, day_tv, time_tv, orders_tv, total_weight_tv,
@@ -273,7 +273,6 @@ public class FulfillmentDetails extends AppCompatActivity implements
 
         fufillerDetailsAdapter = new FufillerDetails_Adapter(this, broadCast.Fulfillments);
         listivew.setAdapter(fufillerDetailsAdapter);
-        listivew.setOnItemClickListener(this);
 
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
@@ -285,7 +284,7 @@ public class FulfillmentDetails extends AppCompatActivity implements
                 broadCast.RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
 
-        fillfromData(positon);
+        fillfromData(positon,false);
 
 
         // Here, thisActivity is the current activity
@@ -373,7 +372,12 @@ public class FulfillmentDetails extends AppCompatActivity implements
 
     }
 
-    private void fillfromData(final int positon) {
+    public void fillfromData(final int positon,boolean cancelTimer) {
+
+        if (cancelTimer){
+            if (timer != null)
+                timer.cancel();
+        }
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -437,16 +441,6 @@ public class FulfillmentDetails extends AppCompatActivity implements
     }
 
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        positions = position;
-        if (timer == null) {
-
-        } else {
-            timer.cancel();
-        }
-        fillfromData(position);
-    }
 
     @Override
     public void onClick(View v) {
@@ -454,23 +448,13 @@ public class FulfillmentDetails extends AppCompatActivity implements
         switch (v.getId()) {
 
             case R.id.fulfiment1_tv:
-                if (timer == null) {
-
-                } else {
-                    timer.cancel();
-                }
-                fillfromData(0);
+                fillfromData(0,true);
                 fulfiment1_tv.setTextColor(Color.parseColor("#EC932F"));
                 fulfiment2_tv.setTextColor(Color.parseColor("#FFFFFF"));
                 positions = 0;
                 break;
             case R.id.fulfiment2_tv:
-                if (timer == null) {
-
-                } else {
-                    timer.cancel();
-                }
-                fillfromData(1);
+                fillfromData(1,true);
                 fulfiment2_tv.setTextColor(Color.parseColor("#EC932F"));
                 fulfiment1_tv.setTextColor(Color.parseColor("#FFFFFF"));
                 positions = 1;
