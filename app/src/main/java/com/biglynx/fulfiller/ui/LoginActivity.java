@@ -799,7 +799,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         Common.disMissDialog();
     }
 
-    private void sendFcmTokenToServer(String fcmToken) {
+    private void sendFcmTokenToServer(final String fcmToken) {
         Common.showDialog(LoginActivity.this);
 
         fillerApiWrapper.sendFcmTokenToServerCall(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
@@ -810,7 +810,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                         if (response.isSuccessful()){
                             registrationID = response.body();
                             Log.e(TAG,"Sending FcmToken Body :: "+registrationID);
-                            sendRegistrationID(registrationID);
+                            sendRegistrationID(registrationID,fcmToken);
                         }else {
                             try {
                                 Log.e(TAG,"Sending FcmToken to Server :: "+response.errorBody().string());
@@ -832,7 +832,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
 
     }
 
-    private void sendRegistrationID(final String registrationID) {
+    private void sendRegistrationID(final String registrationID, String fcmToken) {
         Common.showDialog(LoginActivity.this);
 
         JSONArray flagsObj = new JSONArray();
@@ -847,7 +847,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         }
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("Platform","gcm");
-        hashMap.put("Handle",registrationID);
+        hashMap.put("Handle",fcmToken);
         hashMap.put("Tags",flagsObj);
 
         if (registrationID != null){
