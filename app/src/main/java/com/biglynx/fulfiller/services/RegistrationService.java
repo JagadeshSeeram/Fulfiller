@@ -39,10 +39,6 @@ public class RegistrationService extends Service {
 
     }
 
-    public RegistrationService(Context context) {
-        mContext = context;
-    }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -93,38 +89,24 @@ public class RegistrationService extends Service {
 
     private void sendRegistrationID(final String registrationID, String fcmToken) {
 
-
-
-        //JSONArray flagsObj = new JSONArray();
         String tag = null;
         if (AppPreferences.getInstance(this).getSignInResult() != null) {
             if (AppPreferences.getInstance(this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
                 tag = AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") != null ?
                         "UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") : "";
-                /*flagsObj.put(AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") != null ?
-                        "UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") : "");*/
             } else {
                 tag = AppPreferences.getInstance(this).getSignInResult().optString("Email") != null ?
                         "UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("Email") : "";
-                /*flagsObj.put(AppPreferences.getInstance(this).getSignInResult().optString("Email") != null ?
-                        "UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("Email") : "");*/
             }
         }
         NotificationRegisterModel model = new NotificationRegisterModel();
         model.setPlatform("gcm");
         model.setHandle(fcmToken);
-
-//        NotificationRegisterModel.TagsArray tagsArray = new NotificationRegisterModel.TagsArray();
-//        tagsArray.setTag(tag != null ? tag : "");
         List<String> arrays = new ArrayList<>();
         arrays.add(tag != null ? tag : "");
 
         model.setTags(arrays);
-        /*HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("Platform","gcm");
-        hashMap.put("Handle",fcmToken);
-        hashMap.put("Tags",flagsObj);
-*/
+
         if (registrationID != null){
             fillerApiWrapper.sendRegistrationID(AppPreferences.getInstance(this).getSignInResult() != null ?
                             AppPreferences.getInstance(this).getSignInResult().optString("AuthNToken") : "",
