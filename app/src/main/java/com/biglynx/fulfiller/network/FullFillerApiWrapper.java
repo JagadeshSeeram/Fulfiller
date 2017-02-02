@@ -9,6 +9,7 @@ import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.FullfillerKpi;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
+import com.biglynx.fulfiller.models.NotificationRegisterModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.models.SupportCategoryModel;
@@ -302,17 +303,18 @@ public class FullFillerApiWrapper {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(fcmToken);
+        Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(Constants.NOTIFICATION_PRODUCTCODE,fcmToken);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;
     }
 
-    public Call<Void> sendRegistrationID(String authToken,String registrationID, HashMap<String,Object> hashMap, Callback<Void> callback){
+    public Call<Void> sendRegistrationID(String authToken, String registrationID, NotificationRegisterModel model,
+                                         Callback<Void> callback){
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<Void> call = fullFillerApiHeader.sendRegistrationID(registrationID, Constants.NOTIFICATION_PRODUCTCODE, hashMap);
+        Call<Void> call = fullFillerApiHeader.sendRegistrationID(registrationID, Constants.NOTIFICATION_PRODUCTCODE, model);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;

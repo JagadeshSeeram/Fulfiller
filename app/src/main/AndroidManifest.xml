@@ -138,7 +138,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"></action>
             </intent-filter>
         </service>
-        <service android:name=".services.RegistrationIntentService"
+        <service android:name=".services.RegistrationService"
             android:exported="false"
             >
         </service>

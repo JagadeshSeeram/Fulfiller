@@ -8,6 +8,7 @@ import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.FullfillerKpi;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
+import com.biglynx.fulfiller.models.NotificationRegisterModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.models.SupportCategoryModel;
@@ -104,9 +105,10 @@ public interface FullFillerApi {
     Call<ArrayList<SupportCategoryModel>> getAllTickets(@Query("ProductCode") String productCode);
 
     @POST(HttpAdapter.NOTIFICATION_BACK_END)
-    Call<String> sendFcmTokenToServer(@Query("handle") String fcmToken);
+    Call<String> sendFcmTokenToServer(@Query("productid") String productCode,@Query("handle") String fcmToken);
 
     @PUT(HttpAdapter.NOTIFICATION_BACK_END)
-    Call<Void> sendRegistrationID(@Query("id") String registrationID, @Query("productid") String productCode, @Body HashMap<String,Object> hashMap);
+    Call<Void> sendRegistrationID(@Query("id") String registrationID, @Query("productid") String productCode,
+                                  @Body NotificationRegisterModel model);
 
 }

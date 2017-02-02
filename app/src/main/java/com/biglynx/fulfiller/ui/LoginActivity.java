@@ -43,6 +43,7 @@ import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
+import com.biglynx.fulfiller.services.RegistrationService;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
@@ -782,11 +783,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     public void finishActivity() {
 
         if (AppPreferences.getInstance(LoginActivity.this).getRegistrationID() == null){
-            String fireBaseRegistrationID = FirebaseInstanceId.getInstance().getToken();
-            if (fireBaseRegistrationID != null){
-                Log.e(TAG,"FireBase Token :: "+fireBaseRegistrationID);
-                sendFcmTokenToServer(fireBaseRegistrationID);
-            }
+            startService(new Intent(this, RegistrationService.class));
         }
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -801,86 +798,6 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         Common.disMissDialog();
-    }
-
-    private void sendFcmTokenToServer(final String fcmToken) {
-        Common.showDialog(LoginActivity.this);
-
-        fillerApiWrapper.sendFcmTokenToServerCall(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
-                        AppPreferences.getInstance(LoginActivity.this).getSignInResult().optString("AuthNToken") : "",
-                fcmToken, new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()){
-                            registrationID = response.body();
-                            Log.e(TAG,"Sending FcmToken Body :: "+registrationID);
-                            sendRegistrationID(registrationID,fcmToken);
-                        }else {
-                            try {
-                                Log.e(TAG,"Sending FcmToken to Server :: "+response.errorBody().string());
-                                //AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
-                            } catch (IOException e) {
-                                Log.e(TAG,"Sending FcmToken Error");
-                                e.printStackTrace();
-                            }
-                        }
-                        Common.disMissDialog();
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Common.disMissDialog();
-                        Log.e(TAG,"Sending FcmToken Error");
-                    }
-                });
-
-    }
-
-    private void sendRegistrationID(final String registrationID, String fcmToken) {
-        Common.showDialog(LoginActivity.this);
-
-        JSONArray flagsObj = new JSONArray();
-        if (AppPreferences.getInstance(this).getSignInResult() != null) {
-            if (AppPreferences.getInstance(this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
-                flagsObj.put("UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") != null ?
-                        AppPreferences.getInstance(this).getSignInResult().optString("BusinessLegalName") : "");
-            } else {
-                flagsObj.put("UserName:"+AppPreferences.getInstance(this).getSignInResult().optString("Email") != null ?
-                        AppPreferences.getInstance(this).getSignInResult().optString("Email") : "");
-            }
-        }
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("Platform","gcm");
-        hashMap.put("Handle",fcmToken);
-        hashMap.put("Tags",flagsObj);
-
-        if (registrationID != null){
-            fillerApiWrapper.sendRegistrationID(AppPreferences.getInstance(LoginActivity.this).getSignInResult() != null ?
-                            AppPreferences.getInstance(LoginActivity.this).getSignInResult().optString("AuthNToken") : "",
-                    registrationID, hashMap, new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()){
-                                Log.e(TAG,"Notification Register Body :: "+response.body());
-                                AppPreferences.getInstance(LoginActivity.this).setRegistrationID(registrationID);
-                            }else {
-                                try {
-                                    AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
-                                } catch (IOException e) {
-                                    Log.e(TAG,"Notification Register Error");
-                                    e.printStackTrace();
-                                }
-                            }
-                            Common.disMissDialog();
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Common.disMissDialog();
-                            Log.e(TAG,"Notification Register Error");
-                        }
-                    });
-        }
     }
 
 

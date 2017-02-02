@@ -11,6 +11,7 @@ import com.biglynx.fulfiller.MainActivity;
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.app.MyApplication;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
+import com.biglynx.fulfiller.services.RegistrationService;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
@@ -35,10 +36,12 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         public void run() {
-            if(AppPreferences.getInstance(SplashActivity.this).getSignInResult() != null){
+            if (AppPreferences.getInstance(SplashActivity.this).getSignInResult() != null) {
+                if (AppPreferences.getInstance(SplashActivity.this).getRegistrationID() == null)
+                    startService(new Intent(SplashActivity.this, RegistrationService.class));
+
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            }
-            else{
+            } else {
                 startActivity(new Intent(SplashActivity.this, InitialScreen.class));
             }
 
