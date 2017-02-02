@@ -6,7 +6,7 @@ import java.util.List;
 public class NotificationRegisterModel {
     private String Platform;
     private String Handle;
-    private List<TagsArray> Tags;
+    private List<String> Tags;
 
     public String getPlatform() {
         return Platform;
@@ -24,11 +24,11 @@ public class NotificationRegisterModel {
         this.Handle = handle;
     }
 
-    public List<TagsArray> getTags() {
+    public List<String> getTags() {
         return Tags;
     }
 
-    public void setTags(List<TagsArray> tags) {
+    public void setTags(List<String> tags) {
         this.Tags = tags;
     }
 

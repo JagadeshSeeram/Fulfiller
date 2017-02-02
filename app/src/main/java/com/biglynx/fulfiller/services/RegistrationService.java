@@ -114,10 +114,10 @@ public class RegistrationService extends Service {
         model.setPlatform("gcm");
         model.setHandle(fcmToken);
 
-        NotificationRegisterModel.TagsArray tagsArray = new NotificationRegisterModel.TagsArray();
-        tagsArray.setTag(tag != null ? tag : "");
-        List<TagsArray> arrays = new ArrayList<>();
-        arrays.add(tagsArray);
+//        NotificationRegisterModel.TagsArray tagsArray = new NotificationRegisterModel.TagsArray();
+//        tagsArray.setTag(tag != null ? tag : "");
+        List<String> arrays = new ArrayList<>();
+        arrays.add(tag != null ? tag : "");
 
         model.setTags(arrays);
         /*HashMap<String,Object> hashMap = new HashMap<>();
