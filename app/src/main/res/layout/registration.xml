@@ -341,6 +341,7 @@
                         android:hint="@string/enter_password"
                         android:paddingBottom="@dimen/spacing_small"
                         android:paddingLeft="0dp"
+                        android:inputType="textPassword"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_color_hint_login"
                         android:textSize="@dimen/sp_13" />

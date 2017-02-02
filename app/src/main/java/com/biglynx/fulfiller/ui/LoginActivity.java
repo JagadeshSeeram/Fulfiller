@@ -634,6 +634,10 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                         if (response.isSuccessful()) {
                             SignInResult signInResult = response.body();
                             if (signInResult != null) {
+                                if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
+                                    AppUtil.toast(LoginActivity.this,"your action could not be completed because there was a problem communicating with server");
+                                    return;
+                                }
                                 Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                                 AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                                 finishActivity();

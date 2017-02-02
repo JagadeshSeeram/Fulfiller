@@ -69,7 +69,7 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice);
 
-        broadCast = (BroadCast) getIntent().getSerializableExtra("broadCast");
+        broadCast = getIntent().getParcelableExtra("broadCast");
         positon = getIntent().getIntExtra("position", 1);
         bidamount = getIntent().getStringExtra("bidamount");
         titlebar = (TextView) findViewById(R.id.companyname_tv);
