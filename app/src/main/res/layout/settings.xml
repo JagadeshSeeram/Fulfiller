@@ -50,7 +50,7 @@
                     </com.biglynx.fulfiller.fonts.CustomFontBold>
 
                     <com.biglynx.fulfiller.fonts.CustomFontRegular
-                        android:id="@+id/customFontRegular"
+                        android:id="@+id/account_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"

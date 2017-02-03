@@ -505,7 +505,6 @@ public class FulfillmentDetails extends AppCompatActivity implements
                 }
 
                 break;
-
         }
     }
 

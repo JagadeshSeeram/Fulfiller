@@ -39,6 +39,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout vehicles_LI,notification_LI,cservices_LI,payments_LI,terms_LI, policy_LI;
     private ImageView editProfile_iv;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView account_status;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         terms_LI = (LinearLayout) v.findViewById(R.id.terms_LI);
         policy_LI = (LinearLayout) v.findViewById(R.id.policy_LI);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
+        account_status = (TextView) v.findViewById(R.id.account_status);
         swipeRefreshLayout.setOnRefreshListener(this);
 
         logout_Li.setOnClickListener(this);
@@ -97,6 +99,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName")))
                 name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
         }
+        if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
+            account_status.setText("Status: "+AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status"));
+        else
+            account_status.setText("");
 
         swipeRefreshLayout.setRefreshing(false);
     }
