@@ -249,8 +249,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         Common.disMissDialog();
                         if (response.isSuccessful()) {
                             SignInResult signInResult = response.body();
-                            if (signInResult != null)
+                            if (signInResult != null) {
+                                signInResult.showNoticeDialog = false;
                                 AppPreferences.getInstance(EditProfileActivity.this).setSignInResult(signInResult);
+                            }
                             buildUI();
                         } else {
                             try {

@@ -67,6 +67,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
@@ -436,6 +437,13 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                     if (response.isSuccessful()) {
                         SignInResult signInResult = response.body();
                         if (signInResult != null) {
+                            if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
+                                AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
+                                return;
+                            }
+                            if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                signInResult.showNoticeDialog = true;
+                            Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                             AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                             finishActivity();
                         } else {
@@ -552,6 +560,13 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                                     if (response.isSuccessful()) {
                                                         SignInResult signInResult = response.body();
                                                         if (signInResult != null) {
+                                                            if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
+                                                                AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
+                                                                return;
+                                                            }
+                                                            if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                                                signInResult.showNoticeDialog = true;
+                                                            Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                                                             AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                                                             finishActivity();
                                                         } else {
@@ -636,9 +651,11 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                             SignInResult signInResult = response.body();
                             if (signInResult != null) {
                                 if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
-                                    AppUtil.toast(LoginActivity.this,"your action could not be completed because there was a problem communicating with server");
+                                    AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
                                     return;
                                 }
+                                if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                    signInResult.showNoticeDialog = true;
                                 Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                                 AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                                 finishActivity();

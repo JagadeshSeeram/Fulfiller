@@ -391,6 +391,13 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                             if (response.isSuccessful()) {
                                 SignInResult signInResult = response.body();
                                 if (signInResult != null) {
+                                    if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
+                                        AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
+                                        return;
+                                    }
+                                    if (!signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;
+                                    AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
                                     finishActivity();
                                 } else {
@@ -421,7 +428,14 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                             if (response.isSuccessful()) {
                                 SignInResult signInResult = response.body();
                                 if (signInResult != null) {
+                                    if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
+                                        AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
+                                        return;
+                                    }
+                                    if (!signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
+                                    AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
                                     finishActivity();
                                 } else {
                                     AppUtil.toast(BusinessRegistration.this, OOPS_SOMETHING_WENT_WRONG);

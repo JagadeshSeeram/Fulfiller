@@ -256,7 +256,7 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<AccountConfigModel> getAccountDetailsCall(String authToken,String fulfillerID,Callback<AccountConfigModel> callback){
+    public Call<AccountConfigModel> getAccountDetailsCall(String authToken, String fulfillerID, Callback<AccountConfigModel> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
@@ -266,8 +266,8 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<ArrayList<SupportCategoryModel>> getSupportCategoriesCall(String authToken,String productCode,
-                                                                          Callback<ArrayList<SupportCategoryModel>> callback){
+    public Call<ArrayList<SupportCategoryModel>> getSupportCategoriesCall(String authToken, String productCode,
+                                                                          Callback<ArrayList<SupportCategoryModel>> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
@@ -277,8 +277,8 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<SupportCategoryModel> createTicketCall(String authToken, HashMap<String,String> hashMap,
-                                                     Callback<SupportCategoryModel> callback){
+    public Call<SupportCategoryModel> createTicketCall(String authToken, HashMap<String, String> hashMap,
+                                                       Callback<SupportCategoryModel> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
@@ -288,8 +288,8 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<ArrayList<SupportCategoryModel>> getAllTicketsCall(String authToken,String productCode,
-                                                                          Callback<ArrayList<SupportCategoryModel>> callback){
+    public Call<ArrayList<SupportCategoryModel>> getAllTicketsCall(String authToken, String productCode,
+                                                                   Callback<ArrayList<SupportCategoryModel>> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
@@ -299,22 +299,32 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<String> sendFcmTokenToServerCall(String authToken,String fcmToken,Callback<String> callback){
+    public Call<String> sendFcmTokenToServerCall(String authToken, String fcmToken, Callback<String> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(Constants.NOTIFICATION_PRODUCTCODE,fcmToken);
+        Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(Constants.NOTIFICATION_PRODUCTCODE, fcmToken);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;
     }
 
     public Call<Void> sendRegistrationID(String authToken, String registrationID, NotificationRegisterModel model,
-                                         Callback<Void> callback){
+                                         Callback<Void> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
         Call<Void> call = fullFillerApiHeader.sendRegistrationID(registrationID, Constants.NOTIFICATION_PRODUCTCODE, model);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<SignInResult> getProfileInfo(String authToken, String roleType, Callback<SignInResult> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<SignInResult> call = fullFillerApiHeader.getProfile(roleType);
         call.enqueue(callback);
         Log.d("URLS", call.request().url().toString());
         return call;

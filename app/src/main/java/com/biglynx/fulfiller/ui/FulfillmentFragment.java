@@ -168,8 +168,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
 
                         if (showDialog)
                             Common.disMissDialog();
-                        else
+                        else {
+                            setTabPs();
                             swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
 
                     @Override
@@ -218,6 +220,15 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         awating_tv.setOnClickListener(this);
         confirmed_tv.setOnClickListener(this);
 
+        setTabPs();
+
+        apiWrapper = new FullFillerApiWrapper();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void setTabPs() {
         active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
         past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
         active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -226,10 +237,6 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         confirmed_tv.setVisibility(View.VISIBLE);
 
         awating_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-        apiWrapper = new FullFillerApiWrapper();
-
-        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_To_Refresh_Layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override

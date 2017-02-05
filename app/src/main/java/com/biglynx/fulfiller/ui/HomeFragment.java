@@ -3,14 +3,22 @@ package com.biglynx.fulfiller.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +42,11 @@ import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,10 +82,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     TextView complete_sm_tv, waiting_sm_tv, username_tv, noitems_wait_tv, noitems_confirm_tv,
             fulfillemts_tv, earned_tv, mildesdriven_tv;
     private FullFillerApiWrapper apiWrapper;
-    private String rollType, editProfileType;
+    private String rollType, editProfileType, getProfile;
     private TextView userType_tv;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout fulfiller_profile_info_LI;
+    private AlertDialog alertDialog;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -126,7 +139,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         }
     };
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +148,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.homeactivity, container, false);
+        showNoticeDialog(AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("showNoticeDialog"));
+
         compltedFulfillerList = new ArrayList<>();
         pendingdFulfillerList = new ArrayList<>();
         compltedFulfillerList_less = new ArrayList<>();
@@ -173,11 +187,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
                 rollType = "Partner";
                 editProfileType = "editprofilepartner";
+                getProfile = "getdeliveypartnerprofile";
                 userType_tv.setText("Deliver Partner");
             } else {
                 rollType = "Person";
                 editProfileType = "editprofileperson";
                 userType_tv.setText("Deliver Person");
+                getProfile = "getdeliverypersonprofile";
             }
         }
 
@@ -222,6 +238,45 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
 
         return v;
+    }
+
+    private void showNoticeDialog(boolean showNoticeDialog) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.not_activated_dialog, null);
+        TextView refresh_tv = (TextView) view.findViewById(R.id.refresh_tv);
+        TextView resendActivationMail_tv = (TextView) view.findViewById(R.id.resend_verification_mail_tv);
+        refresh_tv.setOnClickListener(this);
+        SpannableString spannableString = new SpannableString(getString(R.string.resend_verification_mail));
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                if (alertDialog != null && alertDialog.isShowing())
+                    alertDialog.dismiss();
+                AppUtil.toast(getActivity(), "Resend activation mail");
+            }
+        }, 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE),39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        resendActivationMail_tv.setMovementMethod(LinkMovementMethod.getInstance());
+        resendActivationMail_tv.setText(spannableString);
+
+        if (showNoticeDialog) {
+            alertDialog = new AlertDialog.Builder(getActivity())
+                    .setView(view)
+                    .create();
+            alertDialog.show();
+            alertDialog.setCancelable(true);
+            alertDialog.setCanceledOnTouchOutside(true);
+            try {
+                JSONObject signInREsult = AppPreferences.getInstance(getActivity()).getSignInResult();
+                signInREsult.put("showNoticeDialog", false);
+                Gson gson = new Gson();
+                String resultString = signInREsult.toString();
+                SignInResult signInResult = gson.fromJson(resultString, SignInResult.class);
+                AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void callServices(final boolean showProgress) {
@@ -357,7 +412,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                             noitems_wait_tv.setVisibility(View.VISIBLE);
                             noitems_confirm_tv.setVisibility(View.VISIBLE);
                             Log.e("HomeFragment", "DashboardAPI :: " + t.getMessage());
-                           // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                            // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();
                             else
@@ -369,13 +424,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     }
 
     private void emptyAllLists() {
-        if (compltedFulfillerList != null && compltedFulfillerList.size() > 0 )
+        if (compltedFulfillerList != null && compltedFulfillerList.size() > 0)
             compltedFulfillerList.clear();
-        if (compltedFulfillerList_less != null && compltedFulfillerList_less.size() > 0 )
+        if (compltedFulfillerList_less != null && compltedFulfillerList_less.size() > 0)
             compltedFulfillerList_less.clear();
-        if (pendingdFulfillerList != null && pendingdFulfillerList.size() > 0 )
+        if (pendingdFulfillerList != null && pendingdFulfillerList.size() > 0)
             pendingdFulfillerList.clear();
-        if (pendingdFulfillerList_less != null && pendingdFulfillerList_less.size() > 0 )
+        if (pendingdFulfillerList_less != null && pendingdFulfillerList_less.size() > 0)
             pendingdFulfillerList_less.clear();
     }
 
@@ -425,6 +480,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             case R.id.fulfiller_profile_info_LI:
                 MainActivity.setCurrentTab(3);
                 getFragmentManager().beginTransaction().add(R.id.tabFrameLayout, new SettingsFragment()).addToBackStack(null).commit();
+                break;
+            case R.id.refresh_tv:
+                if (alertDialog != null && alertDialog.isShowing())
+                    alertDialog.dismiss();
+                Common.showDialog(getActivity());
+                apiWrapper.getProfileInfo(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                                AppPreferences.getInstance(getActivity()).getSignInResult().optString("") : "",
+                        getProfile, new Callback<SignInResult>() {
+                            @Override
+                            public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
+                                if (response.isSuccessful()) {
+                                    SignInResult signInResult = response.body();
+                                    if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;
+                                    AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
+                                    showNoticeDialog(AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("showNoticeDialog"));
+                                } else {
+                                    try {
+                                        AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                                    } catch (IOException e) {
+                                        AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                                        e.printStackTrace();
+                                    }
+                                }
+                                Common.disMissDialog();
+                            }
+
+                            @Override
+                            public void onFailure(Call<SignInResult> call, Throwable t) {
+                                Common.disMissDialog();
+                            }
+                        });
                 break;
         }
     }
