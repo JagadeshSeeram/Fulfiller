@@ -92,7 +92,7 @@ public class SignInResult {
     public String StateIncorporated;
     @SerializedName("subscription")
     public Subscription subscription;
-    public boolean showNoticeDialog = false;
+    //public boolean showNoticeDialog = false;
 
     public JSONObject toJSON() {
         JSONObject jsonObject = new JSONObject();
@@ -119,7 +119,7 @@ public class SignInResult {
             jsonObject.put("UserId", UserId);
             jsonObject.put("ZipCode", ZipCode);
             jsonObject.put("BusinessLegalName", BusinessLegalName);
-            jsonObject.put("showNoticeDialog",showNoticeDialog);
+            //jsonObject.put("showNoticeDialog",showNoticeDialog);
         } catch (JSONException e) {
             e.printStackTrace();
         }

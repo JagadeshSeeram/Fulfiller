@@ -861,37 +861,40 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (usermarkerId.equals(marker.getId())) {
             return true;
         } else {
+            if (markervalues == null || markervalues.size() == 0)
+                return true;
+            else {
+                //delete previous marker
+                if (previousMarker != null) {
+                    setUpMap(broadCastList.get(markervalues.get(previousMarker.getId())), R.drawable.marks_bgs, markervalues.get(previousMarker.getId()));
+                    previousMarker.remove();
+                }
+                setUpMap(broadCastList.get(markervalues.get(marker.getId())), R.drawable.marks_bg_orgs, markervalues.get(marker.getId()));
 
-            //delete previous marker
-            if (previousMarker != null) {
-                setUpMap(broadCastList.get(markervalues.get(previousMarker.getId())), R.drawable.marks_bgs, markervalues.get(previousMarker.getId()));
-                previousMarker.remove();
+                //bottom viewpager setup
+
+                if (broadCastList.get(markervalues.get(marker.getId())).CompanyLogo == null ||
+                        broadCastList.get(markervalues.get(marker.getId())).CompanyLogo.equals("null")) {
+
+                } else {
+                    Picasso.with(getActivity()).load(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo).into(companylogo_imv);
+                }
+
+                companyname_tv.setText(broadCastList.get(markervalues.get(marker.getId())).BusinessLegalName);
+                pickup_loc_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
+                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.City);
+                locationtype_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.LocationType);
+                //viewpager setup
+                broadCastFulAdapter = new BroadCast_Ful_Adapter(getContext(), broadCastList.get(markervalues.get(marker.getId())), broadCastList.get(markervalues.get(marker.getId())).Fulfillments);
+                fulfiller_viewPager.setAdapter(broadCastFulAdapter);
+                if (!viewpager_LI.isShown()) {
+                    slideToTop(viewpager_LI);
+                }
+                marker.remove();
+                previousMarker = marker; //Now the clicked marker becomes previousMarker
+                setUiPageViewController();
+                return false;
             }
-            setUpMap(broadCastList.get(markervalues.get(marker.getId())), R.drawable.marks_bg_orgs, markervalues.get(marker.getId()));
-
-            //bottom viewpager setup
-
-            if (broadCastList.get(markervalues.get(marker.getId())).CompanyLogo == null ||
-                    broadCastList.get(markervalues.get(marker.getId())).CompanyLogo.equals("null")) {
-
-            } else {
-                Picasso.with(getActivity()).load(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo).into(companylogo_imv);
-            }
-
-            companyname_tv.setText(broadCastList.get(markervalues.get(marker.getId())).BusinessLegalName);
-            pickup_loc_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
-                    broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.City);
-            locationtype_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.LocationType);
-            //viewpager setup
-            broadCastFulAdapter = new BroadCast_Ful_Adapter(getContext(), broadCastList.get(markervalues.get(marker.getId())), broadCastList.get(markervalues.get(marker.getId())).Fulfillments);
-            fulfiller_viewPager.setAdapter(broadCastFulAdapter);
-            if (!viewpager_LI.isShown()) {
-                slideToTop(viewpager_LI);
-            }
-            marker.remove();
-            previousMarker = marker; //Now the clicked marker becomes previousMarker
-            setUiPageViewController();
-            return false;
         }
     }
 

@@ -121,10 +121,27 @@ public class FullFillerApiWrapper {
         return dashBoardModelCall;
     }
 
-    public Call<SignInResult> editProfileModelCall(String authToken, String url, HashMap<String, Object> hashMap, Callback<SignInResult> callback) {
+    public Call<SignInResult> editProfileInSettings(String authToken, String url, HashMap<String, Object> hashMap, Callback<SignInResult> callback) {
         if (fullFillerApiHeader == null)
             createRetrofitWithHeader(authToken);
-        Call<SignInResult> profileModelCall = fullFillerApiHeader.editProfileModelCall(url, hashMap);
+        Call<SignInResult> profileModelCall = fullFillerApiHeader
+                .editProfileInSettings(url, hashMap.get("BusinessLegalName"), hashMap.get("FirstName"),
+                        hashMap.get("Email"), hashMap.get("AddressLine1"),
+                        hashMap.get("City"), hashMap.get("State"),
+                        hashMap.get("Country"),hashMap.get("Phone"),
+                        hashMap.get("BlobId"));
+        profileModelCall.enqueue(callback);
+        Log.d("URLS", profileModelCall.request().url().toString());
+        Log.d("editprofile", "Body :: " + profileModelCall.request().body());
+        return profileModelCall;
+    }
+
+    public Call<SignInResult> editProfileCallInHome(String authToken, String url, HashMap<String, Object> hashMap, Callback<SignInResult> callback) {
+        if (fullFillerApiHeader == null)
+            createRetrofitWithHeader(authToken);
+        Call<SignInResult> profileModelCall = fullFillerApiHeader
+                .editProfileCallInHome(url, hashMap.get("fulfillerid"), hashMap.get("fulfillertype"),
+                        hashMap.get("Proximity"), hashMap.get("ReadyFulfill"));
         profileModelCall.enqueue(callback);
         Log.d("URLS", profileModelCall.request().url().toString());
         Log.d("editprofile", "Body :: " + profileModelCall.request().body());

@@ -441,8 +441,8 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                 AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
                                 return;
                             }
-                            if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
-                                signInResult.showNoticeDialog = true;
+                            /*if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                signInResult.showNoticeDialog = true;*/
                             Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                             AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                             finishActivity();
@@ -564,8 +564,8 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                                                 AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
                                                                 return;
                                                             }
-                                                            if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
-                                                                signInResult.showNoticeDialog = true;
+                                                            /*if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                                                signInResult.showNoticeDialog = true;*/
                                                             Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                                                             AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                                                             finishActivity();
@@ -654,8 +654,8 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                     AppUtil.toast(LoginActivity.this,"Your action could not be completed because there was a problem communicating with server");
                                     return;
                                 }
-                                if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
-                                    signInResult.showNoticeDialog = true;
+                                /*if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                    signInResult.showNoticeDialog = true;*/
                                 Log.d(LoginActivity.class.getSimpleName(), "AuthToken :: " + signInResult.AuthNToken);
                                 AppPreferences.getInstance(LoginActivity.this).setSignInResult(signInResult);
                                 finishActivity();

@@ -438,7 +438,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
             case R.id.cancel_intrest_LI:
                 //finish();
-                share_LI.setVisibility(View.VISIBLE);
+                //share_LI.setVisibility(View.VISIBLE);
                 break;
             case R.id.share_intrest_LI:
                 share_LI.setVisibility(View.VISIBLE);

@@ -161,19 +161,27 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (rollType.equals("editprofilepartner")) {
             contactPerson_LI.setVisibility(View.VISIBLE);
             fullName_tv.setText(getString(R.string.business_name));
+            fullName_ev.setEnabled(false);
+            fullName_ev.setClickable(false);
+            fullName_ev.setFocusable(false);
+            fullName_ev.setFocusableInTouchMode(false);
             fullName_ev.setText(signInResult.optString("BusinessLegalName"));
             contactPerson_ev.setText(signInResult.optString("FirstName"));
             phoneNumber_tv.setText(getString(R.string.phonenumber));
         } else {
             contactPerson_LI.setVisibility(View.GONE);
             fullName_tv.setText(getString(R.string.full_name));
+            fullName_ev.setEnabled(true);
+            fullName_ev.setClickable(true);
+            fullName_ev.setFocusable(true);
+            fullName_ev.setFocusableInTouchMode(true);
             fullName_ev.setText(signInResult.optString("FirstName"));
             phoneNumber_tv.setText(getString(R.string.mobile));
         }
         email_ev.setText(signInResult.optString("Email"));
 
-        if (AppUtil.ifNotEmpty(signInResult.optString("Phone")))
-            phoneNumber_ev.setText(signInResult.optString("Phone"));
+        //if (AppUtil.ifNotEmpty(signInResult.optString("Phone")))
+        phoneNumber_ev.setText(signInResult.optString("Phone"));
         if (AppUtil.ifNotEmpty(signInResult.optString("AddressLine1")))
             address_ev.setText(signInResult.optString("AddressLine1"));
         if (AppUtil.ifNotEmpty(signInResult.optString("City")))
@@ -204,9 +212,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         hashMap.put("BusinessLegalName", fullName_ev.getText().toString());
                         hashMap.put("FirstName", contactPerson_ev.getText().toString());
                     } else {
+                        hashMap.put("BusinessLegalName", "");
                         hashMap.put("FirstName", fullName_ev.getText().toString());
                     }
-                    hashMap.put("Email", email_ev.getText().toString());
+                    hashMap.put("Email", TextUtils.isEmpty(email_ev.getText().toString()) ? "" : email_ev.getText().toString());
                     hashMap.put("AddressLine1", address_ev.getText().toString());
                     hashMap.put("City", city_ev.getText().toString());
                     hashMap.put("State", stateSpinner.getSelectedItem().toString());
@@ -242,7 +251,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         Common.showDialog(EditProfileActivity.this);
         FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
-        apiWrapper.editProfileModelCall(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("AuthNToken"),
+        apiWrapper.editProfileInSettings(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("AuthNToken"),
                 rollType, hashMap, new Callback<SignInResult>() {
                     @Override
                     public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
@@ -250,7 +259,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         if (response.isSuccessful()) {
                             SignInResult signInResult = response.body();
                             if (signInResult != null) {
-                                signInResult.showNoticeDialog = false;
                                 AppPreferences.getInstance(EditProfileActivity.this).setSignInResult(signInResult);
                             }
                             buildUI();
@@ -276,7 +284,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private boolean checkAllMandatoryFields() {
         if (!TextUtils.isEmpty(fullName_ev.getText().toString().trim())
-                && (!TextUtils.isEmpty(email_ev.getText().toString().trim()))
+                /*&& (!TextUtils.isEmpty(email_ev.getText().toString().trim()))*/
                 && (!TextUtils.isEmpty(phoneNumber_ev.getText().toString().trim()))
                 && (!TextUtils.isEmpty(address_ev.getText().toString().trim()))
                 && (!TextUtils.isEmpty(city_ev.getText().toString().trim()))

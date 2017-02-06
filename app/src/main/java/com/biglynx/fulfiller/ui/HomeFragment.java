@@ -97,11 +97,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 return;
             }
             Common.showDialog(getContext());
-            HashMap<String, Object> infoObject;
+            HashMap<String,Object> infoObject = new HashMap<>();
             infoObject = getProfileInfo(isChecked);
 
 
-            apiWrapper.editProfileModelCall(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"),
+            apiWrapper.editProfileCallInHome(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"),
                     editProfileType, infoObject, new Callback<SignInResult>() {
                         @Override
                         public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.homeactivity, container, false);
-        showNoticeDialog(AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("showNoticeDialog"));
+        showNoticeDialog();
 
         compltedFulfillerList = new ArrayList<>();
         pendingdFulfillerList = new ArrayList<>();
@@ -209,6 +209,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 username_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
         }
 
+        switchCompat.setOnCheckedChangeListener(null);
+        switchCompat.setChecked(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("ReadyFufill") : false);
+
         waitinglist_LI.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -240,7 +244,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         return v;
     }
 
-    private void showNoticeDialog(boolean showNoticeDialog) {
+    private void showNoticeDialog() {
+        boolean showNoticeDialog = checkStatus();
+        if (!showNoticeDialog)
+            return;
+
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.not_activated_dialog, null);
         TextView refresh_tv = (TextView) view.findViewById(R.id.refresh_tv);
         TextView resendActivationMail_tv = (TextView) view.findViewById(R.id.resend_verification_mail_tv);
@@ -254,29 +262,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 AppUtil.toast(getActivity(), "Resend activation mail");
             }
         }, 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE),39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         resendActivationMail_tv.setMovementMethod(LinkMovementMethod.getInstance());
         resendActivationMail_tv.setText(spannableString);
 
-        if (showNoticeDialog) {
-            alertDialog = new AlertDialog.Builder(getActivity())
-                    .setView(view)
-                    .create();
-            alertDialog.show();
-            alertDialog.setCancelable(true);
-            alertDialog.setCanceledOnTouchOutside(true);
-            try {
-                JSONObject signInREsult = AppPreferences.getInstance(getActivity()).getSignInResult();
-                signInREsult.put("showNoticeDialog", false);
-                Gson gson = new Gson();
-                String resultString = signInREsult.toString();
-                SignInResult signInResult = gson.fromJson(resultString, SignInResult.class);
-                AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        /*try {
+            JSONObject signInREsult = AppPreferences.getInstance(getActivity()).getSignInResult();
+            signInREsult.put("showNoticeDialog", false);
+            Gson gson = new Gson();
+            String resultString = signInREsult.toString();
+            SignInResult signInResult = gson.fromJson(resultString, SignInResult.class);
+            AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+    }
 
+    private boolean checkStatus() {
+        if (TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
+            return true;
+        else if (!AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")
+                .equalsIgnoreCase("active"))
+            return true;
+        else
+            return false;
     }
 
     private void callServices(final boolean showProgress) {
@@ -492,10 +507,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                             public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
                                 if (response.isSuccessful()) {
                                     SignInResult signInResult = response.body();
-                                    if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                    /*if (TextUtils.isEmpty(signInResult.Status))
                                         signInResult.showNoticeDialog = true;
+                                    else if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;*/
                                     AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
-                                    showNoticeDialog(AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("showNoticeDialog"));
+                                    showNoticeDialog();
                                 } else {
                                     try {
                                         AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());

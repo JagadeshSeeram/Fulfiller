@@ -395,8 +395,8 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                         AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
                                         return;
                                     }
-                                    if (!signInResult.Status.equalsIgnoreCase("active"))
-                                        signInResult.showNoticeDialog = true;
+                                    /*if (!signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;*/
                                     AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
                                     finishActivity();
@@ -432,8 +432,8 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                         AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
                                         return;
                                     }
-                                    if (!signInResult.Status.equalsIgnoreCase("active"))
-                                        signInResult.showNoticeDialog = true;
+                                   /* if (!signInResult.Status.equalsIgnoreCase("active"))
+                                        signInResult.showNoticeDialog = true;*/
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
                                     AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
                                     finishActivity();

@@ -98,7 +98,7 @@ public class NotificatoinProximity extends AppCompatActivity implements
             }
         }
         apiWrapper = new FullFillerApiWrapper();
-        apiWrapper.editProfileModelCall(AppPreferences.getInstance(NotificatoinProximity.this).getSignInResult().optString("AuthNToken"),
+        apiWrapper.editProfileCallInHome(AppPreferences.getInstance(NotificatoinProximity.this).getSignInResult().optString("AuthNToken"),
                 editProfileType, infoObject, new Callback<SignInResult>() {
                     @Override
                     public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
