@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.homeactivity, container, false);
-        //showNoticeDialog();
+        showNoticeDialog();
 
         compltedFulfillerList = new ArrayList<>();
         pendingdFulfillerList = new ArrayList<>();
@@ -269,7 +269,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .create();
-        alertDialog.setCancelable(false);
+        //alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         /*try {
@@ -501,7 +501,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     alertDialog.dismiss();
                 Common.showDialog(getActivity());
                 apiWrapper.getProfileInfo(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
-                                AppPreferences.getInstance(getActivity()).getSignInResult().optString("") : "",
+                                AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
                         getProfile, new Callback<SignInResult>() {
                             @Override
                             public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {

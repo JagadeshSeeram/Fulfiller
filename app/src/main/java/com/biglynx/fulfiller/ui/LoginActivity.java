@@ -626,7 +626,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                     AppUtil.toast(this, "Email cannot be empty!!");
                     return;
                 }
-                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEdit.getText().toString()).matches()) {
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEdit.getText().toString().trim()).matches()) {
                     AppUtil.toast(this, "Email is not valid!!");
                     return;
                 }
