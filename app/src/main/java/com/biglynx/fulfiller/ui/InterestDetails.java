@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.app.MyApplication;
+import com.biglynx.fulfiller.models.FulfillerInterests;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.network.HttpAdapter;
@@ -437,11 +438,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                 break;
 
             case R.id.cancel_intrest_LI:
-                //finish();
-                //share_LI.setVisibility(View.VISIBLE);
-                break;
-            case R.id.share_intrest_LI:
-                share_LI.setVisibility(View.VISIBLE);
+                cancelInterest();
                 break;
             /*case R.id.share_LI:
                 share_LI.setVisibility(View.GONE);
@@ -482,6 +479,39 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                         .putExtra("position", positions));
                 break;
         }
+    }
+
+    private void cancelInterest() {
+        if (!Common.isNetworkAvailable(MyApplication.getInstance())) {
+            AppUtil.toast(InterestDetails.this, "Network disconnected. Please check");
+            return;
+        }
+        Common.showDialog(InterestDetails.this);
+        apiWrapper.cancelInterest(AppPreferences.getInstance(getApplicationContext()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("") : "",
+                interest.Fulfillments.FulfillerInterestId, new Callback<FulfillerInterests>() {
+                    @Override
+                    public void onResponse(Call<FulfillerInterests> call, Response<FulfillerInterests> response) {
+                        if (response.isSuccessful()) {
+                            AppUtil.toast(InterestDetails.this, "Interest is cancelled...");
+                            finish();
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(InterestDetails.this, response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(InterestDetails.this, "Unable to cancel the interest. Please try later...");
+                                e.printStackTrace();
+                            }
+                        }
+                        Common.disMissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<FulfillerInterests> call, Throwable t) {
+                        Common.disMissDialog();
+                        AppUtil.toast(InterestDetails.this, "Unable to cancel the interest. Please try later...");
+                    }
+                });
     }
 
     private void getpermissions() {

@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.homeactivity, container, false);
-        showNoticeDialog();
+        //showNoticeDialog();
 
         compltedFulfillerList = new ArrayList<>();
         pendingdFulfillerList = new ArrayList<>();
@@ -257,8 +257,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                if (alertDialog != null && alertDialog.isShowing())
-                    alertDialog.dismiss();
+                /*if (alertDialog != null && alertDialog.isShowing())
+                    alertDialog.dismiss();*/
                 AppUtil.toast(getActivity(), "Resend activation mail");
             }
         }, 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

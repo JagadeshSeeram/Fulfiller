@@ -346,4 +346,15 @@ public class FullFillerApiWrapper {
         Log.d("URLS", call.request().url().toString());
         return call;
     }
+
+    public Call<FulfillerInterests> cancelInterest(String authToken, String fulfillerInterestId,
+                                         Callback<FulfillerInterests> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<FulfillerInterests> call = fullFillerApiHeader.cancelInterest(fulfillerInterestId);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
 }

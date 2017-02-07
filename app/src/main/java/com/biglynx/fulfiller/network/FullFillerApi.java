@@ -125,4 +125,8 @@ public interface FullFillerApi {
     @GET(HttpAdapter.BASE_URL + "{url}")
     Call<SignInResult> getProfile(@Path("url") String url);
 
+    @FormUrlEncoded
+    @POST(HttpAdapter.CANCEL_INTEREST)
+    Call<FulfillerInterests> cancelInterest(@Field("FulfillerInterestId") String fulfillerInterestId);
+
 }
