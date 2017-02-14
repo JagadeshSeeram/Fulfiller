@@ -513,7 +513,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         } else if (deliveryStatusId == 2) {
             updateProgressbar(35);
         } else if (deliveryStatusId == 3 || deliveryStatusId == 4 || deliveryStatusId == 5) {
-            updateProgressbar(75);
+            updateProgressbar(65);
         } else if (deliveryStatusId == 6)
             updateProgressbar(100);
     }
@@ -543,30 +543,34 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                         public void run() {
                             progress_bar.setProgress(progressStatus);
                             trackimage_imv.setX(progressStatus * (deviceswidth / 100));
-                            ontheway_imv.setImageResource(R.drawable.ontheway_g);
-                            ontheway_tv.setTextColor(Color.parseColor("#94C96F"));
-
                             if (progressStatus == 5) {
-                                if (!googlemaps_LI.isShown())
-                                    googlemaps_LI.setVisibility(View.VISIBLE);
+                                if (progressStatus == max) {
+                                    if (!googlemaps_LI.isShown())
+                                        googlemaps_LI.setVisibility(View.VISIBLE);
+                                }
+                                ontheway_imv.setImageResource(R.drawable.ontheway_g);
+                                ontheway_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                             if (progressStatus == 35) {
-                                googlemaps_LI.setVisibility(View.GONE);
-                                confirmorders_LI.setVisibility(View.VISIBLE);
+                                if (progressStatus == max) {
+                                    googlemaps_LI.setVisibility(View.GONE);
+                                    confirmorders_LI.setVisibility(View.VISIBLE);
+                                }
                                 pickedup_imv.setImageResource(R.drawable.pickedup_g);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
 
                             if (progressStatus > 50) {
-                                if (deliv_customers_LI.getVisibility() == View.VISIBLE) {
-                                } else {
-                                    googlemaps_LI.setVisibility(View.GONE);
-                                    confirmorders_LI.setVisibility(View.GONE);
-                                    deliv_customers_LI.setVisibility(View.VISIBLE);
-                                    checkIfAllOrdersAllDelivered(responseInterestObj);
-                                    pickedup_imv.setImageResource(R.drawable.pickedup_g);
-                                    pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
+                                if (progressStatus == max) {
+                                    if (!deliv_customers_LI.isShown()){
+                                        googlemaps_LI.setVisibility(View.GONE);
+                                        confirmorders_LI.setVisibility(View.GONE);
+                                        deliv_customers_LI.setVisibility(View.VISIBLE);
+                                        checkIfAllOrdersAllDelivered(responseInterestObj);
+                                    }
                                 }
+                                pickedup_imv.setImageResource(R.drawable.pickedup_g);
+                                pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                             if (progressStatus == 100) {
                                 delivered_imv.setImageResource(R.drawable.delivered_g);

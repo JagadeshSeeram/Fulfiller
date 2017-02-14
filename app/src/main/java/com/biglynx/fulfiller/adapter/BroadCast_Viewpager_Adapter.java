@@ -26,14 +26,14 @@ import java.util.concurrent.TimeUnit;
 public class BroadCast_Viewpager_Adapter extends PagerAdapter {
 
     private Context mContext;
-    private List<FulfillersDTO>  fullfillerList;
+    private List<FulfillersDTO> fullfillerList;
     LayoutInflater inflater;
     BroadCast broadCast;
 
     public BroadCast_Viewpager_Adapter(Context mContext, BroadCast broadCast, List<FulfillersDTO> fullfillerLists) {
 
         this.mContext = mContext;
-        this.broadCast=broadCast;
+        this.broadCast = broadCast;
         this.fullfillerList = fullfillerLists;
     }
 
@@ -56,14 +56,13 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
         View itemView = inflater.inflate(R.layout.broadcast_viewpager_items, container,
                 false);
 
-        itemView.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        itemView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
                 //this will log the page number that was click
                 Log.i("TAG", "This page was clicked: " + broadCast.RetailerLocationAddress.RetailerLocationId);
                 mContext.startActivity(new Intent(mContext, FulfillmentDetails.class)
-                .putExtra("position",position)
-                        .putExtra("retaileLocId",broadCast.RetailerLocationAddress.RetailerLocationId)
+                        .putExtra("retaileLocId", broadCast.RetailerLocationAddress.RetailerLocationId)
                 );
             }
         });
@@ -75,16 +74,16 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
         TextView price_type_tv = (TextView) itemView.findViewById(R.id.price_type_tv);
         ImageView price_tag_imv = (ImageView) itemView.findViewById(R.id.price_tag_imv);
 
-            if(fullfillerList.get(position).PriceType.toLowerCase().contains("fixed")){
-                price_tag_imv.setImageResource(R.drawable.fixed_price);
-                price_type_tv.setText("PAYS");
-                price_tv.setText("$"+AppUtil.getTwoDecimals(fullfillerList.get(position).Amount));
+        if (fullfillerList.get(position).PriceType.toLowerCase().contains("fixed")) {
+            price_tag_imv.setImageResource(R.drawable.fixed_price);
+            price_type_tv.setText("PAYS");
+            price_tv.setText("$" + AppUtil.getTwoDecimals(fullfillerList.get(position).Amount));
 
-            }else{
-                price_tag_imv.setImageResource(R.drawable.bidding_price);
-                price_type_tv.setText("BID");
-                price_tv.setText("NOW");
-            }
+        } else {
+            price_tag_imv.setImageResource(R.drawable.bidding_price);
+            price_type_tv.setText("BID");
+            price_tv.setText("NOW");
+        }
 
         orders_tv.setText(fullfillerList.get(position).OrderCount);
         miles_tv.setText(AppUtil.getTwoDecimals(fullfillerList.get(position).TotalDistance));

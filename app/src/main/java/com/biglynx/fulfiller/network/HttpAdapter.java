@@ -22,8 +22,9 @@ public class HttpAdapter {
     public static final String LOGIN_EMAIl = BASE_URL_LOGIN + "biglynxAuthz";
     public static final String SIGNUP_DEVLIVERY_PARTNER = BASE_URL_LOGIN + "Deliverypartner/signup";
     public static final String SIGNUP_DRIVER = BASE_URL_LOGIN + "driver/signup";
-    public static final String FULLFILLER_KPI = BASE_URL + "fulfillerkpi/";
+    public static final String RESEND_ACTIVATION_MAIL = BASE_URL_LOGIN + "Fulfiller/ResendActivationEmail/";
 
+    public static final String FULLFILLER_KPI = BASE_URL + "fulfillerkpi/";
     public static final String KEY_FOR_API = "QklHTFlOWEJST0FEQ0FTVDo6RDEzMUQzODMtQjVFNi00Mjk3LTkxMjItNjU1NkNGM0U0N0UxOjpmdWxmaWxsZXIuaW9zLmFwcDo6MTo6MTo6MDo6MDo6MDo6";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
     public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
@@ -48,7 +49,8 @@ public class HttpAdapter {
     public static final String GET_SUPPORT_CATEGORIES = BASE_URL + "SupportRequest/GetCategories?";
     public static final String CREATE_TICKET = BASE_URL + "SupportRequest?";
     public static final String NOTIFICATION_BACK_END = "http://biglynxnotification.azurewebsites.net/api/Register";
-    public static final String CANCEL_INTEREST = BASE_URL + "cancelinterest";
+    public static final String CANCEL_INTEREST = BASE_URL_LOGIN + "cancelinterest";
+
     public static String SENDER_ID = "55470930292";
 
 

@@ -357,4 +357,15 @@ public class FullFillerApiWrapper {
         Log.d("URLS", call.request().url().toString());
         return call;
     }
+
+    public Call<Void> resendActivationCall(String authToken, String fulfillerID,
+                                         Callback<Void> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<Void> call = fullFillerApiHeader.resendActivationMail(fulfillerID);
+        call.enqueue(callback);
+        Log.d("URLS", call.request().url().toString());
+        return call;
+    }
 }

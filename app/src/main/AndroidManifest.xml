@@ -27,18 +27,21 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <uses-permission android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE"/>
+    <permission
+        android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.biglynx.fulfiller.permission.C2D_MESSAGE" />
 
     <application
-        tools:replace="android:icon"
         android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNew"
-        android:windowSoftInputMode="stateAlwaysHidden">
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:replace="android:icon">
         <activity
             android:name=".ui.SplashActivity"
             android:label="@string/app_name"
@@ -124,31 +127,33 @@
             android:value="9670afc70ca67113b8babc3ab9b71fdc758026d8" />
 
         <activity android:name=".ui.CreateTicketActivity" />
-        <activity android:name=".ui.ViewServiceRequestsActivity"></activity>
+        <activity android:name=".ui.ViewServiceRequestsActivity" />
 
-        <service
-            android:name=".services.MyFirebaseMessagingService">
+        <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".services.MyFireBaseInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"></action>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".services.RegistrationService"
-            android:exported="false"
-            >
-        </service>
-        <receiver android:name="com.biglynx.fulfiller.receiver.NotificationsBroadcastReceiver"
+        <service
+            android:name=".services.RegistrationService"
+            android:exported="false"></service>
+
+        <receiver
+            android:name=".receiver.NotificationsBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.biglynx.fulfiller" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.PaymentsDetailInfoActivity"></activity>
     </application>
 
 </manifest>

@@ -100,7 +100,7 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
                 broadCast.RetailerLocationAddress.RetailerLocationAddress.City + "," + broadCast.RetailerLocationAddress.RetailerLocationAddress.CountryName);
         // pricetype_tv.setText(broadCast.Fulfillments.get(positon).PriceType);
         Date date = new Date();
-        date_tv.setText("" + date);
+        date_tv.setText("" + AppUtil.formatTodayDate(date));
         fulId = broadCast.Fulfillments.get(positon).FulfillmentId;
         fulfillment_id_tv.setText("BroadCast ID " + fulId);
 

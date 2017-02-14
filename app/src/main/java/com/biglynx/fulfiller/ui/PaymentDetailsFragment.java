@@ -138,7 +138,7 @@ public class PaymentDetailsFragment extends Fragment {
             return convertView;
         }
 
-        private class MyViewHolder {
+        private class MyViewHolder implements View.OnClickListener{
             TextView expired_tv,retailer_name_tv,due_tv,price_tv;
 
             public MyViewHolder(View itemView) {
@@ -147,7 +147,12 @@ public class PaymentDetailsFragment extends Fragment {
                 retailer_name_tv = (TextView) itemView.findViewById(R.id.retailer_name_tv);
                 due_tv = (TextView) itemView.findViewById(R.id.due_tv);
                 price_tv = (TextView) itemView.findViewById(R.id.price_tv);
+                itemView.setOnClickListener(this);
 
+            }
+
+            @Override
+            public void onClick(View view) {
             }
         }
     }

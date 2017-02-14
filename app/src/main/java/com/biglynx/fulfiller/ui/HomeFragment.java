@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout fulfiller_profile_info_LI;
     private AlertDialog alertDialog;
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 return;
             }
             Common.showDialog(getContext());
-            HashMap<String,Object> infoObject = new HashMap<>();
+            HashMap<String, Object> infoObject = new HashMap<>();
             infoObject = getProfileInfo(isChecked);
 
 
@@ -105,7 +106,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     editProfileType, infoObject, new Callback<SignInResult>() {
                         @Override
                         public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
-                            Common.disMissDialog();
                             switchCompat.setOnCheckedChangeListener(null);
                             if (response.isSuccessful()) {
                                 SignInResult editProfileModel = response.body();
@@ -124,16 +124,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
                                 AppUtil.CheckErrorCode(getActivity(), response.code());
                             }
+                            Common.disMissDialog();
                             switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
                         }
 
                         @Override
                         public void onFailure(Call<SignInResult> call, Throwable t) {
-                            Common.disMissDialog();
                             switchCompat.setOnCheckedChangeListener(null);
                             switchCompat.setChecked(!switchCompat.isChecked());
                             switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
-                            AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                            //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                            Common.disMissDialog();
                         }
                     });
         }
@@ -259,7 +260,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             public void onClick(View view) {
                 /*if (alertDialog != null && alertDialog.isShowing())
                     alertDialog.dismiss();*/
-                AppUtil.toast(getActivity(), "Resend activation mail");
+                resendActivationMail();
+                //AppUtil.toast(getActivity(), "Resend activation mail");
             }
         }, 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -282,6 +284,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
+    }
+
+    private void resendActivationMail() {
+        if (!Common.isNetworkAvailable(getActivity())) {
+            AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
+            return;
+        }
+        Common.showDialog(getActivity());
+        apiWrapper.resendActivationCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
+                AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("FulfillerId") : "",
+                new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.e(TAG, "resend Activation Successful");
+                        } else {
+                            Log.e(TAG, "resend Activation error");
+                        }
+                        Common.disMissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e(TAG, "resend Activation error");
+                        Common.disMissDialog();
+                    }
+                });
     }
 
     private boolean checkStatus() {
@@ -330,7 +361,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                         @Override
                         public void onFailure(Call<FullfillerKpi> call, Throwable t) {
                             Log.e("HomeFragment", "fullfillerKpi :: " + t.getMessage());
-                            AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                            //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();
                             else
@@ -512,7 +543,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                     else if (AppUtil.ifNotEmpty(signInResult.Status) && !signInResult.Status.equalsIgnoreCase("active"))
                                         signInResult.showNoticeDialog = true;*/
                                     AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
-                                    showNoticeDialog();
                                 } else {
                                     try {
                                         AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
@@ -521,11 +551,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                         e.printStackTrace();
                                     }
                                 }
+                                showNoticeDialog();
                                 Common.disMissDialog();
                             }
 
                             @Override
                             public void onFailure(Call<SignInResult> call, Throwable t) {
+                                showNoticeDialog();
                                 Common.disMissDialog();
                             }
                         });

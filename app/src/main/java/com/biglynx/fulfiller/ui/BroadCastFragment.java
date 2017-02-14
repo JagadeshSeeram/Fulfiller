@@ -94,6 +94,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,6 +152,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private Animation animation_slide_down;
     private Animation animation_slide_up;
     private View v;
+    private CircleIndicator circularIndicator;
 
     @Nullable
     @Override
@@ -219,6 +221,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         search_ev.setOnPlaceSelectedListener(this);
         listview_lv = (ListView) v.findViewById(R.id.listview_lv);
 
+        circularIndicator = (CircleIndicator) v.findViewById(R.id.indicator);
+
         maps_view = (FrameLayout) v.findViewById(R.id.maps_view);
         listview_LI = (LinearLayout) v.findViewById(R.id.listview_LI);
         recent_search_LI = (LinearLayout) v.findViewById(R.id.recent_search_LI);
@@ -245,12 +249,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         //fulfillments viewpager items
         fulfiller_viewPager = (ViewPager) v.findViewById(R.id.fulfiller_vp);
         viewpager_LI = (LinearLayout) v.findViewById(R.id.viewpager_LI);
-        companyname_tv = (TextView) v.findViewById(R.id.companyname_tv);
+        companyname_tv = (TextView) v.findViewById(R.id.companyName_tv);
         pickup_loc_tv = (TextView) v.findViewById(R.id.pickup_loc_tv);
         locationtype_tv = (TextView) v.findViewById(R.id.locationtype_tv);
         companylogo_imv = (ImageView) v.findViewById(R.id.companylogo_imv);
         pager_indicator = (LinearLayout) v.findViewById(R.id.viewPagerCountDots);
-        companyname_tv = (TextView) v.findViewById(R.id.companyname_tv);
         search_imv = (ImageView) v.findViewById(R.id.search_imv);
         companyname_tv.setText("BroadCast");
         current_miles_tv.setOnClickListener(this);
@@ -873,26 +876,27 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
                 //bottom viewpager setup
 
-                if (broadCastList.get(markervalues.get(marker.getId())).CompanyLogo == null ||
-                        broadCastList.get(markervalues.get(marker.getId())).CompanyLogo.equals("null")) {
-
-                } else {
+                if (AppUtil.ifNotEmpty(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo)) {
                     Picasso.with(getActivity()).load(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo).into(companylogo_imv);
                 }
 
                 companyname_tv.setText(broadCastList.get(markervalues.get(marker.getId())).BusinessLegalName);
-                pickup_loc_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
-                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.City);
+                pickup_loc_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
+                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.City + ", " +
+                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.State+", "+
+                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.CountryName);
+
                 locationtype_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.LocationType);
                 //viewpager setup
                 broadCastFulAdapter = new BroadCast_Ful_Adapter(getContext(), broadCastList.get(markervalues.get(marker.getId())), broadCastList.get(markervalues.get(marker.getId())).Fulfillments);
                 fulfiller_viewPager.setAdapter(broadCastFulAdapter);
+                circularIndicator.setViewPager(fulfiller_viewPager);
                 if (!viewpager_LI.isShown()) {
                     slideToTop(viewpager_LI);
                 }
                 marker.remove();
                 previousMarker = marker; //Now the clicked marker becomes previousMarker
-                setUiPageViewController();
+                //setUiPageViewController();
                 return false;
             }
         }

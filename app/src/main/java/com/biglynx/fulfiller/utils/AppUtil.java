@@ -369,10 +369,10 @@ public class AppUtil {
         //AuthToken expires per an hour.401 error code resembles authToken expiry error.
         // So checking error code and redirecting the user to login.
         if (responseCode == 401) {
+            Common.disMissDialog();
             AppPreferences.getInstance(context).setSignInResult(null);
             context.startActivity(new Intent(context, InitialScreen.class));
             context.finishAffinity();
-            ;
         }
     }
 

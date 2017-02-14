@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -434,7 +435,7 @@
                         android:src="@drawable/cougar_logo"></ImageView>
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
-                        android:id="@+id/companyname_tv"
+                        android:id="@+id/companyName_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -464,6 +465,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="2dp"
+                        android:text="pick up location"
                         android:gravity="center"
                         android:textColor="#9F9F9F"
                         android:textSize="@dimen/sp_12" />
@@ -473,7 +475,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="2dp"
                         android:gravity="center"
                         android:text="Locatoin Type :"
                         android:textAllCaps="true"
@@ -485,7 +487,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="2dp"
                         android:gravity="center"
                         android:text="location"
                         android:textColor="#9F9F9F"
@@ -508,8 +509,23 @@
                         tools:listitem="@layout/broadcast_ful_items">
 
                     </android.support.v4.view.ViewPager>
-
                     <RelativeLayout
+                        android:id="@+id/viewPagerIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="0dp"
+                        android:gravity="bottom">
+
+                        <me.relex.circleindicator.CircleIndicator
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            app:ci_drawable="@drawable/selecteditem_dot"
+                            app:ci_drawable_unselected="@drawable/nonselecteditem_dot" />
+                    </RelativeLayout>
+
+                    <!--<RelativeLayout
                         android:id="@+id/viewPagerIndicator"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
@@ -546,7 +562,7 @@
 
                         </LinearLayout>
 
-                    </RelativeLayout>
+                    </RelativeLayout>-->
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>

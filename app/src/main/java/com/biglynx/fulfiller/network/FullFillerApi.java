@@ -54,12 +54,12 @@ public interface FullFillerApi {
     Call<List<FulfillersDTO>> dashBoard(@Path("fulfillerID") String fullfillerId, @Path("rollType") String rollType);
 
     @FormUrlEncoded
-    @POST(HttpAdapter.BASE_URL + "{url}")
+    @POST(HttpAdapter.BASE_URL_LOGIN + "{url}")
     Call<SignInResult> editProfileCallInHome(@Path("url") String url, @Field("fulfillerid") Object fulfillerid, @Field("fulfillertype") Object fulfillertype,
                                              @Field("Proximity") Object Proximity, @Field("ReadyFulfill") Object ReadyFulfill);
 
     @FormUrlEncoded
-    @POST(HttpAdapter.BASE_URL + "{url}")
+    @POST(HttpAdapter.BASE_URL_LOGIN + "{url}")
     Call<SignInResult> editProfileInSettings(@Path("url") String url, @Field("BusinessLegalName") Object BusinessLegalName, @Field("FirstName") Object FirstName,
                                              @Field("Email") Object Email, @Field("AddressLine1") Object AddressLine1,
                                              @Field("City") Object City, @Field("State") Object State,
@@ -122,11 +122,14 @@ public interface FullFillerApi {
     Call<Void> sendRegistrationID(@Query("id") String registrationID, @Query("productid") String productCode,
                                   @Body NotificationRegisterModel model);
 
-    @GET(HttpAdapter.BASE_URL + "{url}")
+    @GET(HttpAdapter.BASE_URL_LOGIN + "{url}")
     Call<SignInResult> getProfile(@Path("url") String url);
 
     @FormUrlEncoded
     @POST(HttpAdapter.CANCEL_INTEREST)
     Call<FulfillerInterests> cancelInterest(@Field("FulfillerInterestId") String fulfillerInterestId);
+
+    @GET(HttpAdapter.RESEND_ACTIVATION_MAIL + "{fulfillerId}")
+    Call<Void> resendActivationMail(@Path("fulfillerId") String fulfillerID);
 
 }

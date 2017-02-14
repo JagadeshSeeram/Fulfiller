@@ -18,12 +18,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/noPayments_tv"
-        android:text="No Payments"
-        android:textColor="@android:color/black"
+        android:text="No recent payments!"
+        android:gravity="center"
+        android:textColor="#ABABAB"
+        android:drawableTop="@drawable/documents_ics"
+        android:textSize="15sp"
+        android:visibility="gone"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/sp_16"
-        android:visibility="gone"
+        android:drawablePadding="@dimen/dp_5"
         />
 
 </RelativeLayout>
