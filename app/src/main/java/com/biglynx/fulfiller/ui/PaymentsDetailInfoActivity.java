@@ -7,18 +7,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.models.InterestDTO;
+import com.biglynx.fulfiller.models.PaymentDetailsModel;
+import com.biglynx.fulfiller.utils.AppUtil;
 
 public class PaymentsDetailInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView icon_back;
     private TextView companyname_tv;
-    private TextView fulfillmentid_tv,retailerName_tv,interestDate_tv,
-    ordersDelivered_tv,totalWeight_tv,totalPayout_tv,paymentStatus_tv;
+    private TextView fulfillmentid_tv, retailerName_tv, interestDate_tv,
+            ordersDelivered_tv, totalWeight_tv, totalPayout_tv, paymentStatus_tv;
+private PaymentDetailsModel model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_detail_info);
 
         initViews();
+
+        if (getIntent().getExtras() != null) {
+            model = getIntent().getExtras().getParcelable(PaymentDetailsFragment.PAYOUT_DETAILS);
+            if (model != null)
+                buildUI();
+        }
+    }
+
+    private void buildUI() {
+        //build Ui
+        fulfillmentid_tv.setText(model.FulfillmentId);
+        retailerName_tv.setText(model.RetailerName);
+        interestDate_tv.setText(AppUtil.getLocalDateFormat(model.DateCreated));
+        ordersDelivered_tv.setText(model.ordersCount);
+        totalWeight_tv.setText(AppUtil.getTwoDecimals(model.totalWeight)+" Kgs");
+        totalPayout_tv.setText("$ "+AppUtil.getTwoDecimals(model.PayoutAmount));
+        paymentStatus_tv.setText(model.PayoutStatus);
     }
 
     private void initViews() {

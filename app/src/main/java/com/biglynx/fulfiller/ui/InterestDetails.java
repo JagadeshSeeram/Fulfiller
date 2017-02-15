@@ -489,11 +489,14 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         Common.showDialog(InterestDetails.this);
         apiWrapper.cancelInterest(AppPreferences.getInstance(getApplicationContext()).getSignInResult() != null ?
                         AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("AuthNToken") : "",
-                interest.Fulfillments.FulfillerInterestId, new Callback<FulfillerInterests>() {
+                interest.Fulfillments.FulfillerInterests.FulfillerInterestId, new Callback<FulfillerInterests>() {
                     @Override
                     public void onResponse(Call<FulfillerInterests> call, Response<FulfillerInterests> response) {
                         if (response.isSuccessful()) {
                             AppUtil.toast(InterestDetails.this, "Interest is cancelled...");
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("cancelled", true);
+                            setResult(RESULT_OK, returnIntent);
                             finish();
                         } else {
                             try {

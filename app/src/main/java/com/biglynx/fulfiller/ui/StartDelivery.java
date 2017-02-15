@@ -146,13 +146,13 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         initViews();
 
         progressStatus = 0;
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             responseInterestObj = (InterestDTO) getIntent().getExtras().getParcelable("responseInterest");
             FULFILLER_ID = getIntent().getExtras().getString("fulfillerId");
             if (getIntent().hasExtra("FulfillerName"))
                 FULFILLER_NAME = getIntent().getExtras().getString("FulfillerName");
         }
-        if (responseInterestObj != null){
+        if (responseInterestObj != null) {
             buildUI(responseInterestObj);
             updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
 
@@ -288,7 +288,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                             if (updateUI) {
                                 buildUI(responseInterestObj);
                                 updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
-                            }else {
+                            } else {
                                 checkIfAllOrdersAllDelivered(responseInterestObj);
                                 startDeliveryAdapter.setItemsList(responseInterestObj.Fulfillments.Orders);
                             }
@@ -375,7 +375,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
         hashMap.put("fulfillerid", AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
                 AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")
-                : FULFILLER_ID );
+                : FULFILLER_ID);
         if (responseInterestObj.Fulfillments.DeliveryPartner != null)
             hashMap.put("confirmationcode", responseInterestObj.Fulfillments.DeliveryPartner.ConfirmationCode);
         else
@@ -389,8 +389,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
                     hashMap.put("FriendlyName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
             }
-        }else
-            hashMap.put("FriendlyName",FULFILLER_NAME);
+        } else
+            hashMap.put("FriendlyName", FULFILLER_NAME);
         hashMap.put("GeoLocationLatitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLatitude)) ?
                 responseInterestObj.Fulfillments.PickUpMapLatitude : "");
         hashMap.put("GeoLocationLongitude", AppUtil.ifNotEmpty(String.valueOf(responseInterestObj.Fulfillments.PickUpMapLongitude)) ?
@@ -562,7 +562,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
                             if (progressStatus > 50) {
                                 if (progressStatus == max) {
-                                    if (!deliv_customers_LI.isShown()){
+                                    if (!deliv_customers_LI.isShown()) {
                                         googlemaps_LI.setVisibility(View.GONE);
                                         confirmorders_LI.setVisibility(View.GONE);
                                         deliv_customers_LI.setVisibility(View.VISIBLE);
@@ -639,13 +639,15 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             //  finish();
             try {
                 JSONArray result = new JSONArray(responseString);
-                for (int i = 0; i < result.length(); i++) {
-                    JSONObject jsonObject = result.getJSONObject(i);
-                    blobId = jsonObject.getString("UniqueId");
-                    if (orderId != null) {
-                        callUpdateDeliveryStatusAPi(5, orderId, blobId);
+                if (result != null) {
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject jsonObject = result.getJSONObject(i);
+                        blobId = jsonObject.getString("UniqueId");
+                        if (orderId != null) {
+                            callUpdateDeliveryStatusAPi(5, orderId, blobId);
+                        }
+                        break;
                     }
-                    break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -740,7 +742,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                  /* googlemaps_LI.setVisibility(View.GONE);
                   confirmorders_LI.setVisibility(View.GONE);
                   deliv_customers_LI.setVisibility(View.VISIBLE);*/
-                    callUpdateDeliveryStatusAPi(6,null);
+                    callUpdateDeliveryStatusAPi(6, null);
                 } else {
                     AppUtil.toast(StartDelivery.this, "Please type CONFIRMED");
                 }
@@ -755,8 +757,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
 
                     if (no_ofpackages_ev.getText().toString().trim().equals(responseInterestObj.Fulfillments.TotalPackages) &&
                             no_ofcustomers_ev.getText().toString().trim().equals(responseInterestObj.Fulfillments.OrderCount)) {
-                        Log.d(StartDelivery.class.getSimpleName(),""+"no_ofpackages_ev :: "+no_ofpackages_ev.getText().toString()+" :: "+
-                                "no_ofcustomers_ev :: "+no_ofcustomers_ev.getText().toString());
+                        Log.d(StartDelivery.class.getSimpleName(), "" + "no_ofpackages_ev :: " + no_ofpackages_ev.getText().toString() + " :: " +
+                                "no_ofcustomers_ev :: " + no_ofcustomers_ev.getText().toString());
                         callUpdateDeliveryStatusAPi(3, null);
                     } else
                         AppUtil.toast(StartDelivery.this, getString(R.string.not_matched));
@@ -800,9 +802,9 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         hashMap.put("FulfillmentId", responseInterestObj.Fulfillments.FulfillmentId);
         hashMap.put("fulfillerid", AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null ?
                 AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FulfillerId")
-                : FULFILLER_ID );
+                : FULFILLER_ID);
         if (FULFILLER_NAME != null)
-            hashMap.put("FlulfillerName",FULFILLER_NAME);
+            hashMap.put("FlulfillerName", FULFILLER_NAME);
         else if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null) {
             if (AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
                 if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("BusinessLegalName")))
@@ -811,7 +813,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName")))
                     hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDelivery.this).getSignInResult().optString("FirstName"));
             }
-        }else {
+        } else {
             if (responseInterestObj.Fulfillments.DeliveryPartner != null)
                 hashMap.put("FlulfillerName", responseInterestObj.Fulfillments.DeliveryPartner.Contactperson);
             else
@@ -941,7 +943,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             confirmtoken_tv.setText(responseInterestObj.Fulfillments.DeliveryPerson.ConfirmationCode);
 
         readytopick_tv.setText("YES");
-        mindistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.TotalDistance)+" Miles");
+        mindistance_tv.setText(AppUtil.getTwoDecimals(mInterest.Fulfillments.TotalDistance) + " Miles");
         maxdistance_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(responseInterestObj.Fulfillments.TotalApproxTimeInSeconds)) + " Min");
         deliverydate_tv.setText(AppUtil.getLocalDateFormat(mInterest.Fulfillments.ExpirationDateTime));
 

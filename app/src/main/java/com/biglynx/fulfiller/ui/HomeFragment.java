@@ -1,6 +1,7 @@
 package com.biglynx.fulfiller.ui;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -88,6 +89,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private LinearLayout fulfiller_profile_info_LI;
     private AlertDialog alertDialog;
     private static final String TAG = HomeFragment.class.getSimpleName();
+    public static final int CANCEL_INTEREST = 1;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -217,9 +219,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         waitinglist_LI.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), InterestDetails.class)
+                startActivityForResult(new Intent(getActivity(), InterestDetails.class)
                         .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
-                        .putExtra("completed", "not"));
+                        .putExtra("completed", "not"), CANCEL_INTEREST);
             }
         });
         confirmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -243,6 +245,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CANCEL_INTEREST){
+            if (resultCode == Activity.RESULT_OK){
+                callServices(true);
+            }
+        }
     }
 
     private void showNoticeDialog() {

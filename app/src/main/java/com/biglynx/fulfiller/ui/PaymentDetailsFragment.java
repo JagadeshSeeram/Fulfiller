@@ -1,23 +1,21 @@
 package com.biglynx.fulfiller.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
-import com.biglynx.fulfiller.adapter.FulfillerPendingAdapter;
-import com.biglynx.fulfiller.models.FulfillersDTO;
+import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.utils.AppPreferences;
@@ -39,6 +37,9 @@ public class PaymentDetailsFragment extends Fragment {
     private MyCustomAdapter adapter;
     private List<PaymentDetailsModel> list;
     private TextView noPayments_tv;
+    public static final String PAYOUT_DETAILS = "interestDetails";
+    private FullFillerApiWrapper apiWrapper;
+    private static final String TAG = "PaymentDetails";
 
     @Nullable
     @Override
@@ -46,7 +47,57 @@ public class PaymentDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.payment_details_fragment, null);
         initViews(view);
         callService();
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (list != null && list.size() > 0) {
+                    callInterestDetailsService(list.get(position).InterestId, position);
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void callInterestDetailsService(String interestId, final int position) {
+        if (!Common.isNetworkAvailable(getActivity())) {
+            AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
+            return;
+        }
+        Common.showDialog(getActivity());
+        apiWrapper.interestInfoCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
+                interestId, new Callback<InterestDTO>() {
+                    @Override
+                    public void onResponse(Call<InterestDTO> call, Response<InterestDTO> response) {
+                        Common.disMissDialog();
+                        if (response.isSuccessful()) {
+                            InterestDTO interestDTO = response.body();
+                            PaymentDetailsModel model = list.get(position);
+                            model.ordersCount = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.OrderCount : "";
+                            model.totalWeight = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.TotalWeight : 0.00;
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(PAYOUT_DETAILS, model);
+                            startActivity(new Intent(getActivity(), PaymentsDetailInfoActivity.class)
+                                    .putExtras(bundle));
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<InterestDTO> call, Throwable t) {
+                        Common.disMissDialog();
+                        Log.e(TAG, "interest details error :: " + t.getStackTrace());
+                    }
+                });
+
     }
 
     private void callService() {
@@ -56,7 +107,6 @@ public class PaymentDetailsFragment extends Fragment {
             return;
         }
         Common.showDialog(getActivity());
-        FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
         apiWrapper.payoutsCall(AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"), new Callback<List<PaymentDetailsModel>>() {
             @Override
             public void onResponse(Call<List<PaymentDetailsModel>> call, Response<List<PaymentDetailsModel>> response) {
@@ -87,12 +137,13 @@ public class PaymentDetailsFragment extends Fragment {
             public void onFailure(Call<List<PaymentDetailsModel>> call, Throwable t) {
                 Common.disMissDialog();
                 noPayments_tv.setVisibility(View.VISIBLE);
-                AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
             }
         });
     }
 
     private void initViews(View view) {
+        apiWrapper = new FullFillerApiWrapper();
         listview = (ListView) view.findViewById(R.id.paymentsDetails_lv);
         noPayments_tv = (TextView) view.findViewById(R.id.noPayments_tv);
         list = new ArrayList<>();
@@ -111,8 +162,9 @@ public class PaymentDetailsFragment extends Fragment {
 
         @Override
         public Object getItem(int position) {
-            return (list != null && list.size()>0) ? list.get(position) : null;
+            return (list != null && list.size() > 0) ? list.get(position) : null;
         }
+
 
         @Override
         public long getItemId(int position) {
@@ -132,14 +184,14 @@ public class PaymentDetailsFragment extends Fragment {
             }
 
             mViewHolder.retailer_name_tv.setText(list.get(position).RetailerName);
-            mViewHolder.due_tv.setText("PayoutStatus: "+list.get(position).PayoutStatus);
-            mViewHolder.price_tv.setText("$ "+AppUtil.getTwoDecimals(list.get(position).PayoutAmount));
+            mViewHolder.due_tv.setText("PayoutStatus: " + list.get(position).PayoutStatus);
+            mViewHolder.price_tv.setText("$ " + AppUtil.getTwoDecimals(list.get(position).PayoutAmount));
 
             return convertView;
         }
 
-        private class MyViewHolder implements View.OnClickListener{
-            TextView expired_tv,retailer_name_tv,due_tv,price_tv;
+        private class MyViewHolder{
+            TextView expired_tv, retailer_name_tv, due_tv, price_tv;
 
             public MyViewHolder(View itemView) {
                 expired_tv = (TextView) itemView.findViewById(R.id.expired_tv);
@@ -147,12 +199,6 @@ public class PaymentDetailsFragment extends Fragment {
                 retailer_name_tv = (TextView) itemView.findViewById(R.id.retailer_name_tv);
                 due_tv = (TextView) itemView.findViewById(R.id.due_tv);
                 price_tv = (TextView) itemView.findViewById(R.id.price_tv);
-                itemView.setOnClickListener(this);
-
-            }
-
-            @Override
-            public void onClick(View view) {
             }
         }
     }
