@@ -3,19 +3,18 @@ package com.biglynx.fulfiller.ui;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -40,14 +39,11 @@ import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.FullfillerKpi;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
+import com.biglynx.fulfiller.network.HttpAdapter;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -250,8 +246,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CANCEL_INTEREST){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == CANCEL_INTEREST) {
+            if (resultCode == Activity.RESULT_OK) {
                 callServices(true);
             }
         }
@@ -270,10 +266,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                /*if (alertDialog != null && alertDialog.isShowing())
-                    alertDialog.dismiss();*/
                 resendActivationMail();
-                //AppUtil.toast(getActivity(), "Resend activation mail");
             }
         }, 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 39, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -303,25 +296,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
             return;
         }
+        String fulfillerID = AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                AppPreferences.getInstance(getActivity()).getSignInResult().optString("FulfillerId") : "";
+        String userType = "";
+        if (AppPreferences.getInstance(getActivity()).getSignInResult() != null) {
+            if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPerson"))
+                userType = HttpAdapter.RESEND_ACTIVATION_MAIL_DRIVER;
+            else
+                userType = HttpAdapter.RESEND_ACTIVATION_MAIL_PARTNER;
+        }
+        if (alertDialog != null && alertDialog.isShowing())
+            alertDialog.dismiss();
+
         Common.showDialog(getActivity());
         apiWrapper.resendActivationCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
-                AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
-                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("FulfillerId") : "",
-                new Callback<Void>() {
+                userType, fulfillerID,
+                new Callback<SignInResult>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
                         if (response.isSuccessful()) {
                             Log.e(TAG, "resend Activation Successful");
                         } else {
+                            try {
+                                AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+
                             Log.e(TAG, "resend Activation error");
                         }
+                        if (alertDialog != null && !alertDialog.isShowing())
+                            showNoticeDialog();
+                        AppUtil.CheckErrorCode(getActivity(), response.code());
                         Common.disMissDialog();
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<SignInResult> call, Throwable t) {
                         Log.e(TAG, "resend Activation error");
+                        AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                        if (alertDialog != null && !alertDialog.isShowing())
+                            showNoticeDialog();
                         Common.disMissDialog();
                     }
                 });

@@ -84,8 +84,10 @@ public interface FullFillerApi {
     @POST(HttpAdapter.VEHICLE)
     Call<Vehicles> addVehicleCall(@Body HashMap hashMap);
 
+    @FormUrlEncoded
     @POST(HttpAdapter.DIRECTDEPOSIT)
-    Call<AccountConfigModel> accountConfiguration(@Body AccountConfigModel configModel);
+    Call<AccountConfigModel> accountConfiguration(@Field("Fulfillerid") String Fulfillerid,@Field("BankName") String BankName,@Field("AccountType") String AccountType,@Field("AccountNumber") String AccountNumber,
+                                                  @Field("RoutingNumber") String RoutingNumber,@Field("AccountName") String AccountName,@Field("Status") String Status);
 
     @GET(HttpAdapter.PAYOUTS)
     Call<List<PaymentDetailsModel>> payouts();
@@ -129,7 +131,7 @@ public interface FullFillerApi {
     @POST(HttpAdapter.CANCEL_INTEREST)
     Call<FulfillerInterests> cancelInterest(@Field("FulfillerInterestId") String fulfillerInterestId);
 
-    @GET(HttpAdapter.RESEND_ACTIVATION_MAIL + "{fulfillerId}")
-    Call<Void> resendActivationMail(@Path("fulfillerId") String fulfillerID);
+    @GET(HttpAdapter.BASE_URL_LOGIN + "{userType}")
+    Call<SignInResult> resendActivationMail(@Path("userType") String userType, @Query("fulfillerId") String fulfillerId);
 
 }

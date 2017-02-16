@@ -1,7 +1,5 @@
 package com.biglynx.fulfiller.network;
 
-import android.util.Log;
-
 import com.biglynx.fulfiller.models.AccountConfigModel;
 import com.biglynx.fulfiller.models.BroadCast;
 import com.biglynx.fulfiller.models.FulfillerInterests;
@@ -27,6 +25,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -40,10 +39,13 @@ public class FullFillerApiWrapper {
     private final Retrofit retrofit;
 
     public FullFillerApiWrapper() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(loggingInterceptor)
                 .build();
         retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
                 .baseUrl(HttpAdapter.BASE_URL).build();
@@ -51,10 +53,13 @@ public class FullFillerApiWrapper {
     }
 
     private void createRetrofitWithHeader(final String authToken) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS);
+                .readTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(loggingInterceptor);
 
         builder.addInterceptor(new Interceptor() {
             @Override
@@ -73,30 +78,30 @@ public class FullFillerApiWrapper {
     public Call<SignInResult> login(String email, String password, Callback<SignInResult> callback) {
         Call<SignInResult> loginCall = fullFillerApi.login(email, password);
         loginCall.enqueue(callback);
-        Log.d("URLS", loginCall.request().url().toString());
+        //Log.d("URLS", loginCall.request().url().toString());
         return loginCall;
     }
 
     public Call<SignInResult> socialLogin(String loginProvider, String providerKey, Callback<SignInResult> callback) {
         Call<SignInResult> loginCall = fullFillerApi.socialLogin(loginProvider, providerKey);
         loginCall.enqueue(callback);
-        Log.d("URLS", loginCall.request().url().toString());
+        //Log.d("URLS", loginCall.request().url().toString());
         return loginCall;
     }
 
     public Call<SignInResult> registerDeliveryPartner(UserProfile userProfile, Callback<SignInResult> callback) {
         Call<SignInResult> userProfileCall = fullFillerApi.registerDeliveryPartner(userProfile);
         userProfileCall.enqueue(callback);
-        Log.d("URLS", userProfileCall.request().url().toString());
-        Log.d("SIGNUP_PARTNER :: ", userProfileCall.request().body().toString());
+        //Log.d("URLS", userProfileCall.request().url().toString());
+        //Log.d("SIGNUP_PARTNER :: ", userProfileCall.request().body().toString());
         return userProfileCall;
     }
 
     public Call<SignInResult> registerDriver(UserProfile userProfile, Callback<SignInResult> callback) {
         Call<SignInResult> userProfileCall = fullFillerApi.registerDriver(userProfile);
         userProfileCall.enqueue(callback);
-        Log.d("URLS", userProfileCall.request().url().toString());
-        Log.d("SIGNUP_DRIVER :: ", userProfileCall.request().body().toString());
+        //Log.d("URLS", userProfileCall.request().url().toString());
+        //Log.d("SIGNUP_DRIVER :: ", userProfileCall.request().body().toString());
         return userProfileCall;
     }
 
@@ -106,7 +111,7 @@ public class FullFillerApiWrapper {
         }
         Call<FullfillerKpi> userProfileCall = fullFillerApiHeader.fullfillerKpi(fullfillerId);
         userProfileCall.enqueue(callback);
-        Log.d("URLS", userProfileCall.request().url().toString());
+        //Log.d("URLS", userProfileCall.request().url().toString());
         return userProfileCall;
     }
 
@@ -117,7 +122,7 @@ public class FullFillerApiWrapper {
         }
         Call<List<FulfillersDTO>> dashBoardModelCall = fullFillerApiHeader.dashBoard(fullfillerId, rollType);
         dashBoardModelCall.enqueue(callback);
-        Log.d("URLS", dashBoardModelCall.request().url().toString());
+        //Log.d("URLS", dashBoardModelCall.request().url().toString());
         return dashBoardModelCall;
     }
 
@@ -131,8 +136,8 @@ public class FullFillerApiWrapper {
                         hashMap.get("Country"),hashMap.get("Phone"),
                         hashMap.get("BlobId"));
         profileModelCall.enqueue(callback);
-        Log.d("URLS", profileModelCall.request().url().toString());
-        Log.d("editprofile", "Body :: " + profileModelCall.request().body());
+        //Log.d("URLS", profileModelCall.request().url().toString());
+        //Log.d("editprofile", "Body :: " + profileModelCall.request().body());
         return profileModelCall;
     }
 
@@ -143,8 +148,8 @@ public class FullFillerApiWrapper {
                 .editProfileCallInHome(url, hashMap.get("fulfillerid"), hashMap.get("fulfillertype"),
                         hashMap.get("Proximity"), hashMap.get("ReadyFulfill"));
         profileModelCall.enqueue(callback);
-        Log.d("URLS", profileModelCall.request().url().toString());
-        Log.d("editprofile", "Body :: " + profileModelCall.request().body());
+        //Log.d("URLS", profileModelCall.request().url().toString());
+        //Log.d("editprofile", "Body :: " + profileModelCall.request().body());
         return profileModelCall;
     }
 
@@ -154,7 +159,7 @@ public class FullFillerApiWrapper {
         }
         Call<InterestDTO> modelCall = fullFillerApiHeader.interestDetailsCall(retailerLocalId);
         modelCall.enqueue(callback);
-        Log.d("URLS", modelCall.request().url().toString());
+        //Log.d("URLS", modelCall.request().url().toString());
         return modelCall;
     }
 
@@ -164,7 +169,7 @@ public class FullFillerApiWrapper {
         }
         Call<ArrayList<BroadCast>> call = fullFillerApiHeader.broadCastCall();
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -174,7 +179,7 @@ public class FullFillerApiWrapper {
         }
         Call<ArrayList<BroadCast>> call = fullFillerApiHeader.broadCastDetailsCall(retaileLocId);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -184,8 +189,8 @@ public class FullFillerApiWrapper {
         }
         Call<FulfillerInterests> call = fullFillerApiHeader.fulFillerInterestCall(hashMap);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
-        Log.d("fulfillerinterest", "Body :: " + call.request().body());
+        //Log.d("URLS", call.request().url().toString());
+        //Log.d("fulfillerinterest", "Body :: " + call.request().body());
         return call;
     }
 
@@ -195,7 +200,7 @@ public class FullFillerApiWrapper {
         }
         Call<List<Vehicles>> call = fullFillerApiHeader.vehicleListCall();
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -205,7 +210,7 @@ public class FullFillerApiWrapper {
         }
         Call<Vehicles> call = fullFillerApiHeader.addVehicleCall(hashMap);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -214,9 +219,11 @@ public class FullFillerApiWrapper {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(configModel);
+        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(configModel.Fulfillerid,configModel.BankName,configModel.AccountType,
+                configModel.AccountNumber,configModel.RoutingNumber,
+                configModel.AccountName,configModel.Status);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -226,7 +233,7 @@ public class FullFillerApiWrapper {
         }
         Call<List<PaymentDetailsModel>> call = fullFillerApiHeader.payouts();
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -237,7 +244,7 @@ public class FullFillerApiWrapper {
         Call<InterestDTO> call = fullFillerApiHeader.startDelivery(hashMap.get("fulfillerid"), hashMap.get("confirmationcode"), hashMap.get("name"),
                 hashMap.get("latitude"), hashMap.get("longitude"), hashMap.get("deviceid"));
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -247,7 +254,7 @@ public class FullFillerApiWrapper {
         }
         Call<List<MessagesModel>> call = fullFillerApiHeader.getAllMessages(FulFillmentId);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -258,7 +265,7 @@ public class FullFillerApiWrapper {
         }
         Call<List<MessagesModel>> call = fullFillerApiHeader.postFulFillerMessages(hashMap);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -269,7 +276,7 @@ public class FullFillerApiWrapper {
         }
         Call<InterestDTO> call = fullFillerApiHeader.updateDeliveryStatus(hashMap);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -279,7 +286,7 @@ public class FullFillerApiWrapper {
         }
         Call<AccountConfigModel> call = fullFillerApiHeader.getAccountDetails(fulfillerID);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -290,7 +297,7 @@ public class FullFillerApiWrapper {
         }
         Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getSupportCategories(productCode);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -301,7 +308,7 @@ public class FullFillerApiWrapper {
         }
         Call<SupportCategoryModel> call = fullFillerApiHeader.createTicket(hashMap);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -312,7 +319,7 @@ public class FullFillerApiWrapper {
         }
         Call<ArrayList<SupportCategoryModel>> call = fullFillerApiHeader.getAllTickets(productCode);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -322,7 +329,7 @@ public class FullFillerApiWrapper {
         }
         Call<String> call = fullFillerApiHeader.sendFcmTokenToServer(Constants.NOTIFICATION_PRODUCTCODE, fcmToken);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -333,7 +340,7 @@ public class FullFillerApiWrapper {
         }
         Call<Void> call = fullFillerApiHeader.sendRegistrationID(registrationID, Constants.NOTIFICATION_PRODUCTCODE, model);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -343,7 +350,7 @@ public class FullFillerApiWrapper {
         }
         Call<SignInResult> call = fullFillerApiHeader.getProfile(roleType);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
@@ -354,18 +361,18 @@ public class FullFillerApiWrapper {
         }
         Call<FulfillerInterests> call = fullFillerApiHeader.cancelInterest(fulfillerInterestId);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
-    public Call<Void> resendActivationCall(String authToken, String fulfillerID,
-                                         Callback<Void> callback) {
+    public Call<SignInResult> resendActivationCall(String authToken, String userType, String fulfillerId,
+                                                   Callback<SignInResult> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<Void> call = fullFillerApiHeader.resendActivationMail(fulfillerID);
+        Call<SignInResult> call = fullFillerApiHeader.resendActivationMail(userType, fulfillerId);
         call.enqueue(callback);
-        Log.d("URLS", call.request().url().toString());
+        //Log.d("URLS", call.request().url().toString());
         return call;
     }
 }

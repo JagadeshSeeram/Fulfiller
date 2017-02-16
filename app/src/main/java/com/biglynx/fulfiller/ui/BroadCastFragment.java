@@ -120,7 +120,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private FullFillerApiWrapper apiWrapper;
     FrameLayout maps_view;
     LinearLayout miles_LI, viewpager_LI, pager_indicator, bac_dim_layout, listview_LI, recent_search_LI;
-    TextView current_miles_tv, fiften_miles_tv, ten_miles_tv, five_miles_tv, two_miles_tv, companyname_tv, pickup_loc_tv, locationtype_tv, current_loc_tv;
+    TextView current_miles_tv, fiften_miles_tv, ten_miles_tv, five_miles_tv, two_miles_tv, companyname_tv, pickup_loc_tv, locationtype_tv, current_loc_tv,title_tv;
     ImageView current_location_tv, companylogo_imv;
     PlaceAutocompleteFragment search_ev;
     boolean search_loc = false, locaton_show = false;
@@ -214,6 +214,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         apiWrapper = new FullFillerApiWrapper();
         Log.d("onCreate", "onCreate()");
         dbHelper = new DBHelper(getActivity());
+        title_tv = (TextView) v.findViewById(R.id.companyname_tv);
+        title_tv.setVisibility(View.VISIBLE);
+        title_tv.setText("Broadcast");
         search_ev = (PlaceAutocompleteFragment)
                 getActivity().getFragmentManager().findFragmentById(R.id.search_place_ev);
         search_ev.getView().setVisibility(View.GONE);
@@ -255,7 +258,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         companylogo_imv = (ImageView) v.findViewById(R.id.companylogo_imv);
         pager_indicator = (LinearLayout) v.findViewById(R.id.viewPagerCountDots);
         search_imv = (ImageView) v.findViewById(R.id.search_imv);
-        companyname_tv.setText("BroadCast");
         current_miles_tv.setOnClickListener(this);
         fiften_miles_tv.setOnClickListener(this);
         ten_miles_tv.setOnClickListener(this);

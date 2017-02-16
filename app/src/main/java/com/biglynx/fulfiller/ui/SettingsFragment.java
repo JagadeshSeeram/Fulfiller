@@ -119,7 +119,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                     @Override
                     public void run() {
                         AppPreferences.getInstance(getContext()).setSignInResult(null);
-                        AppPreferences.getInstance(getContext()).setAccountInfo(null);
+                        //AppPreferences.getInstance(getContext()).setAccountInfo(null);
                         startActivity(new Intent(getActivity(), InitialScreen.class));
                         getActivity().finishAffinity();
                     }

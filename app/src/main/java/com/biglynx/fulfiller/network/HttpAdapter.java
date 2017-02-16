@@ -22,7 +22,8 @@ public class HttpAdapter {
     public static final String LOGIN_EMAIl = BASE_URL_LOGIN + "biglynxAuthz";
     public static final String SIGNUP_DEVLIVERY_PARTNER = BASE_URL_LOGIN + "Deliverypartner/signup";
     public static final String SIGNUP_DRIVER = BASE_URL_LOGIN + "driver/signup";
-    public static final String RESEND_ACTIVATION_MAIL = BASE_URL_LOGIN + "Fulfiller/ResendActivationEmail/";
+    public static final String RESEND_ACTIVATION_MAIL_DRIVER = "driver/ResendActivationEmail";
+    public static final String RESEND_ACTIVATION_MAIL_PARTNER = "deliverypartner/ResendActivationEmail";
 
     public static final String FULLFILLER_KPI = BASE_URL + "fulfillerkpi/";
     public static final String KEY_FOR_API = "QklHTFlOWEJST0FEQ0FTVDo6RDEzMUQzODMtQjVFNi00Mjk3LTkxMjItNjU1NkNGM0U0N0UxOjpmdWxmaWxsZXIuaW9zLmFwcDo6MTo6MTo6MDo6MDo6MDo6";

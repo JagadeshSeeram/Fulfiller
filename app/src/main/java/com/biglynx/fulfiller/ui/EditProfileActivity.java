@@ -304,38 +304,42 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA && resultCode == Activity.RESULT_OK && data != null) {
-            Bundle extras = data.getExtras();
-            // get
-            Bitmap bitMap = (Bitmap) extras.get("data");
+        switch (requestCode){
+            case CAMERA:
+                if (resultCode == RESULT_OK && data != null){
+                    Bundle extras = data.getExtras();
+                    Bitmap bitMap = (Bitmap) extras.get("data");
 
-            try {
-                createImageFile(bitMap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    try {
+                        createImageFile(bitMap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case GALLERY:
+                if (resultCode == RESULT_OK && data != null){
+                    Uri uri = data.getData();
 
-        } else if (data != null) {
+                    /*try {
+                        Bitmap bitmap = decodeBitmap(uri);
 
-            Uri uri = data.getData();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }*/
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    // Get the cursor
+                    Cursor cursor = getContentResolver().query(uri,
+                            filePathColumn, null, null, null);
+                    // Move to first row
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    mCurrentPhotoPath = cursor.getString(columnIndex);
 
-            try {
-                Bitmap bitmap = decodeBitmap(uri);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            // Get the cursor
-            Cursor cursor = getContentResolver().query(uri,
-                    filePathColumn, null, null, null);
-            // Move to first row
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            mCurrentPhotoPath = cursor.getString(columnIndex);
-
-            new SendImageResult().execute(mCurrentPhotoPath);
-            cursor.close();
+                    new SendImageResult().execute(mCurrentPhotoPath);
+                    cursor.close();
+                }
+                break;
         }
     }
 
@@ -365,6 +369,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     public Bitmap decodeBitmap(Uri selectedImage) throws FileNotFoundException {
+        if (selectedImage == null)
+            return null;
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
