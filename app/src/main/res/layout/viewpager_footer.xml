@@ -3,62 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fb="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.8">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_introduction"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            tools:listitem="@layout/viewpager_image"></android.support.v4.view.ViewPager>
+            android:layout_height="0dp"
+            android:layout_weight="0.8">
 
-        <RelativeLayout
-            android:id="@+id/viewPagerIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="0dp"
-            android:gravity="bottom">
-
-            <LinearLayout
-                android:id="@+id/viewPagerCountDots"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:fitsSystemWindows="true"
+                tools:listitem="@layout/viewpager_image"></android.support.v4.view.ViewPager>
 
-                <ImageButton
-                    android:id="@+id/btn_next"
-                    android:layout_width="42dip"
-                    android:layout_height="42dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dip"
-                    android:background="@drawable/nonselecteditem_dot"
-                    android:visibility="gone" />
+            <RelativeLayout
+                android:id="@+id/viewPagerIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:gravity="bottom">
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:ci_drawable="@drawable/selecteditem_dot"
+                    app:ci_drawable_unselected="@drawable/nonselecteditem_dot" />
 
-                <ImageButton
-                    android:id="@+id/btn_finish"
-                    android:layout_width="42dip"
-                    android:layout_height="42dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dip"
-                    android:background="@drawable/selecteditem_dot"
-                    android:contentDescription="Let's start"
-                    android:visibility="gone" />
+                <!--<LinearLayout
+                    android:id="@+id/viewPagerCountDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
-        </RelativeLayout>
-    </FrameLayout>
+                    <ImageButton
+                        android:id="@+id/btn_next"
+                        android:layout_width="42dip"
+                        android:layout_height="42dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/nonselecteditem_dot"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btn_finish"
+                        android:layout_width="42dip"
+                        android:layout_height="42dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/selecteditem_dot"
+                        android:contentDescription="Let's start"
+                        android:visibility="gone" />
+
+                </LinearLayout>-->
+            </RelativeLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -215,7 +222,7 @@
                 android:text="@string/or"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/textview_dp14"
-               />
+                />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
@@ -224,7 +231,7 @@
                 android:layout_height="45dp"
                 android:padding="0dp"
                 android:layout_margin="5dp"
-             />
+                />
             <TextView
                 android:id="@+id/googlelogin_tv"
                 android:layout_width="0dp"
@@ -250,29 +257,29 @@
             android:padding="15dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
-        <com.biglynx.fulfiller.fonts.CustomFontLight
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/learn"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="@dimen/textview_dp14"
-            android:letterSpacing="0.15"
-            android:textColor="#FFFFFF"
-           ></com.biglynx.fulfiller.fonts.CustomFontLight>
+            <com.biglynx.fulfiller.fonts.CustomFontLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/learn"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/textview_dp14"
+                android:letterSpacing="0.15"
+                android:textColor="#FFFFFF"
+                ></com.biglynx.fulfiller.fonts.CustomFontLight>
 
-        <com.biglynx.fulfiller.fonts.CustomFontBold
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clickhere"
-            android:id="@+id/condition_click_tv"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:letterSpacing="0.15"
-            android:textSize="@dimen/textview_dp14"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/login"
-           ></com.biglynx.fulfiller.fonts.CustomFontBold>
+            <com.biglynx.fulfiller.fonts.CustomFontBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clickhere"
+                android:id="@+id/condition_click_tv"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:letterSpacing="0.15"
+                android:textSize="@dimen/textview_dp14"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/login"
+                ></com.biglynx.fulfiller.fonts.CustomFontBold>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

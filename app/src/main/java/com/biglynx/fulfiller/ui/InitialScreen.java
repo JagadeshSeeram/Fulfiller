@@ -59,6 +59,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import me.relex.circleindicator.CircleIndicator;
+
 
 public class InitialScreen extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -91,6 +93,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
     private boolean is_signInBtn_clicked;
     private int request_code;
     ProgressDialog progress_dialog;
+    private CircleIndicator circularIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-        is_intent_inprogress=false;
+        is_intent_inprogress = false;
 
         FacebookSdk.sdkInitialize(this);
         if (BuildConfig.DEBUG) {
@@ -111,7 +114,8 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
         setContentView(R.layout.viewpager_footer);
         this.userDetails_shardP = getSharedPreferences("Userdetails", 0);
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
-        pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+        circularIndicator = (CircleIndicator) findViewById(R.id.indicator);
+        //pager_indicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
         mAdapter = new InitialScreenAdapter(InitialScreen.this, mImageResources);
         login_tv = (TextView) findViewById(R.id.login_tv);
         joinfree_tv = (TextView) findViewById(R.id.joinfree_tv);
@@ -135,7 +139,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-       Common.setGooglePlusButtonText(googlelogin_tv, "Google+");
+        Common.setGooglePlusButtonText(googlelogin_tv, "Google+");
         MyApplication.getInstance().printHashKey();
         show_hide_imv.setOnClickListener(this);
         joinfree_tv.setOnClickListener(this);
@@ -147,7 +151,8 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
         intro_images.setAdapter(mAdapter);
         intro_images.setCurrentItem(0);
         intro_images.setOnPageChangeListener(this);
-        setUiPageViewController();
+        //setUiPageViewController();
+        circularIndicator.setViewPager(intro_images);
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     "com.example.packagename",
@@ -188,7 +193,6 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -207,7 +211,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-        Log.d("is_intent_inprogress",""+is_intent_inprogress);
+        Log.d("is_intent_inprogress", "" + is_intent_inprogress);
     }
 
 
@@ -217,7 +221,6 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
             google_api_client.disconnect();
         }
     }
-
 
 
     @Override
@@ -233,7 +236,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
 
 //                AppUtil.SlideUP(joinfree_LI, this);
 //                joinfree_LI.setVisibility(View.VISIBLE);
-                startActivity(new Intent(InitialScreen.this,SelectRegistration.class));
+                startActivity(new Intent(InitialScreen.this, SelectRegistration.class));
                 break;
             case R.id.show_hide_imv:
 
@@ -253,7 +256,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
 
                                 SharedPreferences.Editor editor = userDetails_shardP.edit();
                                 try {
-                                    String photo="https://graph.facebook.com/" + object.getString("id") + "/picture?type=large";
+                                    String photo = "https://graph.facebook.com/" + object.getString("id") + "/picture?type=large";
                                     editor.putString("fbid", object.getString("id"));
                                     editor.putString("name", object.getString("name"));
                                     editor.putString("email", object.getString("email"));
@@ -263,7 +266,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                startActivity(new Intent(InitialScreen.this,SelectRegistration.class)
+                                startActivity(new Intent(InitialScreen.this, SelectRegistration.class)
                                 );
 
                             }
@@ -287,7 +290,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
                 });
                 break;
             case R.id.sign_in_button:
-                is_signInBtn_clicked=true;
+                is_signInBtn_clicked = true;
                 gPlusSignIn();
                 break;
             case R.id.condition_click_tv:
@@ -303,11 +306,11 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-        for (int i = 0; i < dotsCount; i++) {
+        /*for (int i = 0; i < dotsCount; i++) {
             dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
         }
 
-        dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+        dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));*/
 
         /*if (position + 1 == dotsCount) {
             btnNext.setVisibility(View.GONE);
@@ -327,7 +330,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
     public void onConnected(@Nullable Bundle bundle) {
         is_signInBtn_clicked = false;
         // Get user's information and set it into the layout
-        Log.d("conntected to gogole+","connected");
+        Log.d("conntected to gogole+", "connected");
         getProfileInfo();
         // Update the UI after signin
     }
@@ -372,8 +375,8 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
                 editor.putString("photo", currentPerson.getImage().getUrl());
                 editor.commit();
                 google_api_client.disconnect();
-                startActivity(new Intent(this,SelectRegistration.class)
-                       );
+                startActivity(new Intent(this, SelectRegistration.class)
+                );
             } else {
                 Toast.makeText(getApplicationContext(),
                         "No Personal info mention", Toast.LENGTH_LONG).show();
@@ -401,7 +404,7 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d("user connection result", connectionResult.hasResolution()+","+connectionResult);
+        Log.d("user connection result", connectionResult.hasResolution() + "," + connectionResult);
         if (!connectionResult.hasResolution()) {
             return;
         }

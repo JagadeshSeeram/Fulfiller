@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.biglynx.fulfiller.R;
+import com.squareup.picasso.Picasso;
 
 
 public class InitialScreenAdapter extends PagerAdapter {
@@ -38,7 +39,8 @@ public class InitialScreenAdapter extends PagerAdapter {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.viewpager_image, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(mResources[position]);
+        //imageView.setImageResource(mResources[position]);
+        Picasso.with(mContext).load(mResources[position]).into(imageView);
 
         container.addView(itemView);
 

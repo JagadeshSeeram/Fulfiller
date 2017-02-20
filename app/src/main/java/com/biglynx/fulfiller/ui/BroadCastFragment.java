@@ -256,7 +256,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         pickup_loc_tv = (TextView) v.findViewById(R.id.pickup_loc_tv);
         locationtype_tv = (TextView) v.findViewById(R.id.locationtype_tv);
         companylogo_imv = (ImageView) v.findViewById(R.id.companylogo_imv);
-        pager_indicator = (LinearLayout) v.findViewById(R.id.viewPagerCountDots);
+        //pager_indicator = (LinearLayout) v.findViewById(R.id.viewPagerCountDots);
         search_imv = (ImageView) v.findViewById(R.id.search_imv);
         current_miles_tv.setOnClickListener(this);
         fiften_miles_tv.setOnClickListener(this);
