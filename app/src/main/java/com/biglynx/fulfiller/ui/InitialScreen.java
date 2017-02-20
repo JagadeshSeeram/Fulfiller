@@ -80,10 +80,10 @@ public class InitialScreen extends AppCompatActivity implements ViewPager.OnPage
     GoogleApiClient google_api_client;
     SharedPreferences userDetails_shardP;
     private int[] mImageResources = {
-            R.drawable.sc_1,
-            R.drawable.sc_2,
-            R.drawable.sc_3,
-            R.drawable.sc_4,
+            R.drawable.slide_sc_1,
+            R.drawable.slide_sc_2,
+            R.drawable.slide_sc_3,
+            R.drawable.slide_sc_4,
 
     };
     private static final int SIGN_IN_CODE = 0;
