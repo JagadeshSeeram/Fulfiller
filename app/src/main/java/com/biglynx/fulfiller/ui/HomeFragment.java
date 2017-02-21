@@ -46,6 +46,7 @@ import com.biglynx.fulfiller.utils.Common;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -276,7 +277,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .create();
-        //alertDialog.setCancelable(false);
+        alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         /*try {
@@ -389,7 +390,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
                         @Override
                         public void onFailure(Call<FullfillerKpi> call, Throwable t) {
+                            if (!isVisible())
+                                return;
                             Log.e("HomeFragment", "fullfillerKpi :: " + t.getMessage());
+                            if (t instanceof UnknownHostException){
+                                finishActivity();
+                            }
                             //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();
@@ -482,11 +488,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
                         @Override
                         public void onFailure(Call<List<FulfillersDTO>> call, Throwable t) {
+                            if (!isVisible())
+                                return;
+                            Log.e("HomeFragment", "DashboardAPI :: " + t.getMessage());
+                            if (t instanceof UnknownHostException){
+                                finishActivity();
+                            }
                             waiting_sm_tv.setVisibility(View.GONE);
                             complete_sm_tv.setVisibility(View.GONE);
                             noitems_wait_tv.setVisibility(View.VISIBLE);
                             noitems_confirm_tv.setVisibility(View.VISIBLE);
-                            Log.e("HomeFragment", "DashboardAPI :: " + t.getMessage());
                             // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();
@@ -496,6 +507,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     });
         } else
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
+    }
+
+    private void finishActivity() {
+        Common.disMissDialog();
+        if (swipeRefreshLayout.isRefreshing())
+            swipeRefreshLayout.setRefreshing(false);
+        if (alertDialog != null)
+            alertDialog.dismiss();
+        AppUtil.toast(getActivity(), "Server error. Please login...");
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 
     private void emptyAllLists() {

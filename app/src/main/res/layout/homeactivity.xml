@@ -173,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="start"
-                        android:src="@drawable/ic_small_cab" />
+                        android:src="@drawable/small_cab" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
 
