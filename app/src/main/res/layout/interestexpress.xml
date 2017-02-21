@@ -12,13 +12,11 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DADADA"
-        >
+        android:background="#DADADA">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -214,33 +212,38 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_marginBottom="10dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
 
                             <com.biglynx.fulfiller.fonts.CustomFontBold
                                 android:id="@+id/pricetype_tv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center|start"
                                 android:layout_centerVertical="true"
-                                android:layout_toLeftOf="@+id/price_imv"
+                                android:layout_gravity="center|start"
+                                android:layout_toLeftOf="@+id/price_imv_LI"
                                 android:gravity="center|start"
                                 android:textAllCaps="true"
                                 android:textColor="#000099"
                                 android:textSize="@dimen/textview_dp14" />
 
-                            <ImageView
-
-                                android:id="@+id/price_imv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center|right"
-                                android:layout_centerVertical="true"
+                            <LinearLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:id="@+id/price_imv_LI"
                                 android:layout_alignParentRight="true"
-                                android:gravity="center|right"
+                                android:layout_gravity="center|right"
                                 >
 
-                            </ImageView>
+                                <ImageView
+                                    android:id="@+id/price_imv"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_centerVertical="true"
+                                    android:gravity="center|right"
+                                    android:scaleType="centerCrop"
+                                    ></ImageView>
+                            </LinearLayout>
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -249,19 +252,18 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/delivery_due_LI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/delivery_due_LI"
+                    android:layout_marginBottom="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_10"
                     android:background="@drawable/ef_border"
                     android:orientation="horizontal"
                     android:padding="8dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:visibility="visible"
-                    >
+                    android:visibility="visible">
 
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -346,10 +348,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:weightSum="1">
 
 
@@ -385,10 +387,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:weightSum="1">
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -423,10 +425,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:weightSum="1">
 
 
@@ -457,12 +459,13 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/cus_address_LI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cus_address_LI"
-                        android:layout_weight="0.9"
                         android:layout_marginTop="3dp"
+                        android:layout_weight="0.9"
                         android:orientation="horizontal">
+
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -470,13 +473,14 @@
                             android:background="@drawable/editext_bottom"
                             android:gravity="center|start"
                             android:maxLines="1"
-                            android:paddingTop="10dp"
                             android:paddingBottom="@dimen/dp_10"
-                            android:paddingRight="@dimen/dp_5"
                             android:paddingLeft="@dimen/dp_5"
+                            android:paddingRight="@dimen/dp_5"
+                            android:paddingTop="10dp"
                             android:text="Customer delivery locations: "
                             android:textColor="@color/header_color"
                             android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
+
                         <ImageView
                             android:id="@+id/iv_vehicleType_arrow"
                             android:layout_width="@dimen/dp_20"
@@ -494,10 +498,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:weightSum="1">
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -528,8 +532,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:orientation="horizontal"
                         android:background="@drawable/editext_bottom"
+                        android:orientation="horizontal"
                         android:weightSum="1">
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -564,10 +568,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:visibility="visible"
                         android:weightSum="1">
 
@@ -600,10 +604,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:orientation="horizontal"
-                        android:paddingTop="10dp"
                         android:paddingBottom="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_5"
                         android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="10dp"
                         android:visibility="visible"
                         android:weightSum="1">
 
@@ -709,11 +713,11 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="0.5"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/dp_10"
-                        >
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
+
                         <com.biglynx.fulfiller.fonts.CustomFontRegular
                             android:id="@+id/date_tv"
                             android:layout_width="match_parent"
@@ -724,33 +728,32 @@
                             android:gravity="center|right"
                             android:textColor="@color/header_color"
                             android:textSize="@dimen/sp_12" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Dummy Text"
-                            android:visibility="invisible"
-                            />
+                            android:visibility="invisible" />
                     </LinearLayout>
                 </LinearLayout>
                 <!--end of retailer company details-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="#282F37"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    >
+                    android:background="#282F37"
+                    android:orientation="horizontal">
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="0.5"
                         android:gravity="center|start"
                         android:singleLine="true"
                         android:text="Description"
-                        android:layout_marginLeft="10dp"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
                         android:textSize="@dimen/sp_13" />
@@ -760,11 +763,11 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:layout_weight="0.5"
                         android:gravity="center|end"
                         android:singleLine="true"
                         android:text="amouont"
-                        android:layout_marginRight="@dimen/dp_10"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
                         android:textSize="@dimen/sp_13" />
@@ -773,23 +776,23 @@
                 </LinearLayout>
 
                 <!--fulfillment receipt table start-->
-                <LinearLayout android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="120dp"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="#FFFFFF"
-                    android:layout_marginBottom="120dp"
-                    android:paddingBottom="@dimen/dp_10"
                     android:orientation="vertical"
-                    >
+                    android:paddingBottom="@dimen/dp_10">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_20"
                         android:background="#FFFFFF"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <com.biglynx.fulfiller.fonts.CustomFontLight
                             android:id="@+id/fulfillment_id_tv"
@@ -840,10 +843,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginRight="@dimen/dp_10"
                         android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center|start"
                         android:singleLine="true"
                         android:text="Fixed Price"
@@ -857,19 +860,20 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginLeft="10dp"
                         android:background="@color/seperator_color"></View>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        >
+                        android:layout_marginTop="@dimen/dp_10">
+
                         <LinearLayout
+                            android:id="@+id/amount_layout"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/amount_layout"
-                            android:orientation="vertical"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="10dp"
-                            >
+                            android:orientation="vertical">
+
                             <com.biglynx.fulfiller.fonts.CustomFontMedium
                                 android:id="@+id/subtotal_tv"
                                 android:layout_width="match_parent"
@@ -885,8 +889,8 @@
                                 android:id="@+id/servicefee_tv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_10"
                                 android:layout_gravity="center|right"
+                                android:layout_marginTop="@dimen/dp_10"
                                 android:gravity="center|right"
                                 android:singleLine="true"
                                 android:text="60"
@@ -899,8 +903,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|right"
-                                android:gravity="center|right"
                                 android:layout_marginTop="@dimen/dp_10"
+                                android:gravity="center|right"
                                 android:singleLine="true"
                                 android:text="$ 60"
                                 android:textAllCaps="true"
@@ -908,13 +912,14 @@
                                 android:textSize="@dimen/sp_13" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_toLeftOf="@+id/amount_layout"
                             android:gravity="center"
-                            >
+                            android:orientation="vertical">
+
                             <com.biglynx.fulfiller.fonts.CustomFontBold
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -924,17 +929,19 @@
                                 android:textAllCaps="true"
                                 android:textColor="#7B7B7B"
                                 android:textSize="@dimen/sp_13" />
+
                             <com.biglynx.fulfiller.fonts.CustomFontBold
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center|start"
-                                android:singleLine="true"
                                 android:layout_marginTop="@dimen/dp_10"
+                                android:gravity="center|start"
                                 android:paddingRight="7dp"
+                                android:singleLine="true"
                                 android:text="service fee(10%)"
                                 android:textAllCaps="true"
                                 android:textColor="#7B7B7B"
                                 android:textSize="@dimen/sp_13" />
+
                             <com.biglynx.fulfiller.fonts.CustomFontBold
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1095,8 +1102,7 @@
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/textview_dp14"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <!--end expiration date-->
 

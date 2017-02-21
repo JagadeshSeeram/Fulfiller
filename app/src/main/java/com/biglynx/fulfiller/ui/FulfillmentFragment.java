@@ -81,9 +81,8 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
 
         if (Common.isNetworkAvailable(getActivity())) {
             callService(true);
-        }
-        else
-            AppUtil.toast(getActivity(),getString(R.string.check_interent_connection));
+        } else
+            AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
 
 
         fulfiment_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,7 +162,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                                 e.printStackTrace();
                             }
 
-                            AppUtil.CheckErrorCode(getActivity(),response.code());
+                            AppUtil.CheckErrorCode(getActivity(), response.code());
                         }
 
                         if (showDialog)
@@ -182,7 +181,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                         completed = false;
                         confirm = false;
                         Log.e(FulfillmentFragment.class.getSimpleName(), "DashboardAPI :: " + t.getMessage());
-                       // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+                        // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                         if (showDialog)
                             Common.disMissDialog();
                         else
@@ -229,13 +228,15 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     }
 
     private void setTabPs() {
+        if (!headerbar_LI.isShown())
+            headerbar_LI.setVisibility(View.VISIBLE);
         active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
         past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
         active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
         past_tv.setTextColor(Color.parseColor("#FFFFFF"));
         awating_tv.setVisibility(View.VISIBLE);
         confirmed_tv.setVisibility(View.VISIBLE);
-
+        confirmed_tv.setTextColor(Color.parseColor("#FFFFFF"));
         awating_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
 
