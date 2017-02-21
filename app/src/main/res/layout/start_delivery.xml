@@ -646,7 +646,7 @@
                                         android:layout_weight="0.5"
                                         android:gravity="center"
                                         android:scaleType="fitCenter"
-                                        android:src="@drawable/ontheway_y"
+                                        android:src="@drawable/ic_onthe_way_orng_n"
                                         android:visibility="visible"></ImageView>
 
                                     <com.biglynx.fulfiller.fonts.CustomFontRegular
@@ -678,7 +678,7 @@
                                         android:layout_weight="0.5"
                                         android:gravity="center"
                                         android:scaleType="fitCenter"
-                                        android:src="@drawable/pickedup_y"
+                                        android:src="@drawable/ic_pickedup_orng_n"
                                         android:visibility="visible"></ImageView>
 
 
@@ -713,7 +713,7 @@
                                         android:layout_weight="0.5"
                                         android:gravity="center"
                                         android:scaleType="fitCenter"
-                                        android:src="@drawable/delivered_y"
+                                        android:src="@drawable/ic_delivered_orng_n"
                                         android:visibility="visible"></ImageView>
 
 

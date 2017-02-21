@@ -128,7 +128,7 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
         toolbar_end_imv = (ImageView) findViewById(R.id.toolbar_end_imv);
         addvechile_tv = (TextView) findViewById(R.id.addvechile_tv);
 
-        toolbar_end_imv.setImageResource(R.drawable.add_doc);
+        toolbar_end_imv.setImageResource(R.drawable.ic_add_n);
         icon_back.setVisibility(View.VISIBLE);
         toolbar_end_imv.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);

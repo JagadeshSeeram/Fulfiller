@@ -181,7 +181,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="@dimen/dp_20"
                                 android:background="@color/facebook_bg"
-                                android:src="@drawable/facebook_btn_logo"
+                                android:src="@drawable/ic_fb_login"
                                 />
                         </RelativeLayout>
 
@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:drawableRight="@drawable/crossgrey"
+                        android:drawableRight="@drawable/ic_close_n"
                         android:drawableTint="@color/colorPrimary"
                         android:gravity="center"
                         android:paddingRight="@dimen/dp_10"

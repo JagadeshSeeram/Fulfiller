@@ -197,7 +197,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                                     .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(socialLoginProfilePIc);
                                             socialLoginUserName.setText("Welcome " + object.optString("first_name"));
                                             socialLoginUserEmail.setText(object.optString("email"));
-                                            socialLoginLogo.setImageResource(R.drawable.facebook_btn_logo);
+                                            socialLoginLogo.setImageResource(R.drawable.ic_fb_login);
                                             socialLoginLogo.setShadowColor(R.color.facebook_bg);
                                         }
                                     }

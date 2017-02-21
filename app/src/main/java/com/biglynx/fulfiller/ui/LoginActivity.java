@@ -387,7 +387,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         et_name = (EditText) findViewById(R.id.name_edit);
         bt_startDeliverywithOutLogin = (Button) findViewById(R.id.start_delivery_without_login);
         loginBgImageView = (ImageView) findViewById(R.id.login_image);
-        Picasso.with(LoginActivity.this).load(R.drawable.login_bg).error((int) R.color.colorPrimary).into(loginBgImageView);
+        Picasso.with(LoginActivity.this).load(R.drawable.login_top_bg).error((int) R.color.colorPrimary).into(loginBgImageView);
         this.userDetails_shardP = getSharedPreferences("Userdetails", 0);
         fb_login_tv = (TextView) findViewById(R.id.login_button);
         googlelogin_tv = (TextView) findViewById(R.id.sign_in_button);

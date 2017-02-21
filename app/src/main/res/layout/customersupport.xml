@@ -109,7 +109,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dp_15"
                     android:gravity="center"
-                    android:src="@drawable/blub_ic" />
+                    android:src="@drawable/ic_feedback_n" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontRegular
                     android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dp_15"
                     android:gravity="center"
-                    android:src="@drawable/phone_ic" />
+                    android:src="@drawable/ic_contact_n" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontRegular
                     android:layout_width="match_parent"

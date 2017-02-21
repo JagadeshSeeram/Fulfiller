@@ -548,7 +548,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                     if (!googlemaps_LI.isShown())
                                         googlemaps_LI.setVisibility(View.VISIBLE);
                                 }
-                                ontheway_imv.setImageResource(R.drawable.ontheway_g);
+                                ontheway_imv.setImageResource(R.drawable.ic_onthe_way_grn_n);
                                 ontheway_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                             if (progressStatus == 35) {
@@ -556,7 +556,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                     googlemaps_LI.setVisibility(View.GONE);
                                     confirmorders_LI.setVisibility(View.VISIBLE);
                                 }
-                                pickedup_imv.setImageResource(R.drawable.pickedup_g);
+                                pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
 
@@ -569,11 +569,11 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                         checkIfAllOrdersAllDelivered(responseInterestObj);
                                     }
                                 }
-                                pickedup_imv.setImageResource(R.drawable.pickedup_g);
+                                pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                             if (progressStatus == 100) {
-                                delivered_imv.setImageResource(R.drawable.delivered_g);
+                                delivered_imv.setImageResource(R.drawable.ic_delivered_grn_n);
                                 delivered_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                         }

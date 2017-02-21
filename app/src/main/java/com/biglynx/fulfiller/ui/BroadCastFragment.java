@@ -272,7 +272,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         current_loc_tv.setOnClickListener(this);
         refresh_iv.setOnClickListener(this);
         // list_icon.setImageResource(R.drawable.sortings);
-        maps_icon.setImageResource(R.drawable.map_views);
+        maps_icon.setImageResource(R.drawable.ic_map_vew_n);
         listview_LI.setVisibility(View.GONE);
         atvPlaces = (AutoCompleteTextView) v.findViewById(R.id.atv_places);
         searchbar_FL = (FrameLayout) v.findViewById(R.id.searchbar_FL);
@@ -564,7 +564,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_mark));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
     }
 

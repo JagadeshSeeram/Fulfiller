@@ -976,7 +976,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:src="@drawable/decline_orders" />
+                    android:src="@drawable/ic_close_n" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="match_parent"
@@ -1007,7 +1007,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:src="@drawable/decline_orders" />
+                    android:src="@drawable/ic_close_n" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="match_parent"
@@ -1036,7 +1036,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:src="@drawable/ic_home" />
+                    android:src="@drawable/ic_start_delivery_n" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="match_parent"
@@ -1065,7 +1065,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:src="@drawable/accept_orders" />
+                    android:src="@drawable/ic_extend_expiration" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:id="@+id/submit_tv"

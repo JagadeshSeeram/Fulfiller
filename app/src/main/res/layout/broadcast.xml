@@ -284,7 +284,7 @@
                 android:background="@drawable/light_border_dim"
                 android:gravity="center|end"
                 android:padding="@dimen/spacing_small"
-                android:src="@drawable/current_locations" />
+                android:src="@drawable/ic_current_location" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

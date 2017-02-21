@@ -20,7 +20,7 @@
             android:layout_weight="0.1"
             android:gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_vehicl"
+            android:src="@drawable/ic_vehicles_n"
             android:visibility="visible"></ImageView>
 
         <LinearLayout

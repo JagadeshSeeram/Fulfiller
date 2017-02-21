@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center"
                     android:layout_weight="0.45"
-                    android:src="@drawable/car_group" />
+                    android:src="@drawable/ic_car_group" />
 
                 <ImageView
                     android:layout_width="0dp"
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
                     android:layout_weight="0.45"
-                    android:src="@drawable/people_group" />
+                    android:src="@drawable/ic_people_group" />
             </LinearLayout>
 
             <com.biglynx.fulfiller.fonts.CustomFontBoldHeavy

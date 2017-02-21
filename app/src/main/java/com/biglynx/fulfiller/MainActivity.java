@@ -16,7 +16,6 @@ import com.biglynx.fulfiller.ui.FulfillmentFragment;
 import com.biglynx.fulfiller.ui.HomeFragment;
 import com.biglynx.fulfiller.ui.BroadCastFragment;
 import com.biglynx.fulfiller.ui.SettingsFragment;
-import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends FragmentActivity {
     private static FragmentTabHost mTabHost;
@@ -38,7 +37,7 @@ public class MainActivity extends FragmentActivity {
                 mTabHost.newTabSpec("FULFILLMENTS").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.fulfillment, R.drawable.ic_fulfillments,false)),
                 FulfillmentFragment.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("ME").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.me, R.drawable.ic_me,false)),
+                mTabHost.newTabSpec("ME").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.me, R.drawable.ic_settings,false)),
                 SettingsFragment.class, null);
 
 
@@ -73,7 +72,7 @@ public class MainActivity extends FragmentActivity {
                 }else  if(i==2){
                     imv.setImageResource(R.drawable.ic_fulfillments_selected);
                 }else  if(i==3){
-                    imv.setImageResource(R.drawable.ic_me_selected);
+                    imv.setImageResource(R.drawable.ic_settings_selected);
                 }
             }
             else {
@@ -85,7 +84,7 @@ public class MainActivity extends FragmentActivity {
                 }else  if(i==2){
                     imv.setImageResource(R.drawable.ic_fulfillments);
                 }else  if(i==3){
-                    imv.setImageResource(R.drawable.ic_me);
+                    imv.setImageResource(R.drawable.ic_settings);
                 }
             }
         }

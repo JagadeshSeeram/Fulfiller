@@ -75,12 +75,12 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
         ImageView price_tag_imv = (ImageView) itemView.findViewById(R.id.price_tag_imv);
 
         if (fullfillerList.get(position).PriceType.toLowerCase().contains("fixed")) {
-            price_tag_imv.setImageResource(R.drawable.fixed_price);
+            price_tag_imv.setImageResource(R.drawable.ic_fixed_price_n);
             price_type_tv.setText("PAYS");
             price_tv.setText("$" + AppUtil.getTwoDecimals(fullfillerList.get(position).Amount));
 
         } else {
-            price_tag_imv.setImageResource(R.drawable.bidding_price);
+            price_tag_imv.setImageResource(R.drawable.ic_bidding_n);
             price_type_tv.setText("BID");
             price_tv.setText("NOW");
         }

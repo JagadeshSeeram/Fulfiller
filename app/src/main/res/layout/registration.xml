@@ -53,7 +53,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:background="@color/facebook_bg"
-                        android:src="@drawable/facebook_btn_logo"
+                        android:src="@drawable/ic_fb_login"
                         />
                 </RelativeLayout>
 
@@ -123,7 +123,7 @@
                         android:layout_height="30dp"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="90dp"
-                        android:src="@drawable/facebook_btn_logo"
+                        android:src="@drawable/ic_fb_login"
                         app:civ_border_color="@color/facebook_bg" />
                 </RelativeLayout>
 

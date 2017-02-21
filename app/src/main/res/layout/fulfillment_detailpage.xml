@@ -622,7 +622,7 @@
                             android:background="@drawable/light_border_dim"
                             android:gravity="center|bottom"
                             android:padding="5dp"
-                            android:src="@drawable/current_locations" />
+                            android:src="@drawable/ic_current_location" />
                     </FrameLayout>
                 </LinearLayout>
 

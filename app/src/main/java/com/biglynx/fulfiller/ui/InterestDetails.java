@@ -371,13 +371,13 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         if (interest.Fulfillments.PriceType.toLowerCase().contains("fixed")) {
             pricetype_tv.setText(AppUtil.getTwoDecimals(interest.Fulfillments.Amount) + "$ FIXED PRICE");
-            price_imv.setImageResource(R.drawable.fixed_price);
+            price_imv.setImageResource(R.drawable.ic_fixed_price_n);
             pricetype_tv.setTextColor(Color.parseColor("#89A469"));
 
         } else {
             pricetype_tv.setText("BIDDING PRICE");
             pricetype_tv.setTextColor(Color.parseColor("#ED7165"));
-            price_imv.setImageResource(R.drawable.bidding_price);
+            price_imv.setImageResource(R.drawable.ic_bidding_n);
 
         }
     }

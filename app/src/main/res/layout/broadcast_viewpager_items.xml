@@ -45,7 +45,7 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.09"
                         android:scaleType="fitXY"
-                        android:src="@drawable/fixed_price">
+                        android:src="@drawable/ic_fixed_price_n">
 
                     </ImageView>
 

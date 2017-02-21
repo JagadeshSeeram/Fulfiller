@@ -60,7 +60,7 @@
                 android:layout_height="28dp"
                 android:layout_marginBottom="@dimen/spacing_small"
                 android:layout_weight="0.2"
-                android:src="@drawable/edit_icon_whites" />
+                android:src="@drawable/ic_edit_profile_n" />
         </LinearLayout>
 
         <com.mikhaellopez.circularimageview.CircularImageView
@@ -114,7 +114,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/ic_vehicl"
+                            android:src="@drawable/ic_sett_vehicles_n"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -166,7 +166,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/warehouse_proximity_ics"
+                            android:src="@drawable/ic_sett_notifi_proximity"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -218,7 +218,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/documents_ics"
+                            android:src="@drawable/ic_sett_payments"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -271,7 +271,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/payment"
+                            android:src="@drawable/ic_sett_reviews"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -324,7 +324,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/terms_of_services"
+                            android:src="@drawable/ic_sett_terms_of_service"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -379,7 +379,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/privacy_policys"
+                            android:src="@drawable/ic_sett_privacy_policy"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -432,7 +432,7 @@
                             android:layout_weight="0.1"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/customer_services"
+                            android:src="@drawable/ic_sett_customer_service"
                             android:visibility="visible"></ImageView>
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
