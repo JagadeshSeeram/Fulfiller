@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:background="#DADADA"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@android:color/white"
+            android:padding="@dimen/dp_5"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Inspection Location"
+                android:textAllCaps="true"
+                android:textColor="@color/header_color"
+                android:textSize="@dimen/sp_13" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/editext_bottom"
+                android:hint="Inspection Location"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="0dp"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Plant Inspection results"
+                android:textAllCaps="true"
+                android:textColor="@color/header_color"
+                android:textSize="@dimen/sp_13" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/editext_bottom"
+                android:hint="Plant Inspection results"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="0dp"
+                android:textSize="@dimen/sp_13" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Purchase order number"
+                android:textAllCaps="true"
+                android:textColor="@color/header_color"
+                android:textSize="@dimen/sp_13" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/editext_bottom"
+                android:paddingLeft="0dp"
+                android:hint="Purchase order nuber"
+                android:textSize="@dimen/sp_13" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/planet_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="Plant report attached"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/planet_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/inspection_reject_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="Inspection Rejected"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/inspection_reject_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Reject Reason"
+                android:visibility="gone"
+                android:textSize="@dimen/sp_13" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/inspection_accepted_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="Inspection Accepted"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/inspection_accepted_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Accepeted Reason"
+                android:visibility="gone"
+                android:textSize="@dimen/sp_13" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/deduction_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="was deduction taken"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/deduction_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Deduction Taken Reason"
+                android:textSize="@dimen/sp_13"
+                android:visibility="gone"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/contamination_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="evidence of contamination"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/contamination_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Evidence of contamination reason"
+                android:textSize="@dimen/sp_13"
+                android:visibility="gone"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/re_inspection_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="ReInspection"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/re_inspection_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Re-inspection reason"
+                android:textSize="@dimen/sp_13"
+                android:visibility="gone"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/food_risk_spinner"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/dp_5"
+                    android:text="Security Risk for food package"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <Spinner
+                    android:id="@+id/food_risk_spinner"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/editext_bottom"
+                android:hint="Security risk for food package reason"
+                android:textSize="@dimen/sp_13"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+    </ScrollView>
+</layout>
