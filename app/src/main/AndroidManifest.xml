@@ -45,6 +45,7 @@
         <activity
             android:name=".ui.SplashActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,53 +55,81 @@
         </activity>
         <activity
             android:name=".ui.InitialScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
-        <activity android:name=".ui.BusinessRegistration" />
-        <activity android:name=".ui.SelectRegistration" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.BusinessRegistration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SelectRegistration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.StartDelivery"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.ExplinFulfiller"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.Invoice"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.ThankYou"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.CustomerAddress"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.VehicleList"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.AddVehicle"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.VehicleType"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.NotificatoinProximity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.InterestDetails"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.CustomerSupport"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.FulfillmentDetails"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
-        <activity android:name=".ui.PaymentsActivity" />
-        <activity android:name=".ui.AccountTypes" />
-        <activity android:name=".ui.TermsActivity" />
-        <activity android:name=".ui.EditProfileActivity" />
+        <activity
+            android:name=".ui.PaymentsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.AccountTypes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.TermsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.EditProfileActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -126,8 +155,12 @@
             android:name="io.fabric.ApiKey"
             android:value="9670afc70ca67113b8babc3ab9b71fdc758026d8" />
 
-        <activity android:name=".ui.CreateTicketActivity" />
-        <activity android:name=".ui.ViewServiceRequestsActivity" />
+        <activity
+            android:name=".ui.CreateTicketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ViewServiceRequestsActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".services.MyFirebaseMessagingService">
             <intent-filter>
@@ -153,7 +186,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.PaymentsDetailInfoActivity"></activity>
+        <activity
+            android:name=".ui.PaymentsDetailInfoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
