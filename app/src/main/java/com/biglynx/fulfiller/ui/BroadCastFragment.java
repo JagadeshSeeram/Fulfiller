@@ -564,7 +564,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_mark));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
     }
 
