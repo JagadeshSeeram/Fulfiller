@@ -234,7 +234,7 @@
                     android:id="@+id/start_delivering_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/window_background"
+                    android:background="#F2EFF1"
                     android:orientation="vertical"
                     android:visibility="gone">
 
