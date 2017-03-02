@@ -19,7 +19,8 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <include layout="@layout/toolbar"></include>
+        <!--<include layout="@layout/toolbar"></include>-->
+        <include layout="@layout/transparent_toolbar"></include>
 
         <LinearLayout
             android:id="@+id/business_LI"

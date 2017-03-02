@@ -6,7 +6,7 @@
     android:padding="@dimen/spacing_small"
     android:text="Sample"
     android:textColor="@color/text_color_login"
-    android:textSize="@dimen/sp_16"
+    android:textSize="@dimen/sp_12"
     android:background="@color/white"
     android:textAllCaps="true"
     >

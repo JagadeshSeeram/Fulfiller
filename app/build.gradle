@@ -34,7 +34,7 @@ android {
         javaMaxHeapSize "2048M"
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15
@@ -66,8 +66,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.0'
     compile 'com.android.support:design:24.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.google.android.gms:play-services:10.0.1'
-    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services-auth:10.2.0'
     compile 'com.android.support:cardview-v7:24.1.0'
     compile 'com.yalantis:contextmenu:1.0.5'
     compile 'com.google.code.gson:gson:2.6.2'

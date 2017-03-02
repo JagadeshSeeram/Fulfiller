@@ -798,11 +798,6 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         }
     }
     public void finishActivity() {
-
-        if (AppPreferences.getInstance(LoginActivity.this).getRegistrationID() == null){
-            startService(new Intent(this, RegistrationService.class));
-        }
-
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

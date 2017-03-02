@@ -83,7 +83,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
     private GoogleApiClient mGoogleApiClient;
     private ArrayList<String> stateSpinnerList;
     private CircularImageView socialLoginProfilePIc;
-    private CircularImageView socialLoginLogo;
+    private ImageView socialLoginLogo;
     private LinearLayout socialLoginProfile;
     private LinearLayout socialLoginButtons;
     private TextView socialLoginUserName;
@@ -97,12 +97,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
         initViews();
         initializeFacebookLogin();
         initGooglePlus();
-        type = getIntent().getStringExtra("type");
-        if (type.equals("0")) {
-            business_LI.setVisibility(View.VISIBLE);
-        } else {
-            business_LI.setVisibility(View.GONE);
-        }
+
     }
 
     public void finishActivity() {
@@ -135,13 +130,14 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
         facebookLogin.setOnClickListener(this);
         View googleLogin = findViewById(R.id.sign_in_button);
         socialLoginProfilePIc = (CircularImageView) findViewById(R.id.iv_profile_pic);
-        socialLoginLogo = (CircularImageView) findViewById(R.id.iv_social_login_logo);
+        socialLoginLogo = (ImageView) findViewById(R.id.iv_social_login_logo);
         socialLoginProfile = (LinearLayout) findViewById(R.id.layout_social_login_profile);
         socialLoginButtons = (LinearLayout) findViewById(R.id.layout_social_login_buttons);
         socialLoginUserName = (TextView) findViewById(R.id.tv_social_login_username);
         socialLoginUserEmail = (TextView) findViewById(R.id.tv_social_login_user_email);
         title_tv = (TextView) findViewById(R.id.companyname_tv);
-        title_tv.setText(getString(R.string.register));
+        if (!title_tv.isShown())
+            title_tv.setVisibility(View.VISIBLE);
         googleLogin.setOnClickListener(this);
         icon_back.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -152,6 +148,14 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
         }
 
         stateSpinner.setAdapter(getSpinnerAdapter(stateSpinnerList));
+        type = getIntent().getStringExtra("type");
+        if (type.equals("0")) {
+            business_LI.setVisibility(View.VISIBLE);
+            title_tv.setText(getString(R.string.organization));
+        } else {
+            business_LI.setVisibility(View.GONE);
+            title_tv.setText(getString(R.string.driver));
+        }
     }
 
     public ArrayAdapter getSpinnerAdapter(ArrayList<String> list) {
@@ -190,15 +194,15 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                             loginProvider = Constants.FACEBOOK_LOGIN;
                                             providerKey = object.optString("id");
                                             email_ev.setText(object.optString("email"));
-                                            contact_per_tv.setText(object.optString("first_name"));
+                                            contact_per_tv.setText(object.optString("first_name")+" "+object.optString("last_name"));
                                             passwordLayout.setVisibility(View.GONE);
 
                                             Picasso.with(getApplicationContext()).load("https://graph.facebook.com/" + providerKey + "/picture?type=large")
                                                     .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(socialLoginProfilePIc);
-                                            socialLoginUserName.setText("Welcome " + object.optString("first_name"));
-                                            socialLoginUserEmail.setText(object.optString("email"));
-                                            socialLoginLogo.setImageResource(R.drawable.ic_fb_login);
-                                            socialLoginLogo.setShadowColor(R.color.facebook_bg);
+                                            socialLoginUserName.setText("Welcome, " + object.optString("first_name"));
+                                            //socialLoginUserEmail.setText(object.optString("email"));
+                                            socialLoginLogo.setImageResource(R.drawable.ic_fb_n);
+                                            //socialLoginLogo.setShadowColor(R.color.facebook_bg);
                                         }
                                     }
                                 });
@@ -258,9 +262,9 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
             Picasso.with(getApplicationContext()).load(acct.getPhotoUrl())
                     .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(socialLoginProfilePIc);
             socialLoginUserName.setText(acct.getDisplayName());
-            socialLoginUserEmail.setText(acct.getEmail());
-            socialLoginLogo.setImageResource(R.drawable.gplus_btn_logo);
-            socialLoginLogo.setShadowColor(R.color.gplus_bg);
+            //socialLoginUserEmail.setText(acct.getEmail());
+            socialLoginLogo.setImageResource(R.drawable.ic_google_login);
+            //socialLoginLogo.setShadowColor(R.color.gplus_bg);
         } else {
             //If login fails
             Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();

@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .create();
-        alertDialog.setCancelable(false);
+        //alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         /*try {
@@ -366,6 +366,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         @Override
                         public void onResponse(Call<FullfillerKpi> call, Response<FullfillerKpi> response) {
+                            if (!isVisible())
+                                return;
                             if (response.isSuccessful()) {
                                 FullfillerKpi fullfillerKpi = response.body();
                                 Log.d("HomeFragment", "FulfilerId :: " + fullfillerKpi.FulfilerId);
@@ -413,6 +415,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         @Override
                         public void onResponse(Call<List<FulfillersDTO>> call, Response<List<FulfillersDTO>> response) {
+                            if (!isVisible())
+                                return;
                             if (response.isSuccessful()) {
                                 List<FulfillersDTO> dasBoardListCall = response.body();
                                 emptyAllLists();

@@ -30,7 +30,7 @@ LinearLayout busniess_LI,individual_LI;
         icon_back=(ImageView)findViewById(R.id.icon_back);
         loginBgImageView = (ImageView) findViewById(R.id.login_bg_image);
         Picasso.with(SelectRegistration.this).load(R.drawable.login_bg).error((int) R.color.colorPrimary).into(loginBgImageView);
-        icon_back.setVisibility(View.VISIBLE);
+        //icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
         busniess_LI.setOnClickListener(this);
         individual_LI.setOnClickListener(this);

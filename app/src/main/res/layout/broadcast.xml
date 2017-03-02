@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/window_background"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <include layout="@layout/toolbar_search">
 
@@ -256,23 +256,22 @@
 
         <LinearLayout
 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:gravity="bottom|end"
             android:orientation="vertical"
-
+            android:padding="@dimen/dp_10"
             >
-
             <ImageView
                 android:id="@+id/refresh_iv"
                 android:layout_width="@dimen/dp_45"
                 android:layout_height="43dp"
                 android:layout_gravity="center|end"
-                android:layout_margin="10dp"
                 android:background="@drawable/light_border_dim"
-                android:gravity="center|end"
-                android:padding="@dimen/spacing_small"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:src="@drawable/refresh_white" />
 
             <ImageView
@@ -280,10 +279,10 @@
                 android:layout_width="@dimen/dp_45"
                 android:layout_height="43dp"
                 android:layout_gravity="center|end"
-                android:layout_margin="10dp"
                 android:background="@drawable/light_border_dim"
-                android:gravity="center|end"
+                android:gravity="center"
                 android:padding="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:src="@drawable/ic_current_location" />
 
             <LinearLayout
@@ -291,12 +290,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dp_5"
-                android:paddingRight="@dimen/dp_5">
+                >
 
                 <LinearLayout
                     android:id="@+id/miles_LI"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="43dp"
                     android:layout_gravity="center"
                     android:background="@drawable/light_border_dim"
                     android:gravity="center"
@@ -390,11 +389,10 @@
 
                 <com.biglynx.fulfiller.fonts.CustomFontSemiBold
                     android:id="@+id/current_miles_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="45dp"
+                    android:layout_height="43dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginRight="@dimen/dp_5"
                     android:background="@drawable/light_border_dim"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"

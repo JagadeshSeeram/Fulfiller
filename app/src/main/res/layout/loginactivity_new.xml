@@ -14,12 +14,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="40">
+            android:layout_weight="35">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/login_image"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,29 +28,27 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/login_truck" />
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="Recieved a delivery token from your company?" />
 
                 <Button
                     android:id="@+id/start_delivery_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/start_delivery_button_bg"
-                    android:letterSpacing="0.1"
+                    android:background="@drawable/sign_in_button_bg"
                     android:text="@string/startdelivering"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textview_dp16" />
+                    android:textSize="@dimen/sp_13" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -58,8 +56,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="60"
-            android:background="@color/window_background"
+            android:layout_weight="65"
+            android:background="#F2EFF1"
             android:paddingBottom="5dp">
 
             <FrameLayout
@@ -72,13 +70,23 @@
                     android:id="@+id/login_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/window_background"
+                    android:background="#F2EFF1"
                     android:orientation="vertical"
                     android:visibility="visible"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     >
-
+                    <com.biglynx.fulfiller.fonts.CustomFontBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="sign in"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:textSize="@dimen/sp_16"
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -96,10 +104,10 @@
                             android:paddingLeft="0dp"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            android:textColorHint="@color/text_color_hint_login"
+                            android:textColorHint="@color/black"
                             android:textSize="@dimen/sp_14"
-                            android:background="@drawable/editext_bottom"
-                             />
+                            android:background="@drawable/login_edit_text_bg"
+                            />
 
                         <com.biglynx.fulfiller.utils.EditTextFontLight
                             android:id="@+id/password_edit"
@@ -113,9 +121,9 @@
                             android:paddingLeft="0dp"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            android:textColorHint="@color/text_color_hint_login"
+                            android:textColorHint="@color/black"
                             android:textSize="@dimen/sp_14"
-                            android:background="@drawable/editext_bottom"
+                            android:background="@drawable/login_edit_text_bg"
                             android:inputType="textPassword"
                             />
 
@@ -131,7 +139,7 @@
                             android:text="@string/sign_in"
                             android:textColor="#FFFFFF"
                             android:textSize="@dimen/textview_dp16"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             />
 
                     </LinearLayout>
@@ -143,7 +151,7 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center"
                         android:padding="0dp"
-                        android:text="@string/or"
+                        android:text="Or"
                         android:textColor="#000000"
                         android:textSize="@dimen/textview_dp16"
                         />
@@ -161,54 +169,57 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/fb_button_bg"
                             >
 
                             <com.biglynx.fulfiller.fonts.CustomFontMedium
                                 android:id="@+id/login_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/fb_button_bg"
                                 android:ems="15"
-                                android:gravity="center"
-                                android:padding="14dp"
+                                android:gravity="left"
+                                android:paddingLeft="70dp"
+                                android:paddingTop="14dp"
+                                android:paddingBottom="14dp"
                                 android:text="@string/continue_fb"
                                 android:textSize="@dimen/sp_14" />
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/dp_20"
-                                android:background="@color/facebook_bg"
-                                android:src="@drawable/ic_fb_login"
+                                android:layout_marginLeft="@dimen/dp_15"
+                                android:src="@drawable/com_facebook_button_icon_blue"
                                 />
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/gplus_button_bg_white"
                             android:layout_marginTop="10dp">
 
                             <com.biglynx.fulfiller.fonts.CustomFontMedium
                                 android:id="@+id/sign_in_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/gplus_button_bg"
                                 android:ems="15"
-                                android:gravity="center"
-                                android:padding="14dp"
+                                android:gravity="left"
                                 android:text="@string/continue_googlenew"
+                                android:textColor="@color/black"
+                                android:paddingLeft="70dp"
+                                android:paddingTop="14dp"
+                                android:paddingBottom="14dp"
                                 android:textSize="@dimen/sp_14" />
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/dp_20"
-                                android:background="@color/gplus_bg"
-                                android:src="@drawable/gplus_btn_logo"
+                                android:layout_marginLeft="@dimen/dp_15"
+                                android:src="@drawable/ic_google_login"
 
                                 />
                         </RelativeLayout>
@@ -315,7 +326,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/black"
+        android:background="#282F37"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -333,7 +344,10 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            />
 
         <com.biglynx.fulfiller.fonts.CustomFontRegular
             android:layout_width="0dp"

@@ -74,7 +74,7 @@
     <string name="enterliceneplatenumber">Enter licene plate number</string>
     <string name="addvehicleinsurence">Add vehicle insurance document</string>
     <string name="addvehiclereg">Add vehicle registration document</string>
-    <string name="email_address">Email Address</string>
+    <string name="email_address">Email address</string>
     <string name="password">Password</string>
     <string name="please_provide_the_delivery_token">Please provide the delivery token provided by your organization to start delivering. This app requires precise location of your device and shares the collected information with retailer to track deliveries.</string>
     <string name="enter_fulfiller_id">Enter fulfiller Id</string>
@@ -136,6 +136,8 @@
     <string name="no_account_join_now">Don\'t have an account?\nJOIN NOW</string>
     <string name="account_not_verified">Your account has not been verified. Check your email for the verification link</string>
     <string name="resend_verification_mail">If you have not received an email yet, Click here to resend it</string>
+    <string name="organization">organization with fleet</string>
+    <string name="driver">individual driver</string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

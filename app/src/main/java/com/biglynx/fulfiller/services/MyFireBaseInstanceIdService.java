@@ -1,5 +1,6 @@
 package com.biglynx.fulfiller.services;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -21,6 +22,6 @@ public class MyFireBaseInstanceIdService extends FirebaseInstanceIdService {
     }
 
     private void sendTokenToServer() {
-
+        startService(new Intent(this, RegistrationService.class));
     }
 }

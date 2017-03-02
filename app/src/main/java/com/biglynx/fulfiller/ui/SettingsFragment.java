@@ -100,11 +100,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
         }
         if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
-            account_status.setText("Status: "+AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status"));
+            account_status.setText("Status: " +getStatus(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")));
         else
             account_status.setText("");
 
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private String getStatus(String status) {
+        if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status").equalsIgnoreCase("verificationInProgress")) {
+            String userStatus[] = AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status").split("In");
+            status = ""+userStatus[0]+" In "+userStatus[1];
+            return status;
+        }
+        return status;
     }
 
 
