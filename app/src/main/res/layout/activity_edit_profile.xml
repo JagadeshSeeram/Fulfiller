@@ -249,34 +249,29 @@
                     android:textColor="@color/header_color"
                     android:textSize="@dimen/sp_13" />
 
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
+                    android:id="@+id/layout_spinner_state"
+                    android:visibility="visible"
                     android:layout_marginTop="5dp"
                     >
-                    <RelativeLayout
+                    <Spinner
+                        android:id="@+id/spinner_satte"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:id="@+id/layout_spinner_state"
-                        android:visibility="visible"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/text_color_hint_login"
                         android:background="@drawable/editext_bottom"
-                        >
-                        <Spinner
-                            android:id="@+id/spinner_satte"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/text_color_hint_login"
-                            android:background="@drawable/editext_bottom"
-                            />
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/arrowdowngrey"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/dp_15"
-                            />
-                    </RelativeLayout>
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrowdowngrey"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dp_15"
+                        />
                 </RelativeLayout>
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold

@@ -1,10 +1,16 @@
 package com.biglynx.fulfiller.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -88,7 +94,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
     private LinearLayout socialLoginButtons;
     private TextView socialLoginUserName;
     private TextView socialLoginUserEmail;
-    private TextView title_tv;
+    private TextView title_tv, termsAndPolicy_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +162,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
             business_LI.setVisibility(View.GONE);
             title_tv.setText(getString(R.string.driver));
         }
+
     }
 
     public ArrayAdapter getSpinnerAdapter(ArrayList<String> list) {
