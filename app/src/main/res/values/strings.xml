@@ -51,7 +51,7 @@
     <string name="lastanme">Last name</string>
     <string name="enter_lname">Enter last name</string>
     <string name="register">Register</string>
-    <string name="policies">By registering, you confirm that you accept our Terms of Use and Privacy policy</string>
+    <string name="policies">By registering, you confirm that you accept our Terms of Service and Privacy policy</string>
     <string name="alreadyregister">Already register with Fulfiller?</string>
     <string name="sign_in">Sign In</string>
     <string name="registerbelow">Reigster below to complete sing up</string>
@@ -138,6 +138,7 @@
     <string name="resend_verification_mail">If you have not received an email yet, Click here to resend it</string>
     <string name="organization">organization with fleet</string>
     <string name="driver">individual driver</string>
+    <string name="have_an_account_sign_in">Already registered with Filfiller? <u>Sign in</u></string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

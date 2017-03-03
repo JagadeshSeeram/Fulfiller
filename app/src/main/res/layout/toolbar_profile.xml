@@ -71,6 +71,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/com_facebook_profile_picture_blank_square"
+                android:scaleType="centerCrop"
                 />
 
         </LinearLayout>

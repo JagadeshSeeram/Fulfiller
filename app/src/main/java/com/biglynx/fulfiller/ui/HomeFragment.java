@@ -599,12 +599,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                         signInResult.showNoticeDialog = true;*/
                                     AppPreferences.getInstance(getActivity()).setSignInResult(signInResult);
                                 } else {
-                                    try {
-                                        AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                                    /*try {
+                                        //AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+									    AppUtil.toast(getActivity(), "Unable to process the request. Please try again later...");
                                     } catch (IOException e) {
                                         AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
                                         e.printStackTrace();
-                                    }
+                                    }*/
                                 }
                                 showNoticeDialog();
                                 Common.disMissDialog();
@@ -612,6 +613,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
                             @Override
                             public void onFailure(Call<SignInResult> call, Throwable t) {
+							    AppUtil.toast(getActivity(), "Unable to process the request. Please try again later...");
                                 showNoticeDialog();
                                 Common.disMissDialog();
                             }

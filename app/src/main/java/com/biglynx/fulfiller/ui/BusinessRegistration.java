@@ -94,7 +94,9 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
     private LinearLayout socialLoginButtons;
     private TextView socialLoginUserName;
     private TextView socialLoginUserEmail;
-    private TextView title_tv, termsAndPolicy_tv;
+    private TextView title_tv, termsAndPolicy_tv, hadAccountLogIn_tv;
+    String termsOfUse = "Terms of Service";
+    String policy = "Privacy policy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,10 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
         socialLoginUserName = (TextView) findViewById(R.id.tv_social_login_username);
         socialLoginUserEmail = (TextView) findViewById(R.id.tv_social_login_user_email);
         title_tv = (TextView) findViewById(R.id.companyname_tv);
+        hadAccountLogIn_tv = (TextView) findViewById(R.id.signIn_tv);
+        termsAndPolicy_tv = (TextView) findViewById(R.id.tv_terms_and_policies);
+
+        hadAccountLogIn_tv.setOnClickListener(this);
         if (!title_tv.isShown())
             title_tv.setVisibility(View.VISIBLE);
         googleLogin.setOnClickListener(this);
@@ -163,6 +169,42 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
             title_tv.setText(getString(R.string.driver));
         }
 
+        String termsAndPolicy = getString(R.string.policies);
+        SpannableString spannableString = new SpannableString(termsAndPolicy);
+        spannableString.setSpan(new MyClickableSpan(termsOfUse), termsAndPolicy.indexOf(termsOfUse),
+                termsAndPolicy.indexOf(termsOfUse) + termsOfUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new MyClickableSpan(policy), termsAndPolicy.indexOf(policy),
+                termsAndPolicy.indexOf(policy) + policy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), termsAndPolicy.indexOf(termsOfUse),
+                termsAndPolicy.indexOf(termsOfUse) + termsOfUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), termsAndPolicy.indexOf(policy),
+                termsAndPolicy.indexOf(policy) + policy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        termsAndPolicy_tv.setMovementMethod(LinkMovementMethod.getInstance());
+        termsAndPolicy_tv.setText(spannableString);
+
+
+    }
+
+    private class MyClickableSpan extends ClickableSpan {
+        String clickedString;
+
+        MyClickableSpan(String clickedString) {
+            this.clickedString = clickedString;
+        }
+
+        @Override
+        public void onClick(View widget) {
+            if (clickedString.equals(termsOfUse)) {
+                startActivity(new Intent(getApplicationContext(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.TERMS_OF_SERVICE));
+            } else {
+                startActivity(new Intent(getApplicationContext(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.PRIVACY_POLICY));
+            }
+
+        }
     }
 
     public ArrayAdapter getSpinnerAdapter(ArrayList<String> list) {
@@ -201,7 +243,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                             loginProvider = Constants.FACEBOOK_LOGIN;
                                             providerKey = object.optString("id");
                                             email_ev.setText(object.optString("email"));
-                                            contact_per_tv.setText(object.optString("first_name")+" "+object.optString("last_name"));
+                                            contact_per_tv.setText(object.optString("first_name") + " " + object.optString("last_name"));
                                             passwordLayout.setVisibility(View.GONE);
 
                                             Picasso.with(getApplicationContext()).load("https://graph.facebook.com/" + providerKey + "/picture?type=large")
@@ -402,13 +444,13 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                             if (response.isSuccessful()) {
                                 SignInResult signInResult = response.body();
                                 if (signInResult != null) {
-                                    if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
-                                        AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
+                                    if (!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")) {
+                                        AppUtil.toast(BusinessRegistration.this, "Your action could not be completed because there was a problem communicating with server");
                                         return;
                                     }
                                     /*if (!signInResult.Status.equalsIgnoreCase("active"))
                                         signInResult.showNoticeDialog = true;*/
-                                    AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
+                                    AppUtil.toast(BusinessRegistration.this, "You have registered successfully");
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
                                     finishActivity();
                                 } else {
@@ -439,14 +481,14 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                             if (response.isSuccessful()) {
                                 SignInResult signInResult = response.body();
                                 if (signInResult != null) {
-                                    if(!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")){
-                                        AppUtil.toast(BusinessRegistration.this,"Your action could not be completed because there was a problem communicating with server");
+                                    if (!TextUtils.isEmpty(signInResult.FulfillerId) && signInResult.FulfillerId.trim().equals("0")) {
+                                        AppUtil.toast(BusinessRegistration.this, "Your action could not be completed because there was a problem communicating with server");
                                         return;
                                     }
                                    /* if (!signInResult.Status.equalsIgnoreCase("active"))
                                         signInResult.showNoticeDialog = true;*/
                                     AppPreferences.getInstance(BusinessRegistration.this).setSignInResult(signInResult);
-                                    AppUtil.toast(BusinessRegistration.this,"You have registered successfully");
+                                    AppUtil.toast(BusinessRegistration.this, "You have registered successfully");
                                     finishActivity();
                                 } else {
                                     AppUtil.toast(BusinessRegistration.this, OOPS_SOMETHING_WENT_WRONG);
@@ -468,6 +510,14 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                         }
                     });
                 }
+                break;
+            case R.id.signIn_tv:
+                Intent intent = new Intent(BusinessRegistration.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
