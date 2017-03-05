@@ -926,7 +926,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                 companylogo_imv.setVisibility(View.VISIBLE);
             retailerName_tv.setVisibility(View.GONE);
             Picasso.with(StartDelivery.this).load(mInterest.Fulfillments.RetailerLocation.Retailer.CompanyLogo)
-                    .error(R.drawable.cougar_logo).into(companylogo_imv);
+                    .error(R.drawable.ic_your_company_logo).into(companylogo_imv);
         } else {
             companylogo_imv.setVisibility(View.GONE);
             retailerName_tv.setVisibility(View.VISIBLE);
