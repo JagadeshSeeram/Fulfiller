@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private void updateProfileInfo(boolean showRefresh) {
         if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo")))
             Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo"))
-                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(this.user_Imv);
+                    .error((int) R.drawable.ic_no_profile_img).into(this.user_Imv);
 
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))

@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:background="#F2DEDE"
         android:padding="@dimen/dp_10"
-        android:layout_margin="@dimen/dp_20"
+        android:layout_margin="10dp"
         >
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:text="@string/account_not_verified"
             android:textColor="#C54A48"
             android:layout_marginBottom="@dimen/dp_10"
-            android:textSize="@dimen/sp_13"
+            android:textSize="10sp"
             android:layout_gravity="center"
             android:gravity="center"
             android:letterSpacing="0.05"
@@ -41,24 +41,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_13"
+            android:textSize="10sp"
+            android:fitsSystemWindows="true"
+            android:layout_gravity="center"
             android:text="@string/resend_verification_mail"
             android:id="@+id/resend_verification_mail_tv"
             />
-        <com.biglynx.fulfiller.fonts.CustomFontRegular
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="Refresh"
             android:id="@+id/refresh_tv"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingLeft="@dimen/dp_30"
-            android:paddingRight="@dimen/dp_30"
             android:textColor="#8F8F8F"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/ef_border"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:drawableLeft="@drawable/ic_sync_black"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_20"
+            android:drawablePadding="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             />
     </LinearLayout>
 </LinearLayout>

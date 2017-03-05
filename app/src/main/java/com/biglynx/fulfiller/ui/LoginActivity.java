@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -22,7 +23,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -127,6 +133,9 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     private double latitude;
     private View loginLayout;
     private String registrationID;
+    private TextView termsAndPolicy_tv;
+    String termsOfUse = "Terms of Service";
+    String policy = "Privacy policy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -393,6 +402,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         googlelogin_tv = (TextView) findViewById(R.id.sign_in_button);
         start_delivery_btn = (Button) findViewById(R.id.start_delivery_btn);
         joinNow_tv = (TextView) findViewById(R.id.joinNow_tv);
+        termsAndPolicy_tv = (TextView) findViewById(R.id.tv_terms_and_policies);
         fillerApiWrapper = new FullFillerApiWrapper();
 
         bt_startDeliverywithOutLogin.setOnClickListener(this);
@@ -401,7 +411,43 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         fb_login_tv.setOnClickListener(this);
         googlelogin_tv.setOnClickListener(this);
         start_delivery_btn.setOnClickListener(this);
+
+        String termsAndPolicy = getString(R.string.policies_start_delivery);
+        SpannableString spannableString = new SpannableString(termsAndPolicy);
+        spannableString.setSpan(new MyClickableSpan(termsOfUse), termsAndPolicy.indexOf(termsOfUse),
+                termsAndPolicy.indexOf(termsOfUse) + termsOfUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new MyClickableSpan(policy), termsAndPolicy.indexOf(policy),
+                termsAndPolicy.indexOf(policy) + policy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), termsAndPolicy.indexOf(termsOfUse),
+                termsAndPolicy.indexOf(termsOfUse) + termsOfUse.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), termsAndPolicy.indexOf(policy),
+                termsAndPolicy.indexOf(policy) + policy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        termsAndPolicy_tv.setMovementMethod(LinkMovementMethod.getInstance());
+        termsAndPolicy_tv.setText(spannableString);
     }
+
+    private class MyClickableSpan extends ClickableSpan {
+        String clickedString;
+
+        MyClickableSpan(String clickedString) {
+            this.clickedString = clickedString;
+        }
+
+        @Override
+        public void onClick(View widget) {
+            if (clickedString.equals(termsOfUse)) {
+                startActivity(new Intent(getApplicationContext(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.TERMS_OF_SERVICE));
+            } else {
+                startActivity(new Intent(getApplicationContext(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.PRIVACY_POLICY));
+            }
+
+        }
+    }
+
 
 
     @Override

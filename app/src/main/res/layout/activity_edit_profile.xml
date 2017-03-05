@@ -39,8 +39,8 @@
                         android:id="@+id/profilePic_iv"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
-                        android:src="@drawable/com_facebook_profile_picture_blank_square"
-                        app:civ_border_width="2dp" />
+                        android:src="@drawable/ic_no_profile_img"
+                        app:civ_border_width="1dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -110,6 +110,7 @@
                     android:focusableInTouchMode="false"
                     android:focusable="false"
                     android:editable="false"
+                    android:inputType="textPersonName"
                     android:clickable="false"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/editext_bottom"
@@ -167,6 +168,7 @@
                     android:paddingLeft="0dp"
                     android:focusableInTouchMode="false"
                     android:focusable="false"
+                    android:inputType="textEmailAddress"
                     android:editable="false"
                     android:clickable="false"
                     android:textColor="@color/black"
@@ -190,6 +192,8 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/editext_bottom"
                     android:hint="@string/enter_phoneo"
+                    android:inputType="phone"
+                    android:maxLength="13"
                     android:paddingBottom="@dimen/spacing_small"
                     android:paddingLeft="0dp"
                     android:textColor="@color/black"
@@ -211,6 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/editext_bottom"
+                    android:inputType="textPostalAddress"
                     android:hint="@string/enter_address"
                     android:paddingBottom="@dimen/spacing_small"
                     android:paddingLeft="0dp"
@@ -235,6 +240,7 @@
                     android:background="@drawable/editext_bottom"
                     android:hint="@string/enter_city"
                     android:paddingBottom="@dimen/spacing_small"
+                    android:inputType="textPostalAddress"
                     android:paddingLeft="0dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_color_hint_login"

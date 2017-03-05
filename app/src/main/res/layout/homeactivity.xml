@@ -253,19 +253,35 @@
                                 android:paddingRight="10dp">
 
                             </ListView>
-
-                            <com.biglynx.fulfiller.fonts.CustomFontBold
-                                android:id="@+id/noitems_wait_tv"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center"
-                                android:text="No Fulfillments"
-                                android:textColor="@color/header_grey"
-                                android:textSize="@dimen/textview_dp12"
-                                android:visibility="gone" />
+                                android:layout_height="wrap_content"
+                                android:id="@+id/noitems_wait_LI"
+                                android:visibility="gone"
+                                >
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_no_results"
+                                    android:id="@+id/iv_no_wait_results"
+                                    />
+                                <com.biglynx.fulfiller.fonts.CustomFontBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/noitems_wait_tv"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center"
+                                    android:text="No Results"
+                                    android:textColor="@color/header_grey"
+                                    android:textSize="@dimen/sp_14"
+                                    android:layout_below="@+id/iv_no_wait_results"
+                                    android:layout_centerHorizontal="true"
+                                    />
+                            </RelativeLayout>
 
                         </FrameLayout>
 
@@ -320,20 +336,34 @@
                                 android:paddingRight="10dp">
 
                             </ListView>
-
-                            <com.biglynx.fulfiller.fonts.CustomFontBold
-                                android:id="@+id/noitems_confirm_tv"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="12dp"
-                                android:layout_marginTop="12dp"
-                                android:gravity="center"
-                                android:text="No Fulfillments"
-                                android:textColor="@color/header_grey"
-                                android:textSize="@dimen/textview_dp12"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/noitems_confirm_LI"
                                 android:visibility="gone"
-                                />
+                                >
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"                                    android:src="@drawable/ic_no_results"
+                                    android:id="@+id/iv_no_confirm_results"
+                                    />
+                                <com.biglynx.fulfiller.fonts.CustomFontBold
+                                    android:id="@+id/noitems_confirm_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center"
+                                    android:text="No Results"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_below="@+id/iv_no_confirm_results"
+                                    android:textColor="@color/header_grey"
+                                    android:textSize="@dimen/sp_14"                                android:visibility="visible"
+                                    />
+                            </RelativeLayout>
 
                         </FrameLayout>
 

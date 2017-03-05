@@ -247,7 +247,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
                                             passwordLayout.setVisibility(View.GONE);
 
                                             Picasso.with(getApplicationContext()).load("https://graph.facebook.com/" + providerKey + "/picture?type=large")
-                                                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(socialLoginProfilePIc);
+                                                    .error((int) R.drawable.ic_no_profile_img).into(socialLoginProfilePIc);
                                             socialLoginUserName.setText("Welcome, " + object.optString("first_name"));
                                             //socialLoginUserEmail.setText(object.optString("email"));
                                             socialLoginLogo.setImageResource(R.drawable.ic_fb_n);
@@ -309,7 +309,7 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
             passwordLayout.setVisibility(View.GONE);
 
             Picasso.with(getApplicationContext()).load(acct.getPhotoUrl())
-                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(socialLoginProfilePIc);
+                    .error((int) R.drawable.ic_no_profile_img).into(socialLoginProfilePIc);
             socialLoginUserName.setText(acct.getDisplayName());
             //socialLoginUserEmail.setText(acct.getEmail());
             socialLoginLogo.setImageResource(R.drawable.ic_google_login);

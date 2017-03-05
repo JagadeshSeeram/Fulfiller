@@ -47,7 +47,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="@dimen/textview_dp18"
+                    android:textSize="@dimen/sp_14"
                     android:maxLines="1"
                     android:textAllCaps="true"
                     android:id="@+id/companyname_tv"

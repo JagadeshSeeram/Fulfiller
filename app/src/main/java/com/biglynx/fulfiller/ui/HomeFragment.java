@@ -28,6 +28,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.MainActivity;
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     SwitchCompat switchCompat;
     ImageView userimage_imv;
     Date date;
-    TextView complete_sm_tv, waiting_sm_tv, username_tv, noitems_wait_tv, noitems_confirm_tv,
+    TextView complete_sm_tv, waiting_sm_tv, username_tv,
             fulfillemts_tv, earned_tv, mildesdriven_tv;
     private FullFillerApiWrapper apiWrapper;
     private String rollType, editProfileType, getProfile;
@@ -87,6 +88,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private AlertDialog alertDialog;
     private static final String TAG = HomeFragment.class.getSimpleName();
     public static final int CANCEL_INTEREST = 1;
+    private RelativeLayout noItems_confirm_LI,noItems_wait_LI;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -162,8 +164,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         complete_sm_tv = (TextView) v.findViewById(R.id.complete_sm_tv);
         waiting_sm_tv = (TextView) v.findViewById(R.id.waiting_sm_tv);
         username_tv = (TextView) v.findViewById(R.id.username_tv);
-        noitems_wait_tv = (TextView) v.findViewById(R.id.noitems_wait_tv);
-        noitems_confirm_tv = (TextView) v.findViewById(R.id.noitems_confirm_tv);
+        noItems_wait_LI = (RelativeLayout) v.findViewById(R.id.noitems_wait_LI);
+        noItems_confirm_LI = (RelativeLayout) v.findViewById(R.id.noitems_confirm_LI);
         fulfillemts_tv = (TextView) v.findViewById(R.id.fulfillemts_tv);
         earned_tv = (TextView) v.findViewById(R.id.earned_tv);
         mildesdriven_tv = (TextView) v.findViewById(R.id.mildesdriven_tv);
@@ -199,7 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
         if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))) {
             Picasso.with(getActivity()).load(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))
-                    .error(R.drawable.com_facebook_profile_picture_blank_square).into(userimage_imv);
+                    .error(R.drawable.ic_no_profile_img).into(userimage_imv);
         }
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))
@@ -319,12 +321,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                         if (response.isSuccessful()) {
                             Log.e(TAG, "resend Activation Successful");
                         } else {
-                            try {
+                            /*try {
                                 AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
                             } catch (IOException e) {
                                 AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
-                            }
+                            }*/
 
                             Log.e(TAG, "resend Activation error");
                         }
@@ -437,37 +439,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                     }
                                 }
                                 MyApplication.getInstance().dasBoardListCall = dasBoardListCall;
-                                //Handling SeeMore option.
-                                if (pendingdFulfillerList != null && pendingdFulfillerList.size() > 2)
-                                    waiting_sm_tv.setVisibility(View.VISIBLE);
-                                else
-                                    waiting_sm_tv.setVisibility(View.GONE);
 
-                                if (compltedFulfillerList != null && compltedFulfillerList.size() > 2)
-                                    complete_sm_tv.setVisibility(View.VISIBLE);
-                                else
-                                    complete_sm_tv.setVisibility(View.GONE);
-
-                                if (compltedFulfillerList_less.size() > 0) {
+                                if (compltedFulfillerList != null && compltedFulfillerList_less.size() > 0) {
+                                    if (compltedFulfillerList.size() > 2)
+                                        complete_sm_tv.setVisibility(View.VISIBLE);
+                                    else
+                                        complete_sm_tv.setVisibility(View.GONE);
                                     fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
                                     confirmList.setAdapter(fulfillerConfirmAdapter);
                                     Common.setListViewHeightBasedOnItems(confirmList);
-                                    noitems_confirm_tv.setVisibility(View.GONE);
+                                    noItems_confirm_LI.setVisibility(View.GONE);
                                     confirmList.setVisibility(View.VISIBLE);
                                 } else {
                                     complete_sm_tv.setVisibility(View.GONE);
-                                    noitems_confirm_tv.setVisibility(View.VISIBLE);
+                                    noItems_confirm_LI.setVisibility(View.VISIBLE);
                                     confirmList.setVisibility(View.GONE);
                                 }
-                                if (pendingdFulfillerList_less.size() > 0) {
+                                if (pendingdFulfillerList != null && pendingdFulfillerList_less.size() > 0) {
+                                    if (pendingdFulfillerList.size() > 2)
+                                        waiting_sm_tv.setVisibility(View.VISIBLE);
+                                    else
+                                        waiting_sm_tv.setVisibility(View.GONE);
                                     fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
                                     waitinglist_LI.setAdapter(fulfillerPendingAdapter);
                                     Common.setListViewHeightBasedOnItems(waitinglist_LI);
-                                    noitems_wait_tv.setVisibility(View.GONE);
+                                    noItems_wait_LI.setVisibility(View.GONE);
                                     waitinglist_LI.setVisibility(View.VISIBLE);
                                 } else {
                                     waiting_sm_tv.setVisibility(View.GONE);
-                                    noitems_wait_tv.setVisibility(View.VISIBLE);
+                                    noItems_wait_LI.setVisibility(View.VISIBLE);
                                     waitinglist_LI.setVisibility(View.GONE);
                                 }
                             } else {
@@ -479,8 +479,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                 }
                                 waiting_sm_tv.setVisibility(View.GONE);
                                 complete_sm_tv.setVisibility(View.GONE);
-                                noitems_wait_tv.setVisibility(View.VISIBLE);
-                                noitems_confirm_tv.setVisibility(View.VISIBLE);
+                                noItems_wait_LI.setVisibility(View.VISIBLE);
+                                noItems_confirm_LI.setVisibility(View.VISIBLE);
 
                                 AppUtil.CheckErrorCode(getActivity(), response.code());
                             }
@@ -500,8 +500,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                             }
                             waiting_sm_tv.setVisibility(View.GONE);
                             complete_sm_tv.setVisibility(View.GONE);
-                            noitems_wait_tv.setVisibility(View.VISIBLE);
-                            noitems_confirm_tv.setVisibility(View.VISIBLE);
+                            noItems_wait_LI.setVisibility(View.VISIBLE);
+                            noItems_confirm_LI.setVisibility(View.VISIBLE);
                             // AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
                             if (showProgress)
                                 Common.disMissDialog();

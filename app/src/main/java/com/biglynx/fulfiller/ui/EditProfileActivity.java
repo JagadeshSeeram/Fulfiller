@@ -194,7 +194,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
         if (AppUtil.ifNotEmpty(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo")))
             Picasso.with(EditProfileActivity.this).load(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo"))
-                    .error((int) R.drawable.com_facebook_profile_picture_blank_square).into(this.profilePIc_iv);
+                    .error((int) R.drawable.ic_no_profile_img).into(this.profilePIc_iv);
 
     }
 

@@ -30,12 +30,13 @@
                 android:textSize="@dimen/textview_dp12" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_margin="@dimen/dp_25"
                 android:background="@drawable/appcolor_border"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:visibility="visible">
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -45,7 +46,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="0dp"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:padding="@dimen/dp_10"
                     android:text="setup your proximity distance"
@@ -54,40 +55,37 @@
                     android:textSize="@dimen/textview_dp16" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.biglynx.fulfiller.utils.EditTextFontLight
+                    <EditText
                         android:id="@+id/enter_bid_ev"
-                        android:layout_width="100dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_width="70dp"
+                        android:layout_height="45dp"
+                        android:hint="5"
+                        android:textColorHint="@color/text_color_hint_login"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:background="@drawable/ef_border"
-                        android:hint=""
                         android:inputType="number"
-                        android:paddingLeft="10dp"
-                        android:textColor="#000"
-                        android:textColorHint="#D1D1D1" />
+                        android:textColor="#000" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginLeft="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginTop="0dp"
-                        android:gravity="center|start"
-                        android:padding="8dp"
+                        android:gravity="center"
                         android:text="Miles"
                         android:textAllCaps="false"
                         android:textColor="#787878"
-                        android:textSize="@dimen/textview_dp12" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

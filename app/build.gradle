@@ -34,7 +34,7 @@ android {
         javaMaxHeapSize "2048M"
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15

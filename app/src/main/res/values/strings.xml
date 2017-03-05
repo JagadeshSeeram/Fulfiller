@@ -52,6 +52,8 @@
     <string name="enter_lname">Enter last name</string>
     <string name="register">Register</string>
     <string name="policies">By registering, you confirm that you accept our Terms of Service and Privacy policy</string>
+    <string name="policies_start_delivery">By starting delivery, you confirm that you accept our Terms of Service and Privacy policy</string>
+
     <string name="alreadyregister">Already register with Fulfiller?</string>
     <string name="sign_in">Sign In</string>
     <string name="registerbelow">Reigster below to complete sing up</string>

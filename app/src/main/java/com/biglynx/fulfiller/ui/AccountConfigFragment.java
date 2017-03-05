@@ -107,7 +107,7 @@ public class AccountConfigFragment extends Fragment implements View.OnClickListe
                     @Override
                     public void onFailure(Call<AccountConfigModel> call, Throwable t) {
                         Common.disMissDialog();
-                        AppUtil.toast(getActivity(), "Server is busy. Please try agin later...");
+                        //AppUtil.toast(getActivity(), "Server is busy. Please try agin later...");
                     }
                 });
     }

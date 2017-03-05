@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
 import com.squareup.picasso.Picasso;
@@ -18,7 +19,7 @@ import com.squareup.picasso.Picasso;
 public class SelectRegistration extends FragmentActivity implements View.OnClickListener{
 
 LinearLayout busniess_LI,individual_LI;
-    ImageView icon_back;
+    TextView icon_back;
     private ImageView loginBgImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,7 +28,7 @@ LinearLayout busniess_LI,individual_LI;
         setContentView(R.layout.select_register);
         busniess_LI=(LinearLayout)findViewById(R.id.business_LI);
         individual_LI=(LinearLayout)findViewById(R.id.individual_LI);
-        icon_back=(ImageView)findViewById(R.id.icon_back);
+        icon_back=(TextView)findViewById(R.id.icon_back);
         loginBgImageView = (ImageView) findViewById(R.id.login_bg_image);
         Picasso.with(SelectRegistration.this).load(R.drawable.login_bg).error((int) R.color.colorPrimary).into(loginBgImageView);
         //icon_back.setVisibility(View.VISIBLE);
