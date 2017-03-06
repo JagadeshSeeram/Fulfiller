@@ -564,7 +564,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_mark));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
     }
 
@@ -1122,18 +1122,20 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         protected void onPostExecute(List<HashMap<String, String>> result) {
-            googlePlacesresult.clear();
+            if (googlePlacesresult != null && googlePlacesresult.size() > 0)
+                googlePlacesresult.clear();
 
             String[] from = new String[]{"description"};
             int[] to = new int[]{android.R.id.text1};
 
-            // Creating a SimpleAdapter for the AutoCompleteTextView
-            SimpleAdapter adapter = new SimpleAdapter(getContext(), result, R.layout.dropdown, from, to);
+            if (result != null) {
+                // Creating a SimpleAdapter for the AutoCompleteTextView
+                SimpleAdapter adapter = new SimpleAdapter(getContext(), result, R.layout.dropdown, from, to);
 
-            // Setting the adapter
-            atvPlaces.setAdapter(adapter);
-            googlePlacesresult.addAll(result);
-
+                // Setting the adapter
+                atvPlaces.setAdapter(adapter);
+                googlePlacesresult.addAll(result);
+            }
         }
     }
 

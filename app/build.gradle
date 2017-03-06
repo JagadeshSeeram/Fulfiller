@@ -39,7 +39,7 @@ android {
         applicationId "com.biglynx.fulfiller"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 9
+        versionCode 16
         versionName "1.0"
         multiDexEnabled true
     }

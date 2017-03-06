@@ -237,6 +237,8 @@
                     android:layout_height="match_parent"
                     android:background="#F2EFF1"
                     android:orientation="vertical"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:visibility="gone">
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -244,7 +246,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:drawableRight="@drawable/ic_close_n"
                         android:drawableTint="@color/colorPrimary"
                         android:gravity="center"
@@ -330,8 +332,8 @@
                         android:textColor="@color/header_color"
                         android:textSize="@dimen/sp_13"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
                         />
 
                 </LinearLayout>

@@ -62,7 +62,7 @@
             android:layout_weight="3"
             android:layout_height="@dimen/dp_80"
             android:id="@+id/camera_imv"
-            android:src="@drawable/camera_ics"/>
+            android:src="@drawable/camera_ic"/>
 
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:layout_width="0dp"
@@ -81,7 +81,7 @@
             android:layout_weight="3"
             android:layout_height="80dp"
             android:id="@+id/gallery_Imv"
-            android:src="@drawable/cam_rolls"/>
+            android:src="@drawable/ic_gallery_n"/>
 
     </LinearLayout>
 

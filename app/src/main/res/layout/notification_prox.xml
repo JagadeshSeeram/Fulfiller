@@ -41,7 +41,7 @@
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:id="@+id/bid_text_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="0dp"
@@ -50,9 +50,10 @@
                     android:gravity="center"
                     android:padding="@dimen/dp_10"
                     android:text="setup your proximity distance"
+                    android:letterSpacing="0.2"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textview_dp16" />
+                    android:textSize="@dimen/sp_11" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,12 +67,12 @@
                     <EditText
                         android:id="@+id/enter_bid_ev"
                         android:layout_width="70dp"
-                        android:layout_height="45dp"
+                        android:layout_height="40dp"
                         android:hint="5"
                         android:textColorHint="@color/text_color_hint_login"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:background="@drawable/ef_border"
+                        android:background="@drawable/proxy_bg"
                         android:inputType="number"
                         android:textColor="#000" />
 
@@ -100,7 +101,6 @@
             android:text="@string/submit"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:layout_marginBottom="@dimen/dp_10"
             />
     </RelativeLayout>
 </LinearLayout>
