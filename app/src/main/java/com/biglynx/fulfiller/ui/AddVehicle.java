@@ -282,6 +282,9 @@ public class AddVehicle extends AppCompatActivity implements View.OnClickListene
                         Common.disMissDialog();
                         if (response.isSuccessful()) {
                             AppUtil.toast(AddVehicle.this, getString(R.string.vehicle_added));
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("vehicle_added", true);
+                            setResult(RESULT_OK, returnIntent);
                             finish();
                         } else {
                             try {

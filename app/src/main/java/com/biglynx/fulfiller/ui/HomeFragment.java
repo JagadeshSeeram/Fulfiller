@@ -199,16 +199,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             }
         }
 
-        if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))) {
-            Picasso.with(getActivity()).load(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))
-                    .error(R.drawable.ic_no_profile_img).into(userimage_imv);
-        }
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))
                 username_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName"));
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))) {
+                Picasso.with(getActivity()).load(AppPreferences.getInstance(getActivity()).getSignInResult().optString("CompanyLogo"))
+                        .error(R.drawable.ic_no_profile_img).into(userimage_imv);
+            }
         } else {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName")))
                 username_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("ProfileImage"))) {
+                Picasso.with(getActivity()).load(AppPreferences.getInstance(getActivity()).getSignInResult().optString("ProfileImage"))
+                        .error(R.drawable.ic_no_profile_img).into(userimage_imv);
+            }
         }
 
         switchCompat.setOnCheckedChangeListener(null);

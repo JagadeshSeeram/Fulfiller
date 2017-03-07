@@ -1,5 +1,6 @@
 package com.biglynx.fulfiller.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -56,13 +57,14 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 *
 */
 
-public class VehicleList extends AppCompatActivity implements View.OnClickListener, NetworkOperationListener {
+public class VehicleList extends AppCompatActivity implements View.OnClickListener {
     VehiclesAdapter vehiclesAdapter;
     ImageView icon_back, toolbar_end_imv;
     TextView companyname_tv;
     ListView listView;
     TextView addvechile_tv, no_vehicles_tv;
     FullFillerApiWrapper apiWrapper;
+    public static int ADD_VEHICLES = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,32 +157,18 @@ public class VehicleList extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(this, AddVehicle.class));
                 break;
             case R.id.toolbar_end_imv:
-                startActivity(new Intent(this, AddVehicle.class));
+                startActivityForResult(new Intent(this, AddVehicle.class),ADD_VEHICLES);
                 break;
         }
     }
 
     @Override
-    public void operationCompleted(NetworkResponse networkResponse) {
-        Common.disMissDialog();
-        List<Vehicles> vehiclesList = new ArrayList<>();
-        if (networkResponse.getStatusCode() == 200) {
-            try {
-                JSONArray result = new JSONArray(networkResponse.getResponseString());
-                for (int i = 0; i < result.length(); i++) {
-                    JSONObject jsonObject = result.optJSONObject(i);
-                    Vehicles vehicles = new Gson().fromJson(jsonObject.toString(), Vehicles.class);
-                    vehiclesList.add(vehicles);
-
-                }
-                vehiclesAdapter = new VehiclesAdapter(this, vehiclesList);
-                listView.setAdapter(vehiclesAdapter);
-                Common.setListViewHeightBasedOnItems(listView);
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_VEHICLES) {
+            if (resultCode == Activity.RESULT_OK) {
+                callService();
             }
-        } else {
-
         }
     }
 }

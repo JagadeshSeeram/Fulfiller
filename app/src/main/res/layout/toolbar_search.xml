@@ -27,6 +27,7 @@
                 android:layout_height="25dp"
                 android:layout_weight=".5"
                 android:src="@drawable/ic_ab_back"
+                android:scaleType="fitStart"
                 android:visibility="gone" />
         </LinearLayout>
 

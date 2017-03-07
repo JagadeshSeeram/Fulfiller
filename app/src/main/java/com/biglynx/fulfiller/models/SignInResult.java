@@ -1,7 +1,6 @@
 package com.biglynx.fulfiller.models;
 
 
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
@@ -34,6 +33,8 @@ public class SignInResult {
     public String Phone;
     @SerializedName("PingInterval")
     public String PingInterval;
+    @SerializedName("ProfileImage")
+    public String ProfileImage;
     @SerializedName("CompanyLogo")
     public String CompanyLogo;
     @SerializedName("Proximity")
@@ -110,6 +111,7 @@ public class SignInResult {
             jsonObject.put("MiddleName", MiddleName);
             jsonObject.put("Phone", Phone);
             jsonObject.put("PingInterval", PingInterval);
+            jsonObject.put("ProfileImage", ProfileImage);
             jsonObject.put("CompanyLogo", CompanyLogo);
             jsonObject.put("Proximity", Proximity);
             jsonObject.put("ReadyFufill", ReadyFulfill);

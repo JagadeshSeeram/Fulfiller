@@ -34,7 +34,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.4"
                     android:gravity="center|start"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_your_company_logo"></ImageView>
 
                 <LinearLayout
@@ -82,7 +82,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.08"
                     android:gravity="center|end"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/fav_icons"
                     android:visibility="gone"></ImageView>
 
@@ -185,6 +185,7 @@
                 android:background="#353944"
                 android:fadingEdgeLength="5dp"
                 android:requiresFadingEdge="horizontal"
+                android:layout_marginRight="0dp"
                 widget:dividerWidth="1dp" />
 
             <LinearLayout

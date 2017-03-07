@@ -192,9 +192,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     stateSpinner.setSelection(i);
             }
         }
-        if (AppUtil.ifNotEmpty(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo")))
-            Picasso.with(EditProfileActivity.this).load(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo"))
-                    .error((int) R.drawable.ic_no_profile_img).into(this.profilePIc_iv);
+        if (AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+            if (AppUtil.ifNotEmpty(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo")))
+                Picasso.with(EditProfileActivity.this).load(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("CompanyLogo"))
+                        .error((int) R.drawable.ic_no_profile_img).into(this.profilePIc_iv);
+        }else {
+            if (AppUtil.ifNotEmpty(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("ProfileImage")))
+                Picasso.with(EditProfileActivity.this).load(AppPreferences.getInstance(EditProfileActivity.this).getSignInResult().optString("ProfileImage"))
+                        .error((int) R.drawable.ic_no_profile_img).into(this.profilePIc_iv);
+        }
 
     }
 
@@ -261,7 +267,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                             if (signInResult != null) {
                                 AppPreferences.getInstance(EditProfileActivity.this).setSignInResult(signInResult);
                             }
-                            buildUI();
+                            //buildUI();
+                            AppUtil.toast(EditProfileActivity.this, "Details have been updated successfully");
+                            finish();
+
                         } else {
                             try {
                                 AppUtil.parseErrorMessage(EditProfileActivity.this, response.errorBody().string());

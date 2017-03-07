@@ -88,16 +88,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void updateProfileInfo(boolean showRefresh) {
-        if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo")))
-            Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo"))
-                    .error((int) R.drawable.ic_no_profile_img).into(this.user_Imv);
 
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))
                 name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName"));
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo")))
+                Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("CompanyLogo"))
+                        .error((int) R.drawable.ic_no_profile_img).into(this.user_Imv);
         } else {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName")))
                 name_tv.setText(AppPreferences.getInstance(getActivity()).getSignInResult().optString("FirstName"));
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(getContext()).getSignInResult().optString("ProfileImage")))
+                Picasso.with(getActivity()).load(AppPreferences.getInstance(getContext()).getSignInResult().optString("ProfileImage"))
+                        .error((int) R.drawable.ic_no_profile_img).into(this.user_Imv);
         }
         if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
             account_status.setText("Status: " +getStatus(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")));
