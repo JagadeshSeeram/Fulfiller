@@ -124,7 +124,7 @@ public interface FullFillerApi {
     Call<Void> sendRegistrationID(@Query("id") String registrationID, @Query("productid") String productCode,
                                   @Body NotificationRegisterModel model);
 
-    @GET(HttpAdapter.BASE_URL_LOGIN + "{url}")
+    @GET(HttpAdapter.BASE_URL + "{url}")
     Call<SignInResult> getProfile(@Path("url") String url);
 
     @FormUrlEncoded

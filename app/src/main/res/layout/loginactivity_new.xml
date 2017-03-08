@@ -37,7 +37,7 @@
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recieved a delivery token from your company?" />
+                    android:text="Received a delivery token from your company?" />
 
                 <Button
                     android:id="@+id/start_delivery_btn"

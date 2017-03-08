@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
+    local:contentInsetStart="10dp"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <LinearLayout
@@ -17,23 +18,23 @@
         <LinearLayout
             android:id="@+id/LL_icon_back"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_weight="1.5"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/icon_back"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="match_parent"
                 android:layout_weight=".5"
                 android:src="@drawable/ic_ab_back"
                 android:scaleType="fitStart"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="8.0"
             android:gravity="center">
 
@@ -74,12 +75,12 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
             >
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:gravity="center|right"
-                android:layout_marginRight="10dp"
                 android:visibility="gone"
                 android:id="@+id/toolbar_end_imv"
                 android:layout_marginLeft="10dp"
@@ -94,7 +95,6 @@
                 android:text="Done"
                 android:textSize="@dimen/sp_16"
                 android:visibility="gone"
-                android:layout_marginRight="10dp"
                 android:gravity="center|start"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"

@@ -13,50 +13,44 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        local:contentInsetStart="@dimen/dp_10"
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="horizontal">
+            >
 
             <com.biglynx.fulfiller.fonts.CustomFontRegular
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_weight="0.35"
                 android:textColor="@color/colorPrimary"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="15dp"
-                android:layout_marginLeft="30dp"
                 android:background="@drawable/lef_roundedcorner"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/active_tv"
                 android:textSize="@dimen/sp_13"
                 android:text="Active"
+                android:paddingLeft="@dimen/dp_40"
+                android:paddingRight="@dimen/dp_40"
                 android:textAllCaps="true"
                 >
 
             </com.biglynx.fulfiller.fonts.CustomFontRegular>
 
             <com.biglynx.fulfiller.fonts.CustomFontRegular
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_weight="0.35"
                 android:background="@drawable/lef_roundedcorner_trans"
                 android:textColor="#FFFFFF"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:layout_marginRight="50dp"
-                android:paddingBottom="15dp"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/past_tv"
                 android:textSize="@dimen/sp_13"
                 android:text="Past"
                 android:textAllCaps="true"
+                android:paddingLeft="@dimen/dp_40"
+                android:paddingRight="@dimen/dp_40"
+                android:layout_toRightOf="@+id/active_tv"
                 >
 
             </com.biglynx.fulfiller.fonts.CustomFontRegular>
@@ -90,12 +84,12 @@
                     android:layout_weight="0.5"
                     android:textColor="@color/colorPrimary"
                     android:layout_gravity="center"
-                    android:gravity="center|start"
+                    android:gravity="center"
                     android:id="@+id/awating_tv"
                     android:text="Awating confirmation"
                     android:textSize="@dimen/textview_dp14"
                     android:textAllCaps="true"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     ></com.biglynx.fulfiller.fonts.CustomFontRegular>
 
                 <com.biglynx.fulfiller.fonts.CustomFontRegular
@@ -103,10 +97,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:textColor="#FFFFFF"
-                    android:gravity="center|end|right"
+                    android:gravity="center"
                     android:id="@+id/confirmed_tv"
                     android:text="Confirmed"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textAllCaps="true"
                     android:textSize="@dimen/textview_dp14"
                     ></com.biglynx.fulfiller.fonts.CustomFontRegular>

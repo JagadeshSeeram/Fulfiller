@@ -135,12 +135,12 @@
     <string name="support_category_type">Select support category</string>
     <string name="select_issue">Select an issue</string>
     <string name="describe_issue">describe issue</string>
-    <string name="no_account_join_now">Don\'t have an account?\nJOIN NOW</string>
+    <string name="no_account_join_now">Don\'t have an account?\nJoin Now</string>
     <string name="account_not_verified">Your account has not been verified. Check your email for the verification link</string>
     <string name="resend_verification_mail">If you have not received an email yet, Click here to resend it</string>
     <string name="organization">organization with fleet</string>
     <string name="driver">individual driver</string>
-    <string name="have_an_account_sign_in">Already registered with Filfiller? <u>Sign in</u></string>
+    <string name="have_an_account_sign_in">Already registered with Fulfiller? <u>Sign in</u></string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

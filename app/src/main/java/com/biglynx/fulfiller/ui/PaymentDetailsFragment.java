@@ -77,6 +77,7 @@ public class PaymentDetailsFragment extends Fragment {
                             PaymentDetailsModel model = list.get(position);
                             model.ordersCount = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.OrderCount : "";
                             model.totalWeight = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.TotalWeight : 0.00;
+                            model.FulfillmentId = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.FulfillmentId : "";
                             Bundle bundle = new Bundle();
                             bundle.putParcelable(PAYOUT_DETAILS, model);
                             startActivity(new Intent(getActivity(), PaymentsDetailInfoActivity.class)

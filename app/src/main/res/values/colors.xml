@@ -26,6 +26,7 @@
     <color name="layout_background">#EFEFEF</color>
 
     <color name="seperator_color">#C8C7CC</color>
+    <color name="divider_color">#dfdfdf</color>
     <color name="header_color">#787878</color>
     <color name="black">#000000</color>
     <color name="button_background_1">#4C4C4C</color>

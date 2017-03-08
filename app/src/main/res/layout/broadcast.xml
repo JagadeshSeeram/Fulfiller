@@ -96,7 +96,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_weight="0.85"
-                android:background="@drawable/ef_border"
+                android:background="@drawable/search_bg"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -130,7 +130,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_weight="0.13"
-                android:background="#AA000000"
+                android:background="@drawable/broadcast_list_icon_bg"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -261,151 +261,157 @@
             android:layout_gravity="bottom|end"
             android:gravity="bottom|end"
             android:orientation="vertical"
-            android:padding="@dimen/dp_10"
             >
-            <ImageView
-                android:id="@+id/refresh_iv"
-                android:layout_width="@dimen/dp_45"
-                android:layout_height="43dp"
-                android:layout_gravity="center|end"
-                android:background="@drawable/light_border_dim"
-                android:gravity="center"
-                android:padding="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:src="@drawable/refresh_white" />
-
-            <ImageView
-                android:id="@+id/current_location_tv"
-                android:layout_width="@dimen/dp_45"
-                android:layout_height="43dp"
-                android:layout_gravity="center|end"
-                android:background="@drawable/light_border_dim"
-                android:gravity="center"
-                android:padding="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:src="@drawable/ic_current_location" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dp_5"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10"
                 >
-
-                <LinearLayout
-                    android:id="@+id/miles_LI"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/refresh_iv"
+                    android:layout_width="@dimen/dp_45"
                     android:layout_height="43dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|end"
                     android:background="@drawable/light_border_dim"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:paddingTop="@dimen/dp_5"
-                    android:visibility="gone">
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:src="@drawable/refresh_white" />
 
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/miles_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="2dp"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="Proximaty from\n Current locatoin"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/sp_12" />
-
-                    <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_gravity="center|end"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:gravity="center|start"
-                        android:src="@drawable/right_arrow" />
-
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/two_miles_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="2\nMiles"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/sp_12" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_5"
-                        android:background="#FFFFFF"></View>
-
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/five_miles_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="5\nMiles"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/sp_12" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_5"
-                        android:background="@color/white"></View>
-
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/ten_miles_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="10\nMiles"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/sp_12" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_5"
-                        android:background="@color/white"></View>
-
-                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                        android:id="@+id/fiften_miles_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="15\nMiles"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/sp_12" />
-                </LinearLayout>
-
-                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                    android:id="@+id/current_miles_tv"
-                    android:layout_width="45dp"
+                <ImageView
+                    android:id="@+id/current_location_tv"
+                    android:layout_width="@dimen/dp_45"
                     android:layout_height="43dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="2dp"
+                    android:layout_gravity="center|end"
                     android:background="@drawable/light_border_dim"
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
-                    android:text="5\nMiles"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/textview_dp14" />
-            </LinearLayout>
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:src="@drawable/ic_current_location" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:layout_gravity="center|end"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/miles_LI"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/light_border_dim"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:paddingTop="@dimen/dp_5"
+                        android:visibility="gone">
+
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/miles_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="2dp"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Proximaty from\n Current locatoin"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:gravity="center|start"
+                            android:src="@drawable/right_arrow" />
+
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/two_miles_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="2\nMiles"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/dp_5"
+                            android:background="#FFFFFF"></View>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/five_miles_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="5\nMiles"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/dp_5"
+                            android:background="@color/white"></View>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/ten_miles_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="10\nMiles"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/dp_5"
+                            android:background="@color/white"></View>
+
+                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                            android:id="@+id/fiften_miles_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/dp_5"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="15\nMiles"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                        android:id="@+id/current_miles_tv"
+                        android:layout_width="45dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginLeft="2dp"
+                        android:background="@drawable/light_border_dim"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="5\nMiles"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/textview_dp14" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/viewpager_LI"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="185dp"
                 android:layout_gravity="bottom"
                 android:background="#AA000000"
                 android:orientation="horizontal"
@@ -416,9 +422,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center|top"
                     android:layout_weight="0.35"
+                    android:padding="@dimen/dp_5"
                     android:orientation="vertical">
 
                     <ImageView
@@ -426,10 +432,10 @@
                         android:layout_width="100dp"
                         android:layout_height="@dimen/dp_40"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
+                        android:padding="2dp"
                         android:src="@drawable/ic_your_company_logo"></ImageView>
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -437,7 +443,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_5"
                         android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center"
                         android:text="Cougar Retailer "
@@ -495,7 +500,6 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_weight="0.55">
 
                     <android.support.v4.view.ViewPager

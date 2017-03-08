@@ -769,7 +769,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 break;
 
             case R.id.current_miles_tv:
-                if (miles_LI.getVisibility() == View.VISIBLE) {
+                if (miles_LI.isShown()) {
                     miles_LI.setVisibility(View.GONE);
                 } else {
                     miles_LI.setVisibility(View.VISIBLE);

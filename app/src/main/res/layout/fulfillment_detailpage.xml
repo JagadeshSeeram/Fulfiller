@@ -34,7 +34,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.4"
                     android:gravity="center|start"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_your_company_logo"></ImageView>
 
                 <LinearLayout
@@ -144,7 +144,6 @@
                 android:visibility="visible"
                 android:weightSum="1">
 
-
                 <com.biglynx.fulfiller.fonts.CustomFontSemiBold
                     android:id="@+id/fulfiment1_tv"
                     android:layout_width="0dp"
@@ -172,20 +171,19 @@
                     android:text="Fulfillment 2"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-
+                    android:textSize="@dimen/textview_dp16">
+                </com.biglynx.fulfiller.fonts.CustomFontSemiBold>
             </LinearLayout>
-
             <com.biglynx.fulfiller.utils.HorizontalListView
                 android:id="@+id/listivew"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="#353944"
                 android:fadingEdgeLength="5dp"
                 android:requiresFadingEdge="horizontal"
                 android:layout_marginRight="0dp"
+                android:paddingTop="5dp"
+                android:background="@color/black"
                 widget:dividerWidth="1dp" />
 
             <LinearLayout
@@ -232,13 +230,13 @@
                 <LinearLayout
                     android:layout_width="50dp"
                     android:layout_height="50dp">
-                <ImageView
-                    android:id="@+id/price_imv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|right"
-                    android:gravity="center|right"
-                    android:scaleType="centerCrop"></ImageView>
+                    <ImageView
+                        android:id="@+id/price_imv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:gravity="center|right"
+                        android:scaleType="centerCrop"></ImageView>
                 </LinearLayout>
             </LinearLayout>
 

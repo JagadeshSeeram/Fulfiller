@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        local:contentInsetStart="10dp"
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
@@ -20,13 +21,17 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/icon_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:src="@drawable/ic_ab_back" />
+            <LinearLayout
+                android:layout_width="25dp"
+                android:layout_height="25dp">
+                <ImageView
+                    android:id="@+id/icon_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|start"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/ic_ab_back" />
+            </LinearLayout>
             <com.biglynx.fulfiller.fonts.CustomFontRegular
                 android:id="@+id/payments_tv"
                 android:layout_width="0dp"
@@ -35,7 +40,7 @@
                 android:layout_weight="0.35"
                 android:gravity="center"
                 android:background="@drawable/lef_roundedcorner"
-                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_35"
                 android:paddingBottom="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_15"
                 android:paddingTop="@dimen/dp_10"

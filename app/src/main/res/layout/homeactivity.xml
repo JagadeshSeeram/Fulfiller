@@ -276,7 +276,7 @@
                                     android:layout_marginTop="20dp"
                                     android:gravity="center"
                                     android:text="No Results"
-                                    android:textColor="@color/header_grey"
+                                    android:textColor="@color/black"
                                     android:textSize="@dimen/sp_14"
                                     android:layout_below="@+id/iv_no_wait_results"
                                     android:layout_centerHorizontal="true"
@@ -360,7 +360,7 @@
                                     android:text="No Results"
                                     android:layout_centerHorizontal="true"
                                     android:layout_below="@+id/iv_no_confirm_results"
-                                    android:textColor="@color/header_grey"
+                                    android:textColor="@color/black"
                                     android:textSize="@dimen/sp_14"                                android:visibility="visible"
                                     />
                             </RelativeLayout>

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
+    local:contentInsetStart="@dimen/dp_10"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <LinearLayout

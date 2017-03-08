@@ -51,7 +51,7 @@ public class FufillerDetails_Adapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.recent_search, parent, false);
-            convertView.setBackgroundColor(Color.parseColor("#353944"));
+            convertView.setBackgroundColor(Color.parseColor("#000000"));
             mViewHolder = new MyViewHolder(convertView);
             convertView.setTag(mViewHolder);
         } else {
