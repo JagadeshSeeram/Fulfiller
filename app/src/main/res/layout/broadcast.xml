@@ -8,6 +8,70 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+android:background="@color/colorPrimary"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_gravity="center|top"
+            android:layout_weight="0.85"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/search_imv"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_gravity="center|start"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/search_bg"
+                android:gravity="center|start"
+                android:src="@drawable/ic_current_location"
+                android:padding="3dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/autocomplte_places"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:paddingLeft="@dimen/dp_10"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_weight="0.13"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/listview_imv"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:layout_gravity="center|start"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:gravity="center|start"
+                android:src="@drawable/filters"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/listview_LI"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,71 +145,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_50"
-            android:orientation="horizontal"
-
-            >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_45"
-                android:layout_gravity="center|top"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_weight="0.85"
-                android:background="@drawable/search_bg"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-
-                <ImageView
-                    android:id="@+id/search_imv"
-                    android:layout_width="@dimen/dp_25"
-                    android:layout_height="@dimen/dp_25"
-                    android:layout_gravity="center|start"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:gravity="center|start"
-                    android:src="@drawable/search_darks"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/autocomplte_places"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
-                    android:layout_gravity="center|start"
-                    android:gravity="center|start"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/spacing_small"
-                android:layout_weight="0.13"
-                android:background="@drawable/broadcast_list_icon_bg"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/listview_imv"
-                    android:layout_width="@dimen/dp_28"
-                    android:layout_height="@dimen/dp_28"
-                    android:layout_gravity="center|start"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:gravity="center|start"
-                    android:src="@drawable/list_view_whites"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/searchbar_FL"
