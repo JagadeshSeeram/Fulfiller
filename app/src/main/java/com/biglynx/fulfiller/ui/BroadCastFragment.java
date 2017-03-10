@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,7 +120,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private boolean firstTime;
     private FullFillerApiWrapper apiWrapper;
     FrameLayout maps_view;
-    LinearLayout miles_LI, viewpager_LI, pager_indicator, bac_dim_layout, listview_LI, recent_search_LI;
+    LinearLayout recent_search_LI;
+    LinearLayout miles_LI, viewpager_LI, pager_indicator, bac_dim_layout, listview_LI;
     TextView current_miles_tv, fiften_miles_tv, ten_miles_tv, five_miles_tv, two_miles_tv, companyname_tv, pickup_loc_tv, locationtype_tv, current_loc_tv,title_tv;
     ImageView current_location_tv, companylogo_imv;
     PlaceAutocompleteFragment search_ev;
@@ -140,7 +142,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     RecentSearch_Adapter recentSearchAdapter;
     AutoCompleteTextView atvPlaces;
     TextView autocomplte_places;
-    FrameLayout searchbar_FL;
+    RelativeLayout searchbar_FL;
     PlacesTask placesTask;
     ParserTask parserTask;
     List<HashMap<String, String>> googlePlacesresult;
@@ -275,7 +277,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         maps_icon.setImageResource(R.drawable.ic_map_vew_n);
         listview_LI.setVisibility(View.GONE);
         atvPlaces = (AutoCompleteTextView) v.findViewById(R.id.atv_places);
-        searchbar_FL = (FrameLayout) v.findViewById(R.id.searchbar_FL);
+        searchbar_FL = (RelativeLayout) v.findViewById(R.id.searchbar_FL);
         autocomplte_places = (TextView) v.findViewById(R.id.autocomplte_places);
         atvPlaces.setThreshold(1);
         broadCastList = new ArrayList<>();
@@ -1040,7 +1042,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             String data = "";
 
             // Obtain browser key from https://code.google.com/apis/console
-            String key = "key=AIzaSyDnvhGPDhbTPt-XkXPu7MSvisHZwuy6iHQ";
+            String key = "key=AIzaSyADZn_fB01NotqDI_rjxkBMe9_NfMXNrEw";
 
 
             String input = "";

@@ -8,70 +8,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-android:background="@color/colorPrimary"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_45"
-            android:layout_gravity="center|top"
-            android:layout_weight="0.85"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-
-            <ImageView
-                android:id="@+id/search_imv"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:background="@drawable/search_bg"
-                android:gravity="center|start"
-                android:src="@drawable/ic_current_location"
-                android:padding="3dp"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/autocomplte_places"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_gravity="center|start"
-                android:gravity="center|start"
-                android:paddingLeft="@dimen/dp_10"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_weight="0.13"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/listview_imv"
-                android:layout_width="@dimen/dp_28"
-                android:layout_height="@dimen/dp_28"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:gravity="center|start"
-                android:src="@drawable/filters"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
         android:id="@+id/listview_LI"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,7 +29,207 @@ android:background="@color/colorPrimary"
             android:dividerHeight="1dp"></ListView>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingTop="15dp"
+            android:paddingBottom="@dimen/dp_10"
+            android:weightSum="10"
+            >
 
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center|top"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_weight="9"
+                android:background="@drawable/search_bg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <ImageView
+                    android:id="@+id/search_imv"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:gravity="center|start"
+                    android:src="@drawable/ic_current_location"
+                    android:background="@drawable/search_bg"
+                    android:padding="@dimen/dp_5"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/autocomplte_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center|start"
+                    android:gravity="center|start"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/search_imv"
+                    android:singleLine="true"
+                    android:layout_toLeftOf="@+id/search_image"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:id="@+id/search_image"
+                    android:src="@drawable/search_white"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/spacing_small"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/listview_imv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/filters"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchbar_FL"
+            android:visibility="gone"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchbar_LI"
+                android:layout_gravity="center|top"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="15dp"
+                android:paddingBottom="@dimen/dp_10"
+                android:background="@drawable/search_bg"
+                >
+                <com.biglynx.fulfiller.ui.CustomAutoCompleteTextView
+                    android:id="@+id/atv_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center|start"
+                    android:gravity="center|start"
+                    android:paddingLeft="@dimen/dp_40"
+                    android:paddingRight="@dimen/dp_25"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/search_back"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center|start"
+                    android:gravity="center|start"
+                    android:src="@drawable/left_arrow_white"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/cancel_button"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center|end"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:gravity="center|end"
+                    android:src="@drawable/ic_close_dark"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="10dp"
+                android:background="#EFEFEF"
+                android:layout_below="@+id/searchbar_LI"
+                android:orientation="vertical"
+                android:id="@+id/recent_search_LI"
+                >
+
+                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center|start"
+                    android:padding="2dp"
+                    android:text="Current location"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                    android:id="@+id/current_loc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center|start"
+                    android:padding="2dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+
+                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:gravity="center|start"
+                    android:padding="2dp"
+                    android:text="Recent Searchs"
+                    android:textAllCaps="true"
+                    android:textColor="@color/header_color"
+                    android:textSize="@dimen/sp_13" />
+
+                <ListView
+                    android:id="@+id/recentlist_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"></ListView>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/maps_view"
         android:layout_width="match_parent"
@@ -132,9 +268,6 @@ android:background="@color/colorPrimary"
             android:layout_marginTop="@dimen/dp_30" />
 
         <!--dimebackground setup-->
-
-        <!--end background-->
-
         <LinearLayout
             android:id="@+id/bac_dim_layout"
             android:layout_width="match_parent"
@@ -144,115 +277,7 @@ android:background="@color/colorPrimary"
             android:visibility="gone">
 
         </LinearLayout>
-
-
-        <FrameLayout
-            android:id="@+id/searchbar_FL"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center|top"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_50"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-
-            <com.biglynx.fulfiller.ui.CustomAutoCompleteTextView
-                android:id="@+id/atv_places"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_gravity="center|start"
-                android:background="@drawable/ef_border"
-                android:gravity="center|start"
-                android:paddingLeft="@dimen/dp_40"
-                android:paddingRight="@dimen/dp_25"
-                android:singleLine="true"
-                android:textColor="@color/black"
-
-                />
-
-            <ImageView
-                android:id="@+id/search_back"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_25"
-                android:layout_gravity="center|start"
-                android:gravity="center|start"
-                android:src="@drawable/back_dark_arrow"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/cancel_button"
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
-                android:layout_gravity="center|end"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@color/white"
-                android:gravity="center|end"
-                android:src="@drawable/places_ic_clear"
-                android:visibility="visible" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/recent_search_LI"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/atv_places"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_105"
-            android:background="#EFEFEF"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_5"
-                android:gravity="center|start"
-                android:padding="2dp"
-                android:text="Current location"
-                android:textAllCaps="true"
-                android:textColor="@color/header_color"
-                android:textSize="@dimen/sp_13" />
-
-            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                android:id="@+id/current_loc_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="@dimen/dp_15"
-                android:layout_marginTop="5dp"
-                android:gravity="center|start"
-                android:padding="2dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
-
-            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_5"
-                android:gravity="center|start"
-                android:padding="2dp"
-                android:text="Recent Searchs"
-                android:textAllCaps="true"
-                android:textColor="@color/header_color"
-                android:textSize="@dimen/sp_13" />
-
-            <ListView
-                android:id="@+id/recentlist_lv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"></ListView>
-
-        </LinearLayout>
-
+        <!--end background-->
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -400,7 +425,6 @@ android:background="@color/colorPrimary"
                         android:layout_marginLeft="2dp"
                         android:background="@drawable/light_border_dim"
                         android:gravity="center"
-                        android:padding="@dimen/spacing_small"
                         android:text="5\nMiles"
                         android:textColor="#FFFFFF"
                         android:textSize="@dimen/textview_dp14" />
