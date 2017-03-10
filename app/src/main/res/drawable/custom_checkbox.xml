@@ -4,5 +4,5 @@
         android:drawable="@drawable/ic_check_box_black" />
     <item android:state_pressed="true"
         android:drawable="@drawable/ic_check_box_black" />
-    <item android:drawable="@drawable/checkbox" />
+    <item android:drawable="@drawable/ic_check_box_outline_blank_black" />
 </selector>
