@@ -53,6 +53,7 @@
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/white"
                         />
 
                     <ImageView
@@ -61,7 +62,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_5"
-                        android:src="@drawable/com_facebook_button_icon_blue"                        />
+                        android:src="@drawable/ic_fb_login"
+                        />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -599,7 +601,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/policies"
                     android:textColor="@color/header_color"
-                    android:textSize="@dimen/sp_13"
+                    android:textSize="@dimen/sp_11"
                     android:gravity="center"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"

@@ -38,6 +38,7 @@
             android:layout_weight="0.5"
             android:gravity="center|right"
             android:id="@+id/fulfiller_profile_info_LI"
+            android:layout_marginRight="@dimen/dp_5"
             android:orientation="horizontal">
 
             <LinearLayout

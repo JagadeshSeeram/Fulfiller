@@ -64,7 +64,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="center|start"
-                    android:src="@drawable/ic_current_location"
+                    android:src="@drawable/ic_current_location_new"
                     android:background="@drawable/search_bg"
                     android:padding="@dimen/dp_5"
                     android:visibility="visible" />
@@ -299,9 +299,9 @@
                     android:layout_gravity="center|end"
                     android:background="@drawable/light_border_dim"
                     android:gravity="center"
-                    android:padding="@dimen/dp_10"
+                    android:padding="@dimen/spacing_small"
                     android:layout_marginBottom="@dimen/dp_10"
-                    android:src="@drawable/refresh_white" />
+                    android:src="@drawable/refresh_white_new" />
 
                 <ImageView
                     android:id="@+id/current_location_tv"
@@ -312,7 +312,7 @@
                     android:gravity="center"
                     android:padding="@dimen/spacing_small"
                     android:layout_marginBottom="@dimen/dp_10"
-                    android:src="@drawable/ic_current_location" />
+                    android:src="@drawable/ic_current_location_new" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

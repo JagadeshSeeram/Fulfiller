@@ -39,11 +39,12 @@
         <com.biglynx.fulfiller.fonts.CustomFontMedium
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Please use Desktop to upload documents other than image format like PDF"
+            android:text="Please use Desktop to upload documents other than image format like PDF"
             android:textColor="@color/dialog_text"
             android:layout_gravity="center|start"
             android:textSize="@dimen/sp_13"
             android:gravity="center|start"
+            android:paddingLeft="2dp"
             android:id="@+id/customFontMedium2">
 
         </com.biglynx.fulfiller.fonts.CustomFontMedium>
@@ -62,7 +63,7 @@
             android:layout_weight="3"
             android:layout_height="@dimen/dp_80"
             android:id="@+id/camera_imv"
-            android:src="@drawable/camera_ic"/>
+            android:src="@drawable/ic_cam_new"/>
 
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:layout_width="0dp"
@@ -81,7 +82,7 @@
             android:layout_weight="3"
             android:layout_height="80dp"
             android:id="@+id/gallery_Imv"
-            android:src="@drawable/ic_gallery_n"/>
+            android:src="@drawable/ic_gallery_new"/>
 
     </LinearLayout>
 

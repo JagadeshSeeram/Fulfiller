@@ -166,20 +166,24 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="10dp">
-
-                    <ImageView
+                    <LinearLayout
+                        android:layout_width="45dp"
+                        android:layout_height="27dp"
                         android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="start"
-                        android:src="@drawable/small_cab" />
+                        >
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:gravity="start"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_ready_to_fulfill_orders" />
+                    </LinearLayout>
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:gravity="start"
                         android:layout_toRightOf="@+id/imageView2"
                         android:layout_toLeftOf="@+id/Switch"
@@ -201,6 +205,7 @@
                         android:layout_weight="0.11"
                         android:background="@android:color/transparent"
                         android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/colorPrimary"
                         android:textOff=""
                         android:textOn="" />
@@ -276,8 +281,8 @@
                                     android:layout_marginTop="20dp"
                                     android:gravity="center"
                                     android:text="No Results"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/sp_14"
+                                    android:textColor="@color/header_color"
+                                    android:textSize="@dimen/sp_18"
                                     android:layout_below="@+id/iv_no_wait_results"
                                     android:layout_centerHorizontal="true"
                                     />
@@ -361,7 +366,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_below="@+id/iv_no_confirm_results"
                                     android:textColor="@color/black"
-                                    android:textSize="@dimen/sp_14"                                android:visibility="visible"
+                                    android:textSize="@dimen/sp_18"
                                     />
                             </RelativeLayout>
 
