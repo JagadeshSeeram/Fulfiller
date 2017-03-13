@@ -108,6 +108,7 @@
                             android:textColorHint="@color/black"
                             android:textSize="@dimen/sp_14"
                             android:background="@drawable/login_edit_text_bg"
+                            android:inputType="textEmailAddress"
                             />
 
                         <com.biglynx.fulfiller.utils.EditTextFontLight

@@ -37,16 +37,13 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingTop="15dp"
-            android:paddingBottom="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:weightSum="10"
             >
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center|top"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_weight="9"
@@ -58,14 +55,14 @@
 
                 <ImageView
                     android:id="@+id/search_imv"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="center|start"
-                    android:src="@drawable/ic_current_location_new"
-                    android:background="@drawable/search_bg"
+                    android:src="@drawable/ic_current_location"
+                    android:background="@drawable/current_location_bg"
                     android:padding="@dimen/dp_5"
                     android:visibility="visible" />
 
@@ -81,7 +78,7 @@
                     android:singleLine="true"
                     android:layout_toLeftOf="@+id/search_image"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_12" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_25"
@@ -107,7 +104,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/filters"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    />
 
             </LinearLayout>
 
@@ -129,19 +127,21 @@
                 android:paddingRight="@dimen/dp_10"
                 android:paddingTop="15dp"
                 android:paddingBottom="@dimen/dp_10"
-                android:background="@drawable/search_bg"
+                android:background="@color/colorPrimary"
                 >
                 <com.biglynx.fulfiller.ui.CustomAutoCompleteTextView
                     android:id="@+id/atv_places"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_40"
                     android:layout_gravity="center|start"
                     android:gravity="center|start"
                     android:paddingLeft="@dimen/dp_40"
                     android:paddingRight="@dimen/dp_25"
                     android:singleLine="true"
                     android:textColor="@color/white"
-
+                    android:textSize="@dimen/sp_12"
+                    android:background="@drawable/editext_bottom"
+                    android:textCursorDrawable="@null"
                     />
 
                 <ImageView
@@ -227,7 +227,6 @@
 
             </LinearLayout>
         </RelativeLayout>
-
 
     </RelativeLayout>
     <FrameLayout
