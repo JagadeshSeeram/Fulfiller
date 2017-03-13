@@ -78,7 +78,7 @@
                     android:singleLine="true"
                     android:layout_toLeftOf="@+id/search_image"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_14" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_25"
@@ -139,7 +139,7 @@
                     android:paddingRight="@dimen/dp_25"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     android:background="@drawable/editext_bottom"
                     android:textCursorDrawable="@null"
                     />

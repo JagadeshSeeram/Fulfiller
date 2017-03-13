@@ -24,9 +24,8 @@ android {
         config {
             keyAlias 'biglynx'
             keyPassword 'biglynx'
-//            storeFile file('E:/Biglynx Android Projects/fulfiller/appstore/keystore.jks')
             storePassword 'biglynx'
-            storeFile file('D:/Fulfiller/fulfiller/appstore/keystore.jks')
+            storeFile file('D:/MyProjects/Fulfiller/appstore/keystore.jks')
         }
     }
     dexOptions {
@@ -62,7 +61,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
-
     compile 'com.android.support:appcompat-v7:24.1.0'
     compile 'com.android.support:design:24.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
