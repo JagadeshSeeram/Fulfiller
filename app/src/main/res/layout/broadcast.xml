@@ -78,6 +78,8 @@
                     android:singleLine="true"
                     android:layout_toLeftOf="@+id/search_image"
                     android:textColor="@color/white"
+                    android:hint="Search for location"
+                    android:textColorHint="@color/white"
                     android:textSize="@dimen/sp_14" />
 
                 <ImageView

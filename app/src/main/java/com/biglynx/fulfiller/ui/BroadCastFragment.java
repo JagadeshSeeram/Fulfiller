@@ -159,6 +159,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.black));
+        }
         if (v != null) {
             ViewGroup parent = (ViewGroup) v.getParent();
             if (parent != null)

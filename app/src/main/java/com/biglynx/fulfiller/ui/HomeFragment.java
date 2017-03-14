@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
@@ -149,6 +150,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
+        }
         View v = inflater.inflate(R.layout.homeactivity, container, false);
         showNoticeDialog();
 
@@ -283,7 +287,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .create();
-        alertDialog.setCancelable(false);
+        //alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         /*try {
