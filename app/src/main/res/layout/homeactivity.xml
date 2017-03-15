@@ -272,7 +272,7 @@
                                     android:src="@drawable/ic_no_results"
                                     android:id="@+id/iv_no_wait_results"
                                     />
-                                <com.biglynx.fulfiller.fonts.CustomFontBold
+                                <com.biglynx.fulfiller.fonts.CustomFontRegular
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:id="@+id/noitems_wait_tv"
@@ -351,10 +351,11 @@
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"                                    android:src="@drawable/ic_no_results"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_no_results"
                                     android:id="@+id/iv_no_confirm_results"
                                     />
-                                <com.biglynx.fulfiller.fonts.CustomFontBold
+                                <com.biglynx.fulfiller.fonts.CustomFontRegular
                                     android:id="@+id/noitems_confirm_tv"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"

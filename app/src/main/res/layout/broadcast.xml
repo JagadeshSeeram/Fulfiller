@@ -61,7 +61,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="center|start"
-                    android:src="@drawable/ic_current_location"
+                    android:src="@drawable/ic_current_location_new"
                     android:background="@drawable/current_location_bg"
                     android:padding="@dimen/dp_5"
                     android:visibility="visible" />

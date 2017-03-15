@@ -142,7 +142,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     RecentSearch_Adapter recentSearchAdapter;
     AutoCompleteTextView atvPlaces;
     TextView autocomplte_places;
-    RelativeLayout searchbar_FL;
+    FrameLayout searchbar_FL;
     PlacesTask placesTask;
     ParserTask parserTask;
     List<HashMap<String, String>> googlePlacesresult;
@@ -169,7 +169,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         }
 //        View v = inflater.inflate(R.layout.broadcast, container, false);
         try {
-            v = inflater.inflate(R.layout.broadcast, container, false);
+            v = inflater.inflate(R.layout.broadcast_new, container, false);
         } catch (InflateException e) {
 //         map is already there, just return view as it is
         }
@@ -280,7 +280,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         maps_icon.setImageResource(R.drawable.ic_map_vew_n);
         listview_LI.setVisibility(View.GONE);
         atvPlaces = (AutoCompleteTextView) v.findViewById(R.id.atv_places);
-        searchbar_FL = (RelativeLayout) v.findViewById(R.id.searchbar_FL);
+        searchbar_FL = (FrameLayout) v.findViewById(R.id.searchbar_FL);
         autocomplte_places = (TextView) v.findViewById(R.id.autocomplte_places);
         atvPlaces.setThreshold(1);
         broadCastList = new ArrayList<>();
@@ -767,6 +767,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 bac_dim_layout.setVisibility(View.GONE);
                 recentlist_lv.setVisibility(View.GONE);
                 searchbar_FL.setVisibility(View.GONE);
+                if (recent_search_LI.isShown())
+                    recent_search_LI.setVisibility(View.GONE);
                 break;
 
             case R.id.cancel_button:
@@ -1045,7 +1047,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             String data = "";
 
             // Obtain browser key from https://code.google.com/apis/console
-            String key = "key=AIzaSyADZn_fB01NotqDI_rjxkBMe9_NfMXNrEw";
+            String key = "key=AIzaSyDnvhGPDhbTPt-XkXPu7MSvisHZwuy6iHQ";
 
 
             String input = "";
