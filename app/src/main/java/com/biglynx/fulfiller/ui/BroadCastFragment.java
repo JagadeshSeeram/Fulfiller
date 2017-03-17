@@ -251,6 +251,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         search_back = (ImageView) v.findViewById(R.id.search_back);
         cancel_button = (ImageView) v.findViewById(R.id.cancel_button);
         maps_icon = (ImageView) v.findViewById(R.id.icon_back);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(20,0,0,0);
+        maps_icon.setLayoutParams(layoutParams);
         list_icon = (ImageView) v.findViewById(R.id.listview_imv);
         maps_icon.setVisibility(View.VISIBLE);
         list_icon.setVisibility(View.VISIBLE);
@@ -336,6 +339,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 atvPlaces.clearFocus();
                 bac_dim_layout.setVisibility(View.GONE);
                 recentlist_lv.setVisibility(View.GONE);
+                recent_search_LI.setVisibility(View.GONE);
                 searchbar_FL.setVisibility(View.GONE);
 
                 //Toast.makeText(getActivity(), " selected "+googlePlacesresult.get(pos).get("description"), Toast.LENGTH_LONG).show();
@@ -449,23 +453,36 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void checkTheExpressedFullfilments() {
+
         if (MyApplication.getInstance().dasBoardListCall != null && MyApplication.getInstance().dasBoardListCall.size() > 0) {
             if (broadCastList != null) {
-                for (BroadCast broadCast : broadCastList) {
-                    if (broadCast.Fulfillments != null && broadCast.Fulfillments.size() > 0) {
+                for (BroadCast broadCastModel : broadCastList) {
+                    if (broadCastModel.Fulfillments != null && broadCastModel.Fulfillments.size() > 0) {
                         boolean isExpressed = true;
-                        for (FulfillersDTO fulfillersDTO : broadCast.Fulfillments) {
+                        for (FulfillersDTO fulfillersDTO : broadCastModel.Fulfillments) {
                             for (FulfillersDTO homeFulFiller : MyApplication.getInstance().dasBoardListCall) {
-                                if (fulfillersDTO.FulfillmentId.equals(homeFulFiller.FulfillmentId) && !homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
-                                    isExpressed = false;
-                                    break;
+                                if (fulfillersDTO.FulfillmentId.equals(homeFulFiller.FulfillmentId)) {
+                                    if (!homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
+                                        isExpressed = false;
+                                        break;
+                                    }
+                                    if (homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
+                                        //matched and expressed
+                                        int pos = broadCastList.indexOf(broadCastModel);
+                                        broadCastList.get(pos).isExpressed = true;
+                                    }
                                 }
                             }
                             if (!isExpressed) {
                                 break;
                             }
                         }
-                        broadCast.isExpressed = isExpressed;
+                        //broadCastModel.isExpressed = isExpressed;
+                        int pos = broadCastList.indexOf(broadCastModel);
+                        if (broadCastList.get(pos).isExpressed) {
+                            broadCastModel.isExpressed = isExpressed;
+                            broadCastList.get(pos).isExpressed = broadCastModel.isExpressed;
+                        }
                     }
                 }
             }
@@ -1047,7 +1064,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             String data = "";
 
             // Obtain browser key from https://code.google.com/apis/console
-            String key = "key=AIzaSyDnvhGPDhbTPt-XkXPu7MSvisHZwuy6iHQ";
+            String key = "key=AIzaSyADZn_fB01NotqDI_rjxkBMe9_NfMXNrEw";
 
 
             String input = "";

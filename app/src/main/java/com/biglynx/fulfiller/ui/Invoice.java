@@ -26,6 +26,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.Date;
@@ -69,9 +70,12 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice);
 
-        broadCast = getIntent().getParcelableExtra("broadCast");
-        positon = getIntent().getIntExtra("position", 1);
-        bidamount = getIntent().getStringExtra("bidamount");
+        if (getIntent().getExtras() != null) {
+            broadCast = getIntent().getParcelableExtra("broadCast");
+            positon = getIntent().getIntExtra("position", 1);
+            bidamount = getIntent().getStringExtra("bidamount");
+        }
+        apiWrapper = new FullFillerApiWrapper();
         titlebar = (TextView) findViewById(R.id.companyname_tv);
         titlebar.setText("BROADCAST INTEREST");
         icon_back = (ImageView) findViewById(R.id.icon_back);
@@ -95,7 +99,21 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
         submit_btn.setOnClickListener(this);
+
+        buildUi();
+        /*
+        if(Common.isNetworkAvailable(this)){
+            HttpAdapter.broadCast(this,"fulfillments");
+        }*/
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    private void buildUi() {
         companyname_tv.setText(broadCast.BusinessLegalName);
+        Picasso.with(Invoice.this).load(broadCast.CompanyLogo)
+                .error(R.drawable.ic_your_company_logo).into(companylogo_imv);
         pickup_loc_tv.setText(broadCast.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
                 broadCast.RetailerLocationAddress.RetailerLocationAddress.City + "," + broadCast.RetailerLocationAddress.RetailerLocationAddress.CountryName);
         // pricetype_tv.setText(broadCast.Fulfillments.get(positon).PriceType);
@@ -131,15 +149,6 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
             totalpay_tv.setText("$ " +  AppUtil.getTwoDecimals(subtotals - value));
             finalAmount = subtotals - value;
         }
-
-
-/*
-        if(Common.isNetworkAvailable(this)){
-            HttpAdapter.broadCast(this,"fulfillments");
-        }*/
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -167,7 +176,6 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
                 }
 
                 Common.showDialog(Invoice.this);
-                apiWrapper = new FullFillerApiWrapper();
 
                 HashMap hashMap = new HashMap<>();
                 hashMap.put("FulfillmentId", broadCast != null ? broadCast.Fulfillments.get(positon).FulfillmentId : "");

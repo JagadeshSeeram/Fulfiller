@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
+    local:contentInsetStart="10dp"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <LinearLayout
@@ -17,7 +18,7 @@
         <LinearLayout
             android:id="@+id/LL_icon_back"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_weight="1.5"
             android:gravity="center">
 
@@ -27,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:src="@drawable/ic_ab_back"
-                android:visibility="gone" />
+                android:scaleType="fitStart"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout

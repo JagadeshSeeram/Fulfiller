@@ -21,9 +21,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="technical_error">Server Error, Try again</string>
 
-    <string name="fbid">582259081955868</string>
-    <string name="google_apikey">AIzaSyDZfE1ERCbDdoW0_ZAUUBbbaQ9itnQrptA</string>
-    <string name="oauth2_client_id">684384173280-t5njkeqg3oma7v7eoaupr7qrgl1i6900.apps.googleusercontent.com</string>
+    <string name="fbid">905986182864867</string>
+    <string name="google_apikey">AIzaSyDV99UNmtLmw_VW0hqQr1tq_ituc_MIsYc</string>
+    <string name="oauth2_client_id">55470930292-9ussmff0kkbfjjab1ldaicf7leucf4t8.apps.googleusercontent.com</string>
 
     <string name="busniessname">Business Name</string>
     <string name="contactname">Contact Person</string>

@@ -806,14 +806,14 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                             }else {
                                 AppUtil.toast(LoginActivity.this,"The response is empty");
                             }
-                        } else {
+                        } /*else {
                             try {
-                                AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
+                                //AppUtil.parseErrorMessage(LoginActivity.this, response.errorBody().string());
                             } catch (IOException e) {
                                 AppUtil.toast(LoginActivity.this, OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
-                        }
+                        }*/
                         Common.disMissDialog();
                     }
 

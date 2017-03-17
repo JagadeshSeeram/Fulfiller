@@ -359,7 +359,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         if (TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
             return true;
         else if (!AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")
-                .equalsIgnoreCase("active"))
+                .equalsIgnoreCase("activated"))
             return true;
         else
             return false;
