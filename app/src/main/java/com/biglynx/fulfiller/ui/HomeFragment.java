@@ -287,7 +287,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .create();
-        //alertDialog.setCancelable(false);
+        alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
         /*try {
