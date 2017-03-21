@@ -122,7 +122,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     FrameLayout maps_view;
     LinearLayout recent_search_LI;
     LinearLayout miles_LI, viewpager_LI, pager_indicator, bac_dim_layout, listview_LI;
-    TextView current_miles_tv, fiften_miles_tv, ten_miles_tv, five_miles_tv, two_miles_tv, companyname_tv, pickup_loc_tv, locationtype_tv, current_loc_tv,title_tv;
+    TextView current_miles_tv, fiften_miles_tv, ten_miles_tv, five_miles_tv, two_miles_tv, companyname_tv, pickup_loc_tv, locationtype_tv, current_loc_tv, title_tv;
     ImageView current_location_tv, companylogo_imv;
     PlaceAutocompleteFragment search_ev;
     boolean search_loc = false, locaton_show = false;
@@ -136,7 +136,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private int dotsCount;
     private ImageView[] dots;
 
-    String usermarkerId = "null";
+    Marker usermarker;
     ListView recentlist_lv, listview_lv;
     DBHelper dbHelper;
     RecentSearch_Adapter recentSearchAdapter;
@@ -155,12 +155,15 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private Animation animation_slide_up;
     private View v;
     private CircleIndicator circularIndicator;
+    private static final String CURRENT_POSTION = "Current Position";
+    private static final String RETAILER_POSTION = "Retailer Position";
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= 21) {
-            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.black));
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.black));
         }
         if (v != null) {
             ViewGroup parent = (ViewGroup) v.getParent();
@@ -252,7 +255,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         cancel_button = (ImageView) v.findViewById(R.id.cancel_button);
         maps_icon = (ImageView) v.findViewById(R.id.icon_back);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(20,0,0,0);
+        layoutParams.setMargins(20, 0, 0, 0);
         maps_icon.setLayoutParams(layoutParams);
         list_icon = (ImageView) v.findViewById(R.id.listview_imv);
         maps_icon.setVisibility(View.VISIBLE);
@@ -455,38 +458,69 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private void checkTheExpressedFullfilments() {
 
         if (MyApplication.getInstance().dasBoardListCall != null && MyApplication.getInstance().dasBoardListCall.size() > 0) {
+            List<FulfillersDTO> homeFulFillmntList = MyApplication.getInstance().dasBoardListCall;
+            if (broadCastList != null) {
+                for (int i = 0; i < broadCastList.size(); i++) {
+                    boolean isMatching = false;
+                    BroadCast broadCastFulfillmnt = broadCastList.get(i);
+                    for (int j = 0; j < broadCastFulfillmnt.Fulfillments.size(); j++) {
+                        FulfillersDTO broadcastDTO = broadCastFulfillmnt.Fulfillments.get(j);
+                        for (int k = 0; k < homeFulFillmntList.size(); k++) {
+                            FulfillersDTO homeDTO = homeFulFillmntList.get(k);
+                            if (homeDTO.FulfillmentId.equals(broadcastDTO.FulfillmentId)) {
+                                isMatching = true;
+                                break;
+                            }
+                        }
+                        if (isMatching) {
+                            broadCastList.get(i).isExpressed = isMatching;
+                            break;
+                        }
+                    }
+                }
+
+                boolean containsmatchingFulfillmnts = false;
+                for (BroadCast broadCast : broadCastList) {
+                    if (broadCast.isExpressed) {
+                        containsmatchingFulfillmnts = true;
+                        break;
+                    }
+                }
+                if (containsmatchingFulfillmnts)
+                    setExpressedStatus();
+            }
+        }
+    }
+
+    private void setExpressedStatus() {
+        if (MyApplication.getInstance().dasBoardListCall != null && MyApplication.getInstance().dasBoardListCall.size() > 0) {
             if (broadCastList != null) {
                 for (BroadCast broadCastModel : broadCastList) {
                     if (broadCastModel.Fulfillments != null && broadCastModel.Fulfillments.size() > 0) {
                         boolean isExpressed = true;
                         for (FulfillersDTO fulfillersDTO : broadCastModel.Fulfillments) {
                             for (FulfillersDTO homeFulFiller : MyApplication.getInstance().dasBoardListCall) {
-                                if (fulfillersDTO.FulfillmentId.equals(homeFulFiller.FulfillmentId)) {
-                                    if (!homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
-                                        isExpressed = false;
-                                        break;
-                                    }
-                                    if (homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
-                                        //matched and expressed
-                                        int pos = broadCastList.indexOf(broadCastModel);
-                                        broadCastList.get(pos).isExpressed = true;
-                                    }
+                                if (fulfillersDTO.FulfillmentId.equals(homeFulFiller.FulfillmentId) &&
+                                        !homeFulFiller.Status.equalsIgnoreCase("Expressed")) {
+                                    isExpressed = false;
+                                    break;
                                 }
                             }
                             if (!isExpressed) {
                                 break;
                             }
                         }
-                        //broadCastModel.isExpressed = isExpressed;
-                        int pos = broadCastList.indexOf(broadCastModel);
-                        if (broadCastList.get(pos).isExpressed) {
-                            broadCastModel.isExpressed = isExpressed;
-                            broadCastList.get(pos).isExpressed = broadCastModel.isExpressed;
+                        if (!isExpressed) {
+                            int pos = broadCastList.indexOf(broadCastModel);
+                            broadCastList.get(pos).isExpressed = isExpressed;
                         }
                     }
+
                 }
             }
+
         }
+
     }
 
     /**
@@ -572,6 +606,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             drawCircle(latLng);
             firstTime = true;
         }
+
         addMarker(mCurrentLastLocation);
         getAddress(mCurrentLastLocation, false);
     }
@@ -585,7 +620,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Current Position");
+        markerOptions.title(CURRENT_POSTION);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
     }
@@ -887,7 +922,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if (usermarkerId.equals(marker.getId())) {
+
+        if (marker.getTitle().equals(CURRENT_POSTION)) {
             return true;
         } else {
             if (markervalues == null || markervalues.size() == 0)
@@ -909,7 +945,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 companyname_tv.setText(broadCastList.get(markervalues.get(marker.getId())).BusinessLegalName);
                 pickup_loc_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
                         broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.City + ", " +
-                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.State+", "+
+                        broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.State + ", " +
                         broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.RetailerLocationAddress.CountryName);
 
                 locationtype_tv.setText(broadCastList.get(markervalues.get(marker.getId())).RetailerLocationAddress.LocationType);
@@ -943,6 +979,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         Marker marker1 = gMap.addMarker(new MarkerOptions()
                 .position(new LatLng(Double.parseDouble(broadCast.RetailerLocationAddress.RetailerLocationAddress.Latitude),
                         Double.parseDouble(broadCast.RetailerLocationAddress.RetailerLocationAddress.Longitude)))
+                .title(RETAILER_POSTION)
                 .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(MyApplication.getInstance(), marker))));
         //Log.d("marker values"+marker1.getId(),""+broadCast.RetailerId);
         markervalues.put(marker1.getId(), i);
@@ -1226,20 +1263,24 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         protected Address doInBackground(Void... none) {
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            List<Address> addresses = null;
+            if (isVisible()) {
+                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                List<Address> addresses = null;
 
-            try {
-                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            } catch (IOException ioException) {
-            } catch (IllegalArgumentException illegalArgumentException) {
+                try {
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                } catch (IOException ioException) {
+                } catch (IllegalArgumentException illegalArgumentException) {
+                }
+                if (addresses != null && addresses.size() > 0)
+                    return addresses.get(0);
             }
-            if (addresses != null && addresses.size() > 0)
-                return addresses.get(0);
             return null;
         }
 
         protected void onPostExecute(Address address) {
+            if (!isVisible())
+                return;
             if (address != null) {
                 if (isCurrent) {
                     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());

@@ -23,7 +23,7 @@ public class BroadCast implements Parcelable {
     public List<FulfillersDTO> Fulfillments;
     public RetailerLocationAddress RetailerLocationAddress;
     public FulfillerInterests FulfillerInterests;
-    public boolean isExpressed;
+    public boolean isExpressed = false;
 
 
     public BroadCast(String ids,String s, String s1, String test1, String s2) {
