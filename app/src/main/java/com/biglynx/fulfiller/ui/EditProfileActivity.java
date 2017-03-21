@@ -425,6 +425,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             Common.disMissDialog();
             //  finish();
             try {
+                if (responseString == null || responseString.length() == 0) {
+                    AppUtil.toast(EditProfileActivity.this, OOPS_SOMETHING_WENT_WRONG);
+                    return;
+                }
                 JSONArray result = new JSONArray(responseString);
                 for (int i = 0; i < result.length(); i++) {
                     JSONObject jsonObject = result.getJSONObject(i);

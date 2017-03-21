@@ -602,6 +602,10 @@ public class AddVehicle extends AppCompatActivity implements View.OnClickListene
             Common.disMissDialog();
             //  finish();
             try {
+                if (responseString == null || responseString.length() == 0) {
+                    AppUtil.toast(AddVehicle.this, OOPS_SOMETHING_WENT_WRONG);
+                    return;
+                }
                 JSONArray result = new JSONArray(responseString);
                 for (int i = 0; i < result.length(); i++) {
                     JSONObject jsonObject = result.getJSONObject(i);
@@ -622,7 +626,5 @@ public class AddVehicle extends AppCompatActivity implements View.OnClickListene
             }
             ad.cancel();
         }
-
     }
-
 }
