@@ -1,5 +1,7 @@
 package com.biglynx.fulfiller.network;
 
+import android.text.TextUtils;
+
 import com.biglynx.fulfiller.models.AccountConfigModel;
 import com.biglynx.fulfiller.models.BroadCast;
 import com.biglynx.fulfiller.models.FulfillerInterests;
@@ -133,7 +135,7 @@ public class FullFillerApiWrapper {
                 .editProfileInSettings(url, hashMap.get("BusinessLegalName"), hashMap.get("FirstName"),
                         hashMap.get("Email"), hashMap.get("AddressLine1"),
                         hashMap.get("City"), hashMap.get("State"),
-                        hashMap.get("Country"),hashMap.get("Phone"),
+                        hashMap.get("Country"), hashMap.get("Phone"),
                         hashMap.get("BlobId"));
         profileModelCall.enqueue(callback);
         //Log.d("URLS", profileModelCall.request().url().toString());
@@ -219,9 +221,9 @@ public class FullFillerApiWrapper {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(configModel.Fulfillerid,configModel.BankName,configModel.AccountType,
-                configModel.AccountNumber,configModel.RoutingNumber,
-                configModel.AccountName,configModel.Status);
+        Call<AccountConfigModel> call = fullFillerApiHeader.accountConfiguration(configModel.Fulfillerid, configModel.BankName, configModel.AccountType,
+                configModel.AccountNumber, configModel.RoutingNumber,
+                configModel.AccountName, configModel.Status);
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
@@ -238,21 +240,32 @@ public class FullFillerApiWrapper {
     }
 
     public Call<InterestDTO> startDeliveryCall(final String authToken, HashMap<String, Object> hashMap, Callback<InterestDTO> callback) {
-        if (fullFillerApiHeader == null) {
-            createRetrofitWithHeader(authToken);
-        }
-        Call<InterestDTO> call = fullFillerApiHeader.startDelivery(hashMap.get("fulfillerid"), hashMap.get("confirmationcode"), hashMap.get("name"),
-                hashMap.get("latitude"), hashMap.get("longitude"), hashMap.get("deviceid"));
+        Call<InterestDTO> call = null;
+        if (!TextUtils.isEmpty(authToken)) {
+            if (fullFillerApiHeader == null) {
+                createRetrofitWithHeader(authToken);
+            }
+            call = fullFillerApiHeader.startDelivery(hashMap.get("fulfillerid"), hashMap.get("confirmationcode"), hashMap.get("name"),
+                    hashMap.get("latitude"), hashMap.get("longitude"), hashMap.get("deviceid"));
+        } else
+            call = fullFillerApi.startDelivery(hashMap.get("fulfillerid"), hashMap.get("confirmationcode"), hashMap.get("name"),
+                    hashMap.get("latitude"), hashMap.get("longitude"), hashMap.get("deviceid"));
+
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
     }
 
     public Call<List<MessagesModel>> getAllMessagesCall(final String authToken, String FulFillmentId, Callback<List<MessagesModel>> callback) {
-        if (fullFillerApiHeader == null) {
-            createRetrofitWithHeader(authToken);
-        }
-        Call<List<MessagesModel>> call = fullFillerApiHeader.getAllMessages(FulFillmentId);
+        Call<List<MessagesModel>> call = null;
+        if (!TextUtils.isEmpty(authToken)) {
+            if (fullFillerApiHeader == null) {
+                createRetrofitWithHeader(authToken);
+            }
+            call = fullFillerApiHeader.getAllMessages(FulFillmentId);
+        } else
+            call = fullFillerApi.getAllMessages(FulFillmentId);
+
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
@@ -260,10 +273,15 @@ public class FullFillerApiWrapper {
 
     public Call<List<MessagesModel>> postFulfillerMessagesCall(final String authToken, HashMap<String, Object> hashMap,
                                                                Callback<List<MessagesModel>> callback) {
-        if (fullFillerApiHeader == null) {
-            createRetrofitWithHeader(authToken);
-        }
-        Call<List<MessagesModel>> call = fullFillerApiHeader.postFulFillerMessages(hashMap);
+        Call<List<MessagesModel>> call = null;
+        if (!TextUtils.isEmpty(authToken)) {
+            if (fullFillerApiHeader == null) {
+                createRetrofitWithHeader(authToken);
+            }
+            call = fullFillerApiHeader.postFulFillerMessages(hashMap);
+        } else
+            call = fullFillerApi.postFulFillerMessages(hashMap);
+
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
@@ -271,10 +289,15 @@ public class FullFillerApiWrapper {
 
     public Call<InterestDTO> updateDeliverYStatusCall(final String authToken,
                                                       HashMap<String, Object> hashMap, Callback<InterestDTO> callback) {
-        if (fullFillerApiHeader == null) {
-            createRetrofitWithHeader(authToken);
-        }
-        Call<InterestDTO> call = fullFillerApiHeader.updateDeliveryStatus(hashMap);
+        Call<InterestDTO> call = null;
+        if (!TextUtils.isEmpty(authToken)) {
+            if (fullFillerApiHeader == null) {
+                createRetrofitWithHeader(authToken);
+            }
+            call = fullFillerApiHeader.updateDeliveryStatus(hashMap);
+        } else
+            call = fullFillerApi.updateDeliveryStatus(hashMap);
+
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
@@ -355,7 +378,7 @@ public class FullFillerApiWrapper {
     }
 
     public Call<FulfillerInterests> cancelInterest(String authToken, String fulfillerInterestId,
-                                         Callback<FulfillerInterests> callback) {
+                                                   Callback<FulfillerInterests> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }

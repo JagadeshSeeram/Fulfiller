@@ -299,7 +299,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
-
+                            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
                             AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                     }
@@ -353,7 +353,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
-                            AppUtil.CheckErrorCode(StartDelivery.this, response.code());
+                            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
+                                AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                         Common.disMissDialog();
                     }
@@ -851,7 +852,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                                 e.printStackTrace();
                             }
-
+                            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
                             AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                     }
@@ -898,6 +899,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                             } catch (IOException e) {
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                             }
+                            if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
                             AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
 
