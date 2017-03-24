@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
             return;
         }
-        String fulfillerID = AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+        /*String fulfillerID = AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                 AppPreferences.getInstance(getActivity()).getSignInResult().optString("FulfillerId") : "";
         String userType = "";
         if (AppPreferences.getInstance(getActivity()).getSignInResult() != null) {
@@ -315,14 +315,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 userType = HttpAdapter.RESEND_ACTIVATION_MAIL_DRIVER;
             else
                 userType = HttpAdapter.RESEND_ACTIVATION_MAIL_PARTNER;
-        }
+        }*/
         if (alertDialog != null && alertDialog.isShowing())
             alertDialog.dismiss();
 
         Common.showDialog(getActivity());
         apiWrapper.resendActivationCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
-                userType, fulfillerID,
                 new Callback<SignInResult>() {
                     @Override
                     public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
