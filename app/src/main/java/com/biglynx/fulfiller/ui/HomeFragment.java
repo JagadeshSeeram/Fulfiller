@@ -322,9 +322,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         Common.showDialog(getActivity());
         apiWrapper.resendActivationCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
-                new Callback<SignInResult>() {
+                new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<SignInResult> call, Response<SignInResult> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Log.e(TAG, "resend Activation Successful");
                         } else {
@@ -344,7 +344,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                     }
 
                     @Override
-                    public void onFailure(Call<SignInResult> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         Log.e(TAG, "resend Activation error");
                         AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
                         if (alertDialog != null && !alertDialog.isShowing())

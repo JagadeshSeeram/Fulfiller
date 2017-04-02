@@ -388,12 +388,12 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<SignInResult> resendActivationCall(String authToken,
-                                                   Callback<SignInResult> callback) {
+    public Call<Void> resendActivationCall(String authToken,
+                                                   Callback<Void> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<SignInResult> call = fullFillerApiHeader.resendActivationMail();
+        Call<Void> call = fullFillerApiHeader.resendActivationMail();
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;

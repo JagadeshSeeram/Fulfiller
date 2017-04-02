@@ -132,6 +132,6 @@ public interface FullFillerApi {
     Call<FulfillerInterests> cancelInterest(@Field("FulfillerInterestId") String fulfillerInterestId);
 
     @GET(HttpAdapter.RESEND_ACTIVATION_MAIL)
-    Call<SignInResult> resendActivationMail();
+    Call<Void> resendActivationMail();
 
 }
