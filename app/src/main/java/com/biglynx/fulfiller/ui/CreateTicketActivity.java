@@ -163,11 +163,11 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
 
         apiWrapper.createTicketCall(AppPreferences.getInstance(this).getSignInResult() != null ?
                         AppPreferences.getInstance(this).getSignInResult().optString("AuthNToken") : "",
-                hashMap, new Callback<SupportCategoryModel>() {
+                hashMap, new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<SupportCategoryModel> call, Response<SupportCategoryModel> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()){
-                            SupportCategoryModel categoryModel = response.body();
+                            //SupportCategoryModel categoryModel = response.body();
                             AppUtil.toast(CreateTicketActivity.this,"Ticket created Successfully.");
                             finish();
                         }else {
@@ -183,7 +183,7 @@ public class CreateTicketActivity extends AppCompatActivity implements View.OnCl
                     }
 
                     @Override
-                    public void onFailure(Call<SupportCategoryModel> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         Common.disMissDialog();
                         AppUtil.toast(CreateTicketActivity.this, OOPS_SOMETHING_WENT_WRONG);
                     }

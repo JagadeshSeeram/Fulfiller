@@ -112,7 +112,7 @@ public interface FullFillerApi {
     Call<ArrayList<SupportCategoryModel>> getSupportCategories(@Query("ProductCode") String productCode);
 
     @POST(HttpAdapter.CREATE_TICKET)
-    Call<SupportCategoryModel> createTicket(@Body HashMap<String, String> hashMap);
+    Call<Void> createTicket(@Body HashMap<String, String> hashMap);
 
     @GET(HttpAdapter.CREATE_TICKET)
     Call<ArrayList<SupportCategoryModel>> getAllTickets(@Query("ProductCode") String productCode);

@@ -53,8 +53,9 @@ public class ServiceRequestAdapter extends RecyclerView.Adapter<ServiceRequestAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.status_tv.setText(categoryList.get(position).Status);
-        holder.caterory_tv.setText("-"+categoryList.get(position).Category);
-        holder.issue_tv.setText(categoryList.get(position).CategoryTitle);
+        holder.caterory_tv.setText(AppUtil.ifNotEmpty(categoryList.get(position).Category) ? "-"+categoryList.get(position).Category
+        : "");
+        holder.issue_tv.setText(AppUtil.ifNotEmpty(categoryList.get(position).Category) ? categoryList.get(position).CategoryTitle : "");
         holder.date_tv.setText(AppUtil.getLocalDateFormat(categoryList.get(position).CreatedDateTime));
         holder.description_tv.setText(categoryList.get(position).Description);
     }

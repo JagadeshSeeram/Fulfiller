@@ -324,12 +324,12 @@ public class FullFillerApiWrapper {
         return call;
     }
 
-    public Call<SupportCategoryModel> createTicketCall(String authToken, HashMap<String, String> hashMap,
-                                                       Callback<SupportCategoryModel> callback) {
+    public Call<Void> createTicketCall(String authToken, HashMap<String, String> hashMap,
+                                                       Callback<Void> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<SupportCategoryModel> call = fullFillerApiHeader.createTicket(hashMap);
+        Call<Void> call = fullFillerApiHeader.createTicket(hashMap);
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;
