@@ -52,6 +52,7 @@ public class HttpAdapter {
     public static final String CREATE_TICKET = BASE_URL + "SupportRequest?";
     public static final String NOTIFICATION_BACK_END = "http://biglynxnotification.azurewebsites.net/api/Register";
     public static final String CANCEL_INTEREST = BASE_URL + "cancelinterest";
+    public static final String RESET_PASSWORD = BASE_URL + "ForgotPassword";
 
     public static String SENDER_ID = "55470930292";
 

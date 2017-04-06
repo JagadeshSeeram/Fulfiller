@@ -24,7 +24,7 @@ public class BroadCast implements Parcelable {
     public RetailerLocationAddress RetailerLocationAddress;
     public FulfillerInterests FulfillerInterests;
     public boolean isExpressed = false;
-
+public boolean isClicked = false;
 
     public BroadCast(String ids,String s, String s1, String test1, String s2) {
         this.lat=s;
@@ -49,6 +49,7 @@ public class BroadCast implements Parcelable {
         RetailerLocationAddress = in.readParcelable(com.biglynx.fulfiller.models.RetailerLocationAddress.class.getClassLoader());
         FulfillerInterests = in.readParcelable(com.biglynx.fulfiller.models.FulfillerInterests.class.getClassLoader());
         isExpressed = in.readByte() != 0;
+        isClicked = in.readByte() != 0;
     }
 
     public static final Creator<BroadCast> CREATOR = new Creator<BroadCast>() {
@@ -84,5 +85,6 @@ public class BroadCast implements Parcelable {
         parcel.writeParcelable(RetailerLocationAddress, i);
         parcel.writeParcelable(FulfillerInterests, i);
         parcel.writeByte((byte) (isExpressed ? 1 : 0));
+        parcel.writeByte((byte) (isClicked ? 1 : 0));
     }
 }

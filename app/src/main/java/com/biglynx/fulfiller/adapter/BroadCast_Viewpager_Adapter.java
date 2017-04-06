@@ -3,8 +3,10 @@ package com.biglynx.fulfiller.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +16,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.app.MyApplication;
 import com.biglynx.fulfiller.models.BroadCast;
 import com.biglynx.fulfiller.models.FulfillersDTO;
+import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.ui.FulfillmentDetails;
+import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
+import com.biglynx.fulfiller.utils.Common;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 
 
 public class BroadCast_Viewpager_Adapter extends PagerAdapter {
@@ -61,9 +75,8 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
 
                 //this will log the page number that was click
                 Log.i("TAG", "This page was clicked: " + broadCast.RetailerLocationAddress.RetailerLocationId);
-                mContext.startActivity(new Intent(mContext, FulfillmentDetails.class)
-                        .putExtra("retaileLocId", broadCast.RetailerLocationAddress.RetailerLocationId)
-                );
+                callService(!TextUtils.isEmpty(broadCast.RetailerLocationAddress.RetailerLocationId) ?
+                        broadCast.RetailerLocationAddress.RetailerLocationId : "" );
             }
         });
 
@@ -92,6 +105,55 @@ public class BroadCast_Viewpager_Adapter extends PagerAdapter {
         ((ViewPager) container).addView(itemView);
         return itemView;
 
+    }
+
+    private void callService(String retaileLocId) {
+        if (TextUtils.isEmpty(retaileLocId)) {
+            AppUtil.toast(mContext, "There is something wronh in fetching the data.Please try again later...");
+            return;
+        }
+        Log.e(FulfillmentDetails.class.getSimpleName(), "retaileLocId :: " + retaileLocId);
+
+
+        FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
+        if (Common.isNetworkAvailable(MyApplication.getInstance())) {
+            Common.showDialog(mContext);
+            apiWrapper.broadCastDetailsCall(AppPreferences.getInstance(mContext).getSignInResult() != null ?
+                            AppPreferences.getInstance(mContext).getSignInResult().optString("AuthNToken") : "",
+                    retaileLocId, new Callback<ArrayList<BroadCast>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
+                            Common.disMissDialog();
+                            if (response.isSuccessful()) {
+                                List<BroadCast> resultBroadCast = response.body();
+                                if (resultBroadCast != null && resultBroadCast.size() > 0) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("broadcast",resultBroadCast.get(0));
+                                    mContext.startActivity(new Intent(mContext, FulfillmentDetails.class)
+                                            .putExtras(bundle));
+                                }
+
+
+                            } else {
+                                try {
+                                    AppUtil.parseErrorMessage(mContext, response.errorBody().string());
+                                } catch (IOException e) {
+                                    AppUtil.toast(mContext, OOPS_SOMETHING_WENT_WRONG);
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<BroadCast>> call, Throwable t) {
+                            Common.disMissDialog();
+                            AppUtil.toast(mContext, OOPS_SOMETHING_WENT_WRONG);
+                        }
+                    });
+
+        } else {
+            AppUtil.toast(mContext, mContext.getString(R.string.check_interent_connection));
+        }
     }
 
     @Override

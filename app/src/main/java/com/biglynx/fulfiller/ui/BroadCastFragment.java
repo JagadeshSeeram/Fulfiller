@@ -69,6 +69,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -194,6 +195,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onAnimationEnd(Animation animation) {
                 viewpager_LI.setVisibility(View.GONE);
+                for (BroadCast broadCast : broadCastList){
+                    if (broadCast.isClicked)
+                        broadCast.isClicked = false;
+                    setUpMap(broadCast,R.drawable.marks_bgs,broadCastList.indexOf(broadCast));
+                }
             }
 
             @Override
@@ -418,8 +424,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
         recentlist_lv.setOnItemClickListener(this);
 
-
     }
+
 
     private void callService() {
         Common.showDialog(getActivity());
@@ -535,15 +541,34 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.getUiSettings().setZoomGesturesEnabled(true);
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
+                if (!Common.isNetworkAvailable(getActivity())){
+                    if (!Common.isGpsEnabled(getActivity())){
+                        Common.showDialog(getActivity());
+                    }else{
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                    }
+                }/*else
+                    AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));*/
             }
         } else {
-            buildGoogleApiClient();
+            if (!Common.isNetworkAvailable(getActivity())){
+                if (!Common.isGpsEnabled(getActivity())){
+                    Common.showDialog(getActivity());
+                }else{
+                    if (mGoogleApiClient == null) {
+                        buildGoogleApiClient();
+                    }
+                }
+            }/*else
+                AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));*/
         }
         if (mCurrentLastLocation != null) {
             //move map camera
@@ -571,7 +596,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onConnected(Bundle bundle) {
-
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
@@ -727,23 +751,28 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     if (ContextCompat.checkSelfPermission(getActivity(),
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
+                        if (!Common.isNetworkAvailable(getActivity())) {
+                            if (!Common.isGpsEnabled(getActivity())) {
+                                Common.showDialog(getActivity());
+                            } else {
+                                if (mGoogleApiClient == null) {
+                                    buildGoogleApiClient();
+                                }
+                                gMap.setMyLocationEnabled(true);
+                            }
+                        } else
+                            AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
+                    } else {
 
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        gMap.setMyLocationEnabled(true);
+                        // Permission denied, Disable the functionality that depends on this permission.
+                        Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
                     }
-
-                } else {
-
-                    // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
+                    return;
                 }
-                return;
-            }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can addMarker here other case statements according to your requirement.
+                // other 'case' lines to check for other permissions this app might request.
+                // You can addMarker here other case statements according to your requirement.
+            }
         }
     }
 
@@ -931,9 +960,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             else {
                 //delete previous marker
                 if (previousMarker != null) {
+                    broadCastList.get(markervalues.get(previousMarker.getId())).isClicked = false;
                     setUpMap(broadCastList.get(markervalues.get(previousMarker.getId())), R.drawable.marks_bgs, markervalues.get(previousMarker.getId()));
                     previousMarker.remove();
                 }
+                broadCastList.get(markervalues.get(marker.getId())).isClicked = true;
                 setUpMap(broadCastList.get(markervalues.get(marker.getId())), R.drawable.marks_bg_orgs, markervalues.get(marker.getId()));
 
                 //bottom viewpager setup
@@ -973,6 +1004,18 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         TextView fulfillments = (TextView) marker.findViewById(R.id.fulfillments_tv);
         ImageView background_img = (ImageView) marker.findViewById(R.id.background_img);
         background_img.setBackgroundResource(marks_bgs);
+
+        /*if (!broadCast.isClicked)
+            background_img.setBackgroundResource(marks_bgs);
+        else {
+            if (viewpager_LI.isShown())
+                background_img.setBackgroundResource(R.drawable.marks_bg_orgs);
+            else {
+                background_img.setBackgroundResource(marks_bgs);
+                broadCast.isClicked = false;
+            }
+        }*/
+
         numTxt.setText(broadCast.BusinessLegalName);
         fulfillments.setText(broadCast.Fulfillments.size() + " Fulfillments");
 
@@ -1064,7 +1107,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     int dis = (int) distanceCalculate(broadCast);
                     Log.d("distance is", "" + dis + "," + currentDistance * 1.609 * 1000);
                     if (dis <= currentDistance * 1.609 * 1000) {
-                        setUpMap(broadCast, R.drawable.marks_bgs, i);
+                        if (broadCast.isClicked)
+                        setUpMap(broadCast,R.drawable.marks_bg_orgs, i);
+                        else
+                            setUpMap(broadCast,R.drawable.marks_bgs, i);
+
                     }
                 }
             }

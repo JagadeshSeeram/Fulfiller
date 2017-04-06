@@ -142,6 +142,7 @@
     <string name="driver">individual driver</string>
     <string name="have_an_account_sign_in">Already registered with Fulfiller? <u>Sign in</u></string>
     <string name="join_now">Don\'t have an account yet? join now</string>
+    <string name="member">Already a member of Fulfiller?  SIGN IN</string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

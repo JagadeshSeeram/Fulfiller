@@ -134,4 +134,7 @@ public interface FullFillerApi {
     @GET(HttpAdapter.RESEND_ACTIVATION_MAIL)
     Call<Void> resendActivationMail();
 
+    @GET(HttpAdapter.RESET_PASSWORD)
+    Call<Void> resetPassword(@Query("UserEmail") String email);
+
 }

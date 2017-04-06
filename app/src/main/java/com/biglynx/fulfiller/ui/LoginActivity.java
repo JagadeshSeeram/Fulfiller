@@ -128,7 +128,6 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     private String TAG = LoginActivity.class.getSimpleName();
     private int LOCATION_PERMISSION = 1;
     private LocationRequest mLocationRequest;
-    private LocationManager mLocationManager;
     private double longitude;
     private double latitude;
     private View loginLayout;
@@ -136,6 +135,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     private TextView termsAndPolicy_tv;
     String termsOfUse = "Terms of Service";
     String policy = "Privacy policy";
+    private TextView forgotPassword_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,31 +184,10 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (mLocationManager == null)
-            mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            showCustomDialog();
+        if (!Common.isGpsEnabled(this))
+            Common.showCustomDialog(this);
         else
             initialGoogleLogin();
-    }
-
-    private void showCustomDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your GPS seems to be disabled, please enable to proceed further.")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                        finish();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
     }
 
     @Override
@@ -403,6 +382,8 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         start_delivery_btn = (Button) findViewById(R.id.start_delivery_btn);
         joinNow_tv = (TextView) findViewById(R.id.joinNow_tv);
         termsAndPolicy_tv = (TextView) findViewById(R.id.tv_terms_and_policies);
+        forgotPassword_tv = (TextView) findViewById(R.id.forgot_password_tv);
+        forgotPassword_tv.setOnClickListener(this);
         fillerApiWrapper = new FullFillerApiWrapper();
 
         bt_startDeliverywithOutLogin.setOnClickListener(this);
@@ -734,8 +715,13 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                 break;
             case R.id.sign_in_button:
                 if (Common.isNetworkAvailable(this)) {
-                    is_signInBtn_clicked = true;
-                    gPlusSignIn();
+                    if (Common.isGpsEnabled(this)) {
+                        is_signInBtn_clicked = true;
+                        if (mGoogleApiClient == null)
+                            initialGoogleLogin();
+                        gPlusSignIn();
+                    }else
+                        Common.showCustomDialog(LoginActivity.this);
                 } else
                     AppUtil.toast(LoginActivity.this, getString(R.string.check_interent_connection));
 
@@ -755,11 +741,15 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                 startActivity(new Intent(LoginActivity.this, SelectRegistration.class));
                 break;
             case R.id.start_delivery_without_login:
-                if (AppUtil.ifNotEmpty(et_FullfillerId.getText().toString()) &&
-                        AppUtil.ifNotEmpty(et_confirmationCode.getText().toString()) &&
-                        AppUtil.ifNotEmpty(et_name.getText().toString())) {
+                if (Common.isNetworkAvailable(this)) {
+                    if (Common.isGpsEnabled(this)) {
+                        if (mGoogleApiClient == null)
+                            initialGoogleLogin();
+                        if (AppUtil.ifNotEmpty(et_FullfillerId.getText().toString()) &&
+                                AppUtil.ifNotEmpty(et_confirmationCode.getText().toString()) &&
+                                AppUtil.ifNotEmpty(et_name.getText().toString())) {
 
-                    callStartDeliveryService();
+                            callStartDeliveryService();
                     /*startActivity(new Intent(LoginActivity.this, StartDelivery.class)
                             .putExtra("fulfillerid", et_FullfillerId.getText().toString())
                             .putExtra("confirmationcode", et_confirmationCode.getText().toString())
@@ -767,8 +757,15 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                             .putExtra("latitude", latitude != 0 ? latitude : "")//47.6062
                             .putExtra("longitude", longitude != 0 ? longitude : "")//122.3321
                     );*/
+                        } else
+                            AppUtil.toast(LoginActivity.this, getString(R.string.mandatory));
+                    }else
+                        Common.showCustomDialog(LoginActivity.this);
                 } else
-                    AppUtil.toast(LoginActivity.this, getString(R.string.mandatory));
+                    AppUtil.toast(LoginActivity.this, getString(R.string.check_interent_connection));
+                break;
+            case R.id.forgot_password_tv:
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
                 break;
         }
     }

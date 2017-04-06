@@ -174,7 +174,7 @@
         </service>
         <service
             android:name=".services.RegistrationService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.NotificationsBroadcastReceiver"
@@ -188,7 +188,8 @@
 
         <activity
             android:name=".ui.PaymentsDetailInfoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

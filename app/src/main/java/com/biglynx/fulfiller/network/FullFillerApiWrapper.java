@@ -395,7 +395,16 @@ public class FullFillerApiWrapper {
         }
         Call<Void> call = fullFillerApiHeader.resendActivationMail();
         call.enqueue(callback);
-        //Log.d("URLS", call.request().url().toString());
+        return call;
+    }
+
+    public Call<Void> resetPasswordCall(String authToken,String email,
+                                           Callback<Void> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<Void> call = fullFillerApiHeader.resetPassword(email);
+        call.enqueue(callback);
         return call;
     }
 }

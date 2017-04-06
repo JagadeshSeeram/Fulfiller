@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.BuildConfig;
@@ -48,6 +49,8 @@ public class Common {
     public static SimpleDateFormat un_sdf_format_time;
     private static final double ASSUMED_INIT_LATLNG_DIFF = 1.0;
     private static final float ACCURACY = 0.01f;
+    private static LocationManager mLocationManager;
+
 
     static {
         hexArray = "0123456789ABCDEF".toCharArray();
@@ -343,7 +346,7 @@ public class Common {
     }
 
     public static boolean isNetworkAvailable(Context context) {
-        NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService("connectivity")).getActiveNetworkInfo();
+        NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
             Log.e("Network Testing", "***Not Available***");
             return false;
@@ -351,4 +354,33 @@ public class Common {
         Log.e("Network Testing", "***Available***");
         return true;
     }
+
+    public static boolean isGpsEnabled(Context context){
+        if (mLocationManager == null)
+            mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            return true;
+        return false;
+    }
+
+    public static void showCustomDialog(final Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Your GPS seems to be disabled, please enable to proceed further.")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.dismiss();
+                        context.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.dismiss();
+                        //finish();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 }

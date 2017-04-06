@@ -355,6 +355,7 @@
         <com.biglynx.fulfiller.fonts.CustomFontRegular
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/forgot_password_tv"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"

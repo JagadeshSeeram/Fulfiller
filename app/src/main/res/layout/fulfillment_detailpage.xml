@@ -141,7 +141,7 @@
                 android:layout_height="45dp"
                 android:background="#353944"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:weightSum="1">
 
                 <com.biglynx.fulfiller.fonts.CustomFontSemiBold
@@ -184,6 +184,7 @@
                 android:layout_marginRight="0dp"
                 android:paddingTop="5dp"
                 android:background="@color/black"
+                android:visibility="gone"
                 widget:dividerWidth="1dp" />
 
             <LinearLayout
