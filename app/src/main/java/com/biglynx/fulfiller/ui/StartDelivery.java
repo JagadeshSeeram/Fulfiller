@@ -109,13 +109,13 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private int progressStatus;
     private static int deviceswidth;
     private EditText confirm_code_ev, no_ofpackages_ev, no_ofcustomers_ev;
-    private ListView orderlist_LI;
+    private RecyclerView orderlist_LI;
     private InterestDTO responseInterestObj;
     private StartDeliveryAdapter startDeliveryAdapter;
     private SimpleDateFormat simpleDateFormat;
     private TextView fulfillmentid_tv;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager,mOrdersLayoutManager;
     private MessagesAdapter adapter;
     private FullFillerApiWrapper apiWrapper;
     private EditText replyText_ev;
@@ -429,9 +429,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         ontheway_tv = (TextView) findViewById(R.id.ontheway_tv);
         pickedup_tv = (TextView) findViewById(R.id.pickedup_tv);
         delivered_tv = (TextView) findViewById(R.id.delivered_tv);
-        orderlist_LI = (ListView) findViewById(R.id.orderlist_LI);
-        startDeliveryAdapter = new StartDeliveryAdapter(this);
-        orderlist_LI.setAdapter(startDeliveryAdapter);
+
         //confirm delivery intilizations
         confirm_pickup_btn_tv = (TextView) findViewById(R.id.confirm_pickup_btn_tv);
         no_ofpackages_ev = (EditText) findViewById(R.id.no_ofpackages_ev);
@@ -484,6 +482,16 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         mRecyclerView.setLayoutManager(mLayoutManager);
         adapter = new MessagesAdapter(StartDelivery.this);
         mRecyclerView.setAdapter(adapter);
+
+        orderlist_LI = (RecyclerView) findViewById(R.id.orderlist_LI);
+        orderlist_LI.setHasFixedSize(true);
+        mOrdersLayoutManager = new LinearLayoutManager(this);
+        orderlist_LI.setLayoutManager(mOrdersLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL_LIST);
+        orderlist_LI.addItemDecoration(dividerItemDecoration);
+        startDeliveryAdapter = new StartDeliveryAdapter(this);
+        orderlist_LI.setAdapter(startDeliveryAdapter);
 
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
@@ -684,8 +692,11 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             // params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             //                System.out.println("executing request " + multipartEntity.getContent());
             HttpClient httpClient = new DefaultHttpClient();
-            httpClient.execute(httppost, new PhotoUploadResponseHandler());
-
+            try {
+                httpClient.execute(httppost, new PhotoUploadResponseHandler());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             Log.e("data", e.getLocalizedMessage(), e);
         }

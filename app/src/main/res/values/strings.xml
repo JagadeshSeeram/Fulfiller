@@ -143,6 +143,9 @@
     <string name="have_an_account_sign_in">Already registered with Fulfiller? <u>Sign in</u></string>
     <string name="join_now">Don\'t have an account yet? join now</string>
     <string name="member">Already a member of Fulfiller?  SIGN IN</string>
+    <string name="order_confirmation">Please confirm that each packages have invoices and tagged to identify what each customer receives during delivery</string>
+    <string name="packages">Enter the total number of packages received for delivery</string>
+    <string name="customer_count">Enter the number of customers to deliver orders</string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

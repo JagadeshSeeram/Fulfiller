@@ -467,7 +467,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             // params.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
             //                System.out.println("executing request " + multipartEntity.getContent());
             HttpClient httpClient = new DefaultHttpClient();
-            httpClient.execute(httppost, new PhotoUploadResponseHandler());
+            try {
+                httpClient.execute(httppost, new PhotoUploadResponseHandler());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             Log.e("data", e.getLocalizedMessage(), e);

@@ -248,8 +248,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            >
                             <com.biglynx.fulfiller.utils.EditTextFontLight
                                 android:id="@+id/replyText_ev"
                                 android:layout_width="0dp"
@@ -260,7 +261,10 @@
                                 android:gravity="center|start"
                                 android:hint="@string/send_msg_to_retailer"
                                 android:maxLines="2"
-                                android:padding="3dp"
+                                android:paddingLeft="8dp"
+                                android:paddingTop="@dimen/dp_3"
+                                android:paddingBottom="@dimen/dp_3"
+                                android:paddingRight="@dimen/dp_5"
                                 android:textColor="#4E4E4E"
                                 android:textColorHint="@color/header_color"
                                 android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.utils.EditTextFontLight>
@@ -732,366 +736,115 @@
                                         android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
 
                                 </LinearLayout>
-
                             </LinearLayout>
                             <!--end trcking status-->
+                        </LinearLayout>
+
+                        <!-- delivery customer details-->
+                        <LinearLayout
+                            android:id="@+id/deliv_customers_LI"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:padding="@dimen/dp_10"
+                            android:background="@color/white"
+                            android:visibility="gone">
+
+                            <com.biglynx.fulfiller.fonts.CustomFontBold
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:gravity="center|start"
+                                android:maxLines="1"
+                                android:padding="3dp"
+                                android:text="Delivery Customers"
+                                android:textAllCaps="true"
+                                android:textColor="#000"
+                                android:textSize="@dimen/textview_dp16">
+
+                            </com.biglynx.fulfiller.fonts.CustomFontBold>
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_marginTop="8dp"
                                 android:background="#E5E5E5"></View>
 
-                            <!-- delivery customer details-->
-                            <LinearLayout
-                                android:id="@+id/deliv_customers_LI"
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/orderlist_LI"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:visibility="gone">
+                                android:layout_marginTop="5dp"
+                                android:background="@color/window_background"
+                                >
 
-                                <com.biglynx.fulfiller.fonts.CustomFontBold
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center|start"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="@dimen/dp_10"
-                                    android:gravity="center|start"
-                                    android:maxLines="1"
-                                    android:padding="3dp"
-                                    android:text="Delivery Customers"
-                                    android:textAllCaps="true"
-                                    android:textColor="#000"
-                                    android:textSize="@dimen/textview_dp16">
+                            </android.support.v7.widget.RecyclerView>
 
-                                </com.biglynx.fulfiller.fonts.CustomFontBold>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:background="#E5E5E5"></View>
-
-                                <ListView
-                                    android:id="@+id/orderlist_LI"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:layout_marginTop="5dp"
-                                    android:background="@color/window_background"
-                                    android:divider="#787878"
-                                    android:dividerHeight="0.5dp">
-
-                                </ListView>
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:background="#E5E5E5"></View>
-
-                                <!--Confirm delivery layout start-->
-                                <LinearLayout
-                                    android:id="@+id/confirm_delivery_LI"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:layout_marginTop="5dp"
-                                    android:orientation="vertical"
-                                    android:weightSum="1">
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginTop="10dp"
-                                        android:gravity="center"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="To confirm delivery of fulfillment - type CONFIRMED"
-                                        android:textColor="#000"
-                                        android:textSize="@dimen/textview_dp14">
-
-                                    </com.biglynx.fulfiller.fonts.CustomFontRegular>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginTop="10dp"
-                                        android:gravity="center"
-                                        android:orientation="horizontal"
-                                        android:weightSum="1">
-
-                                        <EditText
-                                            android:id="@+id/confirm_code_ev"
-                                            android:layout_width="0dp"
-                                            android:layout_height="40dp"
-                                            android:layout_gravity="center|start"
-                                            android:layout_weight="0.45"
-                                            android:background="@drawable/light_border"
-                                            android:gravity="center"
-                                            android:textColor="#000" />
-
-                                        <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                            android:id="@+id/confirm_deli_tv"
-                                            android:layout_width="0dp"
-                                            android:layout_height="40dp"
-                                            android:layout_gravity="center"
-                                            android:layout_marginLeft="20dp"
-                                            android:layout_weight="0.43"
-                                            android:background="@color/colorPrimary"
-                                            android:gravity="center"
-                                            android:maxLines="2"
-                                            android:padding="8dp"
-                                            android:text="Confirm Delivery"
-                                            android:textColor="#FFFFFF"
-                                            android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    </LinearLayout>
-
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="20dp"
-                                        android:layout_marginLeft="@dimen/dp_10"
-                                        android:layout_marginRight="@dimen/dp_10"
-                                        android:layout_marginTop="@dimen/dp_5">
-
-                                        <CheckBox
-                                            android:id="@+id/cb_confirmDelivery"
-                                            android:layout_width="30dp"
-                                            android:layout_height="20dp"
-                                            android:background="@null"
-                                            android:checked="true"
-                                            android:clickable="false" />
-
-                                        <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_toRightOf="@+id/cb_confirmDelivery"
-                                            android:gravity="center"
-                                            android:maxLines="2"
-                                            android:padding="3dp"
-                                            android:text="You have notified retailer with delivery confirmatoins at 7:30 PM"
-                                            android:textColor="#919191"
-                                            android:textSize="@dimen/textview_dp12">
-
-                                        </com.biglynx.fulfiller.fonts.CustomFontRegular>
-                                    </RelativeLayout>
-                                </LinearLayout>
-                                <!--Confirm delivery layout end-->
-
-
-                            </LinearLayout>
-                            <!--End of delivery customer details-->
-
-                            <!-- Confirm orders-->
-                            <LinearLayout
-                                android:id="@+id/confirmorders_LI"
+                            <View
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:visibility="gone">
+                                android:layout_height="1dp"
+                                android:background="#E5E5E5"></View>
 
+                            <!--Confirm delivery layout start-->
+                            <LinearLayout
+                                android:id="@+id/confirm_delivery_LI"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:orientation="vertical"
+                                android:weightSum="1">
 
                                 <com.biglynx.fulfiller.fonts.CustomFontRegular
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center|start"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
-                                    android:maxLines="1"
+                                    android:maxLines="2"
                                     android:padding="3dp"
-                                    android:text="Confirm orders picked up from store"
+                                    android:text="To confirm delivery of fulfillment - type CONFIRMED"
                                     android:textColor="#000"
-                                    android:textSize="@dimen/textview_dp16">
+                                    android:visibility="gone"
+                                    android:textSize="@dimen/textview_dp14">
 
                                 </com.biglynx.fulfiller.fonts.CustomFontRegular>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="40dp"
-                                    android:orientation="horizontal"
-                                    android:padding="10dp"
-                                    android:weightSum="1">
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.75"
-                                        android:gravity="center|right"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="Enter number of packages picked up"
-                                        android:textColor="#979797"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    <EditText
-                                        android:id="@+id/no_ofpackages_ev"
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.25"
-                                        android:background="@drawable/light_border"
-                                        android:gravity="center"
-                                        android:inputType="number"
-                                        android:textColor="@color/black" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="40dp"
-                                    android:gravity="center"
-                                    android:orientation="horizontal"
-                                    android:padding="10dp"
-                                    android:weightSum="1">
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:id="@+id/customFontSemiBold2"
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.75"
-                                        android:gravity="center|right"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="Enter the number of customers to deliver"
-                                        android:textColor="#979797"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    <EditText
-                                        android:id="@+id/no_ofcustomers_ev"
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.25"
-                                        android:background="@drawable/light_border"
-                                        android:gravity="center"
-                                        android:inputType="number"
-                                        android:textColor="@color/black" />
-                                </LinearLayout>
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="40dp"
-                                    android:orientation="horizontal"
-                                    android:padding="10dp"
-                                    android:weightSum="1">
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:layout_width="0dp"
-                                        android:layout_height="40dp"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.75"
-                                        android:gravity="center|right"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="I confirm that each package have customer information for delivery"
-                                        android:textColor="#979797"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    <android.support.v7.widget.SwitchCompat
-                                        android:id="@+id/confirmSwitch"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_weight="0.25"
-                                        android:background="@android:color/transparent"
-                                        android:button="@null"
-                                        android:gravity="left"
-                                        android:padding="0dp"
-                                        android:textColor="@color/colorPrimary"
-                                        android:textOff=""
-                                        android:textOn="" />
-                                </LinearLayout>
-
-                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                    android:id="@+id/confirm_pickup_btn_tv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginBottom="40dp"
+                                    android:layout_gravity="center_vertical"
                                     android:layout_marginTop="10dp"
-                                    android:background="@color/colorPrimary"
                                     android:gravity="center"
-                                    android:maxLines="2"
-                                    android:padding="8dp"
-                                    android:text="Confirm Pick Up"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="@dimen/textview_dp18"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+                                    android:orientation="horizontal"
+                                    android:weightSum="1">
 
-                            </LinearLayout>
-                            <!-- End of Confirm orders-->
-                            <!--google maps with notify to retails-->
-                            <LinearLayout
-                                android:id="@+id/googlemaps_LI"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="150dp"
-                                    android:padding="8dp">
-
-                                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                                        android:id="@+id/map"
-                                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:layout_marginLeft="@dimen/dp_10"
-                                        android:layout_marginRight="@dimen/dp_10" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/dp_10"
-                                    android:orientation="horizontal">
+                                    <EditText
+                                        android:id="@+id/confirm_code_ev"
+                                        android:layout_width="0dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center|start"
+                                        android:layout_weight="0.45"
+                                        android:background="@drawable/light_border"
+                                        android:gravity="center"
+                                        android:textColor="#000" />
 
                                     <com.biglynx.fulfiller.fonts.CustomFontSemiBold
-                                        android:id="@+id/notifiy_tv"
+                                        android:id="@+id/confirm_deli_tv"
                                         android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.8"
-                                        android:gravity="center"
-                                        android:maxLines="2"
-                                        android:padding="3dp"
-                                        android:text="On the way to Pick up goods from retailer ? "
-                                        android:textColor="#000"
-                                        android:textSize="@dimen/sp_12"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
-
-                                    <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                        android:id="@+id/notifiy_btn_tv"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center|start"
-                                        android:layout_weight="0.2"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_weight="0.43"
                                         android:background="@color/colorPrimary"
                                         android:gravity="center"
-                                        android:maxLines="1"
-                                        android:padding="3dp"
-                                        android:text="Notifiy"
+                                        android:maxLines="2"
+                                        android:padding="8dp"
+                                        android:text="Confirm Delivery"
                                         android:textColor="#FFFFFF"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+                                        android:textSize="@dimen/textview_dp16"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
                                 </LinearLayout>
 
                                 <RelativeLayout
@@ -1099,28 +852,265 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="20dp"
                                     android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10">
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5">
 
                                     <CheckBox
-                                        android:id="@+id/cb_notify"
+                                        android:id="@+id/cb_confirmDelivery"
                                         android:layout_width="30dp"
                                         android:layout_height="20dp"
                                         android:background="@null"
-                                        android:checked="true" />
+                                        android:checked="true"
+                                        android:clickable="false" />
 
                                     <com.biglynx.fulfiller.fonts.CustomFontRegular
-                                        android:id="@+id/notifieddata_tv"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_toRightOf="@+id/cb_notify"
+                                        android:layout_gravity="center"
+                                        android:layout_toRightOf="@+id/cb_confirmDelivery"
                                         android:gravity="center"
-                                        android:text="you have notified retailer at 6:30PM. Arrived at store by 7:30 PM"
-                                        android:textColor="@color/header_color"
-                                        android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+                                        android:maxLines="2"
+                                        android:padding="3dp"
+                                        android:text="You have notified retailer with delivery confirmatoins at 7:30 PM"
+                                        android:textColor="#919191"
+                                        android:textSize="@dimen/textview_dp12">
+
+                                    </com.biglynx.fulfiller.fonts.CustomFontRegular>
                                 </RelativeLayout>
                             </LinearLayout>
-                            <!-- End of googlemaps with notify orders-->
+                            <!--Confirm delivery layout end-->
+
+
                         </LinearLayout>
+                        <!--End of delivery customer details-->
+
+                        <!-- Confirm orders-->
+                        <LinearLayout
+                            android:id="@+id/confirmorders_LI"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+
+                            <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:padding="3dp"
+                                android:text="Confirm orders picked up from store"
+                                android:textColor="#000"
+                                android:textSize="@dimen/textview_dp16">
+
+                            </com.biglynx.fulfiller.fonts.CustomFontRegular>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="40dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="1">
+
+                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                    android:id="@+id/customFontSemiBold2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.75"
+                                    android:gravity="center|right"
+                                    android:maxLines="2"
+                                    android:padding="3dp"
+                                    android:text="@string/customer_count"
+                                    android:textColor="#979797"
+                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                <EditText
+                                    android:id="@+id/no_ofcustomers_ev"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.25"
+                                    android:background="@drawable/light_border"
+                                    android:gravity="center"
+                                    android:inputType="number"
+                                    android:textColor="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="40dp"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="1">
+
+                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.75"
+                                    android:gravity="center|right"
+                                    android:maxLines="2"
+                                    android:padding="3dp"
+                                    android:text="@string/packages"
+                                    android:textColor="#979797"
+                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                <EditText
+                                    android:id="@+id/no_ofpackages_ev"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.25"
+                                    android:background="@drawable/light_border"
+                                    android:gravity="center"
+                                    android:inputType="number"
+                                    android:textColor="@color/black" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="40dp"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:weightSum="1">
+
+                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.75"
+                                    android:gravity="center|right"
+                                    android:maxLines="2"
+                                    android:padding="3dp"
+                                    android:text="@string/order_confirmation"
+                                    android:textColor="#979797"
+                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                <android.support.v7.widget.SwitchCompat
+                                    android:id="@+id/confirmSwitch"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="0.25"
+                                    android:background="@android:color/transparent"
+                                    android:button="@null"
+                                    android:gravity="left"
+                                    android:padding="0dp"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textOff=""
+                                    android:textOn="" />
+                            </LinearLayout>
+
+                            <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                android:id="@+id/confirm_pickup_btn_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="40dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:padding="8dp"
+                                android:text="Confirm Pick Up"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/textview_dp18"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                        </LinearLayout>
+                        <!-- End of Confirm orders-->
+                        <!--google maps with notify to retails-->
+                        <LinearLayout
+                            android:id="@+id/googlemaps_LI"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                android:padding="8dp">
+
+                                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:id="@+id/map"
+                                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/dp_10"
+                                android:orientation="horizontal">
+
+                                <com.biglynx.fulfiller.fonts.CustomFontSemiBold
+                                    android:id="@+id/notifiy_tv"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.8"
+                                    android:gravity="center"
+                                    android:maxLines="2"
+                                    android:padding="3dp"
+                                    android:text="On the way to Pick up goods from retailer ? "
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/sp_12"></com.biglynx.fulfiller.fonts.CustomFontSemiBold>
+
+                                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                    android:id="@+id/notifiy_btn_tv"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|start"
+                                    android:layout_weight="0.2"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:padding="3dp"
+                                    android:text="Notifiy"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10">
+
+                                <CheckBox
+                                    android:id="@+id/cb_notify"
+                                    android:layout_width="30dp"
+                                    android:layout_height="20dp"
+                                    android:background="@null"
+                                    android:checked="true" />
+
+                                <com.biglynx.fulfiller.fonts.CustomFontRegular
+                                    android:id="@+id/notifieddata_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@+id/cb_notify"
+                                    android:gravity="center"
+                                    android:text="you have notified retailer at 6:30PM. Arrived at store by 7:30 PM"
+                                    android:textColor="@color/header_color"
+                                    android:textSize="@dimen/textview_dp14"></com.biglynx.fulfiller.fonts.CustomFontRegular>
+                            </RelativeLayout>
+                        </LinearLayout>
+                        <!-- End of googlemaps with notify orders-->
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

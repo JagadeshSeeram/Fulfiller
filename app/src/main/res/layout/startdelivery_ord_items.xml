@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/spacing_small"
-    android:paddingTop="@dimen/dp_5"
     android:paddingLeft="@dimen/dp_5"
     android:paddingRight="@dimen/dp_5"
+    android:paddingTop="@dimen/dp_5"
+    android:paddingBottom="@dimen/dp_5"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_13"
+            android:visibility="gone"
             />
         <LinearLayout
             android:layout_width="0dp"
@@ -30,7 +31,7 @@
             android:layout_weight="0.5"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             >
             <com.biglynx.fulfiller.fonts.CustomFontBold
 
@@ -114,41 +115,47 @@
 
         </LinearLayout>
     </LinearLayout>
-    <com.biglynx.fulfiller.fonts.CustomFontBold
-        android:id="@+id/address_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/ef_border"
-        android:text="address"
-        android:textColor="#787878"
-        android:layout_toLeftOf="@+id/copy_tv"
-        android:maxLines="3"
-        android:padding="3dp"
-        android:textSize="@dimen/textview_dp14">
-    </com.biglynx.fulfiller.fonts.CustomFontBold>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         >
         <com.biglynx.fulfiller.fonts.CustomFontBold
-            android:id="@+id/copy_tv"
+            android:id="@+id/address_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:background="#787878"
+            android:background="@drawable/ef_border"
+            android:text="address jsfhffh sfhfdf
+sfhsbfhbhbjsbhbhbhdb"
+            android:textColor="#787878"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/copy_tv"
+            android:maxLines="3"
             android:padding="3dp"
-            android:text="Copy"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/sp_13"
-            android:layout_toLeftOf="@+id/seperator_view"
+            android:textSize="11sp"
             >
         </com.biglynx.fulfiller.fonts.CustomFontBold>
-        <View
+
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:id="@+id/copy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#787878"
+            android:paddingTop="3dp"
+            android:paddingBottom="@dimen/dp_3"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:text="Copy"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/sp_13"
+            android:layout_toLeftOf="@+id/openinmap_tv"
+            >
+        </com.biglynx.fulfiller.fonts.CustomFontBold>
+        <!--<View
             android:layout_width="1dp"
             android:layout_height="3dp"
             android:id="@+id/seperator_view"
@@ -156,19 +163,23 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             >
-        </View>
+        </View>-->
         <com.biglynx.fulfiller.fonts.CustomFontBold
             android:id="@+id/openinmap_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="3dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="@dimen/dp_3"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_3"
             android:background="#787878"
             android:text="Open in maps"
             android:textColor="#FFFFFF"
-            android:layout_toRightOf="@+id/seperator_view"
             android:textSize="@dimen/sp_13"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             >
         </com.biglynx.fulfiller.fonts.CustomFontBold>
     </RelativeLayout>
