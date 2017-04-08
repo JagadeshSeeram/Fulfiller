@@ -165,10 +165,10 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
     public void setItemsList(List<Orders> itemsList) {
         if (ordersList != null)
             ordersList.clear();
-        List<Orders> dummyList = itemsList;
+        /*List<Orders> dummyList = itemsList;
         Orders orders = dummyList.get(0);
         orders.DeliveryStatusId = 5;
-        itemsList.add(1, orders);
+        itemsList.add(1, orders);*/
         ordersList.addAll(itemsList);
         notifyDataSetChanged();
     }
