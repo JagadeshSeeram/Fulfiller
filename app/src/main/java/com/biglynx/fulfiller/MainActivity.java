@@ -1,7 +1,12 @@
 package com.biglynx.fulfiller;
 
+import android.annotation.TargetApi;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 
@@ -12,6 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import com.biglynx.fulfiller.services.MyJobService;
 import com.biglynx.fulfiller.ui.FulfillmentFragment;
 import com.biglynx.fulfiller.ui.HomeFragment;
 import com.biglynx.fulfiller.ui.BroadCastFragment;
@@ -19,11 +26,15 @@ import com.biglynx.fulfiller.ui.SettingsFragment;
 
 public class MainActivity extends FragmentActivity {
     private static FragmentTabHost mTabHost;
+    private static int kJobId = 0;
+    ComponentName mServiceComponent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
+        if (mServiceComponent == null)
+            startLocationService();
         mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
 
@@ -101,5 +112,24 @@ public class MainActivity extends FragmentActivity {
             iv.setImageResource(R.drawable.ic_home_selected);
         }
         return view;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void startLocationService() {
+        mServiceComponent = new ComponentName(this, MyJobService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(kJobId++, mServiceComponent);
+        //builder.setMinimumLatency(120 * 1000); // wait at least
+        builder.setOverrideDeadline(120 * 1000); // maximum delay
+        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
+        //builder.setRequiresDeviceIdle(true); // device should be idle
+        builder.setRequiresCharging(false); // we don't care if the device is charging or not
+        JobScheduler jobScheduler = (JobScheduler) getApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(builder.build());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void cancelAllJobs(View v) {
+        JobScheduler tm = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        tm.cancelAll();
     }
 }
