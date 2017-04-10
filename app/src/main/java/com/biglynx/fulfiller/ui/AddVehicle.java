@@ -243,6 +243,10 @@ public class AddVehicle extends AppCompatActivity implements View.OnClickListene
                         takephoto_tv.setTextColor(Color.parseColor("#868686"));
                         gallerys = true;
                         cameras = false;
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        // Start the Intent
+                        startActivityForResult(galleryIntent, 1);
                     }
                 });
 
@@ -253,6 +257,8 @@ public class AddVehicle extends AppCompatActivity implements View.OnClickListene
                         takephoto_tv.setTextColor(Color.parseColor("#EC932F"));
                         gallerys = false;
                         cameras = true;
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 0);
                     }
                 });
 

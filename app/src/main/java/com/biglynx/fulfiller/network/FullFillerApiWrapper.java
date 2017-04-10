@@ -165,11 +165,11 @@ public class FullFillerApiWrapper {
         return modelCall;
     }
 
-    public Call<ArrayList<BroadCast>> broadCastCall(final String authToken, Callback<ArrayList<BroadCast>> callback) {
+    public Call<ArrayList<BroadCast>> broadCastCall(final String authToken, double latitude, double longitude, Callback<ArrayList<BroadCast>> callback) {
         if (fullFillerApiHeader == null) {
             createRetrofitWithHeader(authToken);
         }
-        Call<ArrayList<BroadCast>> call = fullFillerApiHeader.broadCastCall();
+        Call<ArrayList<BroadCast>> call = fullFillerApiHeader.broadCastCall("15",latitude,longitude);
         call.enqueue(callback);
         //Log.d("URLS", call.request().url().toString());
         return call;

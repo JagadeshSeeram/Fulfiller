@@ -70,7 +70,8 @@ public interface FullFillerApi {
     Call<InterestDTO> interestDetailsCall(@Path("retaileLocId") String retaileLocId);
 
     @GET(HttpAdapter.BROADCASt)
-    Call<ArrayList<BroadCast>> broadCastCall();
+    Call<ArrayList<BroadCast>> broadCastCall(@Query("miles") String miles,@Query("latitude") double latitude,
+                                             @Query("longitude")double longitude);
 
     @GET(HttpAdapter.BROADCAStDETAILS + "/" + "{retaileLocId}")
     Call<ArrayList<BroadCast>> broadCastDetailsCall(@Path("retaileLocId") String retaileLocId);

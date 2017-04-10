@@ -5,12 +5,14 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -23,18 +25,22 @@ import com.biglynx.fulfiller.ui.FulfillmentFragment;
 import com.biglynx.fulfiller.ui.HomeFragment;
 import com.biglynx.fulfiller.ui.BroadCastFragment;
 import com.biglynx.fulfiller.ui.SettingsFragment;
+import com.biglynx.fulfiller.utils.Common;
 
 public class MainActivity extends FragmentActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static FragmentTabHost mTabHost;
-    private static int kJobId = 0;
-    ComponentName mServiceComponent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
-        if (mServiceComponent == null)
-            startLocationService();
+
+        if (Common.isNetworkAvailable(this) && Common.isGpsEnabled(this)){
+            startService(new Intent(this,MyJobService.class));
+        }
+
+
         mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
 
@@ -114,22 +120,10 @@ public class MainActivity extends FragmentActivity {
         return view;
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void startLocationService() {
-        mServiceComponent = new ComponentName(this, MyJobService.class);
-        JobInfo.Builder builder = new JobInfo.Builder(kJobId++, mServiceComponent);
-        //builder.setMinimumLatency(120 * 1000); // wait at least
-        builder.setOverrideDeadline(120 * 1000); // maximum delay
-        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
-        //builder.setRequiresDeviceIdle(true); // device should be idle
-        builder.setRequiresCharging(false); // we don't care if the device is charging or not
-        JobScheduler jobScheduler = (JobScheduler) getApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        jobScheduler.schedule(builder.build());
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void cancelAllJobs(View v) {
-        JobScheduler tm = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        tm.cancelAll();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG,"Destroyed....");
+        stopService(new Intent(this,MyJobService.class));
     }
 }

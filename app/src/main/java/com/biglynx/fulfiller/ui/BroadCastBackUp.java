@@ -1,5 +1,6 @@
 package com.biglynx.fulfiller.ui;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -98,7 +99,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
+public class BroadCastBackUp extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener,
@@ -107,7 +108,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     private GoogleMap gMap;
     GoogleApiClient mGoogleApiClient;
     Location mCurrentLastLocation;
-    Marker mCurrLocationMarker, mUserMapClcikedmarker;
+    Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
     int currentDistance = 5;
@@ -141,21 +142,20 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     AutoCompleteTextView atvPlaces;
     TextView autocomplte_places;
     FrameLayout searchbar_FL;
-    PlacesTask placesTask;
-    ParserTask parserTask;
+    BroadCastBackUp.PlacesTask placesTask;
+    BroadCastBackUp.ParserTask parserTask;
     List<HashMap<String, String>> googlePlacesresult;
     private ImageView search_back, cancel_button, search_imv, maps_icon, list_icon, refresh_iv;
     ArrayList<BroadCast> broadCastList;
     private String currentAddress;
     private Broadcast_Adapter broadcastAdapter;
-    private GeocodeAsyncTask asyncTask;
+    private BroadCastBackUp.GeocodeAsyncTask asyncTask;
     private Animation animation_slide_down;
     private Animation animation_slide_up;
     private View v;
     private CircleIndicator circularIndicator;
     private static final String CURRENT_POSTION = "Current Position";
     private static final String RETAILER_POSTION = "Retailer Position";
-    private static final String USER_MAP_CLICKED_POSTION = "Map_Click Position";
 
 
     @Nullable
@@ -213,10 +213,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
 
         apiWrapper = new FullFillerApiWrapper();
-        /*if (Common.isNetworkAvailable(MyApplication.getInstance())) {
-            callService(mCurrentLastLocation);
+        if (Common.isNetworkAvailable(MyApplication.getInstance())) {
+            callService();
         } else
-            AppUtil.toast(getActivity(), "Network Disconnected. Please check...");*/
+            AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
 
         return v;
     }
@@ -295,7 +295,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         atvPlaces.setThreshold(1);
         broadCastList = new ArrayList<>();
         LinearLayout retailerInfo = (LinearLayout) v.findViewById(R.id.retailerInfo);
-        retailerInfo.setOnTouchListener(new RelativeLayoutTouchListener(getActivity()));
+        retailerInfo.setOnTouchListener(new BroadCastBackUp.RelativeLayoutTouchListener(getActivity()));
 
         search_imv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,9 +364,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                         autocomplte_places.setText(googlePlacesresult.get(pos).get("description"));
                         LatLng position = new LatLng(latitude, longitude);
                         centerLatLng = position;
-                        //drawCircle(position);
-                        if (broadCastList != null)
-                            setRetailerInfo();
+                        drawCircle(position);
                         dbHelper.insertContact(new RecentSearch("1", googlePlacesresult.get(pos).get("description"), latitude, longitude));
                     }
                 } catch (IOException e) {
@@ -389,7 +387,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                         bac_dim_layout.setVisibility(View.VISIBLE);
                         // atvPlaces.setFocusable(false);
                         recentlist_lv.setVisibility(View.GONE);
-                        placesTask = new PlacesTask();
+                        placesTask = new BroadCastBackUp.PlacesTask();
                         placesTask.execute(s.toString());
 
                     } else {
@@ -427,22 +425,17 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    private void callService(LatLng mCurrentLatLng) {
-        if (mCurrentLastLocation == null)
-            return;
+    private void callService() {
         Common.showDialog(getActivity());
         apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
-                mCurrentLatLng.latitude, mCurrentLatLng.longitude,
-                new Callback<ArrayList<BroadCast>>() {
+                mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude(), new Callback<ArrayList<BroadCast>>() {
                     @Override
                     public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
                         if (response.isSuccessful()) {
                             broadCastList = response.body();
                             checkTheExpressedFullfilments();
-                            //drawCircle(centerLatLng);
-                            if (broadCastList != null)
-                                setRetailerInfo();
+                            drawCircle(centerLatLng);
                             broadcastAdapter = new Broadcast_Adapter(getActivity(), broadCastList);
                             listview_lv.setAdapter(broadcastAdapter);
                         } else {
@@ -578,9 +571,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (mCurrentLastLocation != null) {
             //move map camera
             LatLng latLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
-            //drawCircle(latLng);
-            if (broadCastList != null)
-                setRetailerInfo();
+            drawCircle(latLng);
             addMarker(mCurrentLastLocation);
             getAddress(mCurrentLastLocation, true);
         } else {
@@ -633,19 +624,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
         Log.d("TAG- CURRENT", firstTime + "");
-
         if (!firstTime) {
-            //drawCircle(latLng);
-            if (mCurrentLastLocation != null) {
-                LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
-                        mCurrentLastLocation.getLongitude());
-                callService(mCurrentLatLng);
-            }
-            if (broadCastList != null)
-                setRetailerInfo();
+            drawCircle(latLng);
             firstTime = true;
         }
-
 
         addMarker(mCurrentLastLocation);
         getAddress(mCurrentLastLocation, false);
@@ -690,6 +672,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             mCircle = gMap.addCircle(circleOptions);
             mCircle.setCenter(latLng);
         }
+
+        if (broadCastList != null)
+            setRetailerInfo();
     }
 
     public int getZoomLevel(CircleOptions circle) {
@@ -801,9 +786,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (!compareLatLng(targetLatLng, centerLatLng)) {
             Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
             addMarker(mCurrentLastLocation);
-            //drawCircle(targetLatLng);
-            if (broadCastList != null)
-                setRetailerInfo();
+            drawCircle(targetLatLng);
             centerLatLng = targetLatLng;
             if (broadCastList != null)
                 setRetailerInfo();
@@ -842,9 +825,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         search_ev.setText(place.getAddress());
         LatLng position = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
         centerLatLng = position;
-        //drawCircle(position);
-        if (broadCastList != null)
-            setRetailerInfo();
+        drawCircle(position);
         dbHelper.insertContact(new RecentSearch("1", place.getAddress().toString(), place.getLatLng().latitude,
                 place.getLatLng().longitude));
     }
@@ -888,9 +869,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     LatLng latLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
                     Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
                     Log.d("TAG- CURRENT", firstTime + "");
-                    //drawCircle(latLng);
-                    if (broadCastList != null)
-                        setRetailerInfo();
+                    drawCircle(latLng);
                     addMarker(mCurrentLastLocation);
                     getAddress(mCurrentLastLocation, true);
                 }
@@ -909,9 +888,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     LatLng latLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
                     Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
                     Log.d("TAG- CURRENT", firstTime + "");
-                    //drawCircle(latLng);
-                    if (broadCastList != null)
-                        setRetailerInfo();
+                    drawCircle(latLng);
                     addMarker(mCurrentLastLocation);
                     getAddress(mCurrentLastLocation, true);
                 }
@@ -920,36 +897,28 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 current_miles_tv.setText("15 \n Miles");
                 currentDistance = 15;
                 miles_LI.setVisibility(View.GONE);
-                //drawCircle(centerLatLng);
-                if (broadCastList != null)
-                    setRetailerInfo();
+                drawCircle(centerLatLng);
                 break;
 
             case R.id.ten_miles_tv:
                 current_miles_tv.setText("10 \n Miles");
                 currentDistance = 10;
                 miles_LI.setVisibility(View.GONE);
-                //drawCircle(centerLatLng);
-                if (broadCastList != null)
-                    setRetailerInfo();
+                drawCircle(centerLatLng);
                 break;
 
             case R.id.five_miles_tv:
                 current_miles_tv.setText("5 \n Miles");
                 currentDistance = 5;
                 miles_LI.setVisibility(View.GONE);
-                //drawCircle(centerLatLng);
-                if (broadCastList != null)
-                    setRetailerInfo();
+                drawCircle(centerLatLng);
                 break;
 
             case R.id.two_miles_tv:
                 current_miles_tv.setText("2 \n Miles");
                 currentDistance = 2;
                 miles_LI.setVisibility(View.GONE);
-                //drawCircle(centerLatLng);
-                if (broadCastList != null)
-                    setRetailerInfo();
+                drawCircle(centerLatLng);
                 break;
             case R.id.icon_back:
                 maps_view.setVisibility(View.VISIBLE);
@@ -960,11 +929,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 listview_LI.setVisibility(View.VISIBLE);
                 break;
             case R.id.refresh_iv:
-                if (mCurrentLastLocation == null)
-                    return;
-                LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
-                        mCurrentLastLocation.getLongitude());
-                callService(mCurrentLatLng);
+                callService();
                 break;
         }
 
@@ -1123,9 +1088,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         autocomplte_places.setText(dbHelper.getAllSearchh().get(position).place);
         LatLng positions = new LatLng(dbHelper.getAllSearchh().get(position).lat, dbHelper.getAllSearchh().get(position).lang);
         centerLatLng = positions;
-        //drawCircle(positions);
-        if (broadCastList != null)
-            setRetailerInfo();
+        drawCircle(positions);
 
     }
 
@@ -1172,32 +1135,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             if (viewpager_LI.isShown())
                 viewpager_LI.setVisibility(View.GONE);
         }
-
-        if (gMap == null) {
-            return;
-        }
-//        if (!firstTime) {
-//            return;
-//        }
-        if (mUserMapClcikedmarker != null)
-            mUserMapClcikedmarker.remove();
-        LatLng targetLatLng = latLng;
-        if (!compareLatLng(targetLatLng, centerLatLng)) {
-            Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
-            addMarker(mCurrentLastLocation);
-            addMapClickedMarker(targetLatLng);
-            //drawCircle(targetLatLng);
-            centerLatLng = targetLatLng;
-            callService(centerLatLng);
-        }
-    }
-
-    public void addMapClickedMarker(LatLng latLng){
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title(USER_MAP_CLICKED_POSTION);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
-        mUserMapClcikedmarker = gMap.addMarker(markerOptions);
     }
 
     // Fetches all places from GooglePlaces AutoComplete Web Service
@@ -1250,7 +1187,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             super.onPostExecute(result);
 
             // Creating ParserTask
-            parserTask = new ParserTask();
+            parserTask = new BroadCastBackUp.ParserTask();
 
             // Starting Parsing the JSON string returned by Web Service
             parserTask.execute(result);
@@ -1354,7 +1291,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (asyncTask != null) {
             asyncTask.cancel(true);
         }
-        asyncTask = new GeocodeAsyncTask(location, isCurrent);
+        asyncTask = new BroadCastBackUp.GeocodeAsyncTask(location, isCurrent);
         asyncTask.execute();
     }
 
@@ -1418,9 +1355,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 search_ev.setText(place.getAddress());
                 LatLng position = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
                 centerLatLng = position;
-                //drawCircle(position);
-                if (broadCastList != null)
-                    setRetailerInfo();
+                drawCircle(position);
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
@@ -1600,4 +1535,5 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         }
         return builder.build();
     }
+
 }
