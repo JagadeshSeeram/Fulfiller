@@ -407,4 +407,15 @@ public class FullFillerApiWrapper {
         call.enqueue(callback);
         return call;
     }
+
+    public Call<Void> trackUserLocationCall(String authToken,HashMap<String,Object> detailsMap,
+                                        Callback<Void> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<Void> call = fullFillerApiHeader.locationTRackingCall(detailsMap.get("FulfillerId"),detailsMap.get("Lat"),
+        detailsMap.get("Long"),detailsMap.get("deviceID"),detailsMap.get("ZipCode"));
+        call.enqueue(callback);
+        return call;
+    }
 }

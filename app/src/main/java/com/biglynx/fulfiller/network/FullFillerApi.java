@@ -138,4 +138,10 @@ public interface FullFillerApi {
     @GET(HttpAdapter.RESET_PASSWORD)
     Call<Void> resetPassword(@Query("UserEmail") String email);
 
+    @FormUrlEncoded
+    @POST(HttpAdapter.LOCATION_TRACKING_API)
+    Call<Void> locationTRackingCall(@Field("FulfillerId") Object FulfillerId, @Field("Latitude") Object Latitude,
+                                    @Field("Longitude") Object Longitude, @Field("UniqueDeviceId") Object UniqueDeviceId,
+                                    @Field("ZipCode") Object ZipCode);
+
 }
