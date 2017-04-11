@@ -193,7 +193,7 @@
 
     <service android:name=".services.MyJobService"
         android:exported="false"
+        android:stopWithTask="true"
         ></service>
     </application>
-
 </manifest>
