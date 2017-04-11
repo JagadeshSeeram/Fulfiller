@@ -25,6 +25,7 @@ import com.biglynx.fulfiller.ui.FulfillmentFragment;
 import com.biglynx.fulfiller.ui.HomeFragment;
 import com.biglynx.fulfiller.ui.BroadCastFragment;
 import com.biglynx.fulfiller.ui.SettingsFragment;
+import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
 
 public class MainActivity extends FragmentActivity {
@@ -36,14 +37,18 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
-
-        if (Common.isNetworkAvailable(this) && Common.isGpsEnabled(this)) {
-            Log.e(TAG, "Starting LOcation Service :: " + count++);
+        if (count == 0) {
+            /*if (Common.isNetworkAvailable(this)) {
+                if (Common.isGpsEnabled(this)) {
+                    Log.e(TAG, "Starting LOcation Service :: " + count++);
+                }
+            } else {
+                AppUtil.toast(getApplicationContext(), getString(R.string.check_interent_connection));
+            }*/
+            count =+ count;
+            Log.e(TAG, "Starting LOcation Service :: " + count);
             startService(new Intent(this, MyJobService.class));
-        } else {
-            Common.showCustomDialog(this);
         }
-
 
         mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.tabFrameLayout);
@@ -127,6 +132,6 @@ public class MainActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "Destroyed....");
-        stopService(new Intent(this, MyJobService.class));
+        //stopService(new Intent(this, MyJobService.class));
     }
 }

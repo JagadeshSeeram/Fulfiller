@@ -17,8 +17,11 @@ import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.utils.AppPreferences;
+import com.biglynx.fulfiller.utils.AppUtil;
+import com.biglynx.fulfiller.utils.Common;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -37,27 +40,29 @@ import retrofit2.Response;
 public class MyJobService extends Service implements GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, LocationListener {
     private static final String TAG = "SyncService";
+    private static final String TAG_LOC = "SyncLocation";
     Handler handler = null;
     private final long INTERVAL = 120 * 1000;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
 
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        buildGoogleApiClient();
+        //buildGoogleApiClient();
         if (handler == null)
             handler = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG,"Service Started :: "+System.currentTimeMillis());
+                Log.d(TAG, "Service Started :: " + System.currentTimeMillis());
+                if(mGoogleApiClient == null)
+                    buildGoogleApiClient();
                 sendLocationToServer();
-                handler.postDelayed(this,INTERVAL);
+                handler.postDelayed(this, INTERVAL);
             }
         };
-        handler.postDelayed(runnable,0);
+        handler.postDelayed(runnable, 0);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -65,32 +70,34 @@ public class MyJobService extends Service implements GoogleApiClient.OnConnectio
     public void onDestroy() {
         if (mGoogleApiClient != null)
             mGoogleApiClient.disconnect();
+        Log.e(TAG, "Stoping the service :: " + System.currentTimeMillis());
         super.onDestroy();
     }
 
     private void sendLocationToServer() {
         if (mCurrentLocation == null)
             return;
-        HashMap<String,Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("FulfillerId", AppPreferences.getInstance(getApplicationContext()).getSignInResult() != null ?
                 AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("FulfillerId") : "");
-        map.put("Lat",mCurrentLocation.getLatitude());
-        map.put("Long",mCurrentLocation.getLongitude());
-        map.put("deviceID",getDeviceID());
+        map.put("Lat", mCurrentLocation.getLatitude());
+        map.put("Long", mCurrentLocation.getLongitude());
+        map.put("deviceID", getDeviceID());
         map.put("ZipCode", AppPreferences.getInstance(getApplicationContext()).getSignInResult() != null ?
-                AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("ZipCode") : "");        FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
+                AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("ZipCode") : "");
+        FullFillerApiWrapper apiWrapper = new FullFillerApiWrapper();
         apiWrapper.trackUserLocationCall(AppPreferences.getInstance(getApplicationContext()).getSignInResult() != null ?
                         AppPreferences.getInstance(getApplicationContext()).getSignInResult().optString("AuthNToken") : "",
                 map, new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful())
-                            Log.d(TAG,"API Success"+System.currentTimeMillis());
+                            Log.d(TAG, "API Success :: " + System.currentTimeMillis());
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Log.d(TAG,"API Failure"+System.currentTimeMillis());
+                        Log.d(TAG, "API Failure :: " + System.currentTimeMillis());
                     }
                 });
 
@@ -100,7 +107,8 @@ public class MyJobService extends Service implements GoogleApiClient.OnConnectio
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String deviceID = telephonyManager.getDeviceId();
         Log.d(TAG, "Device ID :: " + deviceID);
-        return deviceID;    }
+        return deviceID;
+    }
 
     private void buildGoogleApiClient() {
         if (mGoogleApiClient == null) {
@@ -129,7 +137,7 @@ public class MyJobService extends Service implements GoogleApiClient.OnConnectio
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
 
@@ -147,10 +155,10 @@ public class MyJobService extends Service implements GoogleApiClient.OnConnectio
     public void onLocationChanged(Location location) {
         if (mCurrentLocation != null && location != null &&
                 (mCurrentLocation.getLatitude() == location.getLatitude() &&
-                mCurrentLocation.getLongitude() == location.getLongitude())){
+                        mCurrentLocation.getLongitude() == location.getLongitude())) {
             return;
         }
         mCurrentLocation = location;
-        Log.d("TAG- CURRENT", mCurrentLocation.getLatitude() + " -- " + mCurrentLocation.getLongitude());
+        Log.d(TAG_LOC, mCurrentLocation.getLatitude() + " -- " + mCurrentLocation.getLongitude());
     }
 }
