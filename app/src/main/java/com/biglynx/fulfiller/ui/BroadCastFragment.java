@@ -194,10 +194,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             @Override
             public void onAnimationEnd(Animation animation) {
                 viewpager_LI.setVisibility(View.GONE);
-                for (BroadCast broadCast : broadCastList){
+                for (BroadCast broadCast : broadCastList) {
                     if (broadCast.isClicked)
                         broadCast.isClicked = false;
-                    setUpMap(broadCast,R.drawable.marks_bgs,broadCastList.indexOf(broadCast));
+                    setUpMap(broadCast, R.drawable.marks_bgs, broadCastList.indexOf(broadCast));
                 }
             }
 
@@ -218,6 +218,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(mCurrentLastLocation);
         } else
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");*/
+        buildGoogleApiClient();
 
         return v;
     }
@@ -549,27 +550,27 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                if (Common.isNetworkAvailable(getActivity())){
-                    if (Common.isGpsEnabled(getActivity())){
+                if (Common.isNetworkAvailable(getActivity())) {
+                    if (Common.isGpsEnabled(getActivity())) {
                         if (mGoogleApiClient == null) {
                             buildGoogleApiClient();
                         }
-                    }else{
-                        Common.showDialog(getActivity());
+                    } else {
+                        Common.showCustomDialog(getActivity());
                     }
-                }else
+                } else
                     AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
             }
         } else {
-            if (Common.isNetworkAvailable(getActivity())){
-                if (Common.isGpsEnabled(getActivity())){
+            if (Common.isNetworkAvailable(getActivity())) {
+                if (Common.isGpsEnabled(getActivity())) {
                     if (mGoogleApiClient == null) {
                         buildGoogleApiClient();
                     }
-                }else{
+                } else {
                     Common.showDialog(getActivity());
                 }
-            }else
+            } else
                 AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
         }
         if (mCurrentLastLocation != null) {
@@ -588,12 +589,14 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
@@ -761,15 +764,15 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     if (ContextCompat.checkSelfPermission(getActivity(),
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
-                        if (Common.isNetworkAvailable(getActivity())){
-                            if (Common.isGpsEnabled(getActivity())){
+                        if (Common.isNetworkAvailable(getActivity())) {
+                            if (Common.isGpsEnabled(getActivity())) {
                                 if (mGoogleApiClient == null) {
                                     buildGoogleApiClient();
                                 }
-                            }else{
+                            } else {
                                 Common.showDialog(getActivity());
                             }
-                        }else
+                        } else
                             AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
                     } else {
 
@@ -1118,9 +1121,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     Log.d("distance is", "" + dis + "," + currentDistance * 1.609 * 1000);
                     if (dis <= currentDistance * 1.609 * 1000) {
                         if (broadCast.isClicked)
-                            setUpMap(broadCast,R.drawable.marks_bg_orgs, i);
+                            setUpMap(broadCast, R.drawable.marks_bg_orgs, i);
                         else
-                            setUpMap(broadCast,R.drawable.marks_bgs, i);
+                            setUpMap(broadCast, R.drawable.marks_bgs, i);
 
                     }
                 }
@@ -1167,7 +1170,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-    public void addMapClickedMarker(LatLng latLng){
+    public void addMapClickedMarker(LatLng latLng) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(USER_MAP_CLICKED_POSTION);
