@@ -1162,7 +1162,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         LatLng targetLatLng = latLng;
         if (!compareLatLng(targetLatLng, centerLatLng)) {
             Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
-            addMarker(mCurrentLastLocation);
+            //addMarker(mCurrentLastLocation);
             addMapClickedMarker(targetLatLng);
             centerLatLng = targetLatLng;
             callService(centerLatLng);
