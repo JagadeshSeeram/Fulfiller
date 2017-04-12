@@ -1,18 +1,26 @@
 package com.biglynx.fulfiller.ui;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -69,6 +77,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -652,12 +661,25 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             return;
         }
         //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        final LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(CURRENT_POSTION);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_n));
+//        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
+        markerOptions.icon(createBitmap(40));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
+        ValueAnimator ani = ValueAnimator.ofFloat(1, 0.5f); //change for (0,1) if you want a fade in
+        ani.setDuration(1000);
+        ani.setRepeatMode(ValueAnimator.REVERSE);
+        ani.setRepeatCount(ValueAnimator.INFINITE);
+        ani.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mCurrLocationMarker.setAlpha((float) animation.getAnimatedValue());
+            }
+        });
+        ani.start();
+
     }
 
     private void drawCircle(LatLng latLng) {
@@ -1167,6 +1189,17 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(centerLatLng);
             drawCircle(centerLatLng);
         }
+    }
+
+
+    public BitmapDescriptor createBitmap(int dimension) {
+        Bitmap mDotMarkerBitmap = Bitmap.createBitmap(dimension, dimension, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mDotMarkerBitmap);
+        Drawable shape = getResources().getDrawable(R.drawable.marker_base_shape);
+        shape.setBounds(0, 0, mDotMarkerBitmap.getWidth(), mDotMarkerBitmap.getHeight());
+        shape.draw(canvas);
+
+        return BitmapDescriptorFactory.fromBitmap(mDotMarkerBitmap);
     }
 
     public void addMapClickedMarker(LatLng latLng) {
