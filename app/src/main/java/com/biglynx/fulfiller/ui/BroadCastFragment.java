@@ -50,7 +50,6 @@ import com.biglynx.fulfiller.database.DBHelper;
 import com.biglynx.fulfiller.models.BroadCast;
 import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.RecentSearch;
-import com.biglynx.fulfiller.models.RetailerLocationAddress;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.services.PlaceJSONParser;
 import com.biglynx.fulfiller.utils.AppPreferences;
@@ -657,7 +656,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(CURRENT_POSTION);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_n));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
     }
 
