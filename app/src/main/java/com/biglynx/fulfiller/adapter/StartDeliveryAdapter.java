@@ -57,7 +57,7 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.startdelivery_ord_items, null);
+        View view = inflater.inflate(R.layout.startdelivery_ord_items_new, null);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -68,7 +68,7 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(ordersList.get(position).CustomerPhone, "US");
             String usFormatNUmber = phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-            String finalNumber = usFormatNUmber.replace(" ", "-");
+            String finalNumber = usFormatNUmber.split(" ")[1];
             mViewHolder.phoneno_tv.setText(finalNumber);
 
         } catch (NumberParseException e) {
@@ -77,7 +77,7 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
         }
         mViewHolder.address_tv.setText(ordersList.get(position).OrderAddress.AddressLine1 + ", " +
                 ordersList.get(position).OrderAddress.City + ", " +
-                ordersList.get(position).OrderAddress.State + " " +
+                ordersList.get(position).OrderAddress.State + ", " +
                 ordersList.get(position).OrderAddress.CountryName);
         mViewHolder.copy_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,14 +113,14 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
         });
         if (ordersList.get(position).DeliveryStatusId == 4) {
             mViewHolder.spinner.setSelection(2);
-            mViewHolder.time_tv.setText("");
+//            mViewHolder.time_tv.setText("");
             myAdapter.notifyDeliveryID(4);
         } else if (ordersList.get(position).DeliveryStatusId == 5) {
             mViewHolder.spinner.setSelection(1);
             myAdapter.notifyDeliveryID(5);
         } else {
             mViewHolder.spinner.setSelection(0);
-            mViewHolder.time_tv.setText("");
+  //          mViewHolder.time_tv.setText("");
         }
 
 
@@ -184,7 +184,7 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
             phoneno_tv = (TextView) item.findViewById(R.id.phoneno_tv);
             address_tv = (TextView) item.findViewById(R.id.address_tv);
             copy_tv = (TextView) item.findViewById(R.id.copy_tv);
-            time_tv = (TextView) item.findViewById(R.id.time_tv);
+    //        time_tv = (TextView) item.findViewById(R.id.time_tv);
             openinmap_tv = (TextView) item.findViewById(R.id.openinmap_tv);
             spinner = (Spinner) item.findViewById(R.id.spinner);
             spinnerLayout = (RelativeLayout) item.findViewById(R.id.layout_spinner_status);

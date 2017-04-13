@@ -23,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.ui.EditProfileActivity;
 import com.biglynx.fulfiller.ui.InitialScreen;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -388,5 +389,14 @@ public class AppUtil {
         }
         double min = Double.parseDouble(seconds) / 60;
         return String.format(".%2f", min);
+    }
+
+    public static boolean checkValidUserRoleType(SignInResult signInResult) {
+        if (signInResult == null)
+            return false;
+        else if (signInResult.Role.equalsIgnoreCase("DeliveryPartner") ||
+                signInResult.Role.equalsIgnoreCase("DeliveryPerson"))
+            return true;
+        return false;
     }
 }

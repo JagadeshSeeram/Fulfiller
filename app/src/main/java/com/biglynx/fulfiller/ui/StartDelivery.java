@@ -968,7 +968,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(mInterest.Fulfillments.RetailerLocation.LocationContactPhone, "US");
             String usFormatNUmber = phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
-            String finalNumber = usFormatNUmber.replace(" ", "-");
+            String finalNumber = usFormatNUmber.split(" ")[1];
             Log.d(StartDelivery.class.getSimpleName(), "usFormatNUmber :: " + usFormatNUmber);
             Log.d(StartDelivery.class.getSimpleName(), "finalNumber :: " + finalNumber);
             phoneno_tv.setText(finalNumber);

@@ -35,6 +35,8 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:paddingRight="10dp"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:gravity="center"
                         android:weightSum="1">
 
                         <com.biglynx.fulfiller.fonts.CustomFontSemiBold
@@ -44,6 +46,7 @@
                             android:layout_gravity="center|end"
                             android:layout_weight="0.4"
                             android:gravity="center|end"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:maxLines="2"
                             android:padding="5dp"
                             android:text="Time remaining:"
@@ -56,7 +59,7 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center|end"
                             android:layout_weight="0.6"
-                            android:gravity="center|end"
+                            android:gravity="center|start"
                             android:orientation="horizontal">
 
                             <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -92,6 +95,7 @@
                         android:background="#8F8F8F"
                         android:gravity="center"
                         android:orientation="vertical"
+                        android:visibility="visible"
                         android:padding="@dimen/dp_10">
 
                         <LinearLayout
@@ -547,15 +551,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
+                        android:layout_margin="@dimen/dp_10"
                         android:background="#DADADA"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/ef_border"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@color/white"
                             android:orientation="vertical">
 
                             <com.biglynx.fulfiller.fonts.CustomFontBold
@@ -746,8 +750,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_marginRight="@dimen/dp_10"
                             android:padding="@dimen/dp_10"
                             android:background="@color/white"
                             android:visibility="gone">
@@ -851,8 +853,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="20dp"
-                                    android:layout_marginLeft="@dimen/dp_10"
-                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/dp_5">
 
                                     <CheckBox
@@ -880,7 +881,6 @@
                             </LinearLayout>
                             <!--Confirm delivery layout end-->
 
-
                         </LinearLayout>
                         <!--End of delivery customer details-->
 
@@ -890,6 +890,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
+                            android:background="@color/white"
                             android:visibility="gone">
 
 
@@ -1034,6 +1035,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
+                            android:background="@color/white"
                             android:visibility="gone">
 
                             <LinearLayout

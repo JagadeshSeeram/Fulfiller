@@ -668,10 +668,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(CURRENT_POSTION);
-//        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_ics));
+        //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_n));
         markerOptions.icon(createBitmap(40));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
-        ValueAnimator ani = ValueAnimator.ofFloat(1, 0.5f); //change for (0,1) if you want a fade in
+        /*ValueAnimator ani = ValueAnimator.ofFloat(1, 0.5f); //change for (0,1) if you want a fade in
         ani.setDuration(1000);
         ani.setRepeatMode(ValueAnimator.REVERSE);
         ani.setRepeatCount(ValueAnimator.INFINITE);
@@ -682,7 +682,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             }
         });
         ani.start();
-
+*/
     }
 
     private void drawCircle(LatLng latLng) {
@@ -694,8 +694,12 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (latLng.longitude == 0 || latLng.latitude == 0) {
             return;
         }
+        double radiusInMeters = currentDistance * 1.609 * 1000;
         gMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        gMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        if (currentDistance == 15)
+            gMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+        else
+            gMap.animateCamera(CameraUpdateFactory.zoomTo(getZoomLevel(radiusInMeters)));
         if (broadCastList != null)
             setRetailerInfo();
         /*Log.d("TAG- DRAWN", "DRAWN");
@@ -716,10 +720,14 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         }*/
     }
 
-    public int getZoomLevel(CircleOptions circle) {
+    public int getZoomLevel(double radius) {
         int zoomLevel = 0;
-        if (circle != null) {
+        /*if (circle != null) {
             double radius = circle.getRadius();
+            double scale = radius / 500;
+            zoomLevel = (int) (16 - Math.log(scale) / Math.log(2));
+        }*/
+        if (radius != 0) {
             double scale = radius / 500;
             zoomLevel = (int) (16 - Math.log(scale) / Math.log(2));
         }
@@ -933,6 +941,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 current_miles_tv.setText("15 \n Miles");
                 currentDistance = 15;
                 miles_LI.setVisibility(View.GONE);
+                if (centerLatLng == null) {
+                    if (mCurrentLastLocation != null)
+                        centerLatLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
+                }
                 drawCircle(centerLatLng);
                 break;
 
@@ -940,6 +952,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 current_miles_tv.setText("10 \n Miles");
                 currentDistance = 10;
                 miles_LI.setVisibility(View.GONE);
+                if (centerLatLng == null) {
+                    if (mCurrentLastLocation != null)
+                        centerLatLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
+                }
                 drawCircle(centerLatLng);
                 break;
 
@@ -947,6 +963,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 current_miles_tv.setText("5 \n Miles");
                 currentDistance = 5;
                 miles_LI.setVisibility(View.GONE);
+                if (centerLatLng == null) {
+                    if (mCurrentLastLocation != null)
+                        centerLatLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
+                }
                 drawCircle(centerLatLng);
                 break;
 
@@ -954,6 +974,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 current_miles_tv.setText("2 \n Miles");
                 currentDistance = 2;
                 miles_LI.setVisibility(View.GONE);
+                if (centerLatLng == null) {
+                    if (mCurrentLastLocation != null)
+                        centerLatLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
+                }
                 drawCircle(centerLatLng);
                 break;
             case R.id.icon_back:

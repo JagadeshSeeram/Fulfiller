@@ -57,7 +57,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     private FullFillerApiWrapper apiWrapper;
     FulfillerPendingAdapter fulfillerPendingAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private static String clickedTab = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +223,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         awating_tv.setOnClickListener(this);
         confirmed_tv.setOnClickListener(this);
 
-        setTabPs();
+        setIntialTabDesign();
 
         apiWrapper = new FullFillerApiWrapper();
 
@@ -232,8 +232,55 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     }
 
     private void setTabPs() {
-        if (!headerbar_LI.isShown())
-            headerbar_LI.setVisibility(View.VISIBLE);
+        if (waiting){
+            //show waiting tab in Active, show header layout
+            if (!headerbar_LI.isShown())
+                headerbar_LI.setVisibility(View.VISIBLE);
+            setIntialTabDesign();
+        }else if (confirm){
+            //show confirmed in Active,show Header layout
+            if (!headerbar_LI.isShown())
+                headerbar_LI.setVisibility(View.VISIBLE);
+            if (confirmdFulfillerList != null && confirmdFulfillerList.size() > 0){
+                if (!fulfiment_lv.isShown())
+                fulfiment_lv.setVisibility(View.VISIBLE);
+                if (nofulfillments_tv.isShown())
+                    nofulfillments_tv.setVisibility(View.GONE);
+            }
+            active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
+            past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
+            active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+            past_tv.setTextColor(Color.parseColor("#FFFFFF"));
+            awating_tv.setVisibility(View.VISIBLE);
+            confirmed_tv.setVisibility(View.VISIBLE);
+            awating_tv.setTextColor(Color.parseColor("#FFFFFF"));
+            confirmed_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }else if (completed){
+            //show Past, dont show header layout
+            if (headerbar_LI.isShown())
+                headerbar_LI.setVisibility(View.GONE);
+            if (compltedFulfillerList != null && compltedFulfillerList.size() > 0){
+                if (!fulfiment_lv.isShown())
+                    fulfiment_lv.setVisibility(View.VISIBLE);
+                if (nofulfillments_tv.isShown())
+                    nofulfillments_tv.setVisibility(View.GONE);
+            }
+            active_tv.setBackgroundResource(R.drawable.right_roundedcorner_trans);
+            past_tv.setBackgroundResource(R.drawable.right_roundedcorner);
+            past_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+            active_tv.setTextColor(Color.parseColor("#FFFFFF"));
+            awating_tv.setVisibility(View.GONE);
+            confirmed_tv.setVisibility(View.GONE);
+        }else {
+            //APi Failed show no fulfillments, dont show list view, we dont care about header layout here
+            // because api may fail in any case(active or past)
+            //waiting,confirm,complete will be false initially.
+            fulfiment_lv.setVisibility(View.GONE);
+            nofulfillments_tv.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setIntialTabDesign(){
         active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
         past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
         active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -249,6 +296,8 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.active_tv:
                 headerbar_LI.setVisibility(View.VISIBLE);
+                if(completed)
+                    completed = false;
                 active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
                 past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
                 active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
