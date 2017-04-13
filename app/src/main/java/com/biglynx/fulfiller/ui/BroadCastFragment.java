@@ -134,6 +134,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     PlaceAutocompleteFragment search_ev;
     boolean search_loc = false, locaton_show = false;
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
+
+
     Marker previousMarker;
     HashMap<String, Integer> markervalues = new HashMap<>();
 
@@ -375,6 +377,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                         LatLng position = new LatLng(latitude, longitude);
                         centerLatLng = position;
                         drawCircle(position);
+                        addMapClickedMarker(centerLatLng);
                         dbHelper.insertContact(new RecentSearch("1", googlePlacesresult.get(pos).get("description"), latitude, longitude));
                     }
                 } catch (IOException e) {
@@ -1126,6 +1129,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         LatLng positions = new LatLng(dbHelper.getAllSearchh().get(position).lat, dbHelper.getAllSearchh().get(position).lang);
         centerLatLng = positions;
         drawCircle(positions);
+        addMapClickedMarker(centerLatLng);
     }
 
     public void setRetailerInfo() {
@@ -1178,8 +1182,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 //        if (!firstTime) {
 //            return;
 //        }
-        if (mUserMapClcikedmarker != null)
-            mUserMapClcikedmarker.remove();
+
         LatLng targetLatLng = latLng;
         if (!compareLatLng(targetLatLng, centerLatLng)) {
             Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
@@ -1203,6 +1206,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void addMapClickedMarker(LatLng latLng) {
+        if (mUserMapClcikedmarker != null)
+            mUserMapClcikedmarker.remove();
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(USER_MAP_CLICKED_POSTION);
