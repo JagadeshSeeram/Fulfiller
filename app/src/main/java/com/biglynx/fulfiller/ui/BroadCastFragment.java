@@ -663,6 +663,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (location == null) {
             return;
         }
+        if (mCurrLocationMarker != null)
+            mCurrLocationMarker.remove();
         //Place current location marker
         final LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
