@@ -5,38 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.biglynx.fulfiller.BuildConfig;
 import com.biglynx.fulfiller.R;
-import com.biglynx.fulfiller.adapter.CustomerAddrs_Adapter;
-import com.biglynx.fulfiller.adapter.FulfillerConfirmAdapter;
-import com.biglynx.fulfiller.adapter.FulfillerPendingAdapter;
 import com.biglynx.fulfiller.adapter.VehiclesAdapter;
-import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.Vehicles;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
-import com.biglynx.fulfiller.network.HttpAdapter;
-import com.biglynx.fulfiller.network.NetworkOperationListener;
-import com.biglynx.fulfiller.network.NetworkResponse;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
-import com.facebook.FacebookSdk;
-import com.facebook.LoggingBehavior;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

@@ -226,6 +226,7 @@
                                 android:gravity="center"
                                 android:text="Copy"
                                 android:textColor="#FFFFFF"
+                                android:id="@+id/copy_retailer_adrs_tv"
                                 android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
 
                         </LinearLayout>

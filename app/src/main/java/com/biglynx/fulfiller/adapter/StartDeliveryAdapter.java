@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.Orders;
 import com.biglynx.fulfiller.ui.StartDelivery;
+import com.biglynx.fulfiller.utils.AppUtil;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -83,16 +84,8 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
             @Override
             public void onClick(View view) {
                 try {
-                   /* android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
-                            .getSystemService(context.CLIPBOARD_SERVICE);
-                    clipboard.setText("Confirmation code: " + interest.Fulfillments.FulfillerInterests.ConfirmationCode + "\nFulfillment Id : " +
-                            interest.Fulfillments.FulfillmentId);*/
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
-                            mContext.getSystemService(context.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData
-                            .newPlainText("Details", mViewHolder.address_tv.getText().toString().trim());
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(mContext, "Copied to Clipboard!!", Toast.LENGTH_SHORT).show();
+                    AppUtil.copyText(mContext,"Details",mViewHolder.address_tv.getText().toString().trim());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

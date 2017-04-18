@@ -3,7 +3,6 @@ package com.biglynx.fulfiller.ui;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
@@ -13,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -24,11 +25,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,14 +36,15 @@ import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.adapter.FulfillerConfirmAdapter;
 import com.biglynx.fulfiller.adapter.FulfillerPendingAdapter;
 import com.biglynx.fulfiller.app.MyApplication;
+import com.biglynx.fulfiller.listeners.OnRecyclerItemClickListener;
 import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.FullfillerKpi;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
-import com.biglynx.fulfiller.network.HttpAdapter;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
+import com.biglynx.fulfiller.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -66,13 +66,14 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
  *
 */
 
-public class HomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends Fragment implements View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener,OnRecyclerItemClickListener {
 
     List<FulfillersDTO> compltedFulfillerList;
     List<FulfillersDTO> compltedFulfillerList_less;
     List<FulfillersDTO> pendingdFulfillerList;
     List<FulfillersDTO> pendingdFulfillerList_less;
-    ListView confirmList, waitinglist_LI;
+    RecyclerView confirmList, waitinglist_LI;
     FulfillerConfirmAdapter fulfillerConfirmAdapter;
     FulfillerPendingAdapter fulfillerPendingAdapter;
     LocationManager locationManager;
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private static final String TAG = HomeFragment.class.getSimpleName();
     public static final int CANCEL_INTEREST = 1;
     private RelativeLayout noItems_confirm_LI,noItems_wait_LI;
+    private RecyclerView.LayoutManager mConfrirmListManager,mPendingListManager;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -156,14 +158,48 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         View v = inflater.inflate(R.layout.homeactivity, container, false);
         showNoticeDialog();
 
+        initViews(v);
+
+        /*waitinglist_LI.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivityForResult(new Intent(getActivity(), InterestDetails.class)
+                        .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
+                        .putExtra("completed", "not"), CANCEL_INTEREST);
+            }
+        });*/
+        /*confirmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("confir id", "" + compltedFulfillerList.get(position).FulfillerInterestId);
+                startActivity(new Intent(getActivity(), InterestDetails.class)
+                        .putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId)
+                        .putExtra("completed", "completed"));
+            }
+        });*/
+
+        apiWrapper = new FullFillerApiWrapper();
+        callServices(true);
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Common.showGPSDisabledAlertToUser(getContext());
+        }
+
+        switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
+
+        return v;
+    }
+
+    private void initViews(View v) {
         compltedFulfillerList = new ArrayList<>();
         pendingdFulfillerList = new ArrayList<>();
         compltedFulfillerList_less = new ArrayList<>();
         pendingdFulfillerList_less = new ArrayList<>();
 
         switchCompat = (SwitchCompat) v.findViewById(R.id.Switch);
-        confirmList = (ListView) v.findViewById(R.id.confirmlist_LI);
-        waitinglist_LI = (ListView) v.findViewById(R.id.waitinglist_LI);
+        confirmList = (RecyclerView) v.findViewById(R.id.confirmlist_LI);
+        waitinglist_LI = (RecyclerView) v.findViewById(R.id.waitinglist_LI);
         userimage_imv = (ImageView) v.findViewById(R.id.userimage_imv);
         complete_sm_tv = (TextView) v.findViewById(R.id.complete_sm_tv);
         waiting_sm_tv = (TextView) v.findViewById(R.id.waiting_sm_tv);
@@ -183,10 +219,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         waiting_sm_tv.setOnClickListener(this);
         complete_sm_tv.setOnClickListener(this);
 
-        if (AppPreferences.getInstance(getActivity()).getSignInResult() == null) {
-            // TODO Logout
-            return v;
-        }
+        mConfrirmListManager = new LinearLayoutManager(getActivity());
+        mPendingListManager = new LinearLayoutManager(getActivity());
+        confirmList.setHasFixedSize(true);
+        waitinglist_LI.setHasFixedSize(true);
+        confirmList.setLayoutManager(mConfrirmListManager);
+        waitinglist_LI.setLayoutManager(mPendingListManager);
+        fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(),compltedFulfillerList,this);
+        fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(),pendingdFulfillerList,true,this);
+        confirmList.setAdapter(fulfillerConfirmAdapter);
+        waitinglist_LI.setAdapter(fulfillerPendingAdapter);
+
 
         if (AppPreferences.getInstance(getActivity()).getSignInResult() != null) {
             Log.e(HomeFragment.class.getSimpleName(), "AuthToken :: " + AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken"));
@@ -223,35 +266,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         switchCompat.setChecked(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                 AppPreferences.getInstance(getActivity()).getSignInResult().optBoolean("ReadyFufill") : false);
 
-        waitinglist_LI.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivityForResult(new Intent(getActivity(), InterestDetails.class)
-                        .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
-                        .putExtra("completed", "not"), CANCEL_INTEREST);
-            }
-        });
-        confirmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("confir id", "" + compltedFulfillerList.get(position).FulfillerInterestId);
-                startActivity(new Intent(getActivity(), InterestDetails.class)
-                        .putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId)
-                        .putExtra("completed", "completed"));
-            }
-        });
 
-        apiWrapper = new FullFillerApiWrapper();
-        callServices(true);
-
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Common.showGPSDisabledAlertToUser(getContext());
-        }
-
-        switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
-
-        return v;
     }
 
     @Override
@@ -452,9 +467,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                         complete_sm_tv.setVisibility(View.VISIBLE);
                                     else
                                         complete_sm_tv.setVisibility(View.GONE);
-                                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
-                                    confirmList.setAdapter(fulfillerConfirmAdapter);
-                                    Common.setListViewHeightBasedOnItems(confirmList);
+                                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
+                                    confirmList.setAdapter(fulfillerConfirmAdapter);*/
+                                    fulfillerConfirmAdapter.setList(compltedFulfillerList_less);
+                                    //Common.setListViewHeightBasedOnItems(confirmList);
                                     noItems_confirm_LI.setVisibility(View.GONE);
                                     confirmList.setVisibility(View.VISIBLE);
                                 } else {
@@ -467,9 +483,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                                         waiting_sm_tv.setVisibility(View.VISIBLE);
                                     else
                                         waiting_sm_tv.setVisibility(View.GONE);
-                                    fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
-                                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);
-                                    Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                                   /* fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
+                                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);*/
+                                    fulfillerPendingAdapter.setList(pendingdFulfillerList_less);
+                                    //Common.setListViewHeightBasedOnItems(waitinglist_LI);
                                     noItems_wait_LI.setVisibility(View.GONE);
                                     waitinglist_LI.setVisibility(View.VISIBLE);
                                 } else {
@@ -559,14 +576,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             case R.id.waiting_sm_tv:
 
                 if (waiting_sm_tv.getText().toString().equalsIgnoreCase("See More")) {
-                    fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList, true);
-                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);
-                    Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    /*fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList, true);
+                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);*/
+                    //Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    fulfillerPendingAdapter.setList(pendingdFulfillerList);
+
                     waiting_sm_tv.setText("See Less");
                 } else if (waiting_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
-                    fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
-                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);
-                    Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    /*fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
+                    waitinglist_LI.setAdapter(fulfillerPendingAdapter);*/
+                    //Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    fulfillerPendingAdapter.setList(pendingdFulfillerList_less);
                     waiting_sm_tv.setText("See More");
                 }
                 break;
@@ -574,14 +594,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
                 if (complete_sm_tv.getText().toString().equalsIgnoreCase("See More")) {
 
-                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList);
-                    confirmList.setAdapter(fulfillerConfirmAdapter);
-                    Common.setListViewHeightBasedOnItems(confirmList);
+                    fulfillerConfirmAdapter.setList(compltedFulfillerList);
+                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList);
+                    confirmList.setAdapter(fulfillerConfirmAdapter);*/
+                    //Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See Less");
                 } else if (complete_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
-                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
-                    confirmList.setAdapter(fulfillerConfirmAdapter);
-                    Common.setListViewHeightBasedOnItems(confirmList);
+                    fulfillerConfirmAdapter.setList(compltedFulfillerList_less);
+                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
+                    confirmList.setAdapter(fulfillerConfirmAdapter);*/
+                   // Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See More");
                 }
                 break;
@@ -632,5 +654,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onRefresh() {
         callServices(false);
+    }
+
+    @Override
+    public void onRecyclerItemClcik(String tag, int position) {
+        if (tag.equals(Constants.PENDING)){
+            startActivityForResult(new Intent(getActivity(), InterestDetails.class)
+                    .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
+                    .putExtra("completed", "not"), CANCEL_INTEREST);
+        }else {
+            Log.d("confir id", "" + compltedFulfillerList.get(position).FulfillerInterestId);
+            startActivity(new Intent(getActivity(), InterestDetails.class)
+                    .putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId)
+                    .putExtra("completed", "completed"));
+        }
     }
 }

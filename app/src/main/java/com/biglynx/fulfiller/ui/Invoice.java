@@ -134,7 +134,7 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
             fixedprice_tv.setText("Fixed Price " + AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).Amount) + " $ ");
             subtotal.setText("$ " + AppUtil.getTwoDecimals(broadCast.Fulfillments.get(positon).Amount));
             float value = Float.parseFloat(String.valueOf((broadCast.Fulfillments.get(positon).Amount) * (10 / 100.0f)));
-            servicefee_tv.setText("" + value);
+            servicefee_tv.setText("" + AppUtil.getTwoDecimals(value));
             totalpay_tv.setText("$ " + AppUtil.getTwoDecimals((broadCast.Fulfillments.get(positon).Amount) - value));
             finalAmount = (broadCast.Fulfillments.get(positon).Amount) - value;
 

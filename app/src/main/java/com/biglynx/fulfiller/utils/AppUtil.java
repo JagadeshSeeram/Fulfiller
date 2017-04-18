@@ -213,19 +213,15 @@ public class AppUtil {
         return (180.0d * rad) / 3.141592653589793d;
     }
 
-    public static void copyStream(InputStream is, OutputStream os) {
-        try {
-            byte[] bytes = new byte[Barcode.UPC_E];
-            while (true) {
-                int count = is.read(bytes, 0, Barcode.UPC_E);
-                if (count != -1) {
-                    os.write(bytes, 0, count);
-                } else {
-                    return;
-                }
-            }
-        } catch (Exception e) {
-        }
+    public static void copyText(Context mContext, String key, String textToCopy) {
+        if (!AppUtil.ifNotEmpty(textToCopy))
+            textToCopy = " ";
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
+                mContext.getSystemService(context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData
+                .newPlainText(key, textToCopy);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(mContext, "Copied to Clipboard!!", Toast.LENGTH_SHORT).show();
     }
 
     public static boolean hasLoginSession() {
@@ -348,7 +344,7 @@ public class AppUtil {
         }
     }
 
-    public static String formatTodayDate(Date date){
+    public static String formatTodayDate(Date date) {
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -358,7 +354,7 @@ public class AppUtil {
             displayDateFormat.setTimeZone(TimeZone.getDefault());
             String result = displayDateFormat.format(date);
             return result;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return " ";

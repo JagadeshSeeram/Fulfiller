@@ -248,16 +248,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <ListView
+                            <android.support.v7.widget.RecyclerView
                                 android:id="@+id/waitinglist_LI"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:divider="@color/seperator_color"
-                                android:dividerHeight="0.5dp"
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp">
 
-                            </ListView>
+                            </android.support.v7.widget.RecyclerView>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -331,7 +329,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <ListView
+                            <android.support.v7.widget.RecyclerView
                                 android:id="@+id/confirmlist_LI"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -340,7 +338,7 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp">
 
-                            </ListView>
+                            </android.support.v7.widget.RecyclerView>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

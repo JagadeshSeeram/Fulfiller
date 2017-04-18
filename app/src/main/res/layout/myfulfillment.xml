@@ -111,16 +111,15 @@
                 android:layout_height="match_parent"
                 android:background="#DADADA"
                 >
-                <ListView
+                <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/fulfiment_lv"
-                    android:divider="#353944"
                     android:layout_margin="@dimen/dp_10"
                     android:background="#FFFFFF"
                     android:visibility="visible"
-                    android:dividerHeight="0.1dp">
-                </ListView>
+                    >
+                </android.support.v7.widget.RecyclerView>
 
                 <com.biglynx.fulfiller.fonts.CustomFontBold
                     android:layout_width="wrap_content"

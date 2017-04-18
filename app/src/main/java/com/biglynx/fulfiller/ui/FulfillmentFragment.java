@@ -8,18 +8,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
-import com.biglynx.fulfiller.adapter.FulfillerConfirmAdapter;
 import com.biglynx.fulfiller.adapter.FulfillerPendingAdapter;
+import com.biglynx.fulfiller.listeners.OnRecyclerItemClickListener;
 import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.utils.AppPreferences;
@@ -42,14 +42,14 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
  *
  */
 
-public class FulfillmentFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FulfillmentFragment extends Fragment implements View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener, OnRecyclerItemClickListener {
 
     List<FulfillersDTO> compltedFulfillerList;
     List<FulfillersDTO> waitingFulfillerList;
     List<FulfillersDTO> confirmdFulfillerList;
 
-    ListView fulfiment_lv;
-    FulfillerConfirmAdapter fulfillerConfirmAdapter;
+    RecyclerView fulfiment_lv;
     TextView active_tv, past_tv, awating_tv, confirmed_tv, nofulfillments_tv;
     boolean completed = false, waiting = false, confirm = false;
     LinearLayout headerbar_LI;
@@ -58,6 +58,9 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     FulfillerPendingAdapter fulfillerPendingAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private static String clickedTab = null;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private final String TAG = "FulflmntFrag";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= 21) {
-            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         }
         View v = inflater.inflate(R.layout.myfulfillment, container, false);
 
@@ -89,7 +92,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
             AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
 
 
-        fulfiment_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*fulfiment_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -109,7 +112,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 startActivity(intent);
 
             }
-        });
+        });*/
 
         return v;
     }
@@ -142,9 +145,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                             if (waitingFulfillerList.size() > 0) {
                                 fulfiment_lv.setVisibility(View.VISIBLE);
                                 nofulfillments_tv.setVisibility(View.GONE);
-                                fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
+                                /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
                                 fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
-                                Common.setListViewHeightBasedOnItems(fulfiment_lv);
+                                Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
+                                fulfillerPendingAdapter.setList(waitingFulfillerList);
                                 waiting = true;
                                 completed = false;
                                 confirm = false;
@@ -214,7 +218,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         awating_tv = (TextView) v.findViewById(R.id.awating_tv);
         confirmed_tv = (TextView) v.findViewById(R.id.confirmed_tv);
         nofulfillments_tv = (TextView) v.findViewById(R.id.nofulfillments_tv);
-        fulfiment_lv = (ListView) v.findViewById(R.id.fulfiment_lv);
+        fulfiment_lv = (RecyclerView) v.findViewById(R.id.fulfiment_lv);
         headerbar_LI = (LinearLayout) v.findViewById(R.id.headerbar_LI);
 
         past_tv.setOnClickListener(this);
@@ -222,6 +226,13 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
 
         awating_tv.setOnClickListener(this);
         confirmed_tv.setOnClickListener(this);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        fulfiment_lv.setHasFixedSize(true);
+        fulfiment_lv.setLayoutManager(mLayoutManager);
+        fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), waitingFulfillerList,
+                false, this);
+        fulfiment_lv.setAdapter(fulfillerPendingAdapter);
 
         setIntialTabDesign();
 
@@ -232,21 +243,24 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     }
 
     private void setTabPs() {
-        if (waiting){
+        if (waiting) {
             //show waiting tab in Active, show header layout
             if (!headerbar_LI.isShown())
                 headerbar_LI.setVisibility(View.VISIBLE);
             setIntialTabDesign();
-        }else if (confirm){
+            fulfillerPendingAdapter.setList(waitingFulfillerList);
+        } else if (confirm) {
             //show confirmed in Active,show Header layout
             if (!headerbar_LI.isShown())
                 headerbar_LI.setVisibility(View.VISIBLE);
-            if (confirmdFulfillerList != null && confirmdFulfillerList.size() > 0){
+            if (confirmdFulfillerList != null && confirmdFulfillerList.size() > 0) {
                 if (!fulfiment_lv.isShown())
-                fulfiment_lv.setVisibility(View.VISIBLE);
+                    fulfiment_lv.setVisibility(View.VISIBLE);
                 if (nofulfillments_tv.isShown())
                     nofulfillments_tv.setVisibility(View.GONE);
             }
+            fulfillerPendingAdapter.setList(confirmdFulfillerList);
+
             active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
             past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
             active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -255,23 +269,25 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
             confirmed_tv.setVisibility(View.VISIBLE);
             awating_tv.setTextColor(Color.parseColor("#FFFFFF"));
             confirmed_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-        }else if (completed){
+        } else if (completed) {
             //show Past, dont show header layout
             if (headerbar_LI.isShown())
                 headerbar_LI.setVisibility(View.GONE);
-            if (compltedFulfillerList != null && compltedFulfillerList.size() > 0){
+            if (compltedFulfillerList != null && compltedFulfillerList.size() > 0) {
                 if (!fulfiment_lv.isShown())
                     fulfiment_lv.setVisibility(View.VISIBLE);
                 if (nofulfillments_tv.isShown())
                     nofulfillments_tv.setVisibility(View.GONE);
             }
+            fulfillerPendingAdapter.setList(compltedFulfillerList);
+
             active_tv.setBackgroundResource(R.drawable.right_roundedcorner_trans);
             past_tv.setBackgroundResource(R.drawable.right_roundedcorner);
             past_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
             active_tv.setTextColor(Color.parseColor("#FFFFFF"));
             awating_tv.setVisibility(View.GONE);
             confirmed_tv.setVisibility(View.GONE);
-        }else {
+        } else {
             //APi Failed show no fulfillments, dont show list view, we dont care about header layout here
             // because api may fail in any case(active or past)
             //waiting,confirm,complete will be false initially.
@@ -280,7 +296,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void setIntialTabDesign(){
+    private void setIntialTabDesign() {
         active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
         past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
         active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -296,7 +312,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.active_tv:
                 headerbar_LI.setVisibility(View.VISIBLE);
-                if(completed)
+                if (completed)
                     completed = false;
                 active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
                 past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
@@ -311,9 +327,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 if (waitingFulfillerList.size() > 0) {
                     fulfiment_lv.setVisibility(View.VISIBLE);
                     nofulfillments_tv.setVisibility(View.GONE);
-                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
+                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
-                    Common.setListViewHeightBasedOnItems(fulfiment_lv);
+                    Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
+                    fulfillerPendingAdapter.setList(waitingFulfillerList);
                     waiting = true;
                     confirm = false;
                     completed = false;
@@ -338,9 +355,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     fulfiment_lv.setVisibility(View.VISIBLE);
                     nofulfillments_tv.setVisibility(View.GONE);
 
-                    FulfillerPendingAdapter fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), compltedFulfillerList, false);
+                    /*FulfillerPendingAdapter fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), compltedFulfillerList, false);
                     fulfiment_lv.setAdapter(fulfillerPendingAdapter);
-                    Common.setListViewHeightBasedOnItems(fulfiment_lv);
+                    Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
+                    fulfillerPendingAdapter.setList(compltedFulfillerList);
                     waiting = false;
                     confirm = false;
                     completed = true;
@@ -358,9 +376,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 if (waitingFulfillerList.size() > 0) {
                     fulfiment_lv.setVisibility(View.VISIBLE);
                     nofulfillments_tv.setVisibility(View.GONE);
-                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
+                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
-                    Common.setListViewHeightBasedOnItems(fulfiment_lv);
+                    Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
+                    fulfillerPendingAdapter.setList(waitingFulfillerList);
                     waiting = true;
                     confirm = false;
                     completed = false;
@@ -377,9 +396,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 if (confirmdFulfillerList.size() > 0) {
                     fulfiment_lv.setVisibility(View.VISIBLE);
                     nofulfillments_tv.setVisibility(View.GONE);
-                    fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), confirmdFulfillerList);
+                    /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), confirmdFulfillerList);
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
-                    Common.setListViewHeightBasedOnItems(fulfiment_lv);
+                    Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
+                    fulfillerPendingAdapter.setList(confirmdFulfillerList);
                     waiting = false;
                     confirm = true;
                     completed = false;
@@ -394,5 +414,24 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     @Override
     public void onRefresh() {
         callService(false);
+    }
+
+    @Override
+    public void onRecyclerItemClcik(String tag, int position) {
+        Log.d(TAG, "onRecyclerClcik :: " + tag);
+        Intent intent = new Intent(getActivity(), InterestDetails.class);
+        if (confirm) {
+            intent.putExtra("interestId", "" + confirmdFulfillerList.get(position).FulfillerInterestId);
+            intent.putExtra("completed", "completed");
+        }
+        if (waiting) {
+            intent.putExtra("interestId", "" + waitingFulfillerList.get(position).FulfillerInterestId);
+            intent.putExtra("completed", "not");
+        }
+        if (completed) {
+            intent.putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId);
+            intent.putExtra("completed", "not");
+        }
+        startActivity(intent);
     }
 }

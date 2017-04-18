@@ -50,6 +50,7 @@ import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.CaptureSignatureView;
 import com.biglynx.fulfiller.utils.Common;
+import com.google.android.gms.vision.text.Text;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -115,7 +116,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private SimpleDateFormat simpleDateFormat;
     private TextView fulfillmentid_tv;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager,mOrdersLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager, mOrdersLayoutManager;
     private MessagesAdapter adapter;
     private FullFillerApiWrapper apiWrapper;
     private EditText replyText_ev;
@@ -134,6 +135,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
     private LinearLayout confirm_delivery_LI;
     private String FULFILLER_ID;
     private String FULFILLER_NAME;
+    private TextView mCopy;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,7 +302,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 e.printStackTrace();
                             }
                             if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
-                            AppUtil.CheckErrorCode(StartDelivery.this, response.code());
+                                AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                     }
 
@@ -443,7 +445,8 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
         phoneno_tv = (TextView) findViewById(R.id.phoneno_tv);
         name_tv = (TextView) findViewById(R.id.name_tv);
         address_tv = (TextView) findViewById(R.id.address_tv);
-
+        mCopy = (TextView) findViewById(R.id.copy_retailer_adrs_tv);
+        mCopy.setOnClickListener(this);
         confirm_code_ev = (EditText) findViewById(R.id.confirm_code_ev);
 
         startpos = trackimage_imv.getX();
@@ -694,7 +697,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
             HttpClient httpClient = new DefaultHttpClient();
             try {
                 httpClient.execute(httppost, new PhotoUploadResponseHandler());
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
@@ -804,6 +807,9 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                     AppUtil.toast(StartDelivery.this, getString(R.string.message_cant_be_empty));
                 }
                 break;
+            case R.id.copy_retailer_adrs_tv:
+                AppUtil.copyText(getApplicationContext(), "Address", address_tv.getText().toString());
+                break;
         }
     }
 
@@ -864,7 +870,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 e.printStackTrace();
                             }
                             if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
-                            AppUtil.CheckErrorCode(StartDelivery.this, response.code());
+                                AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
                     }
 
@@ -911,7 +917,7 @@ public class StartDelivery extends AppCompatActivity implements View.OnClickList
                                 AppUtil.toast(StartDelivery.this, OOPS_SOMETHING_WENT_WRONG);
                             }
                             if (AppPreferences.getInstance(StartDelivery.this).getSignInResult() != null)
-                            AppUtil.CheckErrorCode(StartDelivery.this, response.code());
+                                AppUtil.CheckErrorCode(StartDelivery.this, response.code());
                         }
 
                         if (showProgress)
