@@ -439,7 +439,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
 
     private void callService(final LatLng mCurrentLatLng) {
-        if (mCurrentLastLocation == null)
+        if (mCurrentLatLng == null)
             return;
         Common.showDialog(getActivity());
         apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
@@ -455,12 +455,18 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                             broadcastAdapter = new Broadcast_Adapter(getActivity(), broadCastList);
                             listview_lv.setAdapter(broadcastAdapter);
                         } else {
+                            if (broadCastList != null &&
+                                    broadCastList.size() > 0) {
+                                broadCastList.clear();
+                                drawCircle(centerLatLng);
+                            }
                             try {
                                 AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
                             } catch (IOException e) {
                                 AppUtil.toast(getActivity(), getString(R.string.OOPS));
                                 e.printStackTrace();
                             }
+
                             AppUtil.CheckErrorCode(getActivity(), response.code());
                         }
                         Common.disMissDialog();
@@ -648,9 +654,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
                         mCurrentLastLocation.getLongitude());
                 callService(mCurrentLatLng);
+                firstTime = true;
             }
-            drawCircle(latLng);
-            firstTime = true;
+            //drawCircle(latLng);
         }
 
 
@@ -1159,11 +1165,12 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void setRetailerInfo() {
+        for (Marker marker : shownMarkersList) {
+            marker.remove();
+        }
+        shownMarkersList.clear();
         if (broadCastList != null && broadCastList.size() > 0) {
-            for (Marker marker : shownMarkersList) {
-                marker.remove();
-            }
-            shownMarkersList.clear();
+
             for (int i = 0; i < broadCastList.size(); i++) {
                 BroadCast broadCast = broadCastList.get(i);
                 //checking distance is greater than selceted miles
@@ -1223,7 +1230,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             addMapClickedMarker(targetLatLng);
             centerLatLng = targetLatLng;
             callService(centerLatLng);
-            drawCircle(centerLatLng);
+            //drawCircle(centerLatLng);
         }
 
     }
