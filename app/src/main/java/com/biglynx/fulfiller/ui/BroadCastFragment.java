@@ -1197,9 +1197,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onMapClick(LatLng latLng) {
-        if (isVisible()) {
-            if (viewpager_LI.isShown())
-                viewpager_LI.setVisibility(View.GONE);
+        if (!isVisible()) {
+            return;
         }
 
         if (gMap == null) {
@@ -1208,6 +1207,14 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 //        if (!firstTime) {
 //            return;
 //        }
+        if (broadCastList != null && broadCastList.size() > 0) {
+            for (BroadCast broadCast : broadCastList) {
+                if (broadCast.isClicked)
+                    broadCast.isClicked = false;
+            }
+        }
+        if (viewpager_LI.isShown())
+            viewpager_LI.setVisibility(View.GONE);
 
         LatLng targetLatLng = latLng;
         if (!compareLatLng(targetLatLng, centerLatLng)) {
@@ -1218,6 +1225,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(centerLatLng);
             drawCircle(centerLatLng);
         }
+
     }
 
 
