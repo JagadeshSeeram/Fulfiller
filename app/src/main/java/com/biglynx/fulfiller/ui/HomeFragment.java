@@ -67,7 +67,7 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 */
 
 public class HomeFragment extends Fragment implements View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener,OnRecyclerItemClickListener {
+        SwipeRefreshLayout.OnRefreshListener, OnRecyclerItemClickListener {
 
     List<FulfillersDTO> compltedFulfillerList;
     List<FulfillersDTO> compltedFulfillerList_less;
@@ -90,8 +90,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     private AlertDialog alertDialog;
     private static final String TAG = HomeFragment.class.getSimpleName();
     public static final int CANCEL_INTEREST = 1;
-    private RelativeLayout noItems_confirm_LI,noItems_wait_LI;
-    private RecyclerView.LayoutManager mConfrirmListManager,mPendingListManager;
+    private RelativeLayout noItems_confirm_LI, noItems_wait_LI;
+    private RecyclerView.LayoutManager mConfrirmListManager, mPendingListManager;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= 21) {
-            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         }
         View v = inflater.inflate(R.layout.homeactivity, container, false);
         showNoticeDialog();
@@ -223,10 +223,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
         mPendingListManager = new LinearLayoutManager(getActivity());
         confirmList.setHasFixedSize(true);
         waitinglist_LI.setHasFixedSize(true);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL_LIST);
+        confirmList.addItemDecoration(dividerItemDecoration);
+        waitinglist_LI.addItemDecoration(dividerItemDecoration);
+
         confirmList.setLayoutManager(mConfrirmListManager);
         waitinglist_LI.setLayoutManager(mPendingListManager);
-        fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(),compltedFulfillerList,this);
-        fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(),pendingdFulfillerList,true,this);
+        fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList, this);
+        fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList, true, this);
         confirmList.setAdapter(fulfillerConfirmAdapter);
         waitinglist_LI.setAdapter(fulfillerPendingAdapter);
 
@@ -419,7 +425,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                             if (!isVisible())
                                 return;
                             Log.e("HomeFragment", "fullfillerKpi :: " + t.getMessage());
-                            if (t instanceof UnknownHostException){
+                            if (t instanceof UnknownHostException) {
                                 finishActivity();
                             }
                             //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
@@ -519,7 +525,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                             if (!isVisible())
                                 return;
                             Log.e("HomeFragment", "DashboardAPI :: " + t.getMessage());
-                            if (t instanceof UnknownHostException){
+                            if (t instanceof UnknownHostException) {
                                 finishActivity();
                             }
                             waiting_sm_tv.setVisibility(View.GONE);
@@ -603,7 +609,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     fulfillerConfirmAdapter.setList(compltedFulfillerList_less);
                     /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
                     confirmList.setAdapter(fulfillerConfirmAdapter);*/
-                   // Common.setListViewHeightBasedOnItems(confirmList);
+                    // Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See More");
                 }
                 break;
@@ -642,7 +648,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
 
                             @Override
                             public void onFailure(Call<SignInResult> call, Throwable t) {
-							    AppUtil.toast(getActivity(), "Unable to process the request. Please try again later...");
+                                AppUtil.toast(getActivity(), "Unable to process the request. Please try again later...");
                                 showNoticeDialog();
                                 Common.disMissDialog();
                             }
@@ -658,11 +664,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onRecyclerItemClcik(String tag, int position) {
-        if (tag.equals(Constants.PENDING)){
+        if (tag.equals(Constants.PENDING)) {
             startActivityForResult(new Intent(getActivity(), InterestDetails.class)
                     .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
                     .putExtra("completed", "not"), CANCEL_INTEREST);
-        }else {
+        } else {
             Log.d("confir id", "" + compltedFulfillerList.get(position).FulfillerInterestId);
             startActivity(new Intent(getActivity(), InterestDetails.class)
                     .putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId)

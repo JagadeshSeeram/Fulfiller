@@ -48,7 +48,6 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     List<FulfillersDTO> compltedFulfillerList;
     List<FulfillersDTO> waitingFulfillerList;
     List<FulfillersDTO> confirmdFulfillerList;
-
     RecyclerView fulfiment_lv;
     TextView active_tv, past_tv, awating_tv, confirmed_tv, nofulfillments_tv;
     boolean completed = false, waiting = false, confirm = false;
@@ -60,6 +59,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     private static String clickedTab = null;
     private RecyclerView.LayoutManager mLayoutManager;
     private final String TAG = "FulflmntFrag";
+    private List<FulfillersDTO> fulfillersDTOList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,19 +129,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onResponse(Call<List<FulfillersDTO>> call, Response<List<FulfillersDTO>> response) {
                         if (response.isSuccessful()) {
-                            emptyAllLists();
-                            List<FulfillersDTO> fulfillersDTOList = response.body();
-                            for (int i = 0; i < fulfillersDTOList.size(); i++) {
-                                FulfillersDTO fulfillersDTO = fulfillersDTOList.get(i);
+                            fulfillersDTOList = response.body();
 
-                                if (fulfillersDTO.Status.equals("Confirmed")) {
-                                    confirmdFulfillerList.add(fulfillersDTO);
-                                } else if (fulfillersDTO.Status.equals("Expressed")) {
-                                    waitingFulfillerList.add(fulfillersDTO);
-                                } else {
-                                    compltedFulfillerList.add(fulfillersDTO);
-                                }
-                            }
+                            updateListItems();
+
                             if (waitingFulfillerList.size() > 0) {
                                 fulfiment_lv.setVisibility(View.VISIBLE);
                                 nofulfillments_tv.setVisibility(View.GONE);
@@ -207,6 +198,21 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
             compltedFulfillerList.clear();
     }
 
+    private void updateListItems() {
+        emptyAllLists();
+        for (int i = 0; i < fulfillersDTOList.size(); i++) {
+            FulfillersDTO fulfillersDTO = fulfillersDTOList.get(i);
+
+            if (fulfillersDTO.Status.equals("Confirmed")) {
+                confirmdFulfillerList.add(fulfillersDTO);
+            } else if (fulfillersDTO.Status.equals("Expressed")) {
+                waitingFulfillerList.add(fulfillersDTO);
+            } else {
+                compltedFulfillerList.add(fulfillersDTO);
+            }
+        }
+    }
+
 
     private void initViews(View v) {
         compltedFulfillerList = new ArrayList<>();
@@ -230,6 +236,9 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         mLayoutManager = new LinearLayoutManager(getActivity());
         fulfiment_lv.setHasFixedSize(true);
         fulfiment_lv.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL_LIST);
+        fulfiment_lv.addItemDecoration(dividerItemDecoration);
         fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), waitingFulfillerList,
                 false, this);
         fulfiment_lv.setAdapter(fulfillerPendingAdapter);
@@ -312,8 +321,11 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.active_tv:
                 headerbar_LI.setVisibility(View.VISIBLE);
-                if (completed)
-                    completed = false;
+
+                waiting = true;
+                confirm = false;
+                completed = false;
+
                 active_tv.setBackgroundResource(R.drawable.lef_roundedcorner);
                 past_tv.setBackgroundResource(R.drawable.lef_roundedcorner_trans);
                 active_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -324,6 +336,8 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 confirmed_tv.setTextColor(Color.parseColor("#FFFFFF"));
                 awating_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
 
+                updateListItems();
+
                 if (waitingFulfillerList.size() > 0) {
                     fulfiment_lv.setVisibility(View.VISIBLE);
                     nofulfillments_tv.setVisibility(View.GONE);
@@ -331,9 +345,6 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
                     Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
                     fulfillerPendingAdapter.setList(waitingFulfillerList);
-                    waiting = true;
-                    confirm = false;
-                    completed = false;
 
                 } else {
                     fulfiment_lv.setVisibility(View.GONE);
@@ -350,6 +361,13 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                 awating_tv.setVisibility(View.GONE);
                 confirmed_tv.setVisibility(View.GONE);
 
+                waiting = false;
+                confirm = false;
+                completed = true;
+
+                updateListItems();
+
+
                 if (compltedFulfillerList.size() > 0) {
 
                     fulfiment_lv.setVisibility(View.VISIBLE);
@@ -359,9 +377,6 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     fulfiment_lv.setAdapter(fulfillerPendingAdapter);
                     Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
                     fulfillerPendingAdapter.setList(compltedFulfillerList);
-                    waiting = false;
-                    confirm = false;
-                    completed = true;
 
                 } else {
                     fulfiment_lv.setVisibility(View.GONE);
@@ -370,6 +385,10 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
 
                 break;
             case R.id.awating_tv:
+                updateListItems();
+                waiting = true;
+                confirm = false;
+                completed = false;
 
                 confirmed_tv.setTextColor(Color.parseColor("#FFFFFF"));
                 awating_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -380,15 +399,17 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
                     Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
                     fulfillerPendingAdapter.setList(waitingFulfillerList);
-                    waiting = true;
-                    confirm = false;
-                    completed = false;
                 } else {
                     fulfiment_lv.setVisibility(View.GONE);
                     nofulfillments_tv.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.confirmed_tv:
+                updateListItems();
+
+                waiting = false;
+                confirm = true;
+                completed = false;
 
                 awating_tv.setTextColor(Color.parseColor("#FFFFFF"));
                 confirmed_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -400,9 +421,6 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
                     fulfiment_lv.setAdapter(fulfillerConfirmAdapter);
                     Common.setListViewHeightBasedOnItems(fulfiment_lv);*/
                     fulfillerPendingAdapter.setList(confirmdFulfillerList);
-                    waiting = false;
-                    confirm = true;
-                    completed = false;
                 } else {
                     fulfiment_lv.setVisibility(View.GONE);
                     nofulfillments_tv.setVisibility(View.VISIBLE);
@@ -433,5 +451,12 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
             intent.putExtra("completed", "not");
         }
         startActivity(intent);
+    }
+
+    private static class FulfillmentTypes {
+        public static String WAITING = "waiting";
+        public static String COMPLETED = "completed";
+        public static String CONFIRMED = "confirmed";
+
     }
 }
