@@ -147,6 +147,7 @@
     <string name="packages">Enter the total number of packages received for delivery</string>
     <string name="customer_count">Enter the number of customers to deliver orders</string>
     <string name="fulfiller_confirmation">Please login as fulfiller.</string>
+    <string name="navigate_to_payments_page">Thanks for completing the fulfillment. Please check payout status in settings page</string>
     <string-array name="statesList">
         <item>AL</item>
         <item>ak</item>

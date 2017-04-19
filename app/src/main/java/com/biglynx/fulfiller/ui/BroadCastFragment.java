@@ -111,7 +111,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, GoogleMap.OnCameraIdleListener, PlaceSelectionListener, View.OnClickListener, GoogleMap.OnMarkerClickListener,
-        AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener {
+        AdapterView.OnItemClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap gMap;
     GoogleApiClient mGoogleApiClient;
@@ -602,6 +602,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         }
         //gMap.setOnCameraIdleListener(this);
         gMap.setOnMarkerClickListener(this);
+        gMap.setOnMapLongClickListener(this);
         gMap.setOnMapClickListener(this);
     }
 
@@ -653,6 +654,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             if (mCurrentLastLocation != null) {
                 LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
                         mCurrentLastLocation.getLongitude());
+                drawCircle(mCurrentLatLng);
                 callService(mCurrentLatLng);
                 firstTime = true;
             }
@@ -1204,6 +1206,39 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onMapClick(LatLng latLng) {
+        /*if (!isVisible()) {
+            return;
+        }
+
+        if (gMap == null) {
+            return;
+        }
+//        if (!firstTime) {
+//            return;
+//        }*/
+        if (broadCastList != null && broadCastList.size() > 0) {
+            for (BroadCast broadCast : broadCastList) {
+                if (broadCast.isClicked)
+                    broadCast.isClicked = false;
+                setUpMap(broadCast, R.drawable.marks_bgs, broadCastList.indexOf(broadCast));
+            }
+        }
+        if (viewpager_LI.isShown())
+            viewpager_LI.setVisibility(View.GONE);
+
+        /*LatLng targetLatLng = latLng;
+        if (!compareLatLng(targetLatLng, centerLatLng)) {
+            Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
+            //addMarker(mCurrentLastLocation);
+            addMapClickedMarker(targetLatLng);
+            centerLatLng = targetLatLng;
+            callService(centerLatLng);
+            //drawCircle(centerLatLng);
+        }*/
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
         if (!isVisible()) {
             return;
         }
@@ -1232,7 +1267,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(centerLatLng);
             //drawCircle(centerLatLng);
         }
-
     }
 
 
@@ -1255,6 +1289,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_tap_location));
         mUserMapClcikedmarker = gMap.addMarker(markerOptions);
     }
+
+
 
     // Fetches all places from GooglePlaces AutoComplete Web Service
     private class PlacesTask extends AsyncTask<String, Void, String> {

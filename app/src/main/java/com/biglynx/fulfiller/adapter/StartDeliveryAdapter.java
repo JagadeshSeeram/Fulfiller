@@ -1,11 +1,9 @@
 package com.biglynx.fulfiller.adapter;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,16 +11,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.Orders;
-import com.biglynx.fulfiller.ui.StartDelivery;
+import com.biglynx.fulfiller.ui.StartDeliveryNew;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -31,8 +27,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.biglynx.fulfiller.utils.AppUtil.context;
 
 /**
  * Created by Biglynx on 7/22/2016.
@@ -130,7 +124,7 @@ public class StartDeliveryAdapter extends RecyclerView.Adapter<StartDeliveryAdap
                 if (userSelected) {
                     userSelected = false;
                     Log.d("Slected Type ", " :: " + parent.getAdapter().getItem(adapterPosition));
-                    StartDelivery startDelivery = (StartDelivery) mContext;
+                    StartDeliveryNew startDelivery = (StartDeliveryNew) mContext;
                     if (parent.getAdapter().getItem(adapterPosition).equals("Started"))
                         startDelivery.callUpdateDeliveryStatusAPi(4, ordersList.get(position).OrderId);
                     else if (parent.getAdapter().getItem(adapterPosition).equals("Delivered"))

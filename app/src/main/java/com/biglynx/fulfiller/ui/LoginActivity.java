@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,7 +48,6 @@ import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.network.FullFillerApiWrapper;
-import com.biglynx.fulfiller.services.RegistrationService;
 import com.biglynx.fulfiller.utils.AppPreferences;
 import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
@@ -73,11 +71,8 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.vision.text.Text;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -762,7 +757,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                 AppUtil.ifNotEmpty(et_name.getText().toString())) {
 
                             callStartDeliveryService();
-                    /*startActivity(new Intent(LoginActivity.this, StartDelivery.class)
+                    /*startActivity(new Intent(LoginActivity.this, StartDeliveryNew.class)
                             .putExtra("fulfillerid", et_FullfillerId.getText().toString())
                             .putExtra("confirmationcode", et_confirmationCode.getText().toString())
                             .putExtra("name", et_name.getText().toString())
@@ -805,7 +800,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                                 bundle.putParcelable("responseInterest",responseInterestObj);
                                 bundle.putString("fulfillerId",hashMap.get("fulfillerid").toString());
                                 bundle.putString("FulfillerName",hashMap.get("name").toString());
-                                startActivity(new Intent(LoginActivity.this,StartDelivery.class)
+                                startActivity(new Intent(LoginActivity.this,StartDeliveryNew.class)
                                         .putExtras(bundle));
                                 if (startDeliveringLayout.isShown()) {
                                     startDeliveringLayout.startAnimation(animation_slide_down);

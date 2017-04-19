@@ -72,7 +72,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemes"/>
         <activity
-            android:name=".ui.StartDelivery"
+            android:name=".ui.StartDeliveryNew"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemes" />
         <activity

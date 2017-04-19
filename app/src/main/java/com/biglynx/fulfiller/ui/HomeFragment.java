@@ -3,6 +3,7 @@ package com.biglynx.fulfiller.ui;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
@@ -90,6 +91,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     private AlertDialog alertDialog;
     private static final String TAG = HomeFragment.class.getSimpleName();
     public static final int CANCEL_INTEREST = 1;
+    public static String FULFLMNT_DELIVERED = "Delivered";
+
     private RelativeLayout noItems_confirm_LI, noItems_wait_LI;
     private RecyclerView.LayoutManager mConfrirmListManager, mPendingListManager;
 
@@ -156,6 +159,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         }
         View v = inflater.inflate(R.layout.homeactivity, container, false);
+        if (getActivity().getIntent().hasExtra(FULFLMNT_DELIVERED))
+            showFulfilmntDeliveredDialog();
         showNoticeDialog();
 
         initViews(v);
@@ -189,6 +194,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
         switchCompat.setOnCheckedChangeListener(onCheckedChangeListener);
 
         return v;
+    }
+
+    private void showFulfilmntDeliveredDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setMessage(getString(R.string.navigate_to_payments_page))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(getActivity(), PaymentsActivity.class));
+                    }
+                })
+                .create();
+        dialog.show();
     }
 
     private void initViews(View v) {
@@ -278,10 +296,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CANCEL_INTEREST) {
-            if (resultCode == Activity.RESULT_OK) {
-                callServices(true);
-            }
+        switch (requestCode) {
+            case CANCEL_INTEREST:
+                if (resultCode == Activity.RESULT_OK) {
+                    callServices(true);
+                }
+                break;
         }
     }
 

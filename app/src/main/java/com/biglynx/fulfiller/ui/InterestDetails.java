@@ -530,7 +530,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     private Object getDeviceId() {
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String deviceID = telephonyManager.getDeviceId();
-        Log.d(StartDelivery.class.getSimpleName(), "Device ID :: " + deviceID);
+        Log.d(StartDeliveryNew.class.getSimpleName(), "Device ID :: " + deviceID);
         return deviceID;
     }
 
@@ -638,7 +638,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("responseInterest", responseInterestObj);
                                 bundle.putString("fulfillerId", null);
-                                startActivity(new Intent(InterestDetails.this, StartDelivery.class)
+                                startActivity(new Intent(InterestDetails.this, StartDeliveryNew.class)
                                         .putExtras(bundle));
                             } else {
                                 AppUtil.toast(InterestDetails.this, "The response is empty");
