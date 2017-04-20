@@ -658,7 +658,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 callService(mCurrentLatLng);
                 firstTime = true;
             }
-            //drawCircle(latLng);
+            drawCircle(latLng);
         }
 
 

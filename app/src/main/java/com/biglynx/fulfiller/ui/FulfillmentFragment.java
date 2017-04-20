@@ -133,7 +133,25 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
 
                             updateListItems();
 
-                            if (waitingFulfillerList.size() > 0) {
+                            if (completed){
+                                if (compltedFulfillerList.size() > 0){
+                                    fulfiment_lv.setVisibility(View.VISIBLE);
+                                    nofulfillments_tv.setVisibility(View.GONE);
+                                    fulfillerPendingAdapter.setList(compltedFulfillerList);
+                                    waiting = false;
+                                    completed = true;
+                                    confirm = false;
+                                }
+                            } else if (confirm){
+                                if (confirmdFulfillerList.size() > 0){
+                                    fulfiment_lv.setVisibility(View.VISIBLE);
+                                    nofulfillments_tv.setVisibility(View.GONE);
+                                    fulfillerPendingAdapter.setList(confirmdFulfillerList);
+                                    waiting = false;
+                                    completed = false;
+                                    confirm = true;
+                                }
+                            } else if (waitingFulfillerList.size() > 0) {
                                 fulfiment_lv.setVisibility(View.VISIBLE);
                                 nofulfillments_tv.setVisibility(View.GONE);
                                 /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), waitingFulfillerList);
