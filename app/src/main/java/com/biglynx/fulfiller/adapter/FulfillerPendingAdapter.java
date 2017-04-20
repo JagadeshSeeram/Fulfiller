@@ -126,7 +126,7 @@ public class FulfillerPendingAdapter extends RecyclerView.Adapter<FulfillerPendi
                 try{
                     Date date1 = simpleDateFormat.parse(result1.InterestDateTime);
                     Date date2 = simpleDateFormat.parse(result2.InterestDateTime);
-                    return date1.compareTo(date2);
+                    return date2.compareTo(date1);
                 }catch (Exception e) {
                     e.printStackTrace();
                     return 0;

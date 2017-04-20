@@ -142,12 +142,12 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:layout_gravity="center"
                         android:gravity="center|start"
                         android:textColor="#7B7B7B"
                         android:textSize="@dimen/sp_12"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="fulfillment id"
                         android:id="@+id/fulfillment_id_tv"
                         android:textAllCaps="true"
@@ -156,7 +156,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontMedium
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.4"
                         android:layout_gravity="right"
                         android:gravity="center|right"
                         android:textColor="#408007"
@@ -218,7 +218,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:layout_gravity="center"
                         android:gravity="center|end"
                         android:textColor="#7B7B7B"
@@ -230,7 +230,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontMedium
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.4"
                         android:layout_gravity="right"
                         android:gravity="right|center_vertical"
                         android:textColor="#408007"
@@ -254,7 +254,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:layout_gravity="center"
                         android:gravity="center|end"
                         android:textColor="#7B7B7B"
@@ -266,7 +266,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontMedium
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.4"
                         android:layout_gravity="right"
                         android:gravity="right|center_vertical"
                         android:textColor="#EF4C51"
@@ -289,7 +289,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:layout_gravity="center"
                         android:gravity="center|end"
                         android:textColor="#7B7B7B"
@@ -302,7 +302,7 @@
 
                     <com.biglynx.fulfiller.fonts.CustomFontMedium
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.4"
                         android:layout_gravity="right"
                         android:gravity="right|center_vertical"
                         android:layout_marginRight="@dimen/dp_20"

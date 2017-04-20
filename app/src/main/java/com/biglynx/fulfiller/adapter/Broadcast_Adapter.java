@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.models.BroadCast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -23,27 +24,35 @@ import me.relex.circleindicator.CircleIndicator;
 public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageChangeListener {
 
     Context Context;
-    List<BroadCast> broadCastList;
+    List<BroadCast> list = new ArrayList<>();
     LayoutInflater inflater;
     private int dotsCount;
     private ImageView[] dots;
 
     public Broadcast_Adapter(Context mContext, List<BroadCast> mbroadCastList) {
         Context = mContext;
-        this.broadCastList = mbroadCastList;
+        updateList(mbroadCastList);
         inflater = LayoutInflater.from(this.Context);
+    }
+
+    private void updateList(List<BroadCast> mbroadCastList) {
+        int size = mbroadCastList.size();
+        for (int i=0;i<size;i++){
+            if (!mbroadCastList.get(i).isExpressed)
+                list.add(mbroadCastList.get(i));
+        }
     }
 
     @Override
     public int getCount() {
-        Log.d("recent search count", "" + broadCastList.size());
-        return broadCastList.size();
+        Log.d("recent search count", "" + list.size());
+        return list.size();
 
     }
 
     @Override
     public Object getItem(int position) {
-        return broadCastList.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -63,15 +72,15 @@ public class Broadcast_Adapter extends BaseAdapter implements ViewPager.OnPageCh
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
 
-        mViewHolder.retailer_name_tv.setText(broadCastList.get(position).BusinessLegalName);
-        mViewHolder.store_tv.setText(broadCastList.get(position).RetailerLocationAddress.LocationType);
+        mViewHolder.retailer_name_tv.setText(list.get(position).BusinessLegalName);
+        mViewHolder.store_tv.setText(list.get(position).RetailerLocationAddress.LocationType);
         mViewHolder.warehouse_tv.setText("");
-        mViewHolder.address_tv.setText(broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
-                broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.City + "," +
-                broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.State + "," +
-                broadCastList.get(position).RetailerLocationAddress.RetailerLocationAddress.CountryName);
-        //mViewHolder.distance_tv.setText(broadCastList.get(position).MaxDistance+" Miles");
-        BroadCast_Viewpager_Adapter broadCastViewpagerAdapter = new BroadCast_Viewpager_Adapter(Context, broadCastList.get(position), broadCastList.get(position).Fulfillments);
+        mViewHolder.address_tv.setText(list.get(position).RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
+                list.get(position).RetailerLocationAddress.RetailerLocationAddress.City + "," +
+                list.get(position).RetailerLocationAddress.RetailerLocationAddress.State + "," +
+                list.get(position).RetailerLocationAddress.RetailerLocationAddress.CountryName);
+        //mViewHolder.distance_tv.setText(list.get(position).MaxDistance+" Miles");
+        BroadCast_Viewpager_Adapter broadCastViewpagerAdapter = new BroadCast_Viewpager_Adapter(Context, list.get(position), list.get(position).Fulfillments);
         mViewHolder.broacast_viewpager.setAdapter(broadCastViewpagerAdapter);
         mViewHolder.circularIndicator.setViewPager(mViewHolder.broacast_viewpager);
 //        setUiPageViewController(mViewHolder.pager_indicator, broadCastViewpagerAdapter);

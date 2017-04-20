@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -125,6 +126,9 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
         email_ev = (EditText) findViewById(R.id.email_ev);
         businessEdit = (EditText) findViewById(R.id.busniess_tv);
         phoneno_tv = (EditText) findViewById(R.id.phoneno_tv);
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(10);
+        phoneno_tv.setFilters(filterArray);
         addressEdit = (EditText) findViewById(R.id.adress_tv);
         cityEdit = (EditText) findViewById(R.id.city_tv);
         stateSpinner = (Spinner) findViewById(R.id.spinner_satte);

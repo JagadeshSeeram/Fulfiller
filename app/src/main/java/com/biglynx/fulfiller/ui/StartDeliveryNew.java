@@ -147,6 +147,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
     private String TAG = StartDeliveryNew.class.getSimpleName();
+    private Location retailerLocation;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +167,8 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                 FULFILLER_NAME = getIntent().getExtras().getString("FulfillerName");
         }
         if (responseInterestObj != null) {
+            retailerLocation.setLatitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Latitude));
+            retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
             buildUI(responseInterestObj);
             //update progressbar
             updateProgressbar(progressStatus);
@@ -324,6 +327,8 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                         Common.disMissDialog();
                         if (response.isSuccessful()) {
                             responseInterestObj = response.body();
+                            retailerLocation.setLatitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Latitude));
+                            retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
                             if (updateUI) {
                                 buildUI(responseInterestObj);
                                 //updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
@@ -452,6 +457,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
 
     private void initViews() {
         apiWrapper = new FullFillerApiWrapper();
+        retailerLocation = new Location("locationA");
 
         icon_back = (ImageView) findViewById(R.id.icon_back);
         help_icon = (ImageView) findViewById(R.id.help_icon);
@@ -694,26 +700,37 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                         mCurrentLocation.getLongitude() == location.getLongitude())) {
             return;
         }
+        double speed = 0;
+        if (location.hasSpeed())
+            speed = location.getSpeed();
+        else {
+            if (mCurrentLocation != null) {
+                double elapsedTime = (location.getTime() - mCurrentLocation.getTime()) / 1000; // Convert milliseconds to seconds
+                speed = mCurrentLocation.distanceTo(location) / elapsedTime;
+            }
+        }
+
         mCurrentLocation = location;
-        calculateDistance();
+        if (mCurrentLocation != null) {
+            calculateDistance(speed);
+        }
         Log.d(TAG, mCurrentLocation.getLatitude() + " -- " + mCurrentLocation.getLongitude());
     }
 
-    private void calculateDistance() {
+    private void calculateDistance(double speed) {
         double distance = distanceCalculate();
-        double speed = mCurrentLocation.getSpeed();
         //distance = speed * time
-        double time = distance / speed;
-        int progressTime = Integer.parseInt(String.valueOf(100 / time));
+        if (speed == 0)
+            return;
+        //speed = 650.00;
+        Double time = new Double(100 / (distance / speed));
+        int progressTime = time.intValue();
         updateProgressbar(progressTime);
     }
 
     private double distanceCalculate() {
         double distance = 0;
-        Location selected_location = new Location("locationA");
-        selected_location.setLatitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Latitude));
-        selected_location.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
-        distance = selected_location.distanceTo(mCurrentLocation);
+        distance = retailerLocation.distanceTo(mCurrentLocation);
         return distance;
     }
 

@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -111,6 +112,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         address_ev = (EditText) findViewById(R.id.address_ev);
         city_ev = (EditText) findViewById(R.id.city_ev);
         phoneNumber_ev = (EditText) findViewById(R.id.mobile_ev);
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(10);
+        phoneNumber_ev.setFilters(filterArray);
         phoneNumber_tv = (TextView) findViewById(R.id.mobile_tv);
         profilePIc_iv = (CircularImageView) findViewById(R.id.profilePic_iv);
         camera_LI = (LinearLayout) findViewById(R.id.takePhoto_LI);

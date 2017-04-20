@@ -133,7 +133,7 @@
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:drawablePadding="@dimen/dp_5"
-                    android:text="No recent fulfillments!"/>
+                    android:text="no recent fulfillments"/>
             </RelativeLayout>
         </LinearLayout>
 

@@ -9,9 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.models.FulfillersDTO;
 import com.biglynx.fulfiller.models.Vehicles;
 import com.biglynx.fulfiller.utils.AppUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,11 +26,29 @@ public class VehiclesAdapter extends BaseAdapter {
     android.content.Context Context;
     List<Vehicles> vehiclesList;
     LayoutInflater inflater;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     public VehiclesAdapter(Context mContext, List<Vehicles> mvehiclesList) {
         Context = mContext;
         vehiclesList = mvehiclesList;
+        sortList();
         inflater = LayoutInflater.from(this.Context);
+    }
+
+    private void sortList() {
+        Collections.sort(vehiclesList, new Comparator<Vehicles>() {
+            @Override
+            public int compare(Vehicles result1, Vehicles result2) {
+                try{
+                    Date date1 = simpleDateFormat.parse(result1.DateCreated);
+                    Date date2 = simpleDateFormat.parse(result2.DateCreated);
+                    return date2.compareTo(date1);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        });
     }
 
     @Override

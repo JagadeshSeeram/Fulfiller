@@ -43,7 +43,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 finish();
             }
         }, string.indexOf("SIGN"), spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new ForegroundColorSpan(Color.BLUE), string.indexOf("SIGN"), spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.WHITE), string.indexOf("SIGN"), spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         signIn_tv.setMovementMethod(LinkMovementMethod.getInstance());
         signIn_tv.setText(spannableString);
     }

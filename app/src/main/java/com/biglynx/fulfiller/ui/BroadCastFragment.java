@@ -646,22 +646,15 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
 
         //move map camera
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
+        LatLng mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        Log.d("TAG- CURRENT", mCurrentLatLng.latitude + " -- " + mCurrentLatLng.longitude);
         Log.d("TAG- CURRENT", firstTime + "");
 
         if (!firstTime) {
-            if (mCurrentLastLocation != null) {
-                LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
-                        mCurrentLastLocation.getLongitude());
-                drawCircle(mCurrentLatLng);
-                callService(mCurrentLatLng);
-                firstTime = true;
-            }
-            drawCircle(latLng);
+            drawCircle(mCurrentLatLng);
+            callService(mCurrentLatLng);
+            firstTime = true;
         }
-
-
         addMarker(mCurrentLastLocation);
         getAddress(mCurrentLastLocation, false);
     }
@@ -925,6 +918,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     Log.d("TAG- CURRENT", firstTime + "");
                     drawCircle(latLng);
                     addMarker(mCurrentLastLocation);
+                    if (mUserMapClcikedmarker != null)
+                        mUserMapClcikedmarker.remove();
+                    callService(latLng);
                     getAddress(mCurrentLastLocation, true);
                 }
                 break;
@@ -1289,7 +1285,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_tap_location));
         mUserMapClcikedmarker = gMap.addMarker(markerOptions);
     }
-
 
 
     // Fetches all places from GooglePlaces AutoComplete Web Service
