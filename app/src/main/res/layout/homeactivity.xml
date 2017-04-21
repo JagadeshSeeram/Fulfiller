@@ -252,9 +252,9 @@
                                 android:id="@+id/waitinglist_LI"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp">
-
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10"
+                                >
                             </android.support.v7.widget.RecyclerView>
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -333,11 +333,9 @@
                                 android:id="@+id/confirmlist_LI"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:divider="@color/seperator_color"
-                                android:dividerHeight="0.5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp">
-
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10"
+                                >
                             </android.support.v7.widget.RecyclerView>
                             <RelativeLayout
                                 android:layout_width="match_parent"

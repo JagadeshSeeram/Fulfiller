@@ -48,8 +48,8 @@ public class FulfillerConfirmAdapter extends RecyclerView.Adapter<FulfillerConfi
     public void setList(List<FulfillersDTO> list) {
         if (list == null)
             return;
-        if (confirmList != null)
-            confirmList.clear();
+        if (confirmList != null && confirmList.size() > 0)
+            confirmList = new ArrayList<>();
         confirmList.addAll(list);
         Collections.sort(confirmList, new Comparator<FulfillersDTO>() {
             @Override

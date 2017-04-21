@@ -146,6 +146,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     });
         }
     };
+    private List<FulfillersDTO> dasBoardListCall = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -468,24 +469,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                             if (!isVisible())
                                 return;
                             if (response.isSuccessful()) {
-                                List<FulfillersDTO> dasBoardListCall = response.body();
-                                emptyAllLists();
-                                if (dasBoardListCall != null) {
-                                    for (int i = 0; i < dasBoardListCall.size(); i++) {
-                                        FulfillersDTO fulfillersDTO = dasBoardListCall.get(i);
-                                        if (fulfillersDTO.Status.equalsIgnoreCase("Confirmed")) {
-                                            compltedFulfillerList.add(fulfillersDTO);
-                                            if (compltedFulfillerList_less.size() < 2) {
-                                                compltedFulfillerList_less.add(fulfillersDTO);
-                                            }
-                                        } else if (fulfillersDTO.Status.equalsIgnoreCase("Expressed")) {
-                                            pendingdFulfillerList.add(fulfillersDTO);
-                                            if (pendingdFulfillerList_less.size() < 2) {
-                                                pendingdFulfillerList_less.add(fulfillersDTO);
-                                            }
-                                        }
-                                    }
-                                }
+                                dasBoardListCall = response.body();
+                                updateListItems();
                                 MyApplication.getInstance().dasBoardListCall = dasBoardListCall;
 
                                 if (compltedFulfillerList != null && compltedFulfillerList_less.size() > 0) {
@@ -504,6 +489,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                                     noItems_confirm_LI.setVisibility(View.VISIBLE);
                                     confirmList.setVisibility(View.GONE);
                                 }
+                                updateListItems();
                                 if (pendingdFulfillerList != null && pendingdFulfillerList_less.size() > 0) {
                                     if (pendingdFulfillerList.size() > 2)
                                         waiting_sm_tv.setVisibility(View.VISIBLE);
@@ -563,6 +549,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             AppUtil.toast(getActivity(), "Network Disconnected. Please check...");
     }
 
+    private void updateListItems() {
+        emptyAllLists();
+        if (dasBoardListCall != null) {
+            for (int i = 0; i < dasBoardListCall.size(); i++) {
+                FulfillersDTO fulfillersDTO = dasBoardListCall.get(i);
+                if (fulfillersDTO.Status.equalsIgnoreCase("Confirmed")) {
+                    compltedFulfillerList.add(fulfillersDTO);
+                    if (compltedFulfillerList_less.size() < 2) {
+                        compltedFulfillerList_less.add(fulfillersDTO);
+                    }
+                } else if (fulfillersDTO.Status.equalsIgnoreCase("Expressed")) {
+                    pendingdFulfillerList.add(fulfillersDTO);
+                    if (pendingdFulfillerList_less.size() < 2) {
+                        pendingdFulfillerList_less.add(fulfillersDTO);
+                    }
+                }
+            }
+        }
+    }
+
     private void finishActivity() {
         Common.disMissDialog();
         if (swipeRefreshLayout.isRefreshing())
@@ -605,13 +611,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     /*fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList, true);
                     waitinglist_LI.setAdapter(fulfillerPendingAdapter);*/
                     //Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    updateListItems();
                     fulfillerPendingAdapter.setList(pendingdFulfillerList);
-
                     waiting_sm_tv.setText("See Less");
                 } else if (waiting_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
                     /*fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), pendingdFulfillerList_less, true);
                     waitinglist_LI.setAdapter(fulfillerPendingAdapter);*/
                     //Common.setListViewHeightBasedOnItems(waitinglist_LI);
+                    updateListItems();
                     fulfillerPendingAdapter.setList(pendingdFulfillerList_less);
                     waiting_sm_tv.setText("See More");
                 }
@@ -620,12 +627,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
 
                 if (complete_sm_tv.getText().toString().equalsIgnoreCase("See More")) {
 
+                    updateListItems();
                     fulfillerConfirmAdapter.setList(compltedFulfillerList);
                     /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList);
                     confirmList.setAdapter(fulfillerConfirmAdapter);*/
                     //Common.setListViewHeightBasedOnItems(confirmList);
                     complete_sm_tv.setText("See Less");
                 } else if (complete_sm_tv.getText().toString().equalsIgnoreCase("See Less")) {
+                    updateListItems();
                     fulfillerConfirmAdapter.setList(compltedFulfillerList_less);
                     /*fulfillerConfirmAdapter = new FulfillerConfirmAdapter(getActivity(), compltedFulfillerList_less);
                     confirmList.setAdapter(fulfillerConfirmAdapter);*/
