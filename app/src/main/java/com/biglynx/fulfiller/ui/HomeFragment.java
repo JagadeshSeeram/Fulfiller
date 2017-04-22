@@ -692,8 +692,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onRecyclerItemClcik(String tag, int position) {
-        if (tag.equals(Constants.PENDING)) {
+    public void onRecyclerItemClcik(String fulfillerInterestId) {
+        if (fulfillerInterestId == null)
+            return;
+        Log.d(TAG,"fulfillerInterestId :: "+fulfillerInterestId);
+        /*if (tag.equals(Constants.PENDING)) {
             startActivityForResult(new Intent(getActivity(), InterestDetails.class)
                     .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
                     .putExtra("completed", "not"), CANCEL_INTEREST);
@@ -702,6 +705,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             startActivity(new Intent(getActivity(), InterestDetails.class)
                     .putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId)
                     .putExtra("completed", "completed"));
-        }
+        }*/
+        startActivityForResult(new Intent(getActivity(), InterestDetails.class)
+                .putExtra("interestId", "" + fulfillerInterestId)
+                , CANCEL_INTEREST);
     }
 }

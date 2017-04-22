@@ -85,8 +85,7 @@ public class FulfillerConfirmAdapter extends RecyclerView.Adapter<FulfillerConfi
             @Override
             public void onClick(View view) {
                 if (listener != null)
-                    listener.onRecyclerItemClcik(Constants.CONFIRM, position);
-
+                    listener.onRecyclerItemClcik(confirmList.get(position).FulfillerInterestId);
             }
         });
     }

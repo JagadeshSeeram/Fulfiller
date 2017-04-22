@@ -93,13 +93,7 @@ public class FulfillerPendingAdapter extends RecyclerView.Adapter<FulfillerPendi
         mViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (flag) {
-                    if (listener != null)
-                        listener.onRecyclerItemClcik(Constants.PENDING, position);
-                }else {
-                    if (listener != null)
-                        listener.onRecyclerItemClcik(Constants.CONFIRM, position);
-                }
+                listener.onRecyclerItemClcik(confirmList.get(position).FulfillerInterestId);
             }
         });
     }

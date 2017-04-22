@@ -83,7 +83,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
             deliverytoken_tv, fulfillmentid_tv, share_cancel_tv, share_copy_tv, share_email_tv, share_sms_tv;
     EditText enter_bid_ev;
     int positon;
-    String retaileLocId, completed;
+    String retaileLocId;
     int positions;
     SimpleDateFormat simpleDateFormat;
     Timer timer, expiratoin_time, exp_time;
@@ -186,7 +186,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         amount_tv = (TextView) findViewById(R.id.amount_tv);
 
         retaileLocId = getIntent().getStringExtra("interestId");
-        completed = getIntent().getStringExtra("completed");
+        //completed = getIntent().getStringExtra("completed");
 
         apiWrapper = new FullFillerApiWrapper();
         if (Common.isNetworkAvailable(MyApplication.getInstance())) {
@@ -821,7 +821,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
         if (String.valueOf(elapsedSeconds).startsWith("-") || String.valueOf(elapsedDays).startsWith("-") ||
                 String.valueOf(elapsedHours).startsWith("-") || String.valueOf(elapsedMinutes).startsWith("-")) {
-            if (completed.equals("not")) {
+            if (interest.Fulfillments.FulfillerInterests.InterestStatus.equalsIgnoreCase("Expressed")) {
                 if (!expiremsg_tv.isShown())
                     expiremsg_tv.setVisibility(View.VISIBLE);
                 if (delivery_due_LI.isShown())

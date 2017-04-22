@@ -23,7 +23,11 @@ import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -115,6 +119,7 @@ public class PaymentDetailsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     List<PaymentDetailsModel> detailsModels = response.body();
                     list = detailsModels;
+                    sortListItems();
                     adapter.notifyDataSetChanged();
                     if (list == null || list.size() == 0) {
                         noPayments_tv.setVisibility(View.VISIBLE);
@@ -139,6 +144,23 @@ public class PaymentDetailsFragment extends Fragment {
                 Common.disMissDialog();
                 noPayments_tv.setVisibility(View.VISIBLE);
                 //AppUtil.toast(getContext(), OOPS_SOMETHING_WENT_WRONG);
+            }
+        });
+    }
+
+    private void sortListItems() {
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Collections.sort(list, new Comparator<PaymentDetailsModel>() {
+            @Override
+            public int compare(PaymentDetailsModel result1, PaymentDetailsModel result2) {
+                try {
+                    Date date1 = simpleDateFormat.parse(result1.DateCreated);
+                    Date date2 = simpleDateFormat.parse(result2.DateCreated);
+                    return date2.compareTo(date1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return 0;
+                }
             }
         });
     }
@@ -191,7 +213,7 @@ public class PaymentDetailsFragment extends Fragment {
             return convertView;
         }
 
-        private class MyViewHolder{
+        private class MyViewHolder {
             TextView expired_tv, retailer_name_tv, due_tv, price_tv;
 
             public MyViewHolder(View itemView) {

@@ -655,6 +655,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(mCurrentLatLng);
             firstTime = true;
         }
+        drawCircle(mCurrentLatLng);
         addMarker(mCurrentLastLocation);
         getAddress(mCurrentLastLocation, false);
     }
@@ -672,7 +673,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.position(latLng);
         markerOptions.title(CURRENT_POSTION);
         //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_n));
-        markerOptions.icon(createBitmap(40));
+        markerOptions.icon(Common.createBitmap(getActivity(),40));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
         /*ValueAnimator ani = ValueAnimator.ofFloat(1, 0.5f); //change for (0,1) if you want a fade in
         ani.setDuration(1000);
@@ -1266,15 +1267,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    public BitmapDescriptor createBitmap(int dimension) {
-        Bitmap mDotMarkerBitmap = Bitmap.createBitmap(dimension, dimension, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(mDotMarkerBitmap);
-        Drawable shape = getResources().getDrawable(R.drawable.marker_base_shape);
-        shape.setBounds(0, 0, mDotMarkerBitmap.getWidth(), mDotMarkerBitmap.getHeight());
-        shape.draw(canvas);
-
-        return BitmapDescriptorFactory.fromBitmap(mDotMarkerBitmap);
-    }
 
     public void addMapClickedMarker(LatLng latLng) {
         if (mUserMapClcikedmarker != null)

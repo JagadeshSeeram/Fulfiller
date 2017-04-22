@@ -5,8 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -27,6 +30,8 @@ import android.widget.Toast;
 
 import com.biglynx.fulfiller.R;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
@@ -382,5 +387,16 @@ public class Common {
         final AlertDialog alert = builder.create();
         alert.show();
     }
+
+    public static BitmapDescriptor createBitmap(Context mContext, int dimension) {
+        Bitmap mDotMarkerBitmap = Bitmap.createBitmap(dimension, dimension, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mDotMarkerBitmap);
+        Drawable shape = mContext.getResources().getDrawable(R.drawable.marker_base_shape);
+        shape.setBounds(0, 0, mDotMarkerBitmap.getWidth(), mDotMarkerBitmap.getHeight());
+        shape.draw(canvas);
+
+        return BitmapDescriptorFactory.fromBitmap(mDotMarkerBitmap);
+    }
+
 
 }

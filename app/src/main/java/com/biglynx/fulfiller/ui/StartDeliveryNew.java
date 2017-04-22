@@ -172,6 +172,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
             buildUI(responseInterestObj);
             //update progressbar
             updateProgressbar(progressStatus);
+            updateDeliveryScreens(responseInterestObj.Fulfillments.DeliveryStatusId);
             callGetMessagesAPI(true);
         }
     }
@@ -331,7 +332,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                             retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
                             if (updateUI) {
                                 buildUI(responseInterestObj);
-                                //updateProgress(responseInterestObj.Fulfillments.DeliveryStatusId);
+                                updateDeliveryScreens(responseInterestObj.Fulfillments.DeliveryStatusId);
                             } else {
                                 checkIfAllOrdersAllDelivered(responseInterestObj);
                                 startDeliveryAdapter.setItemsList(responseInterestObj.Fulfillments.Orders);
@@ -379,7 +380,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(Call<InterestDTO> call, Response<InterestDTO> response) {
                         if (response.isSuccessful()) {
-                            //updateProgress(deliveryStatusId);
+                            updateDeliveryScreens(deliveryStatusId);
                             if (deliveryStatusId == 4 || deliveryStatusId == 5)
                                 callStartDeliveryService(false);
                             if (deliveryStatusId == 6) {
@@ -561,16 +562,28 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         return "{" + width + "," + height + "}";
     }
 
-    public void updateProgress(int deliveryStatusId) {
+    public void updateDeliveryScreens(int deliveryStatusId) {
         if (deliveryStatusId == 1) {
-            progressStatus = 0;
-            updateProgressbar(5);
+            //progressStatus = 0;
+            //updateProgressbar(5);
+            if (!googlemaps_LI.isShown())
+                googlemaps_LI.setVisibility(View.VISIBLE);
+
         } else if (deliveryStatusId == 2) {
-            updateProgressbar(35);
+            //updateProgressbar(35);
+            googlemaps_LI.setVisibility(View.GONE);
+            confirmorders_LI.setVisibility(View.VISIBLE);
         } else if (deliveryStatusId == 3 || deliveryStatusId == 4 || deliveryStatusId == 5) {
-            updateProgressbar(65);
-        } else if (deliveryStatusId == 6)
-            updateProgressbar(100);
+            //updateProgressbar(65);
+            googlemaps_LI.setVisibility(View.GONE);
+            confirmorders_LI.setVisibility(View.GONE);
+            deliv_customers_LI.setVisibility(View.VISIBLE);
+            checkIfAllOrdersAllDelivered(responseInterestObj);
+        } else if (deliveryStatusId == 6) {
+            //updateProgressbar(100);
+            delivered_imv.setImageResource(R.drawable.ic_delivered_grn_n);
+            delivered_tv.setTextColor(Color.parseColor("#94C96F"));
+        }
     }
 
     private void updateProgressbar(final int max) {
@@ -599,31 +612,31 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                             progress_bar.setProgress(progressStatus);
                             trackimage_imv.setX(progressStatus * (deviceswidth / 100));
                             if (progressStatus == 5) {
-                                if (progressStatus == max) {
+                               /* if (progressStatus == max) {
                                     if (!googlemaps_LI.isShown())
                                         googlemaps_LI.setVisibility(View.VISIBLE);
-                                }
+                                }*/
                                 ontheway_imv.setImageResource(R.drawable.ic_onthe_way_grn_n);
                                 ontheway_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
                             if (progressStatus == 35) {
-                                if (progressStatus == max) {
+                                /*if (progressStatus == max) {
                                     googlemaps_LI.setVisibility(View.GONE);
                                     confirmorders_LI.setVisibility(View.VISIBLE);
-                                }
+                                }*/
                                 pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
 
                             if (progressStatus > 50) {
-                                if (progressStatus == max) {
+                                /*if (progressStatus == max) {
                                     if (!deliv_customers_LI.isShown()) {
                                         googlemaps_LI.setVisibility(View.GONE);
                                         confirmorders_LI.setVisibility(View.GONE);
                                         deliv_customers_LI.setVisibility(View.VISIBLE);
                                         checkIfAllOrdersAllDelivered(responseInterestObj);
                                     }
-                                }
+                                }*/
                                 pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
@@ -634,8 +647,6 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                         }
                     });
                 }
-
-
             }
         }).start(); // Start the operation
     }

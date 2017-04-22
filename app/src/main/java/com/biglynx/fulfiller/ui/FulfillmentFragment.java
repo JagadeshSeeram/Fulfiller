@@ -453,11 +453,13 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onRecyclerItemClcik(String tag, int position) {
-        Log.d(TAG, "onRecyclerClcik :: " + tag);
+    public void onRecyclerItemClcik(String fulfillerInterestId) {
+        Log.d(TAG, "fulfillerInterestId :: " + fulfillerInterestId);
         Intent intent = new Intent(getActivity(), InterestDetails.class);
-        if (confirm) {
-            intent.putExtra("interestId", "" + confirmdFulfillerList.get(position).FulfillerInterestId);
+        intent.putExtra("interestId", "" + fulfillerInterestId);
+
+        /*if (confirm) {
+            intent.putExtra("interestId", "" + fulfillerInterestId);
             intent.putExtra("completed", "completed");
         }
         if (waiting) {
@@ -467,7 +469,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         if (completed) {
             intent.putExtra("interestId", "" + compltedFulfillerList.get(position).FulfillerInterestId);
             intent.putExtra("completed", "not");
-        }
+        }*/
         startActivity(intent);
     }
 
