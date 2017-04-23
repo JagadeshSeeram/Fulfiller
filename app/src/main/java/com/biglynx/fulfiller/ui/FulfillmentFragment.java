@@ -254,8 +254,7 @@ public class FulfillmentFragment extends Fragment implements View.OnClickListene
         mLayoutManager = new LinearLayoutManager(getActivity());
         fulfiment_lv.setHasFixedSize(true);
         fulfiment_lv.setLayoutManager(mLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL_LIST);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity());
         fulfiment_lv.addItemDecoration(dividerItemDecoration);
         fulfillerPendingAdapter = new FulfillerPendingAdapter(getActivity(), waitingFulfillerList,
                 false, this);

@@ -244,7 +244,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
         waitinglist_LI.setHasFixedSize(true);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL_LIST);
+                LinearLayoutManager.VERTICAL);
         confirmList.addItemDecoration(dividerItemDecoration);
         waitinglist_LI.addItemDecoration(dividerItemDecoration);
 
