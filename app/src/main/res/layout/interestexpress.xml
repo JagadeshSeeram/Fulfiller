@@ -488,7 +488,6 @@
                             android:layout_height="@dimen/dp_20"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/dp_10"
                             android:src="@drawable/right_arrow" />
                     </RelativeLayout>
 
@@ -535,6 +534,10 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/editext_bottom"
                         android:orientation="horizontal"
+                        android:paddingLeft="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_10"
                         android:weightSum="1">
 
                         <com.biglynx.fulfiller.fonts.CustomFontMedium
@@ -544,7 +547,6 @@
                             android:layout_weight="0.6"
                             android:gravity="center|start"
                             android:maxLines="2"
-                            android:padding="5dp"
                             android:text="Total miles from store : "
                             android:textColor="@color/header_color"
                             android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>

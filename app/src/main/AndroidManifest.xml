@@ -70,7 +70,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemes"/>
+            android:theme="@style/AppThemes" />
         <activity
             android:name=".ui.StartDeliveryNew"
             android:screenOrientation="portrait"
@@ -190,11 +190,14 @@
         <activity
             android:name=".ui.PaymentsDetailInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.ForgotPasswordActivity" />
 
-    <service android:name=".services.MyJobService"
-        android:exported="false"
-        android:stopWithTask="true"
-        ></service>
+        <service
+            android:name=".services.MyJobService"
+            android:exported="false"
+            android:stopWithTask="true" />
+
+        <activity android:name=".ui.RatingsActivity"></activity>
     </application>
+
 </manifest>

@@ -148,6 +148,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     private Location mCurrentLocation;
     private String TAG = StartDeliveryNew.class.getSimpleName();
     private Location retailerLocation;
+    private Timer msgsTimer;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
@@ -457,13 +458,12 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     }
 
     private void initViews() {
+        msgsTimer = new Timer();
+        runMessagesTimer();
         apiWrapper = new FullFillerApiWrapper();
         retailerLocation = new Location("locationA");
 
         icon_back = (ImageView) findViewById(R.id.icon_back);
-        help_icon = (ImageView) findViewById(R.id.help_icon);
-        help_icon.setVisibility(View.VISIBLE);
-        subway_arrow_imv = (ImageView) findViewById(R.id.subway_arrow_imv);
         trackimage_imv = (ImageView) findViewById(R.id.trackimage_imv);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -549,6 +549,28 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         confirm_pickup_btn_tv.setOnClickListener(this);
         reply_tv.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void runMessagesTimer() {
+        msgsTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "MessagesApi :: " + System.currentTimeMillis());
+                        callGetMessagesAPI(false);
+                    }
+                });
+            }
+        }, 0, 6000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (msgsTimer != null)
+            msgsTimer.cancel();
     }
 
     private static String getScreenResolution(Context context) {
@@ -947,13 +969,13 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         if (FULFILLER_NAME != null)
             hashMap.put("FlulfillerName", FULFILLER_NAME);
         else if (AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult() != null) {
-            if (AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
+           /* if (AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("Role").equals("DeliveryPartner")) {
                 if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("BusinessLegalName")))
                     hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("BusinessLegalName"));
-            } else {
-                if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("FirstName")))
-                    hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("FirstName"));
-            }
+            } else {*/
+            if (!TextUtils.isEmpty(AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("FirstName")))
+                hashMap.put("FlulfillerName", AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult().optString("FirstName"));
+            //}
         } else {
             if (responseInterestObj.Fulfillments.DeliveryPartner != null)
                 hashMap.put("FlulfillerName", responseInterestObj.Fulfillments.DeliveryPartner.Contactperson);
@@ -1041,8 +1063,10 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
 
                         if (showProgress)
                             Common.disMissDialog();
-                        else
-                            swipeRefreshLayout.setRefreshing(false);
+                        else {
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
 
                     }
 
@@ -1050,8 +1074,10 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                     public void onFailure(Call<List<MessagesModel>> call, Throwable t) {
                         if (showProgress)
                             Common.disMissDialog();
-                        else
-                            swipeRefreshLayout.setRefreshing(false);
+                        else {
+                            if (swipeRefreshLayout.isRefreshing())
+                                swipeRefreshLayout.setRefreshing(false);
+                        }
                         if (mRecyclerView.isShown())
                             mRecyclerView.setVisibility(View.GONE);
                         if (!(t instanceof EOFException))

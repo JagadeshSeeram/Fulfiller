@@ -81,7 +81,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (list == null || list.size() == 0)
             return;
         if (modelArrayList != null) {
-            modelArrayList.clear();
+            modelArrayList = new ArrayList<>();
 
             modelArrayList.addAll(list);
             Collections.sort(modelArrayList, new Comparator<MessagesModel>() {

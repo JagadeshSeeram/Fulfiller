@@ -10,6 +10,7 @@ import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
 import com.biglynx.fulfiller.models.NotificationRegisterModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
+import com.biglynx.fulfiller.models.RatingsModel;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.UserProfile;
@@ -143,5 +144,8 @@ public interface FullFillerApi {
     Call<Void> locationTRackingCall(@Field("FulfillerId") Object FulfillerId, @Field("Latitude") Object Latitude,
                                     @Field("Longitude") Object Longitude, @Field("UniqueDeviceId") Object UniqueDeviceId,
                                     @Field("ZipCode") Object ZipCode);
+
+    @GET(HttpAdapter.RATINGS)
+    Call<List<RatingsModel>> getReviewsRatings();
 
 }

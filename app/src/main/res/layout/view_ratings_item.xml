@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/dp_5"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            />
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_tv"
+            android:text="By Pawankn"
+            android:textAllCaps="true"
+            android:textColor="#6A6A6A"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_12"
+            android:layout_toLeftOf="@+id/date_tv"
+            android:layout_toRightOf="@+id/ratingBar"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:paddingRight="@dimen/dp_3"
+            />
+        <com.biglynx.fulfiller.fonts.CustomFontRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date_tv"
+            android:textColor="#6A6A6A"
+            android:text="Web Mar 02 "
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_12"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/settings_seperator_color"
+        >
+    </View>
+    <com.biglynx.fulfiller.fonts.CustomFontBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_tv"
+        android:gravity="left"
+        android:text="djsdsd sdjsjds jdjsbdhsdsbusd sdbhsbsh"
+        android:layout_toLeftOf="@+id/date_tv"
+        android:textColor="@color/header_color"
+        android:layout_marginTop="3dp"
+        android:textSize="@dimen/sp_12"
+        />
+</LinearLayout>

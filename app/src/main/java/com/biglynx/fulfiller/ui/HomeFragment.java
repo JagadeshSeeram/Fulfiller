@@ -95,6 +95,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
 
     private RelativeLayout noItems_confirm_LI, noItems_wait_LI;
     private RecyclerView.LayoutManager mConfrirmListManager, mPendingListManager;
+    private List<FulfillersDTO> dasBoardListCall = new ArrayList<>();
+    private boolean dialogShown = false;
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -146,7 +148,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     });
         }
     };
-    private List<FulfillersDTO> dasBoardListCall = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,8 +161,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         }
         View v = inflater.inflate(R.layout.homeactivity, container, false);
-        if (getActivity().getIntent().hasExtra(FULFLMNT_DELIVERED))
-            showFulfilmntDeliveredDialog();
+        if (getActivity().getIntent().hasExtra(FULFLMNT_DELIVERED)) {
+            if (!dialogShown)
+                showFulfilmntDeliveredDialog();
+        }
         showNoticeDialog();
 
         initViews(v);
@@ -198,6 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     }
 
     private void showFulfilmntDeliveredDialog() {
+        dialogShown = true;
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setMessage(getString(R.string.navigate_to_payments_page))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -695,7 +699,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     public void onRecyclerItemClcik(String fulfillerInterestId) {
         if (fulfillerInterestId == null)
             return;
-        Log.d(TAG,"fulfillerInterestId :: "+fulfillerInterestId);
+        Log.d(TAG, "fulfillerInterestId :: " + fulfillerInterestId);
         /*if (tag.equals(Constants.PENDING)) {
             startActivityForResult(new Intent(getActivity(), InterestDetails.class)
                     .putExtra("interestId", "" + pendingdFulfillerList.get(position).FulfillerInterestId)
@@ -707,7 +711,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     .putExtra("completed", "completed"));
         }*/
         startActivityForResult(new Intent(getActivity(), InterestDetails.class)
-                .putExtra("interestId", "" + fulfillerInterestId)
+                        .putExtra("interestId", "" + fulfillerInterestId)
                 , CANCEL_INTEREST);
     }
 }

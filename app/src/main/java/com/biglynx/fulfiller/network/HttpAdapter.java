@@ -54,6 +54,7 @@ public class HttpAdapter {
     public static final String CANCEL_INTEREST = BASE_URL + "cancelinterest";
     public static final String RESET_PASSWORD = BASE_URL + "ForgotPassword";
     public static final String LOCATION_TRACKING_API = BASE_URL + "deliverypersontracking";
+    public static final String RATINGS = BASE_URL + "ratinglist";
 
     public static String SENDER_ID = "55470930292";
 

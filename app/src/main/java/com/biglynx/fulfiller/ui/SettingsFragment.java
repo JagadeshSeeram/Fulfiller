@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,15 +18,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
+import com.biglynx.fulfiller.models.RatingsModel;
+import com.biglynx.fulfiller.network.FullFillerApiWrapper;
 import com.biglynx.fulfiller.network.NetworkOperationListener;
 import com.biglynx.fulfiller.network.NetworkResponse;
 import com.biglynx.fulfiller.utils.AppPreferences;
+import com.biglynx.fulfiller.utils.AppUtil;
 import com.biglynx.fulfiller.utils.Common;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 
 /*
  *
@@ -37,10 +50,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     private TextView name_tv, logout_Li;
     private CircularImageView user_Imv;
-    private LinearLayout vehicles_LI,notification_LI,cservices_LI,payments_LI,terms_LI, policy_LI;
+    private LinearLayout vehicles_LI, notification_LI, cservices_LI, payments_LI, terms_LI, policy_LI, reviews_LI;
     private ImageView editProfile_iv;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView account_status;
+    private FullFillerApiWrapper apiWrapper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +66,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= 21) {
-            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
+            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         }
         View v = inflater.inflate(R.layout.settings, container, false);
         initViews(v);
@@ -63,17 +77,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        updateProfileInfo(false);
+        updateProfileInfo();
     }
 
     private void initViews(View v) {
-        user_Imv=(CircularImageView) v.findViewById(R.id.user_imv);
-        name_tv=(TextView) v.findViewById(R.id.name_tv);
-        logout_Li=(TextView)v.findViewById(R.id.logout_LI);
-        cservices_LI=(LinearLayout)v.findViewById(R.id.cservices_LI);
-        vehicles_LI=(LinearLayout)v.findViewById(R.id.vehicles_LI);
+        apiWrapper = new FullFillerApiWrapper();
+
+        user_Imv = (CircularImageView) v.findViewById(R.id.user_imv);
+        name_tv = (TextView) v.findViewById(R.id.name_tv);
+        logout_Li = (TextView) v.findViewById(R.id.logout_LI);
+        cservices_LI = (LinearLayout) v.findViewById(R.id.cservices_LI);
+        vehicles_LI = (LinearLayout) v.findViewById(R.id.vehicles_LI);
         payments_LI = (LinearLayout) v.findViewById(R.id.payments_LI);
-        notification_LI=(LinearLayout)v.findViewById(R.id.notification_LI);
+        notification_LI = (LinearLayout) v.findViewById(R.id.notification_LI);
+        reviews_LI = (LinearLayout) v.findViewById(R.id.rating_LI);
+
         editProfile_iv = (ImageView) v.findViewById(R.id.editProfile_iv);
         terms_LI = (LinearLayout) v.findViewById(R.id.terms_LI);
         policy_LI = (LinearLayout) v.findViewById(R.id.policy_LI);
@@ -89,9 +107,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         editProfile_iv.setOnClickListener(this);
         terms_LI.setOnClickListener(this);
         policy_LI.setOnClickListener(this);
+        reviews_LI.setOnClickListener(this);
     }
 
-    private void updateProfileInfo(boolean showRefresh) {
+    private void updateProfileInfo() {
 
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Role").equals("DeliveryPartner")) {
             if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("BusinessLegalName")))
@@ -107,17 +126,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                         .error((int) R.drawable.ic_no_profile_img).into(this.user_Imv);
         }
         if (!TextUtils.isEmpty(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")))
-            account_status.setText("Status: " +getStatus(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")));
+            account_status.setText("Status: " + getStatus(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")));
         else
             account_status.setText("");
-
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     private String getStatus(String status) {
         if (AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status").equalsIgnoreCase("verificationInProgress")) {
             String userStatus[] = AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status").split("In");
-            status = ""+userStatus[0]+" In "+userStatus[1];
+            status = "" + userStatus[0] + " In " + userStatus[1];
             return status;
         }
         return status;
@@ -155,17 +172,66 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 startActivity(new Intent(getActivity(), PaymentsActivity.class));
                 break;
             case R.id.editProfile_iv:
-                Intent intent = new Intent(getActivity(),EditProfileActivity.class);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
                 break;
             case R.id.terms_LI:
-                startActivity(new Intent(getActivity(),TermsActivity.class).putExtra(TermsActivity.TYPE,TermsActivity.TERMS_OF_SERVICE));
+                startActivity(new Intent(getActivity(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.TERMS_OF_SERVICE));
                 break;
             case R.id.policy_LI:
-                startActivity(new Intent(getActivity(),TermsActivity.class).putExtra(TermsActivity.TYPE,TermsActivity.PRIVACY_POLICY));
+                startActivity(new Intent(getActivity(), TermsActivity.class).putExtra(TermsActivity.TYPE, TermsActivity.PRIVACY_POLICY));
                 break;
-
+            case R.id.rating_LI:
+                callRatingsService(true);
+                break;
         }
+    }
+
+    private void callRatingsService(final boolean showProgress) {
+        if (!Common.isNetworkAvailable(getActivity())) {
+            AppUtil.toast(getActivity(), "Network disconnected, Please check...");
+            return;
+        }
+
+        if (showProgress)
+            Common.showDialog(getActivity());
+
+        apiWrapper.getReviews(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
+                        AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
+                new Callback<List<RatingsModel>>() {
+                    @Override
+                    public void onResponse(Call<List<RatingsModel>> call, Response<List<RatingsModel>> response) {
+                        if (response.isSuccessful()) {
+                            List<RatingsModel> ratingsList = response.body();
+                            if (ratingsList != null)
+                                startActivity(new Intent(getActivity(), RatingsActivity.class)
+                                        .putParcelableArrayListExtra("ratingsList", (ArrayList<? extends Parcelable>) ratingsList));
+                        } else {
+                            try {
+                                AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
+                            } catch (IOException e) {
+                                AppUtil.toast(getActivity(), OOPS_SOMETHING_WENT_WRONG);
+                                e.printStackTrace();
+                            }
+                            AppUtil.CheckErrorCode(getActivity(), response.code());
+                        }
+
+                        if (showProgress)
+                            Common.disMissDialog();
+                        else
+                            swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RatingsModel>> call, Throwable t) {
+                        AppUtil.toast(getActivity(), "Unable to show Reviews. Please try later...");
+                        if (showProgress)
+                            Common.disMissDialog();
+                        else
+                            swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+
     }
 
     @Override
@@ -176,6 +242,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        updateProfileInfo(true);
+        updateProfileInfo();
+        callRatingsService(false);
     }
 }

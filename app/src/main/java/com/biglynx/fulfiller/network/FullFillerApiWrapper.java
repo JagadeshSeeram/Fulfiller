@@ -11,6 +11,7 @@ import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.MessagesModel;
 import com.biglynx.fulfiller.models.NotificationRegisterModel;
 import com.biglynx.fulfiller.models.PaymentDetailsModel;
+import com.biglynx.fulfiller.models.RatingsModel;
 import com.biglynx.fulfiller.models.SignInResult;
 import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.models.UserProfile;
@@ -415,6 +416,15 @@ public class FullFillerApiWrapper {
         }
         Call<Void> call = fullFillerApiHeader.locationTRackingCall(detailsMap.get("FulfillerId"),detailsMap.get("Lat"),
         detailsMap.get("Long"),detailsMap.get("deviceID"),detailsMap.get("ZipCode"));
+        call.enqueue(callback);
+        return call;
+    }
+
+    public Call<List<RatingsModel>> getReviews(String authToken, Callback<List<RatingsModel>> callback) {
+        if (fullFillerApiHeader == null) {
+            createRetrofitWithHeader(authToken);
+        }
+        Call<List<RatingsModel>> call = fullFillerApiHeader.getReviewsRatings();
         call.enqueue(callback);
         return call;
     }

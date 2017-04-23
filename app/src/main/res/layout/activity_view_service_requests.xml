@@ -5,10 +5,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/window_background"
-    tools:context="com.biglynx.fulfiller.ui.ViewServiceRequestsActivity">
+    >
 
     <include layout="@layout/toolbar_search"></include>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/total_ratings_LI"
+        android:layout_marginBottom="@dimen/dp_10"
+        >
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:rating="4"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:backgroundTint="@color/colorPrimary"
+            android:progressTint="@color/colorPrimary"
+            />
+        <com.biglynx.fulfiller.fonts.CustomFontBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_ratings_tv"
+            android:text="195 retailer reviews"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_3"
+            android:textSize="@dimen/sp_13"
+            />
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
