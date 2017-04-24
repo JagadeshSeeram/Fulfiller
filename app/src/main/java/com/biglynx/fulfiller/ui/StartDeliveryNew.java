@@ -464,6 +464,8 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         retailerLocation = new Location("locationA");
 
         icon_back = (ImageView) findViewById(R.id.icon_back);
+        help_icon = (ImageView) findViewById(R.id.help_icon);
+        subway_arrow_imv = (ImageView) findViewById(R.id.subway_arrow_imv);
         trackimage_imv = (ImageView) findViewById(R.id.trackimage_imv);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

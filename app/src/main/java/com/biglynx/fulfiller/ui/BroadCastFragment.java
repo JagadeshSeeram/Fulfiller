@@ -655,7 +655,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             callService(mCurrentLatLng);
             firstTime = true;
         }
-        drawCircle(mCurrentLatLng);
+        /*if (location.hasSpeed() && location.getSpeed() > 0)
+            drawCircle(mCurrentLatLng);*/
         addMarker(mCurrentLastLocation);
         getAddress(mCurrentLastLocation, false);
     }
@@ -835,7 +836,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         LatLng targetLatLng = gMap.getCameraPosition().target;
         if (!compareLatLng(targetLatLng, centerLatLng)) {
             Log.d("TAG- CAMEAR", targetLatLng.latitude + " -- " + targetLatLng.longitude);
-            addMarker(mCurrentLastLocation);
+            //addMarker(mCurrentLastLocation);
             drawCircle(targetLatLng);
             centerLatLng = targetLatLng;
         }

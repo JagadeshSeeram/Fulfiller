@@ -527,7 +527,7 @@
                                 android:layout_weight="0.6"
                                 android:gravity="center|start"
                                 android:maxLines="2"
-                                android:padding="5dp"
+                                android:padding="10dp"
                                 android:text="Approximate delivery time:"
                                 android:textColor="@color/header_color"
                                 android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontRegular>
@@ -540,7 +540,7 @@
                                 android:layout_weight="0.4"
                                 android:gravity="center|end"
                                 android:maxLines="2"
-                                android:padding="5dp"
+                                android:padding="10dp"
                                 android:textColor="#000"
                                 android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontLight>
 

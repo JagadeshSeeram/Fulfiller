@@ -2,8 +2,8 @@ package com.biglynx.fulfiller.ui;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import com.biglynx.fulfiller.R;
 import com.biglynx.fulfiller.adapter.RatingsAdapter;
-import com.biglynx.fulfiller.adapter.ServiceRequestAdapter;
 import com.biglynx.fulfiller.models.RatingsModel;
-import com.biglynx.fulfiller.models.SupportCategoryModel;
 import com.biglynx.fulfiller.utils.AppUtil;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class RatingsActivity extends AppCompatActivity implements View.OnClickLi
     private ArrayList<RatingsModel> ratingsList;
     private ImageView icon_back;
     private TextView companyname_tv;
-    private int VERTICAL_ITEM_SPACE = 20;
+    private int VERTICAL_ITEM_SPACE = 40;
     private TextView total_ratings_tv;
     private RatingBar ratingBar;
     @Override
