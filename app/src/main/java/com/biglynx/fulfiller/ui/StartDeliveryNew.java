@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -100,7 +101,11 @@ import retrofit2.Response;
 
 import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 
-
+/* 2- notified
+* 3- Confirmed no.of packages count
+* 4- started
+* 5- delivered
+* 6- Fulfillment Confirmed delivery*/
 public class StartDeliveryNew extends AppCompatActivity implements View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -172,7 +177,10 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
             retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
             buildUI(responseInterestObj);
             //update progressbar
-            updateProgressbar(progressStatus);
+            if (responseInterestObj.Fulfillments.DeliveryStatusId > 2)
+                updateProgressbar(responseInterestObj.Fulfillments.DeliveryStatusId);
+            else
+                updateProgressbar(progressStatus);
             updateDeliveryScreens(responseInterestObj.Fulfillments.DeliveryStatusId);
             callGetMessagesAPI(true);
         }
@@ -303,7 +311,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     }
 
     //StartDeliveryNew API
-    private void callStartDeliveryService(final boolean updateUI) {
+    private void callStartDeliveryService(final int id) {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("fulfillerid", AppPreferences.getInstance(StartDeliveryNew.this).getSignInResult() != null ?
@@ -331,13 +339,16 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                             responseInterestObj = response.body();
                             retailerLocation.setLatitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Latitude));
                             retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
-                            if (updateUI) {
-                                buildUI(responseInterestObj);
-                                updateDeliveryScreens(responseInterestObj.Fulfillments.DeliveryStatusId);
-                            } else {
-                                checkIfAllOrdersAllDelivered(responseInterestObj);
-                                startDeliveryAdapter.setItemsList(responseInterestObj.Fulfillments.Orders);
+                            int count = checkIfAllOrdersAllDelivered(responseInterestObj);
+                            startDeliveryAdapter.setItemsList(responseInterestObj.Fulfillments.Orders);
+                            if (id == 5 && count > 0) {
+                                int progressBarBreak = 50 / responseInterestObj.Fulfillments.Orders.size();
+                                if (count == responseInterestObj.Fulfillments.Orders.size())
+                                    updateProgressbar(100);
+                                else
+                                    updateProgressbar(50 + (count * progressBarBreak));
                             }
+
                         } else {
                             try {
                                 AppUtil.parseErrorMessage(StartDeliveryNew.this, response.errorBody().string());
@@ -381,17 +392,40 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(Call<InterestDTO> call, Response<InterestDTO> response) {
                         if (response.isSuccessful()) {
-                            updateDeliveryScreens(deliveryStatusId);
-                            if (deliveryStatusId == 4 || deliveryStatusId == 5)
-                                callStartDeliveryService(false);
-                            if (deliveryStatusId == 6) {
-                                if (FULFILLER_ID == null)
-                                    finishActivity();
-                                else {
-                                    startActivity(new Intent(StartDeliveryNew.this, LoginActivity.class));
-                                    finish();
-                                }
+                            switch (deliveryStatusId) {
+                                case 2:
+                                    //request for location updates
+                                    if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                                            Manifest.permission.ACCESS_FINE_LOCATION)
+                                            == PackageManager.PERMISSION_GRANTED) {
+                                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                                                mLocationRequest, StartDeliveryNew.this);
+                                    }
+                                    updateProgressbar(5);
+                                    break;
+                                case 3:
+                                    // user confirmed currect no.of packages and order count
+                                    //stop location updates and update progress bar to 50(pickedup)
+                                    updateProgressbar(50);
+                                    LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
+                                            StartDeliveryNew.this);
+                                    break;
+                                case 4:
+                                case 5:
+                                    callStartDeliveryService(deliveryStatusId);
+                                    break;
+                                case 6:
+                                    if (FULFILLER_ID == null)
+                                        finishActivity();
+                                    else {
+                                        startActivity(new Intent(StartDeliveryNew.this, LoginActivity.class));
+                                        finish();
+                                    }
+                                    break;
                             }
+
+                            updateDeliveryScreens(deliveryStatusId);
+
                         } else {
                             try {
                                 AppUtil.parseErrorMessage(StartDeliveryNew.this, response.errorBody().string());
@@ -499,6 +533,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         subway_details_LI = (LinearLayout) findViewById(R.id.subway_details_LI);
         details_LI = (LinearLayout) findViewById(R.id.details_LI);
         progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
+        progress_bar.setProgress(100);
 
         deliv_customers_LI = (LinearLayout) findViewById(R.id.deliv_customers_LI);
         googlemaps_LI = (LinearLayout) findViewById(R.id.googlemaps_LI);
@@ -588,23 +623,20 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
 
     public void updateDeliveryScreens(int deliveryStatusId) {
         if (deliveryStatusId == 1) {
-            //progressStatus = 0;
-            //updateProgressbar(5);
             if (!googlemaps_LI.isShown())
                 googlemaps_LI.setVisibility(View.VISIBLE);
 
         } else if (deliveryStatusId == 2) {
-            //updateProgressbar(35);
+            //user Notified the retailer that he is comming to pickup the fulfillment
+            //so show confirm packages UI
             googlemaps_LI.setVisibility(View.GONE);
             confirmorders_LI.setVisibility(View.VISIBLE);
         } else if (deliveryStatusId == 3 || deliveryStatusId == 4 || deliveryStatusId == 5) {
-            //updateProgressbar(65);
             googlemaps_LI.setVisibility(View.GONE);
             confirmorders_LI.setVisibility(View.GONE);
             deliv_customers_LI.setVisibility(View.VISIBLE);
             checkIfAllOrdersAllDelivered(responseInterestObj);
         } else if (deliveryStatusId == 6) {
-            //updateProgressbar(100);
             delivered_imv.setImageResource(R.drawable.ic_delivered_grn_n);
             delivered_tv.setTextColor(Color.parseColor("#94C96F"));
         }
@@ -636,34 +668,15 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                             progress_bar.setProgress(progressStatus);
                             trackimage_imv.setX(progressStatus * (deviceswidth / 100));
                             if (progressStatus == 5) {
-                               /* if (progressStatus == max) {
-                                    if (!googlemaps_LI.isShown())
-                                        googlemaps_LI.setVisibility(View.VISIBLE);
-                                }*/
                                 ontheway_imv.setImageResource(R.drawable.ic_onthe_way_grn_n);
                                 ontheway_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
-                            if (progressStatus == 35) {
-                                /*if (progressStatus == max) {
-                                    googlemaps_LI.setVisibility(View.GONE);
-                                    confirmorders_LI.setVisibility(View.VISIBLE);
-                                }*/
+                            if (progressStatus == 50) {
                                 pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
                                 pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
                             }
 
-                            if (progressStatus > 50) {
-                                /*if (progressStatus == max) {
-                                    if (!deliv_customers_LI.isShown()) {
-                                        googlemaps_LI.setVisibility(View.GONE);
-                                        confirmorders_LI.setVisibility(View.GONE);
-                                        deliv_customers_LI.setVisibility(View.VISIBLE);
-                                        checkIfAllOrdersAllDelivered(responseInterestObj);
-                                    }
-                                }*/
-                                pickedup_imv.setImageResource(R.drawable.ic_pickedup_grn_n);
-                                pickedup_tv.setTextColor(Color.parseColor("#94C96F"));
-                            }
+
                             if (progressStatus == 100) {
                                 delivered_imv.setImageResource(R.drawable.ic_delivered_grn_n);
                                 delivered_tv.setTextColor(Color.parseColor("#94C96F"));
@@ -711,11 +724,6 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
     }
 
     @Override
@@ -735,7 +743,10 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                         mCurrentLocation.getLongitude() == location.getLongitude())) {
             return;
         }
-        double speed = 0;
+
+        //user notified and then we request for location updates
+        //user notifeis means started...started position is 5 on progressBar
+        double speed = 5;
         if (location.hasSpeed())
             speed = location.getSpeed();
         else {
@@ -757,8 +768,9 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         //distance = speed * time
         if (speed == 0)
             return;
-        //speed = 650.00;
-        Double time = new Double(100 / (distance / speed));
+        //50 indicates- calculate distance upto pickup. Pickup is the position
+        //where retailer stays and user pickups the fulfillment here.
+        Double time = new Double(50 / (distance / speed));
         int progressTime = time.intValue();
         updateProgressbar(progressTime);
     }
@@ -1161,11 +1173,11 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         //Common.setListViewHeightBasedOnItems(orderlist_LI);
     }
 
-    private void checkIfAllOrdersAllDelivered(InterestDTO mInterest) {
+    private int checkIfAllOrdersAllDelivered(InterestDTO mInterest) {
         if (deliv_customers_LI.isShown()) {
+            int deliveredItemsCount = 0;
             if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
                 int noOfOrders = mInterest.Fulfillments.Orders.size();
-                int deliveredItemsCount = 0;
                 for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
                     if (mInterest.Fulfillments.Orders.get(i).Status.equalsIgnoreCase("Delivered"))
                         deliveredItemsCount = deliveredItemsCount + 1;
@@ -1175,7 +1187,9 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                 } else
                     confirm_delivery_LI.setVisibility(View.GONE);
             }
+            return deliveredItemsCount;
         }
+        return 0;
     }
 
     public void printDifference(Date startDate, Date endDate) {
