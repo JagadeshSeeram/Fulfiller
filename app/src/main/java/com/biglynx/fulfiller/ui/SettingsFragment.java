@@ -201,11 +201,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
                 new Callback<List<RatingsModel>>() {
                     @Override
                     public void onResponse(Call<List<RatingsModel>> call, Response<List<RatingsModel>> response) {
+                        if (!showProgress)
+                            return;
+
                         if (response.isSuccessful()) {
                             List<RatingsModel> ratingsList = response.body();
-                            if (ratingsList != null)
-                                startActivity(new Intent(getActivity(), RatingsActivity.class)
-                                        .putParcelableArrayListExtra("ratingsList", (ArrayList<? extends Parcelable>) ratingsList));
+                            if (ratingsList != null) {
+                                    startActivity(new Intent(getActivity(), RatingsActivity.class)
+                                            .putParcelableArrayListExtra("ratingsList", (ArrayList<? extends Parcelable>) ratingsList));
+                            }
                         } else {
                             try {
                                 AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
