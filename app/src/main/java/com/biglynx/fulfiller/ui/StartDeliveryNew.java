@@ -177,9 +177,17 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
             retailerLocation.setLongitude(Double.parseDouble(responseInterestObj.Fulfillments.RetailerLocation.RetailerLocationAddress.Longitude));
             buildUI(responseInterestObj);
             //update progressbar
-            if (responseInterestObj.Fulfillments.DeliveryStatusId > 2)
-                updateProgressbar(responseInterestObj.Fulfillments.DeliveryStatusId);
-            else
+            if (responseInterestObj.Fulfillments.DeliveryStatusId > 2) {
+                switch (responseInterestObj.Fulfillments.DeliveryStatusId) {
+                    case 3:
+                    case 4:
+                        updateProgressbar(50);
+                        break;
+                    case 5:
+                        updateProgressbar(100);
+                        break;
+                }
+            } else
                 updateProgressbar(progressStatus);
             updateDeliveryScreens(responseInterestObj.Fulfillments.DeliveryStatusId);
             callGetMessagesAPI(true);
@@ -1174,8 +1182,25 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     }
 
     private int checkIfAllOrdersAllDelivered(InterestDTO mInterest) {
-        if (deliv_customers_LI.isShown()) {
-            int deliveredItemsCount = 0;
+        int deliveredItemsCount = 0;
+        int noOfOrders = 0;
+        if (deliv_customers_LI.getVisibility() == View.VISIBLE){
+            if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
+                noOfOrders = mInterest.Fulfillments.Orders.size();
+                for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
+                    if (mInterest.Fulfillments.Orders.get(i).Status.equalsIgnoreCase("Delivered"))
+                        deliveredItemsCount = deliveredItemsCount + 1;
+                }
+            }
+            if (deliveredItemsCount != 0 && noOfOrders == deliveredItemsCount) {
+                confirm_delivery_LI.setVisibility(View.VISIBLE);
+            } else
+                confirm_delivery_LI.setVisibility(View.GONE);
+        }
+        return deliveredItemsCount;
+
+
+        /*if (deliv_customers_LI.isShown()) {
             if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
                 int noOfOrders = mInterest.Fulfillments.Orders.size();
                 for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
@@ -1186,10 +1211,10 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
                     confirm_delivery_LI.setVisibility(View.VISIBLE);
                 } else
                     confirm_delivery_LI.setVisibility(View.GONE);
+                return deliveredItemsCount;
             }
-            return deliveredItemsCount;
         }
-        return 0;
+        return 0;*/
     }
 
     public void printDifference(Date startDate, Date endDate) {
