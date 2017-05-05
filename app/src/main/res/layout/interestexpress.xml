@@ -559,7 +559,6 @@
                             android:layout_weight="0.4"
                             android:gravity="center|end"
                             android:maxLines="1"
-                            android:padding="5dp"
                             android:textColor="#000"
                             android:textSize="@dimen/sp_11"></com.biglynx.fulfiller.fonts.CustomFontMedium>
 
@@ -618,7 +617,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|start"
-                            android:layout_weight="0.6"
+                            android:layout_weight="0.45"
                             android:gravity="center|start"
                             android:maxLines="2"
                             android:text="Due date: "
@@ -630,9 +629,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center|end"
-                            android:layout_weight="0.4"
+                            android:layout_weight="0.55"
                             android:gravity="center|end"
-                            android:maxLines="2"
                             android:textColor="#000"
                             android:textSize="@dimen/sp_11"></com.biglynx.fulfiller.fonts.CustomFontMedium>
 
