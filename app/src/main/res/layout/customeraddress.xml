@@ -13,8 +13,25 @@
         android:orientation="vertical"
         android:background="#DADADA"
         >
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@color/white"
+            android:id="@+id/layout_timings"
+            android:visibility="gone"
+            android:orientation="vertical"
+            >
+            <com.biglynx.fulfiller.fonts.CustomFontBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/store_name_tv"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14"
+                />
+        </LinearLayout>
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"

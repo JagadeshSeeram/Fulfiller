@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Biglynx on 7/22/2016.
  */
-public class FulfillersDTO implements Parcelable{
+public class FulfillersDTO implements Parcelable {
 
     public String FulfillerId;
     public String Status;
@@ -21,7 +21,6 @@ public class FulfillersDTO implements Parcelable{
     public double Amount;
     public String BusinessLegalName;
 
-    public String ExpirationDateTime1;
     public String DueDate;
 
     public double PickUpMapLatitude;
@@ -37,6 +36,7 @@ public class FulfillersDTO implements Parcelable{
     public String DateUpdated;
     public String TotalApproxTimeInSeconds;
     public String ExpirationDateTime;
+    public String DeliveryDueDatetime;
     public String InterestExpirationDateTime;
     public String FulfillerInterestId;
     public List<Orders> Orders;
@@ -61,7 +61,6 @@ public class FulfillersDTO implements Parcelable{
         PriceType = in.readString();
         Amount = in.readDouble();
         BusinessLegalName = in.readString();
-        ExpirationDateTime1 = in.readString();
         DueDate = in.readString();
         PickUpMapLatitude = in.readDouble();
         PickUpMapLongitude = in.readDouble();
@@ -76,6 +75,7 @@ public class FulfillersDTO implements Parcelable{
         DateUpdated = in.readString();
         TotalApproxTimeInSeconds = in.readString();
         ExpirationDateTime = in.readString();
+        DeliveryDueDatetime = in.readString();
         InterestExpirationDateTime = in.readString();
         FulfillerInterestId = in.readString();
         Orders = in.createTypedArrayList(com.biglynx.fulfiller.models.Orders.CREATOR);
@@ -119,7 +119,6 @@ public class FulfillersDTO implements Parcelable{
         parcel.writeString(PriceType);
         parcel.writeDouble(Amount);
         parcel.writeString(BusinessLegalName);
-        parcel.writeString(ExpirationDateTime1);
         parcel.writeString(DueDate);
         parcel.writeDouble(PickUpMapLatitude);
         parcel.writeDouble(PickUpMapLongitude);
@@ -134,6 +133,7 @@ public class FulfillersDTO implements Parcelable{
         parcel.writeString(DateUpdated);
         parcel.writeString(TotalApproxTimeInSeconds);
         parcel.writeString(ExpirationDateTime);
+        parcel.writeString(DeliveryDueDatetime);
         parcel.writeString(InterestExpirationDateTime);
         parcel.writeString(FulfillerInterestId);
         parcel.writeTypedList(Orders);

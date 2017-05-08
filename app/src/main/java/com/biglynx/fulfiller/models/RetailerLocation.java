@@ -18,6 +18,7 @@ public class RetailerLocation implements Parcelable{
     public String LocationContactRole;
     public String LocationContactPhone;
     public String LocationContactMail;
+    public BusinessHours BusinessHours;
 
     protected RetailerLocation(Parcel in) {
         RetailerLocationAddress = in.readParcelable(com.biglynx.fulfiller.models.RetailerLocationAddress.class.getClassLoader());
@@ -29,6 +30,7 @@ public class RetailerLocation implements Parcelable{
         LocationContactPhone = in.readString();
         LocationContactMail = in.readString();
         Retailer = in.readParcelable(com.biglynx.fulfiller.models.Retailer.class.getClassLoader());
+        BusinessHours = in.readParcelable(com.biglynx.fulfiller.models.BusinessHours.class.getClassLoader());
     }
 
     public static final Creator<RetailerLocation> CREATOR = new Creator<RetailerLocation>() {
@@ -59,5 +61,6 @@ public class RetailerLocation implements Parcelable{
         parcel.writeString(LocationContactPhone);
         parcel.writeString(LocationContactMail);
         parcel.writeParcelable(Retailer, i);
+        parcel.writeParcelable(BusinessHours, i);
     }
 }

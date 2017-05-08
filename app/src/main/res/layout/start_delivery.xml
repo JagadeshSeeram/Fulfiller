@@ -453,6 +453,7 @@
                             android:layout_marginTop="3dp"
                             android:background="@drawable/editext_bottom"
                             android:orientation="horizontal"
+                            android:id="@+id/layout_store_working_hrs"
                             android:weightSum="1">
 
                             <com.biglynx.fulfiller.fonts.CustomFontRegular

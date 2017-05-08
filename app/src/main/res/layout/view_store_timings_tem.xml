@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F8FA"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <com.biglynx.fulfiller.fonts.CustomFontMedium
+        android:id="@+id/day_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center|left"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:textColor="#878396"
+        android:textSize="@dimen/sp_13" />
+
+    <com.biglynx.fulfiller.fonts.CustomFontMedium
+        android:id="@+id/working_hrs_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center|left"
+        android:padding="@dimen/dp_10"
+        android:textColor="#878396"
+        android:textSize="@dimen/sp_13" />
+</LinearLayout>

@@ -154,6 +154,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     private String TAG = StartDeliveryNew.class.getSimpleName();
     private Location retailerLocation;
     private Timer msgsTimer;
+    private LinearLayout storeworkingHrs_LI;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void onCreate(Bundle savedInstanceState) {
@@ -504,6 +505,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         runMessagesTimer();
         apiWrapper = new FullFillerApiWrapper();
         retailerLocation = new Location("locationA");
+        storeworkingHrs_LI = (LinearLayout) findViewById(R.id.layout_store_working_hrs);
 
         icon_back = (ImageView) findViewById(R.id.icon_back);
         help_icon = (ImageView) findViewById(R.id.help_icon);
@@ -568,6 +570,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         signView = (CaptureSignatureView) findViewById(R.id.signature_view);
         signatureCancel.setOnClickListener(this);
         signatureSave.setOnClickListener(this);
+        storeworkingHrs_LI.setOnClickListener(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.messages_listView);
         mLayoutManager = new LinearLayoutManager(StartDeliveryNew.this);
@@ -973,6 +976,12 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
             case R.id.copy_retailer_adrs_tv:
                 AppUtil.copyText(getApplicationContext(), "Address", address_tv.getText().toString());
                 break;
+            case R.id.layout_store_working_hrs:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("STORE_HRS", responseInterestObj.Fulfillments.RetailerLocation.BusinessHours);
+                startActivity(new Intent(this, CustomerAddress.class)
+                        .putExtras(bundle));
+                break;
         }
     }
 
@@ -1184,7 +1193,7 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
     private int checkIfAllOrdersAllDelivered(InterestDTO mInterest) {
         int deliveredItemsCount = 0;
         int noOfOrders = 0;
-        if (deliv_customers_LI.getVisibility() == View.VISIBLE){
+        if (deliv_customers_LI.getVisibility() == View.VISIBLE) {
             if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
                 noOfOrders = mInterest.Fulfillments.Orders.size();
                 for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
