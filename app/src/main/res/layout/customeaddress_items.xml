@@ -14,7 +14,6 @@
         android:text="name"
         android:padding="5dp"
         android:textAllCaps="true"
-        android:maxLines="1"
         android:id="@+id/place_tv"
         android:textColor="#000"
         android:textSize="@dimen/textview_dp14">

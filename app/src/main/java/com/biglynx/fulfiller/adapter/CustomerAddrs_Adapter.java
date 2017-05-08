@@ -14,31 +14,31 @@ import com.biglynx.fulfiller.models.InterestDTO;
 import com.biglynx.fulfiller.models.Orders;
 import com.biglynx.fulfiller.models.RecentSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class CustomerAddrs_Adapter extends BaseAdapter {
     Context Context;
-    List<Orders> ordersList;
+    List<Orders> ordersList = new ArrayList<>();
     LayoutInflater inflater;
-    InterestDTO interestDTO;
-    public CustomerAddrs_Adapter(Context mContext, List<Orders> ordersLists, InterestDTO interestDTO){
-        Context=mContext;
-        ordersList=ordersLists;
+
+    public CustomerAddrs_Adapter(Context mContext, List<Orders> ordersLists) {
+        Context = mContext;
+        ordersList = ordersLists;
         inflater = LayoutInflater.from(this.Context);
-        this.interestDTO = interestDTO;
     }
 
     @Override
     public int getCount() {
-        Log.d("recent search count", " "+String.valueOf(ordersList != null ? ordersList.size() : 1));
-        return ordersList != null ? ordersList.size() : 1;
+        Log.d("no of adderesses", " " + String.valueOf(ordersList.size()));
+        return ordersList.size();
 
     }
 
     @Override
     public Object getItem(int position) {
-        return ordersList != null ? ordersList.get(position): null;
+        return ordersList != null ? ordersList.get(position) : null;
     }
 
     @Override
@@ -58,15 +58,10 @@ public class CustomerAddrs_Adapter extends BaseAdapter {
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
 
-       if (interestDTO ==  null) {
-           mViewHolder.place_tv.setText(ordersList.get(position).OrderAddress.AddressLine1 + "," + ordersList.get(position).OrderAddress.City + "," +
-                   ordersList.get(position).OrderAddress.CountryName);
-       }else {
-           mViewHolder.place_tv.setText(interestDTO.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + " " +
-                   interestDTO.RetailerLocationAddress.RetailerLocationAddress.City + " " +
-                   interestDTO.RetailerLocationAddress.RetailerLocationAddress.State+" "+
-                   interestDTO.RetailerLocationAddress.RetailerLocationAddress.CountryName);
-       }
+        mViewHolder.place_tv.setText(ordersList.get(position).OrderAddress.AddressLine1 + ", " +
+                ordersList.get(position).OrderAddress.City + ", " +
+                ordersList.get(position).OrderAddress.State + ", " +
+                ordersList.get(position).OrderAddress.CountryName);
 
         return convertView;
     }

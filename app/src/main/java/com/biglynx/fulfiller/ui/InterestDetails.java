@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -50,6 +51,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -72,7 +74,7 @@ import static com.biglynx.fulfiller.utils.Constants.OOPS_SOMETHING_WENT_WRONG;
 */
 
 public class InterestDetails extends AppCompatActivity implements NetworkOperationListener,
-        AdapterView.OnItemClickListener, View.OnClickListener {
+        View.OnClickListener {
 
     ImageView icon_back, price_imv;
     TextView locationtype_tv, day_tv, time_tv, order_tv, total_weight_tv,
@@ -82,7 +84,6 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     TextView interest_conf_tv, interest_conf_val_tv, interest_exp_tv, interest_exp_val_tv, express_day_tv, express_time_tv, expiration_tv,
             deliverytoken_tv, fulfillmentid_tv, share_cancel_tv, share_copy_tv, share_email_tv, share_sms_tv;
     EditText enter_bid_ev;
-    int positon;
     String retaileLocId;
     int positions;
     SimpleDateFormat simpleDateFormat;
@@ -269,7 +270,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         /*  pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
                 interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine2);*/
 
-        fillfromData(positon);
+        fillfromData();
 
         pickup_loc_tv.setText(interest.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + ", " +
                 interest.RetailerLocationAddress.RetailerLocationAddress.City + ", "
@@ -309,7 +310,7 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         }
     }
 
-    private void fillfromData(final int positon) {
+    private void fillfromData() {
         // Timer to display delivery due time
         timer.schedule(new TimerTask() {
             @Override
@@ -413,12 +414,6 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        positions = position;
-        fillfromData(position);
-    }
-
-    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -474,9 +469,10 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
                 break;
 
             case R.id.cus_address_LI:
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("ORDERS_LIST", (ArrayList<? extends Parcelable>) interest.Fulfillments.Orders);
                 startActivity(new Intent(this, CustomerAddress.class)
-                        .putExtra("interest", interest)
-                        .putExtra("position", positions));
+                        .putExtras(bundle));
                 break;
         }
     }

@@ -35,42 +35,37 @@ public class CustomerAddress extends AppCompatActivity implements
         View.OnClickListener {
 
     ListView listView;
-    BroadCast broadCast;
     int positon;
     ImageView icon_back;
     TextView companyname_tv;
     CustomerAddrs_Adapter customerAddrsAdapter;
-    InterestDTO interestDTO;
-
+private List<Orders> ordersList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customeraddress);
 
-        companyname_tv=(TextView)findViewById(R.id.companyname_tv);
-        icon_back=(ImageView) findViewById(R.id.icon_back);
+        companyname_tv = (TextView) findViewById(R.id.companyname_tv);
+        icon_back = (ImageView) findViewById(R.id.icon_back);
 
         icon_back.setVisibility(View.VISIBLE);
         icon_back.setOnClickListener(this);
         companyname_tv.setText("Customer Addresses");
+        ordersList= new ArrayList<>();
 
-        if (getIntent().getExtras() != null){
-            if (getIntent().hasExtra("broadCast"))
-                broadCast=(BroadCast)getIntent().getParcelableExtra("broadCast");
-            else
-                interestDTO = (InterestDTO) getIntent().getParcelableExtra("interest");
-
-            positon=getIntent().getIntExtra("position",1);
+        if (getIntent().getExtras() != null) {
+            if (getIntent().hasExtra("ORDERS_LIST")){
+                ordersList = getIntent().getExtras().getParcelableArrayList("ORDERS_LIST");
+            }
         }
 
 
-        listView=(ListView)findViewById(R.id.listview);
+        listView = (ListView) findViewById(R.id.listview);
 
-        customerAddrsAdapter=new CustomerAddrs_Adapter(this,broadCast != null ? broadCast.Fulfillments.get(positon).Orders : null,interestDTO);
+        customerAddrsAdapter = new CustomerAddrs_Adapter(this,ordersList);
         listView.setAdapter(customerAddrsAdapter);
 
     }
-
 
 
     @Override
