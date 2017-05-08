@@ -22,8 +22,8 @@
     <string name="technical_error">Server Error, Try again</string>
 
     <string name="fbid">905986182864867</string>
-    <string name="google_apikey">AIzaSyDV99UNmtLmw_VW0hqQr1tq_ituc_MIsYc</string>
-    <string name="oauth2_client_id">55470930292-9ussmff0kkbfjjab1ldaicf7leucf4t8.apps.googleusercontent.com</string>
+    <string name="google_apikey">AIzaSyDOIGJ5aoau6yVvtM_A9xdhuwBhccoq1eM</string>
+    <string name="oauth2_client_id">84283183813-ck9v6j7sjf5n6bick1k8q6ilu404pkj4.apps.googleusercontent.com</string>
 
     <string name="busniessname">Business Name</string>
     <string name="contactname">Contact Person</string>
