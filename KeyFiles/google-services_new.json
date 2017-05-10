@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "84283183813",
+    "project_id": "fulfiller-cfa95"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84283183813:android:554d4aa118ee9709",
+        "android_client_info": {
+          "package_name": "com.biglynx.fulfiller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84283183813-7qpiphdcgv4951kmpigm11e9a3k6qu00.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biglynx.fulfiller",
+            "certificate_hash": "38df6976bbd68830e2c78ab54e99e06b998c218e"
+          }
+        },
+        {
+          "client_id": "84283183813-jrkeda5ad64mcrbo99ac4cpp2g4mbkbh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biglynx.fulfiller",
+            "certificate_hash": "d193f3bf94272b9516d1c48c523e0f76d7ad725f"
+          }
+        },
+        {
+          "client_id": "84283183813-ck9v6j7sjf5n6bick1k8q6ilu404pkj4.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "84283183813-tart77h8ce7f3hgf2f7gjfjbfl2vgep3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biglynx.fulfiller",
+            "certificate_hash": "881f616fb89c23983e7798ad0ef562f2ba13edd9"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOIGJ5aoau6yVvtM_A9xdhuwBhccoq1eM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

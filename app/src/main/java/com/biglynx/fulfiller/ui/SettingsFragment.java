@@ -129,6 +129,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
             account_status.setText("Status: " + getStatus(AppPreferences.getInstance(getActivity()).getSignInResult().optString("Status")));
         else
             account_status.setText("");
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private String getStatus(String status) {
@@ -247,6 +248,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onRefresh() {
         updateProfileInfo();
-        callRatingsService(false);
+        //callRatingsService(false);
     }
 }

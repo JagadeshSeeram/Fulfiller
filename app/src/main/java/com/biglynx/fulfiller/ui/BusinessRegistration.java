@@ -218,7 +218,6 @@ public class BusinessRegistration extends FragmentActivity implements View.OnCli
 
     private void initGooglePlus() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.oauth2_client_id))
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)

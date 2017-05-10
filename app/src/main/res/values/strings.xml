@@ -23,7 +23,7 @@
 
     <string name="fbid">905986182864867</string>
     <string name="google_apikey">AIzaSyDOIGJ5aoau6yVvtM_A9xdhuwBhccoq1eM</string>
-    <string name="oauth2_client_id">84283183813-ck9v6j7sjf5n6bick1k8q6ilu404pkj4.apps.googleusercontent.com</string>
+    <string name="oauth2_client_id">84283183813-tart77h8ce7f3hgf2f7gjfjbfl2vgep3.apps.googleusercontent.com</string>
 
     <string name="busniessname">Business Name</string>
     <string name="contactname">Contact Person</string>
@@ -56,7 +56,7 @@
 
     <string name="alreadyregister">Already register with Fulfiller?</string>
     <string name="sign_in">Sign In</string>
-    <string name="registerbelow">Reigster below to complete sing up</string>
+    <string name="registerbelow">Reigster below to complete sing up</string>fv
     <string name="home">Home</string>
     <string name="broadcast">BroadCasts</string>
     <string name="fulfillment">FulFillments</string>

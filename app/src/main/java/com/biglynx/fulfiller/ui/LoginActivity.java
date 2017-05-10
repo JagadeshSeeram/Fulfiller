@@ -341,7 +341,6 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
 
     private void initialGoogleLogin() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.oauth2_client_id))
                 .requestEmail()
                 .build();
         if (mGoogleApiClient == null) {
