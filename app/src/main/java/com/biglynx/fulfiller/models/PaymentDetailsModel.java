@@ -22,7 +22,7 @@ public class PaymentDetailsModel implements Parcelable {
     public String FulfillmentId;
     public String CompletedDatetime;
     public String ordersCount;
-    public double totalWeight;
+    public String totalWeight;
 
     protected PaymentDetailsModel(Parcel in) {
         Comments = in.readString();
@@ -39,7 +39,7 @@ public class PaymentDetailsModel implements Parcelable {
         FulfillmentId = in.readString();
         CompletedDatetime = in.readString();
         ordersCount = in.readString();
-        totalWeight = in.readDouble();
+        totalWeight = in.readString();
     }
 
     public static final Creator<PaymentDetailsModel> CREATOR = new Creator<PaymentDetailsModel>() {
@@ -75,6 +75,6 @@ public class PaymentDetailsModel implements Parcelable {
         dest.writeString(FulfillmentId);
         dest.writeString(CompletedDatetime);
         dest.writeString(ordersCount);
-        dest.writeDouble(totalWeight);
+        dest.writeString(totalWeight);
     }
 }

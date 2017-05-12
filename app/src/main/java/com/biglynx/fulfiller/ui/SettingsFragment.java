@@ -229,7 +229,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
                     @Override
                     public void onFailure(Call<List<RatingsModel>> call, Throwable t) {
-                        AppUtil.toast(getActivity(), "Unable to show Reviews. Please try later...");
+                        //AppUtil.toast(getActivity(), "Unable to show Reviews. Please try later...");
                         if (showProgress)
                             Common.disMissDialog();
                         else

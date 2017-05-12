@@ -27,7 +27,7 @@ public class FulfillersDTO implements Parcelable {
     public double PickUpMapLongitude;
     public double MinDistance;
     public double MaxDistance;
-    public double TotalWeight;
+    public String TotalWeight;
     public String TotalPackages;
     public String LocationContactPerson;
     public String LocationContactRole;
@@ -66,7 +66,7 @@ public class FulfillersDTO implements Parcelable {
         PickUpMapLongitude = in.readDouble();
         MinDistance = in.readDouble();
         MaxDistance = in.readDouble();
-        TotalWeight = in.readDouble();
+        TotalWeight = in.readString();
         TotalPackages = in.readString();
         LocationContactPerson = in.readString();
         LocationContactRole = in.readString();
@@ -124,7 +124,7 @@ public class FulfillersDTO implements Parcelable {
         parcel.writeDouble(PickUpMapLongitude);
         parcel.writeDouble(MinDistance);
         parcel.writeDouble(MaxDistance);
-        parcel.writeDouble(TotalWeight);
+        parcel.writeString(TotalWeight);
         parcel.writeString(TotalPackages);
         parcel.writeString(LocationContactPerson);
         parcel.writeString(LocationContactRole);

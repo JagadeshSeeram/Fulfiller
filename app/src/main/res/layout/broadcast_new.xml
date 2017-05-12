@@ -433,11 +433,11 @@
                     <ImageView
                         android:id="@+id/companylogo_imv"
                         android:layout_width="100dp"
-                        android:layout_height="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_30"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_2"
                         android:gravity="center"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:padding="2dp"
                         android:src="@drawable/ic_your_company_logo"></ImageView>
 
@@ -446,47 +446,44 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center"
                         android:text="Cougar Retailer "
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:textSize="@dimen/textview_dp14" />
+                        android:textSize="@dimen/sp_11" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center"
+                        android:maxLines="6"
                         android:text="pickup Location :"
                         android:textAllCaps="true"
                         android:textColor="#9F9F9F"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_11" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontRegular
                         android:id="@+id/pickup_loc_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="2dp"
                         android:text="pick up location"
                         android:gravity="center"
                         android:textColor="#9F9F9F"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_11" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="2dp"
                         android:gravity="center"
                         android:text="Locatoin Type :"
                         android:textAllCaps="true"
                         android:textColor="#9F9F9F"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="10sp" />
 
                     <com.biglynx.fulfiller.fonts.CustomFontRegular
                         android:id="@+id/locationtype_tv"
@@ -496,7 +493,7 @@
                         android:gravity="center"
                         android:text="location"
                         android:textColor="#9F9F9F"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 

@@ -435,7 +435,7 @@
             <LinearLayout
                 android:id="@+id/viewpager_LI"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="200dp"
                 android:layout_gravity="bottom"
                 android:background="#AA000000"
                 android:orientation="horizontal"
@@ -454,11 +454,11 @@
                     <ImageView
                         android:id="@+id/companylogo_imv"
                         android:layout_width="100dp"
-                        android:layout_height="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_35"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:gravity="center"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:padding="2dp"
                         android:src="@drawable/ic_your_company_logo"></ImageView>
 

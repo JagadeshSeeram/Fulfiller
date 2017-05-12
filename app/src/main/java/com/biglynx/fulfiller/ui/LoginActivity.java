@@ -482,7 +482,6 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                     }
-                    clearGoogleAccount();
                 }
 
                 @Override
@@ -495,6 +494,7 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
             //If login fails
             Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
         }
+        clearGoogleAccount();
     }
 
     private void clearGoogleAccount() {

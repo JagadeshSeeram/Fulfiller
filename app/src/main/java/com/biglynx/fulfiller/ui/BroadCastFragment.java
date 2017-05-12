@@ -439,8 +439,19 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
 
     private void callService(final LatLng mCurrentLatLng) {
+
+        if (!Common.isNetworkAvailable(getActivity())) {
+            AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
+            return;
+        }
+        if (!Common.isGpsEnabled(getActivity())) {
+            Common.showCustomDialog(getActivity());
+            return;
+        }
+
         if (mCurrentLatLng == null)
             return;
+        centerLatLng = mCurrentLatLng;
         Common.showDialog(getActivity());
         apiWrapper.broadCastCall(AppPreferences.getInstance(getActivity()).getSignInResult() != null ?
                         AppPreferences.getInstance(getActivity()).getSignInResult().optString("AuthNToken") : "",
@@ -449,6 +460,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     @Override
                     public void onResponse(Call<ArrayList<BroadCast>> call, Response<ArrayList<BroadCast>> response) {
                         if (response.isSuccessful()) {
+                            if (broadCastList != null &&
+                                    broadCastList.size() > 0) {
+                                broadCastList.clear();
+                            }
                             broadCastList = response.body();
                             checkTheExpressedFullfilments();
                             drawCircle(centerLatLng);
@@ -705,8 +720,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             gMap.animateCamera(CameraUpdateFactory.zoomTo(9));
         else
             gMap.animateCamera(CameraUpdateFactory.zoomTo(getZoomLevel(radiusInMeters)));
-        if (broadCastList != null)
+        if (broadCastList != null) {
+            centerLatLng = latLng;
             setRetailerInfo();
+        }
         /*Log.d("TAG- DRAWN", "DRAWN");
         double radiusInMeters = currentDistance * 1.609 * 1000;
         centerLatLng = latLng;
@@ -918,6 +935,9 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     LatLng latLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
                     Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
                     Log.d("TAG- CURRENT", firstTime + "");
+                    if (broadCastList!= null && broadCastList.size() > 0) {
+                        broadCastList.clear();
+                    }
                     drawCircle(latLng);
                     addMarker(mCurrentLastLocation);
                     if (mUserMapClcikedmarker != null)
@@ -1022,7 +1042,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        if (marker.getTitle().equals(CURRENT_POSTION)) {
+        if (marker.getTitle().equals(CURRENT_POSTION) || marker.getTitle().equals(USER_MAP_CLICKED_POSTION)) {
             return true;
         } else {
             if (markervalues == null || markervalues.size() == 0)
@@ -1041,6 +1061,8 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
                 if (AppUtil.ifNotEmpty(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo)) {
                     Picasso.with(getActivity()).load(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo).into(companylogo_imv);
+                }else {
+                    companylogo_imv.setImageResource(R.drawable.ic_your_company_logo);
                 }
 
                 companyname_tv.setText(broadCastList.get(markervalues.get(marker.getId())).BusinessLegalName);

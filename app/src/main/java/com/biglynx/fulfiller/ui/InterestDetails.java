@@ -363,7 +363,8 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
         }, 0, 1000);
 
         order_tv.setText("" + interest.Fulfillments.Orders.size());
-        total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
+        //total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Lbs");
+        total_weight_tv.setText(interest.Fulfillments.TotalWeight + " Kgs");
         mindistance_tv.setText(interest.Fulfillments.TotalDistance + " Miles");
         maxdistance_tv.setText(TimeUnit.SECONDS.toMinutes(Long.parseLong(interest.Fulfillments.TotalApproxTimeInSeconds)) + " Min");
         due_date_tv.setText("" + AppUtil.getLocalDateFormat(interest.Fulfillments.ExpirationDateTime));

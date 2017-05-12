@@ -80,7 +80,7 @@ public class PaymentDetailsFragment extends Fragment {
                             InterestDTO interestDTO = response.body();
                             PaymentDetailsModel model = list.get(position);
                             model.ordersCount = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.OrderCount : "";
-                            model.totalWeight = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.TotalWeight : 0.00;
+                            model.totalWeight = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.TotalWeight : "";
                             model.FulfillmentId = (interestDTO.Fulfillments != null) ? interestDTO.Fulfillments.FulfillmentId : "";
                             Bundle bundle = new Bundle();
                             bundle.putParcelable(PAYOUT_DETAILS, model);

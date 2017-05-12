@@ -34,7 +34,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.4"
                     android:gravity="center|start"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_your_company_logo"></ImageView>
 
                 <LinearLayout
@@ -484,7 +484,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:gravity="center|start"
                         android:maxLines="1"
                         android:padding="@dimen/dp_5"
@@ -497,10 +497,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|end"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.5"
                         android:gravity="center|end"
-                        android:maxLines="1"
-                        android:padding="5dp"
                         android:textColor="#000"
                         android:textSize="@dimen/sp_13"></com.biglynx.fulfiller.fonts.CustomFontMedium>
 
