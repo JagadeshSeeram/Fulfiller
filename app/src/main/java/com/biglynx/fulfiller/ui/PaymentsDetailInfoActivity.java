@@ -37,7 +37,7 @@ private PaymentDetailsModel model;
         retailerName_tv.setText(model.RetailerName);
         interestDate_tv.setText(AppUtil.getLocalDateFormat(model.DateCreated));
         ordersDelivered_tv.setText(model.ordersCount);
-        totalWeight_tv.setText(AppUtil.getTwoDecimals(model.totalWeight)+" Kgs");
+        totalWeight_tv.setText(model.totalWeight + " Kgs");
         totalPayout_tv.setText("$ "+AppUtil.getTwoDecimals(model.PayoutAmount));
         paymentStatus_tv.setText(model.PayoutStatus);
     }

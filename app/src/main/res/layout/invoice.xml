@@ -35,7 +35,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
                     android:gravity="center|start"
-                    android:scaleType="fitXY"></ImageView>
+                    android:padding="@dimen/dp_2"
+                    android:scaleType="centerCrop"></ImageView>
 
                 <LinearLayout
                     android:layout_width="0dp"

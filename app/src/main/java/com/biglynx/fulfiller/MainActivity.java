@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity {
             }*/
             count =+ count;
             Log.e(TAG, "Starting LOcation Service :: " + count);
-            //startService(new Intent(this, MyJobService.class));
+            startService(new Intent(this, MyJobService.class));
         }
 
         mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);

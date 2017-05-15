@@ -112,8 +112,13 @@ public class Invoice extends AppCompatActivity implements NetworkOperationListen
 
     private void buildUi() {
         companyname_tv.setText(broadCast.BusinessLegalName);
-        Picasso.with(Invoice.this).load(broadCast.CompanyLogo)
-                .error(R.drawable.ic_your_company_logo).into(companylogo_imv);
+        if (AppUtil.ifNotEmpty(broadCast.CompanyLogo)) {
+            Picasso.with(Invoice.this).load(broadCast.CompanyLogo)
+                    .error(R.drawable.ic_your_company_logo).into(companylogo_imv);
+        }else {
+            companylogo_imv.setImageResource(R.drawable.ic_your_company_logo);
+        }
+
         pickup_loc_tv.setText(broadCast.RetailerLocationAddress.RetailerLocationAddress.AddressLine1 + "," +
                 broadCast.RetailerLocationAddress.RetailerLocationAddress.City + "," + broadCast.RetailerLocationAddress.RetailerLocationAddress.CountryName);
         // pricetype_tv.setText(broadCast.Fulfillments.get(positon).PriceType);

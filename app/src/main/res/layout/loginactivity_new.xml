@@ -109,6 +109,7 @@
                             android:textSize="@dimen/sp_14"
                             android:background="@drawable/login_edit_text_bg"
                             android:inputType="textEmailAddress"
+                            android:text="biglynx1@gmail.com"
                             />
 
                         <com.biglynx.fulfiller.utils.EditTextFontLight
@@ -127,6 +128,7 @@
                             android:textSize="@dimen/sp_14"
                             android:background="@drawable/login_edit_text_bg"
                             android:inputType="textPassword"
+                            android:text="Coroctas1234"
                             />
 
                         <Button

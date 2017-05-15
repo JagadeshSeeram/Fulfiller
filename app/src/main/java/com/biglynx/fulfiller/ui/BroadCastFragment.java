@@ -464,6 +464,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                                     broadCastList.size() > 0) {
                                 broadCastList.clear();
                             }
+                            markervalues.clear();
+                            if (previousMarker != null) {
+                                previousMarker.remove();
+                                previousMarker = null;
+                            }
                             broadCastList = response.body();
                             checkTheExpressedFullfilments();
                             drawCircle(centerLatLng);
@@ -473,7 +478,11 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                             if (broadCastList != null &&
                                     broadCastList.size() > 0) {
                                 broadCastList.clear();
-                                drawCircle(centerLatLng);
+                                markervalues.clear();
+                                if (previousMarker != null) {
+                                    previousMarker.remove();
+                                    previousMarker = null;
+                                }
                             }
                             try {
                                 AppUtil.parseErrorMessage(getActivity(), response.errorBody().string());
@@ -689,7 +698,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         markerOptions.position(latLng);
         markerOptions.title(CURRENT_POSTION);
         //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location_n));
-        markerOptions.icon(Common.createBitmap(getActivity(),40));
+        markerOptions.icon(Common.createBitmap(getActivity(), 40));
         mCurrLocationMarker = gMap.addMarker(markerOptions);
         /*ValueAnimator ani = ValueAnimator.ofFloat(1, 0.5f); //change for (0,1) if you want a fade in
         ani.setDuration(1000);
@@ -935,7 +944,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                     LatLng latLng = new LatLng(mCurrentLastLocation.getLatitude(), mCurrentLastLocation.getLongitude());
                     Log.d("TAG- CURRENT", latLng.latitude + " -- " + latLng.longitude);
                     Log.d("TAG- CURRENT", firstTime + "");
-                    if (broadCastList!= null && broadCastList.size() > 0) {
+                    if (broadCastList != null && broadCastList.size() > 0) {
                         broadCastList.clear();
                     }
                     drawCircle(latLng);
@@ -1017,11 +1026,14 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 listview_LI.setVisibility(View.VISIBLE);
                 break;
             case R.id.refresh_iv:
-                if (mCurrentLastLocation == null)
-                    return;
-                LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
-                        mCurrentLastLocation.getLongitude());
-                callService(mCurrentLatLng);
+                if (centerLatLng == null) {
+                    if (mCurrentLastLocation != null) {
+                        LatLng mCurrentLatLng = new LatLng(mCurrentLastLocation.getLatitude(),
+                                mCurrentLastLocation.getLongitude());
+                        centerLatLng = mCurrentLatLng;
+                    }
+                }
+                callService(centerLatLng);
                 break;
         }
 
@@ -1061,7 +1073,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
 
                 if (AppUtil.ifNotEmpty(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo)) {
                     Picasso.with(getActivity()).load(broadCastList.get(markervalues.get(marker.getId())).CompanyLogo).into(companylogo_imv);
-                }else {
+                } else {
                     companylogo_imv.setImageResource(R.drawable.ic_your_company_logo);
                 }
 
@@ -1088,25 +1100,23 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void setUpMap(BroadCast broadCast, int marks_bgs, int i) {
+
         if (broadCast.isExpressed) {
             return;
         }
+
+        int dis = (int) distanceCalculate(broadCast);
+        Log.d("distance is", "" + dis + "," + currentDistance * 1.609 * 1000);
+        if (dis > currentDistance * 1.609 * 1000) {
+            return;
+        }
+
+
         View marker = ((LayoutInflater) MyApplication.getInstance().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker_layout, null);
         TextView numTxt = (TextView) marker.findViewById(R.id.name_tv);
         TextView fulfillments = (TextView) marker.findViewById(R.id.fulfillments_tv);
         ImageView background_img = (ImageView) marker.findViewById(R.id.background_img);
         background_img.setBackgroundResource(marks_bgs);
-
-        /*if (!broadCast.isClicked)
-            background_img.setBackgroundResource(marks_bgs);
-        else {
-            if (viewpager_LI.isShown())
-                background_img.setBackgroundResource(R.drawable.marks_bg_orgs);
-            else {
-                background_img.setBackgroundResource(marks_bgs);
-                broadCast.isClicked = false;
-            }
-        }*/
 
         numTxt.setText(broadCast.BusinessLegalName);
         fulfillments.setText(broadCast.Fulfillments.size() + " Fulfillments");
@@ -1116,7 +1126,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                         Double.parseDouble(broadCast.RetailerLocationAddress.RetailerLocationAddress.Longitude)))
                 .title(RETAILER_POSTION)
                 .icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(MyApplication.getInstance(), marker))));
-        //Log.d("marker values"+marker1.getId(),""+broadCast.RetailerId);
+        //Log.d("marker values"+marker1.getId(),""+broadCast.RetailerId);markervalues.get(previousMarker.getId())
         markervalues.put(marker1.getId(), i);
         shownMarkersList.add(marker1);
         Log.d("markers id", "" + marker1.getId());
@@ -1190,6 +1200,7 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         for (Marker marker : shownMarkersList) {
             marker.remove();
         }
+
         shownMarkersList.clear();
         if (broadCastList != null && broadCastList.size() > 0) {
 
@@ -1197,15 +1208,10 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
                 BroadCast broadCast = broadCastList.get(i);
                 //checking distance is greater than selceted miles
                 if (centerLatLng != null) {
-                    int dis = (int) distanceCalculate(broadCast);
-                    Log.d("distance is", "" + dis + "," + currentDistance * 1.609 * 1000);
-                    if (dis <= currentDistance * 1.609 * 1000) {
-                        if (broadCast.isClicked)
-                            setUpMap(broadCast, R.drawable.marks_bg_orgs, i);
-                        else
-                            setUpMap(broadCast, R.drawable.marks_bgs, i);
-
-                    }
+                    if (broadCast.isClicked)
+                        setUpMap(broadCast, R.drawable.marks_bg_orgs, i);
+                    else
+                        setUpMap(broadCast, R.drawable.marks_bgs, i);
                 }
             }
         }
@@ -1266,6 +1272,15 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
         if (gMap == null) {
             return;
         }
+
+        if (!Common.isNetworkAvailable(getActivity())) {
+            AppUtil.toast(getActivity(), getString(R.string.check_interent_connection));
+            return;
+        }
+        if (!Common.isGpsEnabled(getActivity())) {
+            Common.showCustomDialog(getActivity());
+            return;
+        }
 //        if (!firstTime) {
 //            return;
 //        }
@@ -1288,7 +1303,6 @@ public class BroadCastFragment extends Fragment implements OnMapReadyCallback,
             //drawCircle(centerLatLng);
         }
     }
-
 
 
     public void addMapClickedMarker(LatLng latLng) {
