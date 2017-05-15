@@ -1,19 +1,14 @@
-Hanumanth
+Release
 ----------------------
 <string name="fbid">582259081955868</string>
 <string name="google_apikey">AIzaSyDZfE1ERCbDdoW0_ZAUUBbbaQ9itnQrptA</string>
 Places Key
 key=AIzaSyDnvhGPDhbTPt-XkXPu7MSvisHZwuy6iHQ
-0auth2 id : 684384173280-t5njkeqg3oma7v7eoaupr7qrgl1i6900.apps.googleusercontent.com
 
-Snehitha
-------------------------
+
+
+
+--------Debug---------
 <string name="fbid">905986182864867</string>
-<string name="google_apikey">AIzaSyDV99UNmtLmw_VW0hqQr1tq_ituc_MIsYc</string>
-Places Key
-key=AIzaSyADZn_fB01NotqDI_rjxkBMe9_NfMXNrEw
-0auth2 id : 55470930292-9ussmff0kkbfjjab1ldaicf7leucf4t8.apps.googleusercontent.com
-
-<Sandy>
-google_apikey = AIzaSyDOIGJ5aoau6yVvtM_A9xdhuwBhccoq1eM
-0auth2 id : 84283183813-ck9v6j7sjf5n6bick1k8q6ilu404pkj4.apps.googleusercontent.com
+<string name="google_apikey">AIzaSyDOIGJ5aoau6yVvtM_A9xdhuwBhccoq1eM</string>
+Use release Places key for debug. will work

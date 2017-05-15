@@ -25,7 +25,7 @@ android {
             keyAlias 'biglynx'
             keyPassword 'biglynx'
             storePassword 'biglynx'
-            storeFile file('D:/MyProjects/Fulfiller/appstore/keystore.jks')
+            storeFile file('/home/schinnapally/Documents/MyProjects/Fulfiller/appstore/keystore.jks')
         }
     }
     dexOptions {
