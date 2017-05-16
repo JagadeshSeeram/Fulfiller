@@ -861,12 +861,17 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
             if (expiration_tv.isShown())
                 expiration_tv.setVisibility(View.GONE);
         } else {
-            if (!expiration_tv.isShown())
-                expiration_tv.setVisibility(View.VISIBLE);
+
             if (!interest.Fulfillments.FulfillerInterests.InterestStatus.equalsIgnoreCase("Confirmed") &&
-                    !cancel_intrest_LI.isShown())
+                    !cancel_intrest_LI.isShown()) {
                 cancel_intrest_LI.setVisibility(View.VISIBLE);
-            expiration_tv.setText("Interest Expirs IN : " + elapsedDays + "D :" + elapsedHours + "H :" + elapsedMinutes + "M :" + elapsedSeconds + "S");
+            }
+            if (!interest.Fulfillments.FulfillerInterests.InterestStatus.equalsIgnoreCase("Confirmed")){
+                if(!expiration_tv.isShown()) {
+                    expiration_tv.setVisibility(View.VISIBLE);
+                }
+                expiration_tv.setText("Interest Expirs IN : " + elapsedDays + "D :" + elapsedHours + "H :" + elapsedMinutes + "M :" + elapsedSeconds + "S");
+            }
         }
     }
 
