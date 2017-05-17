@@ -312,25 +312,30 @@ public class InterestDetails extends AppCompatActivity implements NetworkOperati
 
     private void fillfromData() {
         // Timer to display delivery due time
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO do your thing
-                        try {
-                            Date interestDueDate = simpleDateFormat.parse(interest.Fulfillments.ExpirationDateTime);
-                            Date todayDate = new Date();
-                            System.out.println("service Date  " + interestDueDate + ",current date" + todayDate);
-                            printDifference(todayDate, interestDueDate);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+        if (AppUtil.ifNotEmpty(interest.Fulfillments.FulfillerInterests.DeliveryDueDatetime)) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // TODO do your thing
+                            try {
+                                Date interestDueDate = simpleDateFormat.parse(interest.Fulfillments.FulfillerInterests.DeliveryDueDatetime);
+                                Date todayDate = new Date();
+                                System.out.println("service Date  " + interestDueDate + ",current date" + todayDate);
+                                printDifference(todayDate, interestDueDate);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-            }
-        }, 0, 1000);
+                    });
+                }
+            }, 0, 1000);
+        }else {
+            day_tv.setText("0" + " Days");
+            time_tv.setText("0H : 0M : 0S");
+        }
 
         try {
 

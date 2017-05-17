@@ -31,6 +31,7 @@ public class FulfillerInterests implements Parcelable {
     public  String ConfirmationCode;
     public  String FulfillerId;
     public String InterestExpirationDateTime;
+    public String DeliveryDueDatetime;
 
     protected FulfillerInterests(Parcel in) {
         FulfillerInterestId = in.readString();
@@ -46,6 +47,7 @@ public class FulfillerInterests implements Parcelable {
         ConfirmationCode = in.readString();
         FulfillerId = in.readString();
         InterestExpirationDateTime = in.readString();
+        DeliveryDueDatetime = in.readString();
     }
 
     public static final Creator<FulfillerInterests> CREATOR = new Creator<FulfillerInterests>() {
@@ -80,5 +82,6 @@ public class FulfillerInterests implements Parcelable {
         parcel.writeString(ConfirmationCode);
         parcel.writeString(FulfillerId);
         parcel.writeString(InterestExpirationDateTime);
+        parcel.writeString(DeliveryDueDatetime);
     }
 }
