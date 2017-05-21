@@ -438,8 +438,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     JSONObject jsonObject = result.getJSONObject(i);
 
                     blobId = jsonObject.getString("UniqueId");
-                    Bitmap myBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-                    profilePIc_iv.setImageBitmap(myBitmap);
+                    try {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+                        profilePIc_iv.setImageBitmap(myBitmap);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

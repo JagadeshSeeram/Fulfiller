@@ -1194,9 +1194,9 @@ public class StartDeliveryNew extends AppCompatActivity implements View.OnClickL
         int deliveredItemsCount = 0;
         int noOfOrders = 0;
         if (deliv_customers_LI.getVisibility() == View.VISIBLE) {
-            if (mInterest.Fulfillments.Orders != null && responseInterestObj.Fulfillments.Orders.size() > 0) {
+            if (mInterest.Fulfillments.Orders != null && mInterest.Fulfillments.Orders.size() > 0) {
                 noOfOrders = mInterest.Fulfillments.Orders.size();
-                for (int i = 0; i < mInterest.Fulfillments.Orders.size(); i++) {
+                for (int i = 0; i < noOfOrders; i++) {
                     if (mInterest.Fulfillments.Orders.get(i).Status.equalsIgnoreCase("Delivered"))
                         deliveredItemsCount = deliveredItemsCount + 1;
                 }
